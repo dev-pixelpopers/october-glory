@@ -1,7 +1,42 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Valturin";
+  src: url("/fonts/Valturin.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Andrea-Bellarosa";
+  src: url("/fonts/Andrea-Bellarosa.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
 :root {
-  --background: #ffffff;
+  --background: #5f5353;
   --foreground: #171717;
 }
 
@@ -22,5 +57,58 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Valturin", sans-serif;
+}
+.gotham {
+  font-family: "Gotham", sans-serif;
+  font-style: normal;
+}
+.font-light {
+  font-weight: 300;
+}
+.font-regular {
+  font-weight: 400;
+}
+.font-bold {
+  font-weight: 700;
+}
+.valturin {
+  font-family: "Valturin", sans-serif;
+  font-style: normal;
+}
+.andrea {
+  font-family: "Andrea-Bellarosa", sans-serif;
+  font-style: normal;
+}
+.text-black {
+  color: #000;
+}
+.text-white {
+  color: #fff;
+}
+.text-gold {
+  color: #ccb884;
+}
+.text-grey {
+  color: #f4f4f4;
+}
+.background-marquee {
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: slideText 25s linear infinite;
+}
+@keyframes slideText {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+img {
+    width: 100%;
+    height: 100%;
 }
