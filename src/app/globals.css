@@ -112,3 +112,85 @@ img {
     width: 100%;
     height: 100%;
 }
+
+
+/* marquee slider */
+.marquee-container {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            z-index: 1;
+        }
+
+        .marquee-ring {
+            position: relative;
+            width: 0;
+            height: 0;
+        }
+
+        .marquee-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: center center;
+            backface-visibility: hidden;
+        }
+
+        /* Card Design */
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 1vh 4vh rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-visual {
+            height: 80%;
+            width: 100%;
+            background: #f0f0f0;
+        }
+
+        .card-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-info {
+            height: 20%;
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            background: #fff;
+        }
+
+        .card-info p {
+            color: #111;
+            /* Default for Desktop */
+            font-size: 1.6vh;
+            font-weight: 600;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* --- MOBILE RESPONSIVE CSS --- */
+        @media (max-width: 768px) {
+            .card-info p {
+                /* Set a minimum readable size for mobile instead of relying solely on vh */
+                font-size: 14px; 
+            }
+            .card-inner {
+                /* Slightly subtler shadow on mobile for performance and look */
+                box-shadow: 0 0.5vh 2vh rgba(0, 0, 0, 0.1); 
+            }
+        }
+/*end here */

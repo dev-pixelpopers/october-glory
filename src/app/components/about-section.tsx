@@ -11,7 +11,7 @@ export default function WelcomeSection() {
     O
   </div>
   
-  <div className="valturin text-[75vw] leading-[0.75] text-[#3C3C3C] absolute top-[25%] right-[-4vw]">
+  <div className="valturin text-[70vw] leading-[0.75] text-[#3C3C3C] absolute top-[25%] right-[-2vw]">
     G
   </div>
 

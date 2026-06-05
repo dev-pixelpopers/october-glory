@@ -10,80 +10,85 @@ export default function OfferSection() {
   const [activeCard, setActiveCard] = useState<ActiveCard>("wigs");
 
   return (
-    <section className="relative w-full min-h-screen bg-[#151515] py-24 px-[5%] flex flex-col items-center overflow-hidden">
-      
+    <section
+      className="relative w-full min-h-screen bg-[#151515] pt-[150px] pb-[100px] px-[110px] flex flex-col items-center overflow-hidden bg-center bg-cover bg-no-repeat"
+      style={{ backgroundImage: "url('/images/servicce.png')" }}
+    >
       {/* Background Dim Image Layer (Optional) */}
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none bg-[url('/images/bg-faint.png')] bg-cover bg-center"></div>
 
       {/* Header Titles */}
-      <div className="relative z-10 text-center mb-16">
-        <h2 className="text-white text-[70px] md:text-[90px] leading-none font-light" style={{ fontFamily: 'Brush Script MT, cursive' }}>
-          What We Offer
-        </h2>
-        <h3 className="text-[#cda873] text-[30px] md:text-[40px] mt-2 font-serif">
+      <div className="relative z-10 text-center mb-22">
+        <h2 className="text-white andrea text-[88px]">What We Offer</h2>
+        <h3 className="text-[#cda873] valturin text-[66px] mt-2">
           It's Your Time To Shine.
         </h3>
       </div>
 
       {/* Cards Container */}
-      <div className="relative z-10 flex gap-6 w-full max-w-[1100px] h-[550px]">
-        
+      <div className="relative z-10 flex gap-6 w-full h-full">
         {/* =========================================
             CARD 1: WIGS EXTENSIONS 
         ========================================= */}
         <div
           onClick={() => setActiveCard("wigs")}
-          className={`relative bg-[#8b5a40] rounded-[30px] overflow-hidden cursor-pointer transition-all duration-700 ease-in-out flex ${
-            activeCard === "wigs" ? "flex-[2.2]" : "flex-1"
+          className={`flex relative pt-[25px] pb-[0px] px-[40px] bg-gradient-to-b from-[#9C6D51] to-[#5F3A21] rounded-[30px] overflow-hidden cursor-pointer transition-all duration-700 ease-in-out flex ${
+            activeCard === "wigs" ? "flex-[1.66]" : "flex-1"
           }`}
         >
-          {/* Model Image */}
-          <div
-            className={`absolute bottom-0 transition-all duration-700 ease-in-out ${
-              activeCard === "wigs" ? "left-[-2%] w-[55%]" : "left-1/2 -translate-x-1/2 w-[90%]"
-            }`}
-          >
-            <img
-              src="/images/wigs-model.png" 
-              alt="Wigs Model"
-              className="w-full h-auto object-contain"
-            />
+          <div className="w-[53.9%]">
+            {/* Model Image */}
+            <div
+              className={`relative transition-all duration-700 ease-in-out ${
+                activeCard === "wigs"
+                  ? "w-[100%]"
+                  : "left-1/2 -translate-x-1/2 w-[80%]"
+              }`}
+            >
+              <img
+                src="/images/left-image.png"
+                alt="Wigs Model"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
 
-          {/* Description Text & Button */}
-          <div
-            className={`absolute top-[20%] right-[8%] w-[45%] flex flex-col gap-6 transition-all duration-500 ease-in-out ${
-              activeCard === "wigs"
-                ? "opacity-100 translate-x-0 delay-200"
-                : "opacity-0 translate-x-10 pointer-events-none"
-            }`}
-          >
-            <p className="text-white/90 text-[15px] leading-loose font-light">
-              If You Want To Add Length, Thickness And Volume, Hair Extensions By Jhavuanna Will Be The Best You've Experienced In New York! Don't Forget About Our Wig Spa!
-            </p>
-            
-            <button className="flex items-center gap-3 text-white w-max mt-2 hover:opacity-80 transition">
-              <span className="flex items-center justify-center w-8 h-8 border border-white rounded-full text-xs">
-                →
-              </span>
-              <span className="font-semibold text-sm tracking-widest">Learn More</span>
-            </button>
-          </div>
+          <div className="flex flex-col align-bottom justify-end gap-20 pb-[60px] w-[46.1%]">
+            {/* Description Text & Button */}
+            <div
+              className={`flex flex-col gap-6 transition-all duration-500 ease-in-out ${
+                activeCard === "wigs"
+                  ? "opacity-100 translate-x-0 delay-200"
+                  : "opacity-0 translate-x-10 pointer-events-none"
+              }`}
+            >
+              <p className="text-white text-[20px] leading-[36px] font-light gotham">
+                If You Want To Add Length, Thickness And Volume, Hair Extensions
+                By Jhavuanna Will Be The Best You've Experienced In New York!
+                Don't Forget About Our Wig Spa!
+              </p>
 
-          {/* Titles Overlay (Wigs Extensions) */}
-          <div
-            className={`absolute transition-all duration-700 ease-in-out ${
-              activeCard === "wigs"
-                ? "bottom-12 right-12 text-right"
-                : "bottom-8 left-1/2 -translate-x-1/2 text-center"
-            }`}
-          >
-            <h4 className="text-white text-[70px] leading-[0.5]" style={{ fontFamily: 'Brush Script MT, cursive' }}>
-              Wigs
-            </h4>
-            <h5 className="text-white text-[35px] font-serif tracking-wide mt-2">
-              Extensions
-            </h5>
+              <button className="flex items-center gap-3 text-white w-max mt-2 hover:opacity-80 transition">
+                <span className="flex items-center justify-center w-8 h-8 border border-white rounded-full w-[55px] h-[55px] text-[22px]">
+                  →
+                </span>
+                <span className="gotham text-[20px]">Learn More</span>
+              </button>
+            </div>
+
+            {/* Titles Overlay (Wigs Extensions) */}
+            <div
+              className={`relative transition-all duration-700 ease-in-out ${
+                activeCard === "wigs"
+                  ? "text-left"
+                  : "-translate-x-1/2 text-left"
+              }`}
+            >
+              <h4 className="text-white text-[88px] andrea">Wigs</h4>
+              <h5 className="text-white text-[66px] leading-[60px] valturin ml-[67px] mt-[10px]">
+                Extensions
+              </h5>
+            </div>
           </div>
         </div>
 
@@ -97,55 +102,59 @@ export default function OfferSection() {
           }`}
         >
           {/* Model Image */}
-          <div
-            className={`absolute bottom-0 transition-all duration-700 ease-in-out ${
-              activeCard === "silk" ? "left-[-2%] w-[55%]" : "left-1/2 -translate-x-1/2 w-[95%]"
-            }`}
-          >
-            <img
-              src="/images/silk-model.png" 
-              alt="Silk Press Model"
-              className="w-full h-auto object-contain"
-            />
+          <div className="w-[53.9%]">
+            {/* Model Image */}
+            <div
+              className={`relative transition-all duration-700 ease-in-out ${
+                activeCard === "wigs"
+                  ? "w-[100%]"
+                  : "left-1/2 -translate-x-1/2 w-[80%]"
+              }`}
+            >
+              <img
+                src="/images/silk-press.png"
+                alt="Wigs Model"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
 
-          {/* Description Text & Button */}
-          <div
-            className={`absolute top-[20%] right-[8%] w-[45%] flex flex-col gap-6 transition-all duration-500 ease-in-out ${
-              activeCard === "silk"
-                ? "opacity-100 translate-x-0 delay-200"
-                : "opacity-0 translate-x-10 pointer-events-none"
-            }`}
-          >
-            <p className="text-white/90 text-[15px] leading-loose font-light">
-              Experience the ultimate sleek and shiny look with our premium Silk Press service. Perfect for natural hair, giving you that flawless straight finish.
-            </p>
-            
-            <button className="flex items-center gap-3 text-white w-max mt-2 hover:opacity-80 transition">
-              <span className="flex items-center justify-center w-8 h-8 border border-white rounded-full text-xs">
-                →
-              </span>
-              <span className="font-semibold text-sm tracking-widest">Learn More</span>
-            </button>
-          </div>
+          <div className="flex flex-col align-bottom justify-end gap-20 pb-[60px] w-[46.1%]">
+            {/* Description Text & Button */}
+            <div
+              className={`flex flex-col gap-6 transition-all duration-500 ease-in-out ${
+                activeCard === "wigs"
+                  ? "opacity-100 translate-x-0 delay-200"
+                  : "opacity-0 translate-x-10 pointer-events-none"
+              }`}
+            >
+              <p className="text-white text-[20px] leading-[36px] font-light gotham">
+                Your hair is cleansed and conditioned with our premier spa treatments. We will then “responsibly” press your tresses for a smooth, luxurious finish.
+              </p>
 
-          {/* Titles Overlay (Silk Press) */}
-          <div
-            className={`absolute transition-all duration-700 ease-in-out ${
-              activeCard === "silk"
-                ? "bottom-12 right-12 text-right"
-                : "bottom-8 left-1/2 -translate-x-1/2 text-center"
-            }`}
-          >
-            <h4 className="text-white text-[70px] leading-[0.5]" style={{ fontFamily: 'Brush Script MT, cursive' }}>
-              Silk
-            </h4>
-            <h5 className="text-white text-[35px] font-serif tracking-wide mt-2">
-              Press
-            </h5>
+              <button className="flex items-center gap-3 text-white w-max mt-2 hover:opacity-80 transition">
+                <span className="flex items-center justify-center w-8 h-8 border border-white rounded-full w-[55px] h-[55px] text-[22px]">
+                  →
+                </span>
+                <span className="gotham text-[20px]">Learn More</span>
+              </button>
+            </div>
+
+            {/* Titles Overlay (Wigs Extensions) */}
+            <div
+              className={`relative transition-all duration-700 ease-in-out ${
+                activeCard === "wigs"
+                  ? "text-left"
+                  : "-translate-x-1/2 text-left"
+              }`}
+            >
+              <h4 className="text-white text-[88px] andrea">Silk</h4>
+              <h5 className="text-white text-[66px] leading-[60px] valturin ml-[67px] mt-[10px]">
+                Press
+              </h5>
+            </div>
           </div>
         </div>
-
       </div>
     </section>
   );
