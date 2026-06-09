@@ -3,7 +3,7 @@ import React from "react";
 export default function HeroSection() {
   return (
     <section
-      className="hero-wrapper pt-[100px] pb-[60px] h-screen items-end"
+      className="hero-wrapper pt-[210px] pb-[30px] h-screen items-end"
       style={{
         backgroundImage: "url('/images/hero-bg.png')",
         backgroundSize: "cover",
@@ -26,7 +26,7 @@ export default function HeroSection() {
       {/* Foreground Content Layer */}
       <div className="foreground-container">
         {/* Aapki Transparent Image Yahan Ayegi */}
-        <div className="hero-image-box absolute left-0 bottom-0">
+        <div className="hero-image-box absolute left-0 bottom-[-100px]">
           {/* src mein apni image ka path lagayein */}
           <img src="/images/hero-girls.png" alt="Glory October Team" />
         </div>

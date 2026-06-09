@@ -7,7 +7,7 @@ export default function GuidebookSection() {
       {/* Wrapper for the 2 columns (Flexbox for 1 Row, 2 Columns) */}
       <div className="w-full flex flex-col md:flex-row items-center">
         {/* Left Column: Image Area */}
-        <div className="w-[60%] flex justify-center items-center bg-white rounded-3xl p-4 md:p-0 shadow-lg">
+        <div className="w-[55%] flex justify-center items-center bg-white rounded-3xl p-4 md:p-0 shadow-lg">
           <img
             src="/images/guide-image.png" // Yahan apne tablet wali image ka path lagayein
             alt="Tablet showing The Ultimate Buying Guide"
@@ -17,7 +17,7 @@ export default function GuidebookSection() {
 
         {/* Right Column: Text & Gradient Card */}
         <div
-          className="w-[45%] px-10 py-[40px] h-[80vh] flex flex-col justify-center rounded-[20px] -ml-[100px]"
+          className="w-[50%] px-10 py-[40px] h-[80vh] flex flex-col justify-center rounded-[20px] -ml-[100px]"
           style={{
             backgroundImage: "linear-gradient(270deg, #93674D 0%, #2D2018 100%)",
           }}
