@@ -92,7 +92,7 @@ export default function LookbookPage() {
 
   return (
     <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">
-      <Header theme="dark" />
+      <Header bg="white" />
 
       {/* ============================
           HERO SECTION

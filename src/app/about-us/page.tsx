@@ -5,7 +5,7 @@ import Footer from "../components/footer";
 export default function AboutUsPage() {
   return (
     <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">
-      <Header theme="dark" />
+      <Header bg="white" />
 
       {/* --- About Us Page Hero --- */}
       <section

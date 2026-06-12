@@ -3,12 +3,12 @@
 import React, { useState } from "react";
 import FullScreenMenu from "./FullScreenMenu";
 
-export default function Header({ theme = "light" }: { theme?: "light" | "dark" }) {
+export default function Header({ theme = "light", bg = "transparent" }: { theme?: "light" | "dark"; bg?: "white" | "transparent" }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     // Elevated z-index when open so it sits on top of the popup
-    <div className={`main-header absolute top-0 left-0 w-full transition-all duration-500 ${isMenuOpen ? 'z-[10000]' : 'z-2'}`}>
+    <div className={`main-header absolute top-0 left-0 w-full transition-all duration-500 ${isMenuOpen ? 'z-[10000]' : 'z-2'} ${bg === 'white' ? 'bg-white' : ''}`}>
       <section className="bg-[#000] py-1">
         <div className="container mx-auto">
           <p className="text-center gotham text-[20px] text-white">

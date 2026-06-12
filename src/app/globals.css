@@ -59,55 +59,70 @@ body {
   color: var(--foreground);
   font-family: "Valturin", sans-serif;
 }
+
 .gotham {
   font-family: "Gotham", sans-serif;
   font-style: normal;
 }
+
 .font-light {
   font-weight: 300;
 }
+
 .font-regular {
   font-weight: 400;
 }
+
 .font-bold {
   font-weight: 700;
 }
+
 .valturin {
   font-family: "Valturin", sans-serif;
   font-style: normal;
 }
+
 .andrea {
   font-family: "Andrea-Bellarosa", sans-serif;
   font-style: normal;
 }
+
 .text-black {
   color: #000;
 }
+
 .text-white {
   color: #fff;
 }
+
 .text-gold {
   color: #ccb884;
 }
+
 .text-grey {
   color: #f4f4f4;
 }
+
 .background-marquee {
   overflow: hidden;
 }
+
 .marquee-track {
   display: flex;
   white-space: nowrap;
   animation: slideText 25s linear infinite;
 }
+
 @keyframes slideText {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
 }
+
 img {
   width: 100%;
   height: 100%;
@@ -181,6 +196,10 @@ img {
   text-overflow: ellipsis;
 }
 
+form input::Placeholder,
+form textarea::Placeholder {
+  color: #fff;
+}
 
 
 /* --- MOBILE RESPONSIVE CSS --- */
@@ -189,9 +208,11 @@ img {
     /* Set a minimum readable size for mobile instead of relying solely on vh */
     font-size: 14px;
   }
+
   .card-inner {
     /* Slightly subtler shadow on mobile for performance and look */
     box-shadow: 0 0.5vh 2vh rgba(0, 0, 0, 0.1);
   }
 }
+
 /*end here */

@@ -116,9 +116,9 @@ export default function Footer() {
 
           {/* Policy Links */}
           <div className="w-full md:w-1/3 flex justify-center gap-6">
-            <a href="#" className="text-gray-800 hover:text-[#d4af6e] text-[20px] gotham transition-colors">Terms</a>
-            <a href="#" className="text-gray-800 hover:text-[#d4af6e] text-[20px] gotham transition-colors">Privacy</a>
-            <a href="#" className="text-gray-800 hover:text-[#d4af6e] text-[20px] gotham transition-colors">Returns</a>
+            <a href="/terms" className="text-gray-800 hover:text-[#d4af6e] text-[20px] gotham transition-colors">Terms</a>
+            <a href="/privacy" className="text-gray-800 hover:text-[#d4af6e] text-[20px] gotham transition-colors">Privacy</a>
+            <a href="/returns" className="text-gray-800 hover:text-[#d4af6e] text-[20px] gotham transition-colors">Returns</a>
           </div>
 
           {/* Payment Icons Placeholder */}
