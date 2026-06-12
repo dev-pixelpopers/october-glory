@@ -34,16 +34,19 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
           {/* Left Column: Primary Navigation */}
           <nav>
             <ul className="list-none p-0 m-0 w-3/4">
-              {['Home', 'About Us', 'Lookbook', 'About', 'Glory News', 'Contact'].map((item, index) => (
-                <li key={index} className="mb-6 border-b border-white/80 pb-2">
-                  <a
-                    href={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="text-white no-underline font-serif text-[46px] hover:opacity-70 transition-opacity"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
+              {['Home', 'About Us', 'Lookbook', 'Glory News', 'Contact'].map((item, index) => {
+                const href = item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '-')}`;
+                return (
+                  <li key={index} className="mb-6 border-b border-white/80 pb-2">
+                    <a
+                      href={href}
+                      className="text-white no-underline font-serif text-[46px] hover:opacity-70 transition-opacity"
+                    >
+                      {item}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 

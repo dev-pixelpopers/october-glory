@@ -4,24 +4,24 @@ export default function Footer() {
   return (
     // Dark background wrapper
     <footer className="w-full bg-[#1B1B1B] p-4 md:p-8 lg:p-12 h-screen flex items-end justify-center">
-      
+
       {/* Inner White Container */}
-      <div className="bg-white rounded-[2rem] pt-[350px] px-[60px] pb-[30px] flex flex-col w-full">
-        
+      <div className="bg-white rounded-[2rem] pt-[200px] px-[60px] pb-[30px] flex flex-col w-full">
+
         {/* --- TOP SECTION (3 Columns) --- */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0">
-          
+
           {/* Column 1: Logo & Socials */}
           <div className="flex flex-col items-center justify-center md:border-r border-gray-200 md:pr-10 lg:pr-16 pb-8 md:pb-0 border-b md:border-b-0">
             {/* Logo Placeholder */}
             <div className="mb-8 w-[285px] h-[135px]">
-              <img 
-                src="/images/logo.svg" 
-                alt="October Glory Logo" 
+              <img
+                src="/images/logo.svg"
+                alt="October Glory Logo"
                 className="w-full h-full object-contain object-left"
               />
             </div>
-            
+
             {/* Socials */}
             <div className="flex items-center gap-4">
               <span className="text-black gotham text-[22px]">
@@ -56,7 +56,7 @@ export default function Footer() {
             <p className="text-gray-800 text-[22px] gotham mb-6">
               By Appointment Only
             </p>
-            
+
             <div className="flex flex-col gap-4">
               {/* Phone */}
               <div className="flex items-center gap-3">
@@ -66,7 +66,7 @@ export default function Footer() {
                 <span className="text-gray-800 text-[22px] gotham w-16">Phone</span>
                 <span className="text-gray-600 text-[18px] gotham">917 - 905 - 6552</span>
               </div>
-              
+
               {/* Address */}
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full border border-[#d4af6e] flex items-center justify-center text-[#d4af6e] flex-shrink-0">
@@ -74,7 +74,7 @@ export default function Footer() {
                 </div>
                 <span className="text-gray-800 text-[22px] gotham w-16 mt-1">Address</span>
                 <span className="text-gray-600 text-[18px] gotham  ml-[20px]">
-                  1381 Bedford Avenue<br/>Brooklyn, NY 11216
+                  1381 Bedford Avenue<br />Brooklyn, NY 11216
                 </span>
               </div>
             </div>
@@ -85,7 +85,7 @@ export default function Footer() {
             <h3 className="text-gold font-bold text-[26px] gotham mb-4">
               Opening Hours
             </h3>
-            
+
             <div className="flex flex-col gap-4 text-sm">
               <div className="flex justify-start items-center gap-[20px]">
                 <span className="text-gray-800 gotham text-[20px]">Sun - Tue</span>
@@ -106,7 +106,7 @@ export default function Footer() {
 
         {/* --- BOTTOM SECTION (Links & Copyright) --- */}
         <div className="mt-12 md:mt-24 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
-          
+
           {/* Copyright */}
           <div className="w-full md:w-1/3 text-center md:text-left">
             <p className="text-black text-[18px] gotham">
@@ -123,15 +123,15 @@ export default function Footer() {
 
           {/* Payment Icons Placeholder */}
           <div className="w-full md:w-1/3 flex justify-center md:justify-end gap-2">
-            <img 
-              src="/images/Payment-Logo.png" 
-              alt="Payment Methods" 
+            <img
+              src="/images/Payment-Logo.png"
+              alt="Payment Methods"
               className="h-6 object-contain max-w-[285px]"
             />
           </div>
 
         </div>
-        
+
       </div>
     </footer>
   );
