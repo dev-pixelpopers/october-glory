@@ -126,14 +126,14 @@ export default function AboutUsPage() {
           <p className="gotham text-[18px] text-gray-300 max-w-[600px] font-light leading-relaxed">
             Let us tailor an unforgettable styling experience for you. Schedule your private appointment with Jhavuanna Paterson today.
           </p>
-          <a
+           <a
             href="/contact"
-            className="book-btn flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-gold hover:text-black transition-all duration-300"
+            className="flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
           >
-            <span className="btn-icon bg-gold text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
+            <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
               →
             </span>
-            Book Appointment
+            Book Consultation
           </a>
         </div>
       </section>
