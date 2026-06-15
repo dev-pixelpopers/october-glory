@@ -24,7 +24,7 @@ export default function AboutUsPage() {
             October Glory
           </h2>
           <p className="gotham text-[18px] md:text-[22px] leading-relaxed text-gray-300 font-light mt-8 max-w-[750px]">
-            Step into the ultimate sanctuary of Brooklyn hair styling. Where your beauty meets the luxury of bespoke craftsmanship, customized care, and master styling.
+            Owner / Master Hair Stylist
           </p>
         </div>
       </section>
@@ -42,13 +42,13 @@ export default function AboutUsPage() {
           <div className="flex flex-col gap-8">
             <span className="andrea text-[70px] text-gold">The Vision</span>
             <h2 className="valturin text-[45px] leading-tight text-white uppercase tracking-wider">
-              Crafting Beauty & Elevating Confidence
+              Jhavuanna Paterson
             </h2>
             <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
-              At <strong>October Glory</strong>, we believe that hair is more than styling—it is a statement of identity, confidence, and self-love. Founded by master artist <strong>Jhavuanna Paterson</strong> in Brooklyn, NY, October Glory has grown to become the premier boutique hair salon for clients seeking bespoke hair transformations.
+              Jhavuanna Paterson is an artist, scientist, and engineer wrapped into a neat convenient package.  A native of Oakland, California and known for her blessed hands, Jhavuanna always knew that she would be a driving force in the hair and make-up industries. It all began when she was in third grade where she realized the one -to-three pony-tail hairstyles her mom gave her were not "glorious" enough. Jhavuanna is a purist whose indulgent personality and extreme attention to detail, yields exceptional results for her clients as she only works with top-of-the-line tools and products.  Jhavuanna's passion is to help her clients achieve any and every look that flatters, and accentuates their natural beauty.  Jhavuanna truly believes that because a woman's hair is her glory, proper care and maintenance are vital to its overall strength and health.
             </p>
             <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
-              Jhavuanna's approach combines deep technical expertise with an artist's vision. Specializing in precision hair cutting, expert styling, detailed color highlighting, and customized hair treatments, her mission is to elevate each client's unique style with customized hair care.
+              Jhavuanna believes the way you wear your hair is an outward expression of your perception of yourself and how you want others to perceive you. For generations black women have been plagued with the notion that they have “bad hair” or that their hair could not grow. After servicing client after client, she realized that women needed more education about their hair and that intuitive insight didn’t come natural to everyone. And just like that, October Salon and Wig Spa was born. Jhavuanna is committed to making the idea of “bad hair” a thing of the past, and for every woman to fall in love with their hair, one head at a time.
             </p>
           </div>
 
@@ -63,6 +63,32 @@ export default function AboutUsPage() {
             </div>
           </div>
         </div>
+
+        <div className="relative z-10 max-w-[1400px] mx-auto gap-16 items-center mt-[60px]">
+          <div className="flex flex-col gap-8 w-full">
+            <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+              Jhavuanna has developed products, systems and subscription plans to help her clients reach full hair growth potential. October Glory Salon and Wig Spa has become a powerful community of beautiful women enthused about self care and, of course, healthy hair - who Jhavuanna, endearingly calls her, “Glory Girls”.
+            </p>
+
+            <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+              While a highly educated, trained and skilled cosmetologist, Jhavuanna is committed to continuous learning.  It is her goal to impart knowledge and to increase her Glory Girls’ capacity of love and knowledge of their natural hair. She believes as she grows, October Glory will breed women who will evangelize a positive narrative about Black womens’ hair.
+            </p>
+
+          </div>
+        </div>
+      </section>
+
+      <section className="relative w-full overflow-hidden">
+        <video
+          className="w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/images/about-video.mp4" />
+          Your browser does not support the video tag.
+        </video>
       </section>
 
       {/* --- The Glory Experience (Core Values) --- */}
@@ -126,7 +152,7 @@ export default function AboutUsPage() {
           <p className="gotham text-[18px] text-gray-300 max-w-[600px] font-light leading-relaxed">
             Let us tailor an unforgettable styling experience for you. Schedule your private appointment with Jhavuanna Paterson today.
           </p>
-           <a
+          <a
             href="/contact"
             className="flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
           >
