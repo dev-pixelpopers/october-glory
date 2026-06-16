@@ -92,25 +92,38 @@ export default function LookbookPage() {
 
   return (
     <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">
-      <Header bg="white" />
+      <Header theme="dark" />
 
-      {/* ============================
-          HERO SECTION
-      ============================ */}
+      {/* --- About Us Page Hero --- */}
       <section
-        className="relative pt-[220px] pb-[120px] px-6 md:px-[120px] bg-cover bg-center flex flex-col items-center justify-center text-center overflow-hidden"
-        style={{ backgroundImage: "url('/images/hero-bg.png')" }}
+        className="relative w-full h-screen flex items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg, rgba(27,27,27,0.6) 0%, rgba(27,27,27,0.85) 100%), url('/images/servicce.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
-        <div className="absolute inset-0 bg-black/85 z-0"></div>
+        {/* Subtle animated grain overlay */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]" />
 
-        <div className="relative z-10 flex flex-col items-center max-w-[900px]">
-          <h1 className="andrea text-[80px] md:text-[110px] text-white mb-[-20px] tracking-wide">
-            The
-          </h1>
-          <h2 className="valturin text-[45px] md:text-[75px] text-gold uppercase tracking-[4px] leading-tight">
-            Lookbook
-          </h2>
-          <p className="gotham text-[18px] md:text-[22px] leading-relaxed text-gray-300 font-light mt-8 max-w-[750px]">
+        <div className="relative z-10 text-center flex flex-col items-center px-6">
+          <div>
+            <h1 className="andrea text-[120px] leading-[2] text-white mb-0 tracking-wide">
+              The
+            </h1>
+            <h2 className="valturin text-[80px] text-[#ccb884] mt-[-10px] tracking-widest">
+              Lookbook
+            </h2>
+          </div>
+
+          {/* Gold divider */}
+          <div
+            className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent my-8 origin-center"
+          />
+
+          <p className="gotham text-white/70 text-[20px] leading-[36px] max-w-[600px] font-light"
+          >
             A curated showcase of our finest transformations. Every style tells a story of confidence, artistry, and the October Glory touch.
           </p>
         </div>
@@ -126,8 +139,8 @@ export default function LookbookPage() {
               key={cat}
               onClick={() => setActiveFilter(cat)}
               className={`gotham text-[16px] tracking-wider uppercase px-8 py-3 rounded-full border transition-all duration-300 cursor-pointer ${activeFilter === cat
-                  ? "bg-[#C0A062] border-[#C0A062] text-black font-semibold"
-                  : "bg-transparent border-white/20 text-gray-300 hover:border-[#C0A062] hover:text-[#C0A062]"
+                ? "bg-[#C0A062] border-[#C0A062] text-black font-semibold"
+                : "bg-transparent border-white/20 text-gray-300 hover:border-[#C0A062] hover:text-[#C0A062]"
                 }`}
             >
               {cat}

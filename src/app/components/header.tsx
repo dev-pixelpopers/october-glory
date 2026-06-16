@@ -62,7 +62,7 @@ export default function Header({ theme = "light", bg = "transparent" }: { theme?
                 src="/images/logo.svg"
                 alt="October Glory Logo"
                 // Added a filter to turn the black logo white when the menu opens
-                className={`h-full w-full max-w-[68%] object-contain transition-all duration-500 ${isMenuOpen ? 'brightness-0 invert' : ''}`}
+                className={`h-full w-full max-w-[68%] object-contain transition-all duration-500 ${isMenuOpen || theme === 'dark' ? 'brightness-0 invert' : ''}`}
               />
             </a>
           </div>
