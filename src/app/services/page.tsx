@@ -91,15 +91,47 @@ const stylingOptions = [
 export default function ServicesPage() {
     return (
         <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">
-            <Header bg="white" />
+            <Header theme="dark" />
+
+            {/* --- About Us Page Hero --- */}
+            <section
+                className="relative w-full h-screen flex items-center justify-center overflow-hidden"
+                style={{
+                    backgroundImage:
+                        "linear-gradient(180deg, rgba(27,27,27,0.6) 0%, rgba(27,27,27,0.85) 100%), url('/images/servicce.png')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                }}
+            >
+                {/* Subtle animated grain overlay */}
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]" />
+
+                <div className="relative z-10 text-center flex flex-col items-center px-6">
+                    <div>
+                        <h1 className="andrea text-[120px] leading-[2] text-white mb-0 tracking-wide">
+                            Service
+                        </h1>
+                        <h2 className="valturin text-[80px] text-[#ccb884] mt-[-10px] tracking-widest">
+                            Choose Your Service
+                        </h2>
+                    </div>
+
+                    {/* Gold divider */}
+                    <div
+                        className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent my-8 origin-center"
+                    />
+
+                    <p className="gotham text-white/70 text-[20px] leading-[36px] max-w-[600px] font-light"
+                    >
+                        Each of our services are tailored to our client’s personality and style. We pride ourselves in providing an inspiring, relaxed experience offering the latest in hair trends.
+                    </p>
+                </div>
+            </section>
             <section className="min-h-screen bg-[#1B1B1B] text-white px-[60px] py-[150px] relative overflow-hidden">
 
-                {/* BACKGROUND TITLE */}
-                <h1 className="absolute top-12.5 left-12.5 text-[120px] text-white/10 valturin pointer-events-none">
-                    Services
-                </h1>
 
-                {/* HEADER */}
+
+
                 <div className="relative z-10 mb-24 max-w-4xl pt-10">
                     <h2 className="text-[70px] valturin text-[#C0A062] leading-[80px]">
                         Our Premium Services
@@ -216,21 +248,35 @@ export default function ServicesPage() {
 
                 </div>
 
-                {/* BOTTOM CTA SECTION */}
-                <div className="mt-45 -mb-35 text-center relative z-50">
-                    <h3 className="text-[50px] valturin text-white">
+
+
+            </section>
+
+            <section
+                className="py-[120px] px-6 bg-cover bg-center text-center relative"
+                style={{
+                    backgroundImage: "url('/images/servicce.png')",
+                }}
+            >
+                <div className="absolute inset-0 bg-black/90 z-0"></div>
+                <div className="relative z-10 flex flex-col items-center max-w-[800px] mx-auto gap-8">
+                    <h2 className="andrea text-[70px] text-white mb-[-30px]">Reserve Your Space</h2>
+                    <h3 className="valturin text-[35px] md:text-[50px] text-gold uppercase tracking-wider">
                         Ready to Transform Your Look?
                     </h3>
-
-                    <p className="text-[18px] gotham text-gray-300 mt-4">
-                        Book an appointment today and experience luxury hair care.
+                    <p className="gotham text-[18px] text-gray-300 max-w-[600px] font-light leading-relaxed">
+                        Let us tailor an unforgettable styling experience for you. Schedule your private appointment with Jhavuanna Paterson today.
                     </p>
-
-                    <button className="mt-10 bg-[#C0A062] text-black px-10 py-4 rounded-full text-[18px] hover:bg-white transition">
-                        Book Now
-                    </button>
+                    <a
+                        href="/contact"
+                        className="flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
+                    >
+                        <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
+                            →
+                        </span>
+                        Book Consultation
+                    </a>
                 </div>
-
             </section>
             <Footer />
         </div >

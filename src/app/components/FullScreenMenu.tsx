@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react';
 
-// Notice: We removed onClose since the header handles it now
 interface FullScreenMenuProps {
   isOpen: boolean;
 }
@@ -21,23 +20,35 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
 
   return (
     <div
-      className={`fixed inset-0 w-screen h-screen bg-[#9b7762] text-white z-20 overflow-y-auto transition-all duration-500 ease-in-out ${
-        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
-      }`}
+      className="fixed inset-0 w-screen h-screen bg-[#9b7762] text-white z-20 overflow-y-auto"
+      style={{
+        clipPath: isOpen
+          ? 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'  // fully visible
+          : 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)',      // collapsed to left edge
+        transition: 'clip-path 2s cubic-bezier(0.76, 0, 0.24, 1)',
+        pointerEvents: isOpen ? 'all' : 'none',
+      }}
     >
-      {/* pt-[200px] ensures content sits comfortably below your main header */}
       <div className="w-full px-[120px] pt-[200px] pb-[40px] max-w-[1600px] mx-auto">
-        
+
         {/* Main Content Area */}
         <div className="grid grid-cols-2 gap-20">
-          
+
           {/* Left Column: Primary Navigation */}
           <nav>
             <ul className="list-none p-0 m-0 w-3/4">
               {['Home', 'About Us', 'Lookbook', 'Glory News', 'Contact'].map((item, index) => {
                 const href = item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '-')}`;
                 return (
-                  <li key={index} className="mb-6 border-b border-white/80 pb-2">
+                  <li
+                    key={index}
+                    className="mb-6 border-b border-white/80 pb-2"
+                    style={{
+                      opacity: isOpen ? 1 : 0,
+                      transform: isOpen ? 'translateY(0px)' : 'translateY(30px)',
+                      transition: `opacity 0.5s ease ${0.3 + index * 0.08}s, transform 0.5s ease ${0.3 + index * 0.08}s`,
+                    }}
+                  >
                     <a
                       href={href}
                       className="text-white no-underline font-serif text-[46px] hover:opacity-70 transition-opacity"
@@ -51,16 +62,25 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
           </nav>
 
           {/* Right Column: Services & Contact Info */}
-          <div>
+          <div
+            style={{
+              opacity: isOpen ? 1 : 0,
+              transform: isOpen ? 'translateY(0px)' : 'translateY(30px)',
+              transition: 'opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s',
+            }}
+          >
             <h2 className="font-serif text-[46px] mt-0 mb-8 font-normal text-white">
-              Services
+              <a href="/services">Services</a>
             </h2>
-            
+
             <div className="grid grid-cols-2 gap-12 mb-16">
               <ul className="list-none p-0 m-0">
                 {['Natural Styles', 'Relaxers And Colors', 'Weaves And Extensions', 'Haircuts And Styles'].map((item, index) => (
                   <li key={index} className="mb-4 border-b border-white/50 pb-2">
-                    <a href={`/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-white no-underline text-[18px] hover:opacity-70 transition-opacity">
+                    <a
+                      href={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                      className="text-white no-underline text-[18px] hover:opacity-70 transition-opacity"
+                    >
                       {item}
                     </a>
                   </li>
@@ -69,7 +89,10 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
               <ul className="list-none p-0 m-0">
                 {['Treatments', 'Glorious Packages', 'Bridal Package', 'Maintenance Packages'].map((item, index) => (
                   <li key={index} className="mb-4 border-b border-white/50 pb-2">
-                    <a href={`/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-white no-underline text-[18px] hover:opacity-70 transition-opacity">
+                    <a
+                      href={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                      className="text-white no-underline text-[18px] hover:opacity-70 transition-opacity"
+                    >
                       {item}
                     </a>
                   </li>
@@ -81,7 +104,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
               <h3 className="text-[18px] font-normal border-b border-white/50 pb-2 mb-6 inline-block w-full">
                 By Appointment Only
               </h3>
-              
+
               <div>
                 <p className="flex items-center gap-4 mb-4 text-[16px]">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -99,7 +122,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
               </div>
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>
