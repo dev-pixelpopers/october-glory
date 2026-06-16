@@ -37,7 +37,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
           {/* Left Column: Primary Navigation */}
           <nav>
             <ul className="list-none p-0 m-0 w-3/4">
-              {['Home', 'About Us', 'Lookbook', 'Glory News', 'Contact'].map((item, index) => {
+              {['Home', 'About Us', 'Lookbook', 'Glory News', 'Covid-19', 'Contact'].map((item, index) => {
                 const href = item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '-')}`;
                 return (
                   <li
