@@ -125,11 +125,10 @@ export default function LookbookPage() {
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
-              className={`gotham text-[16px] tracking-wider uppercase px-8 py-3 rounded-full border transition-all duration-300 cursor-pointer ${
-                activeFilter === cat
+              className={`gotham text-[16px] tracking-wider uppercase px-8 py-3 rounded-full border transition-all duration-300 cursor-pointer ${activeFilter === cat
                   ? "bg-[#C0A062] border-[#C0A062] text-black font-semibold"
                   : "bg-transparent border-white/20 text-gray-300 hover:border-[#C0A062] hover:text-[#C0A062]"
-              }`}
+                }`}
             >
               {cat}
             </button>
@@ -171,9 +170,8 @@ export default function LookbookPage() {
 
               {/* Overlay */}
               <div
-                className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent rounded-[1.5rem] flex flex-col justify-end p-8 transition-opacity duration-500 ${
-                  hoveredId === item.id ? "opacity-100" : "opacity-0"
-                }`}
+                className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent rounded-[1.5rem] flex flex-col justify-end p-8 transition-opacity duration-500 ${hoveredId === item.id ? "opacity-100" : "opacity-0"
+                  }`}
               >
                 {/* Category Badge */}
                 <span className="gotham text-[12px] uppercase tracking-[3px] text-[#C0A062] mb-2 font-semibold">
@@ -189,9 +187,8 @@ export default function LookbookPage() {
 
               {/* Persistent Category Pill */}
               <div
-                className={`absolute top-5 left-5 transition-opacity duration-500 ${
-                  hoveredId === item.id ? "opacity-0" : "opacity-100"
-                }`}
+                className={`absolute top-5 left-5 transition-opacity duration-500 ${hoveredId === item.id ? "opacity-0" : "opacity-100"
+                  }`}
               >
                 <span className="gotham text-[11px] uppercase tracking-[2px] text-white bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full font-medium">
                   {item.category}
