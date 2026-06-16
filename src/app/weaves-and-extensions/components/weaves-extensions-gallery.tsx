@@ -14,44 +14,48 @@ const BOOKING_URL =
 
 const services = [
   {
-    name: "SILK PRESS",
-    price: "$100",
-    // Replace with your own image after upload
-    image: "/images/SilkPress-01.webp",
+    name: "SINGLE TRACK",
+    price: "$60",
+    image: "/images/Weaves-And-Extensions-01.webp",
   },
   {
-    name: "RODSET",
-    price: "$120",
-    image: "/images/RodSet-01.webp",
+    name: "FULL WEAVE W/ LEAVE OUT",
+    price: "$400",
+    image: "/images/Weaves-And-Extensions-02.webp",
   },
   {
-    name: "FLAT TWIST",
-    price: "$125",
-    image: "/images/FlatTwist.jpg",
+    name: "FULL-HEAD WEAVE",
+    price: "$450",
+    image: "/images/Weaves-And-Extensions-04.webp",
   },
   {
-    name: "WASH & GO",
+    name: "WIG UNIT CONSULT",
     price: "$50",
-    image: "/images/wash&go.jpg",
+    image: "/images/Weaves-And-Extensions-05-06-07.webp",
   },
   {
-    name: "BRAID DOWN",
+    name: "WIG PREP",
     price: "$125",
-    image: "/images/braiddown.jpg",
+    image: "/images/Weaves-And-Extensions-05-06-07.webp",
   },
   {
-    name: "2 STRAND TWIST",
+    name: "WIG WASH",
     price: "$125",
-    image: "/images/2-strand-twist.jpg",
+    image: "/images/Weaves-And-Extensions-05-06-07.webp",
   },
   {
-    name: "NATURAL UPDO",
-    price: "$75",
-    image: "/images/naturalfrenchroll.jpg",
+    name: "WIG TIGHTEN",
+    price: "$250",
+    image: "/images/Weaves-And-Extensions-05-06-07.webp",
+  },
+  {
+    name: "GLORIOUS BOOST",
+    price: "$120",
+    image: "/images/Weaves-And-Extensions-08.webp",
   },
 ];
 
-export default function NaturalStylesGallery() {
+export default function WeavesExtensionsGallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 

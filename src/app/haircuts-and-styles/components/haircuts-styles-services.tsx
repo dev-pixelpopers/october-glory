@@ -44,7 +44,7 @@ const serviceDetails = [
   },
 ];
 
-export default function NaturalStylesServices() {
+export default function HaircutsStylesServices() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const btnRef = useRef<HTMLAnchorElement>(null);

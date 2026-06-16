@@ -14,44 +14,48 @@ const BOOKING_URL =
 
 const services = [
   {
-    name: "SILK PRESS",
+    name: "GLORY-GIRL PONYTAIL",
+    price: "$165",
+    image: "/images/Haircuts-And-Styles-01.webp",
+  },
+  {
+    name: "GLORY-GIRL UPDOS",
+    price: "$150",
+    image: "/images/Haircuts-And-Styles-02.webp",
+  },
+  {
+    name: "GLORY-GIRL PRECISION CUT",
+    price: "$150",
+    image: "/images/Haircuts-And-Styles-03.webp",
+  },
+  {
+    name: "WEAVE PRECISION CUT",
     price: "$100",
-    // Replace with your own image after upload
-    image: "/images/SilkPress-01.webp",
+    image: "/images/Haircuts-And-Styles-04.webp",
   },
   {
-    name: "RODSET",
-    price: "$120",
-    image: "/images/RodSet-01.webp",
-  },
-  {
-    name: "FLAT TWIST",
-    price: "$125",
-    image: "/images/FlatTwist.jpg",
-  },
-  {
-    name: "WASH & GO",
-    price: "$50",
-    image: "/images/wash&go.jpg",
-  },
-  {
-    name: "BRAID DOWN",
-    price: "$125",
-    image: "/images/braiddown.jpg",
-  },
-  {
-    name: "2 STRAND TWIST",
-    price: "$125",
-    image: "/images/2-strand-twist.jpg",
-  },
-  {
-    name: "NATURAL UPDO",
+    name: "HAIRCUT ONLY",
     price: "$75",
-    image: "/images/naturalfrenchroll.jpg",
+    image: "/images/Haircuts-And-Styles-05.webp",
+  },
+  {
+    name: "HAIRCUT & FINISH",
+    price: "$125",
+    image: "/images/Haircuts-And-Styles-06.webp",
+  },
+  {
+    name: "NEW LOOK HAIRCUT",
+    price: "$120",
+    image: "/images/Haircuts-And-Styles-07.webp",
+  },
+  {
+    name: "PRO CONSULT",
+    price: "$50",
+    image: "/images/salon-image.webp",
   },
 ];
 
-export default function NaturalStylesGallery() {
+export default function HaircutsStylesGallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
