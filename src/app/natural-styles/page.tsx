@@ -13,9 +13,13 @@ export const metadata = {
 export default function NaturalStylesPage() {
   return (
     <div className="main-app bg-[#1B1B1B]">
-      <Header theme="dark" bg="transparent" />
+      <Header theme="dark" />
       <NaturalStylesHero />
       <NaturalStylesGallery />
+      <section
+        className="h-screen bg-fixed bg-bottom bg-cover bg-no-repeat w-full"
+        style={{ backgroundImage: "url('/images/salon-image.webp')" }}
+      ></section>
       <NaturalStylesServices />
       <Footer />
     </div>

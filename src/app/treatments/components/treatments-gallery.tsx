@@ -14,44 +14,28 @@ const BOOKING_URL =
 
 const services = [
   {
-    name: "SILK PRESS",
-    price: "$100",
-    // Replace with your own image after upload
-    image: "/images/SilkPress-01.webp",
-  },
-  {
-    name: "RODSET",
-    price: "$120",
-    image: "/images/RodSet-01.webp",
-  },
-  {
-    name: "FLAT TWIST",
-    price: "$125",
-    image: "/images/FlatTwist.jpg",
-  },
-  {
-    name: "WASH & GO",
+    name: "SCALP RELIEF",
     price: "$50",
-    image: "/images/wash&go.jpg",
+    image: "/images/treatments-01.webp",
   },
   {
-    name: "BRAID DOWN",
-    price: "$125",
-    image: "/images/braiddown.jpg",
+    name: "THE UPMOST HYDRATION",
+    price: "$50",
+    image: "/images/treatments-02.webp",
   },
   {
-    name: "2 STRAND TWIST",
-    price: "$125",
-    image: "/images/2-strand-twist.jpg",
+    name: "PROTEIN MOISTURE PACK",
+    price: "$55",
+    image: "/images/treatments-03.webp",
   },
   {
-    name: "NATURAL UPDO",
-    price: "$75",
-    image: "/images/naturalfrenchroll.jpg",
+    name: "BOND BUILDER",
+    price: "$65",
+    image: "/images/treatments-04.webp",
   },
 ];
 
-export default function NaturalStylesGallery() {
+export default function TreatmentsGallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 

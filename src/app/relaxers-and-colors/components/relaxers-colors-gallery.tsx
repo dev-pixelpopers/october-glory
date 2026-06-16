@@ -14,44 +14,59 @@ const BOOKING_URL =
 
 const services = [
   {
-    name: "SILK PRESS",
+    name: "RELAXER TOUCH UP",
     price: "$100",
-    // Replace with your own image after upload
-    image: "/images/SilkPress-01.webp",
+    // Replace with your own image
+    image: "/images/relaxers-colors-01.webp",
   },
   {
-    name: "RODSET",
+    name: "VIRGIN RELAXER",
+    price: "$225",
+    image: "/images/relaxers-colors-02.webp",
+  },
+  {
+    name: "COLOR RETOUCH",
+    price: "$125",
+    image: "/images/relaxers-colors-03.webp",
+  },
+  {
+    name: "SINGLE PROCESS",
     price: "$120",
-    image: "/images/RodSet-01.webp",
+    image: "/images/relaxers-colors-04.webp",
   },
   {
-    name: "FLAT TWIST",
-    price: "$125",
-    image: "/images/FlatTwist.jpg",
+    name: "DOUBLE PROCESS",
+    price: "$350",
+    image: "/images/relaxers-colors-05.webp",
   },
   {
-    name: "WASH & GO",
-    price: "$50",
-    image: "/images/wash&go.jpg",
+    name: "HALF-HEAD HIGHLIGHTS",
+    price: "$160",
+    image: "/images/relaxers-colors-06.webp",
   },
   {
-    name: "BRAID DOWN",
-    price: "$125",
-    image: "/images/braiddown.jpg",
+    name: "FULL HIGHLIGHTS OR FOILAYAGE",
+    price: "$300",
+    image: "/images/relaxers-colors-07.webp",
   },
   {
-    name: "2 STRAND TWIST",
-    price: "$125",
-    image: "/images/2-strand-twist.jpg",
+    name: "CROWN LIGHTS",
+    price: "$85",
+    image: "/images/relaxers-colors-08.webp",
   },
   {
-    name: "NATURAL UPDO",
-    price: "$75",
-    image: "/images/naturalfrenchroll.jpg",
+    name: "COLOR CORRECTION",
+    price: "$250",
+    image: "/images/relaxers-colors-09.webp",
+  },
+  {
+    name: "GLORIOUS BOOST",
+    price: "$120",
+    image: "/images/relaxers-colors-10.webp",
   },
 ];
 
-export default function NaturalStylesGallery() {
+export default function RelaxersColorsGallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 

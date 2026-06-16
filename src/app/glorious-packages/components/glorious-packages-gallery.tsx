@@ -14,44 +14,28 @@ const BOOKING_URL =
 
 const services = [
   {
-    name: "SILK PRESS",
-    price: "$100",
-    // Replace with your own image after upload
-    image: "/images/SilkPress-01.webp",
+    name: "GLORIOUS RODSET",
+    price: "$230",
+    image: "/images/glorious-packages-01.webp",
   },
   {
-    name: "RODSET",
+    name: "GLORIOUS SILK PRESS",
+    price: "$245",
+    image: "/images/glorious-packages-02.webp",
+  },
+  {
+    name: "GLORIOUS BOOST",
     price: "$120",
-    image: "/images/RodSet-01.webp",
+    image: "/images/glorious-packages-03.webp",
   },
   {
-    name: "FLAT TWIST",
-    price: "$125",
-    image: "/images/FlatTwist.jpg",
-  },
-  {
-    name: "WASH & GO",
-    price: "$50",
-    image: "/images/wash&go.jpg",
-  },
-  {
-    name: "BRAID DOWN",
-    price: "$125",
-    image: "/images/braiddown.jpg",
-  },
-  {
-    name: "2 STRAND TWIST",
-    price: "$125",
-    image: "/images/2-strand-twist.jpg",
-  },
-  {
-    name: "NATURAL UPDO",
-    price: "$75",
-    image: "/images/naturalfrenchroll.jpg",
+    name: "WIG PREP",
+    price: "$120",
+    image: "/images/glorious-packages-04.webp",
   },
 ];
 
-export default function NaturalStylesGallery() {
+export default function GloriousPackagesGallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 

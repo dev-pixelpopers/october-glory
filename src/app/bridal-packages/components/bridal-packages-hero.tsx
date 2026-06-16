@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-export default function NaturalStylesHero() {
+export default function GloriousPackagesHero() {
   const headingRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
@@ -43,33 +43,24 @@ export default function NaturalStylesHero() {
       {/* Subtle animated grain overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]" />
 
-      {/* Decorative gold corner accents */}
-      {/* <div className="absolute top-[160px] left-[80px] w-[80px] h-[80px] border-t-2 border-l-2 border-[#ccb884]/40" /> */}
-      {/* <div className="absolute bottom-[80px] right-[80px] w-[80px] h-[80px] border-b-2 border-r-2 border-[#ccb884]/40" /> */}
-
       <div className="relative z-10 text-center flex flex-col items-center px-6">
         <div ref={headingRef}>
           <h1 className="andrea text-[120px] leading-[2] text-white mb-0 tracking-wide">
-            Natural
+            BRIDAL
           </h1>
           <h2 className="valturin text-[80px] text-[#ccb884] mt-[-10px] tracking-widest">
-            Styles
+            Packages
           </h2>
         </div>
 
-        {/* Gold divider */}
-        <div
-          ref={dividerRef}
-          className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent my-8 origin-center"
-        />
+
 
         <p
           ref={subtitleRef}
           className="gotham text-white/70 text-[20px] leading-[36px] max-w-[600px] font-light"
         >
-          Embrace the beauty of your natural texture with our expertly crafted
-          styling services — designed to celebrate, protect, and elevate every
-          curl and coil.
+          Indulge in our luxury bundled packages — combining multiple premium
+          services for a complete, head-to-toe hair transformation.
         </p>
       </div>
     </section>
