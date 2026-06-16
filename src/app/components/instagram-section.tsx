@@ -1,23 +1,42 @@
-"use client"; // Next.js App Router ke liye zaroori hai
-
-import React from "react";
+"use client";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 export default function InstagramSection() {
-  // Yahan aap apni videos ke URLs add kar sakte hain
+  const containerRef = useRef<HTMLDivElement>(null);
   const instagramVideos = [
-    { id: 1, src: "/images/video-01.mp4" }, // Placeholder video 1
-    { id: 2, src: "/images/video-02.mp4" }, // Placeholder video 2
-    { id: 3, src: "/images/video-03.mp4" }, // Placeholder video 3
-    { id: 4, src: "/images/video-04.mp4" }, // Placeholder video 4
-    { id: 5, src: "/images/video-05.mp4" }, // Placeholder video 5
+    { id: 1, src: "/images/video-01.mp4" },
+    { id: 2, src: "/images/video-02.mp4" },
+    { id: 3, src: "/images/video-03.mp4" },
+    { id: 4, src: "/images/video-04.mp4" },
+    { id: 5, src: "/images/video-05.mp4" },
   ];
 
+  useGSAP(() => {
+    // Select all the direct div children of the grid
+    const videoContainers = gsap.utils.toArray(".grid > div");
+
+    gsap.from(videoContainers, {
+      y: window.innerHeight, // Start from below the viewport
+      opacity: 0,
+      stagger: 0.15, // Animates them one by one
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top", // Starts when the sticky container hits the top
+        end: "bottom bottom", // Ends when the 200vh section finishes scrolling
+        scrub: 1, // Smoothly ties the animation to the scrollbar
+      },
+    });
+  }, { scope: containerRef });
+
   return (
-    <section className="w-full bg-[#1b1b1b] py-16 px-30 overflow-hidden h-screen">
-      <div className="flex flex-col gap-10">
-        {/* ROW 1: Headings & Paragraph */}
+    <section ref={containerRef} className="w-full bg-[#1b1b1b] py-16 px-30 relative min-h-[200vh]">
+      <div className="flex flex-col gap-10 sticky top-0 overflow-hidden h-screen justify-center items-center">
         <div className="flex flex-col md:flex-row justify-between items-center w-full gap-6">
-          {/* Column 1: Headings & Line */}
           <div className="flex flex-col">
             <h2 className="text-white text-[88px] andrea z-10">Follow</h2>
             <div className="flex items-center gap-10">
@@ -27,16 +46,12 @@ export default function InstagramSection() {
               </h3>
             </div>
           </div>
-
-          {/* Column 2: Paragraph */}
           <div className="mb-2 md:mb-4">
             <p className="text-white text-[22px] gotham">
               Real Clients. Real Installs. Real Results.
             </p>
           </div>
         </div>
-
-        {/* ROW 2: Videos Grid */}
         <div className="grid grid-cols-2 md:grid-cols-5 w-full gap-2">
           {instagramVideos.map((video) => (
             <div
@@ -45,29 +60,29 @@ export default function InstagramSection() {
             >
               <video
                 src={video.src}
-                autoPlay
                 loop
-                muted // Muted zaroori hai autoplay ke liye
+                muted
                 playsInline
-                className="w-full object-cover h-[400px]"
+                className="w-full object-cover h-[400px] transition-opacity duration-300 cursor-pointer"
+                onMouseEnter={(e) => e.currentTarget.play()}
+                onMouseLeave={(e) => {
+                  e.currentTarget.pause();
+                  // Optional: Uncomment the next line if you want the video to restart from the beginning every time they hover off
+                  // e.currentTarget.currentTime = 0; 
+                }}
               />
             </div>
           ))}
         </div>
 
-        {/* ROW 3: Instagram Button */}
-        <div className="flex justify-center w-full mt-6">
-          {/* Gradient Border Wrapper (Padding Trick) */}
+        <div className="flex justify-center w-full mt-6 z-10">
           <div className="rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[4px] w-max shadow-lg hover:shadow-[0_0_20px_rgba(193,53,132,0.5)] transition-shadow duration-300 cursor-pointer">
             <a
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              // Height thodi kam ki hai taake border mila kar total 70px lagay
               className="group flex items-center bg-white rounded-full w-max h-[62px]"
             >
-              {/* Gradient Instagram Icon Circle */}
-              {/* Width/Height ko container ke hisaab se perfect round kiya hai */}
               <div className="w-[90px] h-[90px] rounded-[30px] -ml-[10px] bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] flex items-center justify-center -ml-[1px]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -82,8 +97,6 @@ export default function InstagramSection() {
                   />
                 </svg>
               </div>
-
-              {/* Text Box */}
               <span className="px-6 pr-8 text-black tracking-wide text-[24px] gotham font-semibold group-hover:text-[#ee2a7b] transition-colors duration-300">
                 @OctoberGloryHair
               </span>

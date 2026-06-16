@@ -1,74 +1,161 @@
+"use client";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+gsap.registerPlugin(ScrollTrigger);
 export default function PerfectSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const ogRef = useRef<HTMLDivElement>(null);
+  const heading1Ref = useRef<HTMLHeadingElement>(null);
+  const heading2Ref = useRef<HTMLHeadingElement>(null);
+  const heading3Ref = useRef<HTMLHeadingElement>(null);
+  const heading4Ref = useRef<HTMLParagraphElement>(null);
+  const heading5Ref = useRef<HTMLParagraphElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  useGSAP(() => {
+    gsap.set(imageRef.current, { yPercent: 150, duration: 0.5 })
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+      }
+    })
+
+    tl.to(ogRef.current, {
+      xPercent: 59,
+      duration: 1
+    })
+      .to(imageRef.current, {
+        yPercent: 0,
+        duration: 1
+      }, "<")
+      .to(heading1Ref.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1
+      })
+      .to(heading2Ref.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1
+      }, "<")
+      .to(heading3Ref.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1
+      }, "<")
+      .to(heading4Ref.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1
+      }, "<")
+      .to(heading5Ref.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1
+      }, "<")
+      .to(buttonRef.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1
+      }, "<")
+  })
+
+
   return (
-    <section className="flex flex-col bg-[#1B1B1B] min-h-screen py-[40px] px-[100px] relative overflow-hidden">
-      <div className="absolute inset-0 flex justify-between overflow-hidden pointer-events-none">
-        {/* text-[70vw] lagane se yeh screen ka 70% hissa cover karega jo ke bohat massive hoga */}
-        {/* leading-[0.8] ya leading-none zaroori hai taakay text ke oopar extra space na aaye */}
-        <div className="valturin text-[60vw] leading-[0.75] text-white absolute top-[17%] left-[-0vw]">
-          O
-        </div>
-
-        <div className="valturin text-[60vw] leading-[0.75] text-white absolute top-[17%] right-[0vw]">
-          G
-        </div>
-      </div>
-      <div className="flex gap-10 items-center">
-        {/* Left column */}
-        <div className="w-[40%] flex flex-col gap-10">
-          <div className="w-full text-trd">
-            <h3 className="text-[12vw] leading-[0.75] valtrin capitalize mb-[50px] text-[#383838]">
-              october
-            </h3>
-          </div>
-          <div className="relative w-full flex flex-col gap-0">
-            <h2 className="text-white text-[61px] valtrin text-gold capitalize">
-              Find the wig that
-            </h2>
-            <h2 className="text-[81px] andrea text-white capitalize">
-              perfectly matches
-            </h2>
-            <h2 className="text-gold text-[61px] valtrin capitalize">
-              your beauty.
-            </h2>
+    <section ref={containerRef} className=" min-h-[300vh] relative">
+      <div className="flex flex-col bg-[#1B1B1B] py-[40px] px-[100px] sticky top-0 h-screen overflow-hidden">
+        <div ref={ogRef} className="absolute inset-0 flex justify-between overflow-hidden pointer-events-none">
+          <div className="valturin text-[65vw] leading-[0.75] text-white absolute top-[17%] left-[-0vw]">
+            O
           </div>
 
-          <button className="flex items-center gap-4 group w-max">
-            <div className="w-15 h-15 rounded-full border border-gray-400 flex items-center justify-center transition-colors duration-300 group-hover:bg-white group-hover:text-black text-gray-300">
-              {/* SVG Arrow */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                />
-              </svg>
+          <div className="valturin text-[65vw] leading-[0.75] text-white absolute top-[17%] right-[0vw]">
+            G
+          </div>
+        </div>
+        <div className="flex gap-10 items-center">
+          {/* Left column */}
+          <div className="w-[40%] flex flex-col gap-10">
+            <div className="w-full text-trd -mt-[160px] ml-[8px]">
+              <h3 ref={heading1Ref} className=" w-[900px] text-[12vw] leading-[1] valtrin capitalize mb-[50px] opacity-22"
+                style={{
+                  clipPath: "inset(0% 100% 0% 0%)",
+                  backgroundImage: "linear-gradient(180deg, #000 13%, #FFF 100%)",
+                  backgroundClip: "text",
+                  color: "transparent"
+                }}>
+                october
+              </h3>
             </div>
-            <span className="text-white gotham text-[20px] group-hover:text-white transition-colors duration-300">
-              Try On
-            </span>
-          </button>
-        </div>
+            <div className="relative w-full flex flex-col gap-0">
+              <h2 ref={heading2Ref} className="text-white text-[61px] valtrin text-gold capitalize"
+                style={{
+                  clipPath: "inset(0% 100% 0% 0%)"
+                }}>
+                Find the wig that
+              </h2>
+              <h2 ref={heading3Ref} className="text-[81px] andrea text-white capitalize"
+                style={{
+                  clipPath: "inset(0% 100% 0% 0%)"
+                }}>
+                perfectly matches
+              </h2>
+              <h2 ref={heading4Ref} className="text-gold text-[61px] valtrin capitalize"
+                style={{
+                  clipPath: "inset(0% 100% 0% 0%)"
+                }}>
+                your beauty.
+              </h2>
+            </div>
 
-        {/* right column  */}
-        <div className="w-[60%] relative flex items-center justify-left pt-[100px] ">
-          <div className="w-[60%] h-full required z-1">
-            <img
-              src="/images/perfect-image.png" // Yahan apni image ka path lagayein
-              alt="Woman getting hair done"
-              className="w-full h-full object-cover object-top"
-            />
+            <button ref={buttonRef} className="flex items-center gap-4 group w-max"
+              style={{
+                clipPath: "inset(0% 100% 0% 0%)"
+              }}>
+              <div className="w-15 h-15 rounded-full border border-gray-400 flex items-center justify-center transition-colors duration-300 group-hover:bg-white group-hover:text-black text-gray-300">
+                {/* SVG Arrow */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                  />
+                </svg>
+              </div>
+              <span className="text-white gotham text-[20px] group-hover:text-white transition-colors duration-300">
+                Try On
+              </span>
+            </button>
           </div>
-          <div className="w-full text-trd text-right absolute bottom-[10%] right-[-10%]">
-            <h3 className="text-[12vw] text-[#383838] leading-[0.75] valtrin capitalize">
-              Glory
-            </h3>
+
+          {/* right column  */}
+          <div className="w-[60%] relative flex items-center justify-left pt-[100px] ">
+            <div className="w-[64%] h-full required z-1 -ml-[20px]">
+              <img
+                ref={imageRef}
+                src="/images/perfect-image.png"
+                alt="Woman getting hair done"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+            <div className="w-full text-trd text-right absolute bottom-[10%] right-[-10%]">
+              <h3 ref={heading5Ref} className="text-[12vw] leading-[1] valtrin capitalize opacity-22"
+                style={{
+                  clipPath: "inset(0% 100% 0% 0%)",
+                  backgroundImage: "linear-gradient(180deg, #000 13%, #FFF 100%)",
+                  backgroundClip: "text",
+                  color: "transparent"
+                }}>
+                Glory
+              </h3>
+            </div>
           </div>
         </div>
       </div>

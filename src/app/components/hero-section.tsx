@@ -10,7 +10,9 @@ export default function HeroSection() {
   const buttonRef = useRef(null);
   const imageRef = useRef(null);
   useGSAP(() => {
-    const tl = gsap.timeline();
+    // Build the intro paused — it should only play once the preloader has
+    // finished and lifted away (see preloader.tsx, "preloader:done" event).
+    const tl = gsap.timeline({ paused: true });
     tl.to(imageRef.current, {
       clipPath: "inset(0% 0% 0% 0%)",
       duration: 1,
@@ -22,7 +24,18 @@ export default function HeroSection() {
       .to(buttonRef.current, {
         opacity: 1,
         duration: 1,
-      })
+      });
+
+    // If the preloader already finished before this mounted (e.g. on
+    // client-side navigation back to the home page), play right away.
+    if ((window as Window & { __preloaderDone?: boolean }).__preloaderDone) {
+      tl.play();
+      return;
+    }
+
+    const play = () => tl.play();
+    window.addEventListener("preloader:done", play, { once: true });
+    return () => window.removeEventListener("preloader:done", play);
   });
   return (
     <section
