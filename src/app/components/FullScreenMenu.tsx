@@ -87,7 +87,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
                 ))}
               </ul>
               <ul className="list-none p-0 m-0">
-                {['Treatments', 'Glorious Packages', 'Bridal Package', 'Maintenance Packages'].map((item, index) => (
+                {['Treatments', 'Glorious Packages', 'Bridal Packages'].map((item, index) => (
                   <li key={index} className="mb-4 border-b border-white/50 pb-2">
                     <a
                       href={`/${item.toLowerCase().replace(/\s+/g, '-')}`}

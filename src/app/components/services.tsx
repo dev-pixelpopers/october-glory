@@ -116,7 +116,7 @@ export default function OfferSection() {
 
               {/* Description Text & Button — only visible when active */}
               <div
-                className={`absolute top-[20%] right-[40px] w-[37%] flex flex-col gap-6 transition-all duration-500 ease-in-out ${isActive
+                className={`absolute top-[20%] right-[40px] w-[43%] flex flex-col gap-6 transition-all duration-500 ease-in-out ${isActive
                   ? "opacity-100 translate-x-0 delay-200"
                   : "opacity-0 translate-x-10 pointer-events-none"
                   }`}

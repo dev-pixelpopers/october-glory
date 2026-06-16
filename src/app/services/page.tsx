@@ -47,8 +47,8 @@ const services = [
             "Luxury bundled packages combining multiple premium salon services for complete care.",
     },
     {
-        title: "Bridal Package",
-        slug: "bridal-package",
+        title: "Bridal Packages",
+        slug: "bridal-packages",
         image: "/images/bridal1.webp",
         description:
             "Exclusive bridal experience ensuring flawless hair styling for your special day.",

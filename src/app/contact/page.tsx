@@ -351,7 +351,7 @@ export default function ContactPage() {
                         value="bridal"
                         className="bg-[#2D2018] text-white"
                       >
-                        Bridal Package
+                        Bridal Packages
                       </option>
                       <option
                         value="wigs"

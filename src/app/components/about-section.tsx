@@ -95,7 +95,7 @@ export default function WelcomeSection() {
           <div ref={descriptionRef} className="w-[33.5%] px-[31px] flex flex-col gap-10 items-start" style={{
             clipPath: "inset(0% 100% 0% 0%)"
           }}>
-            <p className="gotham text-[20px] leading-[40px] capitalize font-light">
+            <p className="gotham text-white text-[20px] leading-[40px] capitalize font-light">
               <strong>October Glory</strong> Salon Is A Luxury Hair Salon Located
               In Brooklyn, Founded By The Talented Hair Artist{" "}
               <strong>Jhavuanna Paterson</strong>. We Specialize In Precision Hair
