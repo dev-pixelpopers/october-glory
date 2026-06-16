@@ -40,7 +40,7 @@ export default function GloryNewsPage() {
                 </div>
             </section>
 
-            <section className="pt-[100px] pb-[200px] px-[50px]">
+            <section className="pt-[100px] pb-[150px] px-[50px]">
                 <div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
