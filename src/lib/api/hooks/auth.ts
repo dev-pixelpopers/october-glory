@@ -1,8 +1,13 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { api, setToken, getToken } from "../client";
+import { useRouter } from "next/navigation";
+import { api, setToken, getToken, ApiError } from "../client";
+import { showToast } from "@/app/components/salon/toast";
 import type { AuthResponse, RegisterResponse, User } from "../types";
+
+/** API error code: guest checkout denied because the email has a password. */
+export const USER_REQUIRES_PASSWORD = "USER_REQUIRES_PASSWORD";
 
 function storeAuth(qc: ReturnType<typeof useQueryClient>, res: AuthResponse) {
   setToken(res.token);
@@ -43,15 +48,23 @@ export function useRegister() {
 
 /**
  * Frictionless "Continue as Guest": name + email, immediate session, no OTP.
- * Existing full accounts receive an ability-scoped token (session_scope
- * "guest") that can book but not touch loyalty/history.
+ * If the email belongs to a full registered account the API answers 409
+ * USER_REQUIRES_PASSWORD — the user is routed to the login screen with
+ * their email pre-filled instead.
  */
 export function useGuestSession() {
   const qc = useQueryClient();
+  const router = useRouter();
   return useMutation({
     mutationFn: (payload: { name: string; email: string; phone?: string }) =>
       api.post<AuthResponse>("/auth/guest-session", payload),
     onSuccess: (res) => storeAuth(qc, res),
+    onError: (err, vars) => {
+      if (err instanceof ApiError && err.code === USER_REQUIRES_PASSWORD) {
+        showToast("Account found! Please log in with your password to continue.", "info");
+        router.push(`/login?email=${encodeURIComponent(vars.email)}`);
+      }
+    },
   });
 }
 
@@ -69,6 +82,37 @@ export function useResendOtp() {
   return useMutation({
     mutationFn: (payload: { email: string }) =>
       api.post<{ message: string }>("/auth/resend-otp", payload),
+  });
+}
+
+/** Step 1 of password reset: emails a 6-digit code. Response is always 200. */
+export function useForgotPassword() {
+  return useMutation({
+    mutationFn: (payload: { email: string }) =>
+      api.post<{ message: string }>("/auth/forgot-password", payload),
+  });
+}
+
+/**
+ * Step 2 of password reset: code + new password → fresh full session.
+ * The backend revokes all older tokens, so every cached query is stale.
+ */
+export function useResetPassword() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: {
+      email: string;
+      otp_code: string;
+      password: string;
+      password_confirmation: string;
+    }) => api.post<AuthResponse>("/auth/reset-password", payload),
+    onSuccess: (res) => {
+      storeAuth(qc, res);
+      // Everything else cached before the reset belongs to the old session.
+      // (Not qc.clear() — that detaches mounted observers, so the login
+      // screen would never see the new "me" and never redirect.)
+      qc.invalidateQueries({ predicate: (q) => q.queryKey[0] !== "me" });
+    },
   });
 }
 

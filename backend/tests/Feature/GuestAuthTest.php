@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Mail\LoginOtpMail;
+use App\Mail\SendPasswordResetOtpMail;
 use App\Mail\SendRegistrationOtpMail;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -63,7 +64,7 @@ class GuestAuthTest extends TestCase
         $this->assertSame('Guest Greta', User::query()->where('email', 'greta@example.com')->value('name'));
     }
 
-    public function test_full_account_email_gets_scoped_guest_session(): void
+    public function test_full_account_email_is_denied_guest_session(): void
     {
         User::query()->create([
             'name' => 'Registered Rita',
@@ -78,80 +79,20 @@ class GuestAuthTest extends TestCase
             'email' => 'rita@example.com',
         ]);
 
-        $response->assertOk()->assertJson(['session_scope' => 'guest']);
+        $response->assertStatus(409)
+            ->assertJson(['code' => 'USER_REQUIRES_PASSWORD'])
+            ->assertJsonMissing(['token']);
         Mail::assertNothingQueued();
-    }
 
-    public function test_scoped_guest_session_cannot_touch_loyalty_history_or_admin(): void
-    {
-        $this->seed(\Database\Seeders\DatabaseSeeder::class);
-
-        $owner = User::query()->create([
-            'name' => 'Owner Olivia',
-            'email' => 'olivia@example.com',
-            'password' => 'secret-password',
-            'role' => 'client',
+        // Privileged accounts are equally protected from guest hijacking.
+        User::query()->create([
+            'name' => 'Admin Ada', 'email' => 'ada@example.com',
+            'password' => 'secret-password', 'role' => 'admin',
             'email_verified_at' => now(),
         ]);
-        $owner->loyaltyTransactions()->create([
-            'amount' => 500, 'type' => 'admin_adjustment', 'description' => 'Saved points',
-        ]);
-
-        // Pre-existing appointment that must stay hidden.
-        $worker = User::query()->where('role', 'worker')->first();
-        $historic = $owner->appointmentsAsClient()->create([
-            'booking_reference' => 'SLN-HIST01',
-            'worker_id' => $worker->id,
-            'start_time' => now()->subWeek(),
-            'end_time' => now()->subWeek()->addHour(),
-            'total_duration_minutes' => 60,
-            'subtotal_amount' => 75,
-            'total_amount' => 75,
-            'payment_method' => 'card',
-            'status' => 'completed',
-        ]);
-        // Booked last week — created_at must predate the guest session.
-        $historic->newQuery()->whereKey($historic->id)->update(['created_at' => now()->subWeek()]);
-
-        $token = $this->postJson('/api/auth/guest-session', [
-            'name' => 'Olivia', 'email' => 'olivia@example.com',
-        ])->json('token');
-        $headers = ['Authorization' => "Bearer {$token}"];
-
-        // Saved balance locked and hidden.
-        $this->getJson('/api/loyalty/balance', $headers)
-            ->assertOk()->assertJson(['balance' => 0, 'locked' => true]);
-        $this->assertCount(0, $this->getJson('/api/loyalty/transactions', $headers)->json('data'));
-
-        // Historical appointments hidden.
-        $this->assertCount(0, $this->getJson('/api/appointments', $headers)->json('data'));
-
-        // Redemption rejected outright.
-        $service = \App\Models\Service::query()->first();
-        $this->postJson('/api/appointments', [
-            'service_ids' => [$service->id],
-            'worker_id' => null,
-            'start_time' => now()->next('Tuesday')->format('Y-m-d').' 11:00:00',
-            'payment_method' => 'card',
-            'loyalty_points_used' => 100,
-        ], $headers)->assertStatus(422);
-
-        // Booking without redemption works, and only that booking is visible.
-        $this->postJson('/api/appointments', [
-            'service_ids' => [$service->id],
-            'worker_id' => null,
-            'start_time' => now()->next('Tuesday')->format('Y-m-d').' 11:00:00',
-            'payment_method' => 'card',
-        ], $headers)->assertCreated();
-        $this->assertCount(1, $this->getJson('/api/appointments', $headers)->json('data'));
-
-        // Role-gated endpoints refuse scoped tokens even for privileged emails.
-        $admin = User::query()->where('role', 'admin')->first();
-        $adminScoped = $this->postJson('/api/auth/guest-session', [
-            'name' => 'X', 'email' => $admin->email,
-        ])->json('token');
-        $this->getJson('/api/admin/audit-logs', ['Authorization' => "Bearer {$adminScoped}"])
-            ->assertForbidden();
+        $this->postJson('/api/auth/guest-session', [
+            'name' => 'X', 'email' => 'ada@example.com',
+        ])->assertStatus(409)->assertJsonMissing(['token']);
     }
 
     /* ---------------------- Registration OTP verification -------------------- */
@@ -302,6 +243,111 @@ class GuestAuthTest extends TestCase
         $guest->refresh();
         $this->assertFalse($guest->is_guest);
         $this->assertTrue(Hash::check('brand-new-password', $guest->password));
+    }
+
+    /* ------------------------- OTP password reset ---------------------------- */
+
+    public function test_forgot_password_queues_reset_code_and_is_generic(): void
+    {
+        User::query()->create([
+            'name' => 'Registered Rita', 'email' => 'rita@example.com',
+            'password' => 'old-password', 'role' => 'client',
+            'email_verified_at' => now(),
+        ]);
+
+        $this->postJson('/api/auth/forgot-password', ['email' => 'rita@example.com'])->assertOk();
+        Mail::assertQueued(SendPasswordResetOtpMail::class, fn ($m) => $m->hasTo('rita@example.com'));
+
+        // Unknown email: identical 200, nothing sent — no enumeration.
+        $this->postJson('/api/auth/forgot-password', ['email' => 'nobody@example.com'])->assertOk();
+        Mail::assertQueuedCount(1);
+    }
+
+    public function test_reset_password_with_valid_code_updates_password_and_signs_in(): void
+    {
+        $user = User::query()->create([
+            'name' => 'Registered Rita', 'email' => 'rita@example.com',
+            'password' => 'old-password', 'role' => 'client',
+            'email_verified_at' => now(),
+        ]);
+        $staleToken = $user->createToken('spa', ['*'])->plainTextToken;
+
+        Cache::put('otp:reset:rita@example.com', Hash::make('123456'), now()->addMinutes(15));
+
+        $response = $this->postJson('/api/auth/reset-password', [
+            'email' => 'rita@example.com',
+            'otp_code' => '123456',
+            'password' => 'brand-new-password',
+            'password_confirmation' => 'brand-new-password',
+        ]);
+
+        $response->assertOk()
+            ->assertJsonStructure(['token', 'user'])
+            ->assertJson(['session_scope' => 'full']);
+
+        $user->refresh();
+        $this->assertTrue(Hash::check('brand-new-password', $user->password));
+
+        // Sessions predating the reset are revoked; the code is single-use.
+        $this->getJson('/api/me', ['Authorization' => "Bearer {$staleToken}"])->assertUnauthorized();
+        $this->postJson('/api/auth/reset-password', [
+            'email' => 'rita@example.com',
+            'otp_code' => '123456',
+            'password' => 'another-password-1',
+            'password_confirmation' => 'another-password-1',
+        ])->assertStatus(400);
+    }
+
+    public function test_reset_password_converts_guest_to_full_account(): void
+    {
+        User::query()->create([
+            'name' => 'Guest Gina', 'email' => 'gina@example.com',
+            'password' => null, 'role' => 'client', 'is_guest' => true,
+        ]);
+
+        Cache::put('otp:reset:gina@example.com', Hash::make('222333'), now()->addMinutes(15));
+
+        $this->postJson('/api/auth/reset-password', [
+            'email' => 'gina@example.com',
+            'otp_code' => '222333',
+            'password' => 'first-real-password',
+            'password_confirmation' => 'first-real-password',
+        ])->assertOk();
+
+        $user = User::query()->where('email', 'gina@example.com')->first();
+        $this->assertFalse($user->is_guest);
+        $this->assertNotNull($user->email_verified_at);
+        $this->assertTrue(Hash::check('first-real-password', $user->password));
+    }
+
+    public function test_reset_password_rejects_invalid_or_mismatched_input(): void
+    {
+        User::query()->create([
+            'name' => 'Registered Rita', 'email' => 'rita@example.com',
+            'password' => 'old-password', 'role' => 'client',
+            'email_verified_at' => now(),
+        ]);
+
+        // Wrong / missing code → 400 with the specific message.
+        $this->postJson('/api/auth/reset-password', [
+            'email' => 'rita@example.com',
+            'otp_code' => '000000',
+            'password' => 'brand-new-password',
+            'password_confirmation' => 'brand-new-password',
+        ])->assertStatus(400)->assertJson(['message' => 'Invalid or expired verification code.']);
+
+        // Mismatched confirmation → 422 validation error before any OTP check.
+        Cache::put('otp:reset:rita@example.com', Hash::make('123456'), now()->addMinutes(15));
+        $this->postJson('/api/auth/reset-password', [
+            'email' => 'rita@example.com',
+            'otp_code' => '123456',
+            'password' => 'brand-new-password',
+            'password_confirmation' => 'something-else',
+        ])->assertStatus(422);
+
+        // Password unchanged throughout.
+        $user = User::query()->where('email', 'rita@example.com')->first();
+        $this->assertTrue(Hash::check('old-password', $user->password));
     }
 
     /* ------------------------- Shoutout screenshot upload -------------------- */

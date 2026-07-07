@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Header from "./components/header";
 import HeroSection from "./components/hero-section";
 import WelcomeSection from "./components/about-section";
@@ -15,28 +14,28 @@ import Footer from "./components/footer";
 export default function Home() {
   return (
     <div className="main-app bg-[#1B1B1B]">
-      <Header/>
-      <HeroSection/>
+      <Header />
+      <HeroSection />
 
-      <WelcomeSection/>
+      <WelcomeSection />
 
-      <OfferSection/>
+      <OfferSection />
 
-      <GloryExperience/>
+      <GloryExperience />
 
-      <CollectionsSection/>
+      <CollectionsSection />
 
-      <ConfidenceJourneySection/>
+      <ConfidenceJourneySection />
 
-      <PerfectSection/>
+      <PerfectSection />
 
-      <GuidebookSection/>
+      <GuidebookSection />
 
-      <TestimonialSlider/>
+      <TestimonialSlider />
 
-      <InstagramSection/>
+      <InstagramSection />
 
-      <Footer/>
+      <Footer />
 
     </div>
   );

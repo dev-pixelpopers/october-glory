@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Preloader from "./components/preloader";
 import QueryProvider from "@/lib/api/query-provider";
+import { ToastHost } from "./components/salon/toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
         <QueryProvider>
           <Preloader />
           {children}
+          <ToastHost />
         </QueryProvider>
       </body>
     </html>

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\GuestSessionRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\SetPasswordRequest;
 use App\Http\Requests\VerifyOtpRequest;
 use App\Http\Resources\UserResource;
@@ -18,11 +20,8 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    /** Abilities granted to password-verified (or brand-new guest) sessions. */
+    /** Abilities granted to password-verified (or guest) sessions. */
     protected const FULL_ABILITIES = ['*'];
-
-    /** Abilities for a guest-session issued to an existing full account. */
-    protected const GUEST_ABILITIES = ['guest'];
 
     public function __construct(protected OtpService $otp) {}
 
@@ -110,10 +109,8 @@ class AuthController extends Controller
      *
      * - Unknown email:            create a passwordless guest, full session.
      * - Existing guest account:   sign straight in, full session.
-     * - Existing FULL account:    sign in immediately but on an ability-scoped
-     *   token that can book appointments yet cannot redeem loyalty points,
-     *   view historical appointments, or reach role-gated endpoints — those
-     *   require the standard password route.
+     * - Existing FULL account:    denied with 409 USER_REQUIRES_PASSWORD —
+     *   the account has a password, so its owner must sign in with it.
      */
     public function guestSession(GuestSessionRequest $request): JsonResponse
     {
@@ -130,25 +127,28 @@ class AuthController extends Controller
                 'is_guest' => true,
             ]);
 
-            return $this->tokenResponse($user, self::FULL_ABILITIES, 201);
+            return $this->tokenResponse($user, 201);
         }
 
         if (! $user->is_active) {
             throw ValidationException::withMessages(['email' => 'This account cannot be used right now.']);
         }
 
-        if ($user->is_guest) {
+        if ($user->is_guest && $user->password === null) {
             // Returning guest: refresh contact details, sign in immediately.
             $user->update([
                 'name' => $data['name'],
                 'phone' => $data['phone'] ?? $user->phone,
             ]);
 
-            return $this->tokenResponse($user, self::FULL_ABILITIES);
+            return $this->tokenResponse($user);
         }
 
-        // Full registered account: scoped guest session.
-        return $this->tokenResponse($user, self::GUEST_ABILITIES);
+        // Full registered account: guest checkout would bypass its password.
+        return response()->json([
+            'code' => 'USER_REQUIRES_PASSWORD',
+            'message' => 'This email is associated with a registered account. Please log in with your password.',
+        ], 409);
     }
 
     /**
@@ -216,6 +216,48 @@ class AuthController extends Controller
         return response()->json(['user' => new UserResource($user->fresh())]);
     }
 
+    /**
+     * Step 1 of the forgot-password flow: email a 6-digit reset code.
+     * Response is generic to avoid email enumeration.
+     */
+    public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
+    {
+        $user = User::query()->where('email', $request->validated('email'))->first();
+
+        if ($user && $user->is_active) {
+            $this->otp->send($user, OtpService::PURPOSE_RESET);
+        }
+
+        return response()->json([
+            'message' => 'If an account exists for that email, a 6-digit reset code is on its way.',
+        ]);
+    }
+
+    /**
+     * Step 2: exchange the emailed reset code for a new password.
+     * Also converts guests to full accounts and signs the user in.
+     */
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $user = User::query()->where('email', $data['email'])->first();
+
+        if (! $user || ! $this->otp->verify($data['email'], $data['otp_code'], OtpService::PURPOSE_RESET)) {
+            return response()->json(['message' => 'Invalid or expired verification code.'], 400);
+        }
+
+        $user->forceFill([
+            'password' => $data['password'],
+            'is_guest' => false,
+            'email_verified_at' => $user->email_verified_at ?? now(),
+        ])->save();
+
+        // A password change must invalidate every session that predates it.
+        $user->tokens()->delete();
+
+        return $this->tokenResponse($user);
+    }
+
     public function logout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
@@ -233,12 +275,12 @@ class AuthController extends Controller
         ]);
     }
 
-    protected function tokenResponse(User $user, array $abilities = self::FULL_ABILITIES, int $status = 200): JsonResponse
+    protected function tokenResponse(User $user, int $status = 200): JsonResponse
     {
         return response()->json([
-            'token' => $user->createToken('spa', $abilities)->plainTextToken,
+            'token' => $user->createToken('spa', self::FULL_ABILITIES)->plainTextToken,
             'user' => new UserResource($user),
-            'session_scope' => $abilities === self::GUEST_ABILITIES ? 'guest' : 'full',
+            'session_scope' => 'full',
         ], $status);
     }
 }

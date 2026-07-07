@@ -21,12 +21,15 @@ export function setToken(token: string | null) {
 
 export class ApiError extends Error {
   status: number;
+  /** Machine-readable error code from the API, e.g. "USER_REQUIRES_PASSWORD". */
+  code?: string;
   errors?: Record<string, string[]>;
 
-  constructor(status: number, message: string, errors?: Record<string, string[]>) {
+  constructor(status: number, message: string, errors?: Record<string, string[]>, code?: string) {
     super(message);
     this.status = status;
     this.errors = errors;
+    this.code = code;
   }
 }
 
@@ -74,6 +77,7 @@ async function request<T>(
       res.status,
       json?.message ?? `Request failed with status ${res.status}`,
       json?.errors,
+      json?.code,
     );
   }
 
@@ -100,6 +104,7 @@ async function postForm<T>(path: string, form: FormData): Promise<T> {
       res.status,
       json?.message ?? `Request failed with status ${res.status}`,
       json?.errors,
+      json?.code,
     );
   }
 

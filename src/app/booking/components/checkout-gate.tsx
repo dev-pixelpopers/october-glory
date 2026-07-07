@@ -10,10 +10,9 @@ import { getToken } from "@/lib/api/client";
  * else chooses "Continue as Guest" (name/email/phone, instant — no OTP) or
  * full sign-in.
  *
- * If the email belongs to a full registered account, the backend issues an
- * ability-scoped guest session: booking proceeds instantly, but saved
- * loyalty points and appointment history stay locked until the owner signs
- * in with their password.
+ * If the email belongs to a full registered account, the backend denies the
+ * guest session (409 USER_REQUIRES_PASSWORD) and useGuestSession reroutes to
+ * /login with the email pre-filled so the owner can sign in properly.
  */
 export default function CheckoutGate({ children }: { children: React.ReactNode }) {
   const { data: me, isLoading } = useMe();

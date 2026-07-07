@@ -20,6 +20,8 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/guest-session', [AuthController::class, 'guestSession']);
 Route::post('/auth/verify-otp', [AuthController::class, 'verifyOtp']);
 Route::post('/auth/resend-otp', [AuthController::class, 'resendOtp'])->middleware('throttle:5,1');
+Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword'])->middleware('throttle:5,1');
+Route::post('/auth/reset-password', [AuthController::class, 'resetPassword'])->middleware('throttle:10,1');
 
 Route::get('/categories', [ServiceCategoryController::class, 'index']);
 Route::get('/services', [ServiceController::class, 'index']);

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Mail\LoginOtpMail;
+use App\Mail\SendPasswordResetOtpMail;
 use App\Mail\SendRegistrationOtpMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
@@ -15,15 +16,19 @@ use Illuminate\Support\Facades\Mail;
  * Purposes:
  *  - "login":    passwordless sign-in for legacy guests at the login screen.
  *  - "register": mandatory email-ownership verification for new full accounts.
+ *  - "reset":    forgot-password flow; proves email ownership before a new
+ *                password is accepted.
  */
 class OtpService
 {
     public const PURPOSE_LOGIN = 'login';
     public const PURPOSE_REGISTER = 'register';
+    public const PURPOSE_RESET = 'reset';
 
     public const TTL_MINUTES = [
         self::PURPOSE_LOGIN => 10,
         self::PURPOSE_REGISTER => 15,
+        self::PURPOSE_RESET => 15,
     ];
 
     public const RESEND_COOLDOWN_SECONDS = 60;
@@ -45,9 +50,11 @@ class OtpService
         Cache::put("{$key}:cooldown", true, self::RESEND_COOLDOWN_SECONDS);
         Cache::forget("{$key}:attempts");
 
-        $mailable = $purpose === self::PURPOSE_REGISTER
-            ? new SendRegistrationOtpMail($user, $code, $ttl)
-            : new LoginOtpMail($user, $code, $ttl);
+        $mailable = match ($purpose) {
+            self::PURPOSE_REGISTER => new SendRegistrationOtpMail($user, $code, $ttl),
+            self::PURPOSE_RESET => new SendPasswordResetOtpMail($user, $code, $ttl),
+            default => new LoginOtpMail($user, $code, $ttl),
+        };
 
         Mail::to($user)->queue($mailable);
 
