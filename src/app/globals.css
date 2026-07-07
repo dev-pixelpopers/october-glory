@@ -216,3 +216,47 @@ form textarea::Placeholder {
 }
 
 /*end here */
+
+/* --- DASHBOARD-SCOPED THEME ---------------------------------------------
+   These variables only apply inside the authenticated dashboard layout.
+   The public salon site keeps its fixed brand theme; toggling light/dark
+   in the dashboard never leaks outside the .dash-theme-* wrapper. */
+
+.dash-theme-dark {
+  --dash-bg: #151515;
+  --dash-card: #1d1d1d;
+  --dash-elev: #232323;
+  --dash-border: rgba(255, 255, 255, 0.16);
+  --dash-border-soft: rgba(255, 255, 255, 0.08);
+  --dash-border-strong: rgba(255, 255, 255, 0.5);
+  --dash-text: #ffffff;
+  --dash-text-soft: rgba(255, 255, 255, 0.75);
+  --dash-text-muted: rgba(255, 255, 255, 0.52);
+  --dash-text-faint: rgba(255, 255, 255, 0.35);
+  --dash-track: rgba(255, 255, 255, 0.1);
+  color-scheme: dark;
+}
+
+.dash-theme-light {
+  --dash-bg: #f6f3ec;
+  --dash-card: #ffffff;
+  --dash-elev: #faf8f2;
+  --dash-border: rgba(23, 23, 23, 0.16);
+  --dash-border-soft: rgba(23, 23, 23, 0.08);
+  --dash-border-strong: rgba(23, 23, 23, 0.45);
+  --dash-text: #1a1712;
+  --dash-text-soft: rgba(26, 23, 18, 0.78);
+  --dash-text-muted: rgba(26, 23, 18, 0.56);
+  --dash-text-faint: rgba(26, 23, 18, 0.38);
+  --dash-track: rgba(23, 23, 23, 0.08);
+  color-scheme: light;
+}
+
+/* Brand logo is black artwork: invert it only on the dark dashboard theme. */
+.dash-theme-dark .dash-logo {
+  filter: brightness(0) invert(1);
+}
+
+.dash-theme-light .dash-logo {
+  filter: none;
+}

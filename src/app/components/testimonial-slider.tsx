@@ -77,7 +77,6 @@ export default function TestimonialSlider() {
             return (
               <div
                 key={testimonial.id}
-                // col-start-1 row-start-1 allows them to sit on top of each other
                 className={`col-start-1 row-start-1 w-full max-w-[90%] sm:max-w-lg md:max-w-2xl lg:max-w-3xl px-4 md:px-8 text-center transition-all duration-[800ms] ease-in-out ${positionClass} ${effectClass}`}
               >
                 <p className="text-black text-[16px] md:text-[22px] gotham leading-[35px] md:leading-[54px] mb-6 md:mb-8">
