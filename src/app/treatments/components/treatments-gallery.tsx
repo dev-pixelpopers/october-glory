@@ -10,7 +10,7 @@ if (typeof window !== "undefined") {
 }
 
 const BOOKING_URL =
-  "https://www.vagaro.com//Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVL2LPHcA1MSzdjmR77PgNO89nkScgoh/XItsZiAvMSwg29GkfunPKpsn7GMKFL4WEP9ko0RiGqpIZ/KFqFgWkys767ajFMz9rJEVrHUd1u2uaqES+ew0DN8nlQRL8wZ3JvghJpwuChzDj9h0Mru8i7ww9EqwJtGj9HLr19aG1GmL+l9bDVPtK1PlVLd/yIWuOzF5DcFZ/X2vSorKvQhldHO2KJc8FTfu8fSZbDZ/fKlcLH5wt4ow87po8iF098PwIxBq4/Em9Y0XfM2mvEI4lcjdQf7q9gXkBP/8WJIKsph3EHqdmHX8syCs/lf4W6brJw==";
+  "/dashboard/book";
 
 const services = [
   {
@@ -112,8 +112,6 @@ export default function TreatmentsGallery() {
 
               <a
                 href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-[#ccb884] gotham text-[14px] tracking-[2px] uppercase translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 hover:text-white"
               >
                 Book Now

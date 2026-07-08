@@ -8,6 +8,7 @@ export const metadata = {
   title: "Relaxers And Colors | October Glory",
   description:
     "Discover our professional relaxer and coloring services — Relaxer Touch-Up, Virgin Relaxer, Full Color, Highlights, Color Correction, Gloss Treatment and more. Book your appointment today.",
+  alternates: { canonical: "/relaxers-and-colors" },
 };
 
 export default function RelaxersAndColorsPage() {

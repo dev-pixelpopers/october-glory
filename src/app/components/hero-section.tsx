@@ -1,5 +1,6 @@
 "use client";
 import { useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -78,10 +79,10 @@ export default function HeroSection() {
             <h2 className="valturin text-center text-[73.063px] text-black">a Salon Luxury Experience</h2>
           </div>
 
-          <button ref={buttonRef} className="book-btn flex mt-[20px] gap-[10px] items-center border-black border-1 text-black rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham opacity-0">
+          <Link href="/dashboard/book" ref={buttonRef} className="book-btn flex mt-[20px] gap-[10px] items-center border-black border-1 text-black rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham opacity-0">
             <span className="btn-icon"><img src="/images/btn-arrow.svg" width="43px" height="43px" /></span>
             Book Your Visit
-          </button>
+          </Link>
         </div>
       </div>
     </section>

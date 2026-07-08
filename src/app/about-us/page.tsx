@@ -2,6 +2,13 @@ import React from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
+export const metadata = {
+  title: "About Us | October Glory",
+  description:
+    "Meet Jhavuanna Paterson and the October Glory team — the story behind our luxury salon experience.",
+  alternates: { canonical: "/about-us" },
+};
+
 export default function AboutUsPage() {
   return (
     <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">
@@ -168,7 +175,7 @@ export default function AboutUsPage() {
             Let us tailor an unforgettable styling experience for you. Schedule your private appointment with Jhavuanna Paterson today.
           </p>
           <a
-            href="/contact"
+            href="/dashboard/book"
             className="flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
           >
             <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">

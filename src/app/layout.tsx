@@ -15,9 +15,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+/**
+ * Base for every URL-derived metadata field (canonical tags, OG images).
+ * Set NEXT_PUBLIC_SITE_URL to the production origin when deploying.
+ */
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "October Glory",
-  description: "",
+  description:
+    "October Glory — more than a salon, a luxury hair experience. Natural styles, silk presses, weaves, treatments and color by expert stylists.",
 };
 
 export default function RootLayout({

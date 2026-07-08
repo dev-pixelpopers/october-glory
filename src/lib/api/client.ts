@@ -8,6 +8,20 @@ const API_BASE =
 
 const TOKEN_KEY = "og_auth_token";
 
+/**
+ * Routing-hint cookie mirroring token presence so the server-side proxy
+ * (src/proxy.ts) can gate /dashboard routes. It carries no secret and is NOT
+ * a security boundary — the API enforces real auth on every request.
+ */
+const SESSION_COOKIE = "og_session";
+
+function syncSessionCookie(hasToken: boolean) {
+  if (typeof document === "undefined") return;
+  document.cookie = hasToken
+    ? `${SESSION_COOKIE}=1; path=/; max-age=31536000; SameSite=Lax`
+    : `${SESSION_COOKIE}=; path=/; max-age=0; SameSite=Lax`;
+}
+
 export function getToken(): string | null {
   if (typeof window === "undefined") return null;
   return window.localStorage.getItem(TOKEN_KEY);
@@ -17,6 +31,12 @@ export function setToken(token: string | null) {
   if (typeof window === "undefined") return;
   if (token) window.localStorage.setItem(TOKEN_KEY, token);
   else window.localStorage.removeItem(TOKEN_KEY);
+  syncSessionCookie(!!token);
+}
+
+// Sessions created before the cookie existed: heal the hint on first load.
+if (typeof window !== "undefined" && window.localStorage.getItem(TOKEN_KEY)) {
+  syncSessionCookie(true);
 }
 
 export class ApiError extends Error {

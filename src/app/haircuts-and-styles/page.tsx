@@ -8,6 +8,7 @@ export const metadata = {
   title: "Haircuts And Styles | October Glory",
   description:
     "Discover our expert haircut and styling services — Glory-Girl Ponytail, Updos, Precision Cut, Weave Precision Cut, Haircut & Finish, New Look Haircut and more. Book your appointment today.",
+  alternates: { canonical: "/haircuts-and-styles" },
 };
 
 export default function HaircutsAndStylesPage() {

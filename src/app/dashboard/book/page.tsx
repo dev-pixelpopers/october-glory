@@ -4,6 +4,8 @@ import BookScreen from "./book-screen";
 export const metadata = {
   title: "Book An Appointment | October Glory",
   description: "Reserve your seat with October Glory's specialists.",
+  // Authenticated area — keep it out of search results.
+  robots: { index: false, follow: false },
 };
 
 export default function BookPage() {

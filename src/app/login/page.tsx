@@ -3,6 +3,8 @@ import LoginScreen from "./login-screen";
 
 export const metadata = {
   title: "Sign In | October Glory",
+  // Auth screen — keep it out of search results.
+  robots: { index: false, follow: false },
 };
 
 export default function LoginPage() {

@@ -277,7 +277,7 @@ export default function LookbookPage() {
             Inspired by what you see? Let us create your signature look. Book a private consultation today.
           </p>
           <a
-            href="/contact"
+            href="/dashboard/book"
             className="flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
           >
             <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">

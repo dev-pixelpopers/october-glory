@@ -11,6 +11,13 @@ import TestimonialSlider from "./components/testimonial-slider";
 import InstagramSection from "./components/instagram-section";
 import Footer from "./components/footer";
 
+export const metadata = {
+  title: "October Glory | More Than a Salon — Luxury Hair Experience",
+  description:
+    "Reserve your seat at October Glory: natural styles, silk presses, weaves and extensions, treatments and color by expert stylists.",
+  alternates: { canonical: "/" },
+};
+
 export default function Home() {
   return (
     <div className="main-app bg-[#1B1B1B]">

@@ -8,6 +8,7 @@ export const metadata = {
   title: "Natural Styles | October Glory",
   description:
     "Explore our premium natural hair styling services — Silk Press, Rodset, Flat Twist, Wash & Go, Braid Down, 2 Strand Twist and Natural Updo. Book your appointment today.",
+  alternates: { canonical: "/natural-styles" },
 };
 
 export default function NaturalStylesPage() {

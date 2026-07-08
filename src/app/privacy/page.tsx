@@ -2,6 +2,12 @@ import React from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
+export const metadata = {
+  title: "Privacy Policy | October Glory",
+  description: "How October Glory collects, uses and protects your personal information.",
+  alternates: { canonical: "/privacy" },
+};
+
 export default function PrivacyPolicyPage() {
   return (
     <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">

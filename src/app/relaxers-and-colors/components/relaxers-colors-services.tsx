@@ -156,7 +156,7 @@ export default function RelaxersColorsServices() {
       {/* CTA Button */}
       <div className="flex justify-center">
         <a
-          href="/contact"
+          href="/dashboard/book"
           className="flex mt-4 gap-[10px] items-center border-[#000] border text-[#000] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
         >
           <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">

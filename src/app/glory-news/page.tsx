@@ -2,6 +2,13 @@ import React from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
+export const metadata = {
+  title: "Glory News | October Glory",
+  description:
+    "Hair care tips, styling guides and salon news from the October Glory team.",
+  alternates: { canonical: "/glory-news" },
+};
+
 const blogs = Array.from({ length: 9 }, (_, index) => ({
     id: index + 1,
     image: "/images/post-01.webp",

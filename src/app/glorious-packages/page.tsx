@@ -8,6 +8,7 @@ export const metadata = {
   title: "Glorious Packages | October Glory",
   description:
     "Explore our luxury bundled packages — Glorious Rodset, Glorious Silk Press, Glorious Boost, Wig Prep and more. Book your appointment today.",
+  alternates: { canonical: "/glorious-packages" },
 };
 
 export default function GloriousPackagesPage() {

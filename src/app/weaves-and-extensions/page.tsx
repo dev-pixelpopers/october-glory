@@ -8,6 +8,7 @@ export const metadata = {
   title: "Weaves And Extensions | October Glory",
   description:
     "Explore our premium weave and extension services — Single Track, Full Weave, Full-Head Weave, Wig Unit Consult, Wig Prep, Wig Wash, Wig Tighten and more. Book your appointment today.",
+  alternates: { canonical: "/weaves-and-extensions" },
 };
 
 export default function WeavesAndExtensionsPage() {

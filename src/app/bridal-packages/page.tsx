@@ -8,6 +8,7 @@ export const metadata = {
   title: "Bridal Packages | October Glory",
   description:
     "Explore our luxury bundled packages — Glorious Rodset, Glorious Silk Press, Glorious Boost, Wig Prep and more. Book your appointment today.",
+  alternates: { canonical: "/bridal-packages" },
 };
 
 export default function GloriousPackagesPage() {
@@ -52,7 +53,7 @@ export default function GloriousPackagesPage() {
             </div>
             <div className="flex justify-start">
               <a
-                href="/contact"
+                href="/dashboard/book"
                 className="flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
               >
                 <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">

@@ -3,6 +3,8 @@ import DashboardRouter from "./components/dashboard-router";
 
 export const metadata = {
   title: "Dashboard | October Glory",
+  // Authenticated area — keep it out of search results.
+  robots: { index: false, follow: false },
 };
 
 export default function DashboardPage() {

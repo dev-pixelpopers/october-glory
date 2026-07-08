@@ -2,6 +2,12 @@ import React from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
+export const metadata = {
+  title: "Returns & Refunds | October Glory",
+  description: "October Glory's policy on returns, refunds and appointment changes.",
+  alternates: { canonical: "/returns" },
+};
+
 export default function ReturnsPage() {
   return (
     <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">

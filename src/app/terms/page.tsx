@@ -2,6 +2,12 @@ import React from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
+export const metadata = {
+  title: "Terms of Service | October Glory",
+  description: "The terms and conditions for using October Glory's services and website.",
+  alternates: { canonical: "/terms" },
+};
+
 export default function TermsPage() {
   return (
     <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">

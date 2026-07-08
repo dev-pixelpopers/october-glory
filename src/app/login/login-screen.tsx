@@ -9,15 +9,26 @@ import { useMe } from "@/lib/api/hooks/auth";
 export default function LoginScreen() {
   const { data: me } = useMe();
   const router = useRouter();
+  const searchParams = useSearchParams();
   // Set when guest checkout finds a registered account and reroutes here.
-  const prefillEmail = useSearchParams().get("email") ?? undefined;
+  const prefillEmail = searchParams.get("email") ?? undefined;
+  // Callback appended by the proxy when an auth-only page was requested
+  // (e.g. /login?redirect=/dashboard/book from a public "Book Now" button).
+  const redirectParam = searchParams.get("redirect");
 
-  // Guests (and scoped guest-sessions) head straight into the booking flow;
-  // full sign-ins land on their dashboard.
+  // Honor the callback first; otherwise guests head into the booking flow
+  // and full sign-ins land on their dashboard.
   useEffect(() => {
     if (!me) return;
-    router.replace(me.is_guest || me.session_scope === "guest" ? "/dashboard/book" : "/dashboard");
-  }, [me, router]);
+    // Internal paths only — never forward to another origin ("//evil.com").
+    const callback =
+      redirectParam && redirectParam.startsWith("/") && !redirectParam.startsWith("//")
+        ? redirectParam
+        : null;
+    router.replace(
+      callback ?? (me.is_guest || me.session_scope === "guest" ? "/dashboard/book" : "/dashboard"),
+    );
+  }, [me, router, redirectParam]);
 
   return (
     <main className="min-h-screen bg-[#151515] flex flex-col">

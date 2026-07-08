@@ -8,6 +8,7 @@ export const metadata = {
   title: "Treatments | October Glory",
   description:
     "Explore our premium hair treatment services — Scalp Relief, The Upmost Hydration, Protein Moisture Pack, Bond Builder and more. Book your appointment today.",
+  alternates: { canonical: "/treatments" },
 };
 
 export default function TreatmentsPage() {

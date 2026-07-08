@@ -62,7 +62,11 @@ export function useGuestSession() {
     onError: (err, vars) => {
       if (err instanceof ApiError && err.code === USER_REQUIRES_PASSWORD) {
         showToast("Account found! Please log in with your password to continue.", "info");
-        router.push(`/login?email=${encodeURIComponent(vars.email)}`);
+        const params = new URLSearchParams({ email: vars.email });
+        // Keep the post-login callback alive across the guest → login handoff.
+        const redirect = new URLSearchParams(window.location.search).get("redirect");
+        if (redirect) params.set("redirect", redirect);
+        router.push(`/login?${params.toString()}`);
       }
     },
   });

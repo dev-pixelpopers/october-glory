@@ -16,6 +16,10 @@ class ShoutoutClaim extends Model
 
     protected $fillable = ['user_id', 'proof_url', 'platform', 'status', 'admin_notes', 'reviewed_by'];
 
+    // Mirrors the DB column default so a freshly created (unsaved-refresh)
+    // model already reports "pending" in API responses.
+    protected $attributes = ['status' => self::STATUS_PENDING];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
