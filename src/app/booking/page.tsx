@@ -1,20 +1,10 @@
-import Header from "../components/header";
-import Footer from "../components/footer";
-import BookingWizard from "./components/booking-wizard";
+import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "Book An Appointment | October Glory",
-  description: "Reserve your seat with October Glory's specialists.",
-};
-
+/**
+ * The booking wizard lives inside the dashboard now (/dashboard/book) so it
+ * renders with the sidebar, dashboard header, and theme toggle. This stub
+ * keeps old bookmarks and emailed links working.
+ */
 export default function BookingPage() {
-  return (
-    <main className="bg-[#151515] min-h-screen flex flex-col">
-      <Header theme="dark" />
-      <div className="pt-[220px] pb-24 flex-1">
-        <BookingWizard />
-      </div>
-      <Footer />
-    </main>
-  );
+  redirect("/dashboard/book");
 }

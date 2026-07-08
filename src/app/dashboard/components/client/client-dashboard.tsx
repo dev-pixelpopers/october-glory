@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { CalendarDays, Crown, Gift, UserRound } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { CalendarDays, CalendarPlus, Crown, Gift, UserRound } from "lucide-react";
 import SetPasswordBanner from "@/app/components/salon/set-password-banner";
 import { useAppointments, useCancelAppointment } from "@/lib/api/hooks/booking";
 import {
@@ -15,24 +15,40 @@ import ShoutoutSubmissionForm from "./shoutout-form";
 import { useSubmitReview } from "@/lib/api/hooks/reviews";
 import type { Appointment, User } from "@/lib/api/types";
 import { money, shortDate, timeLabel } from "@/lib/format";
-import DashboardShell, { buttonGhost, buttonGold, Card, inputClass, StatusBadge } from "../dashboard-shell";
+import DashboardShell, { buttonGhost, buttonGold, Card, inputClass, StatusBadge, type NavItem } from "../dashboard-shell";
 import { Modal } from "../admin/service-manager";
 import { Pagination } from "../admin/audit-log-viewer";
 
+/**
+ * Client sidebar navigation, shared with /dashboard/book so the booking
+ * wizard renders under the exact same dashboard chrome. "book" is a real
+ * route; the rest are in-page tabs on /dashboard.
+ */
+export const CLIENT_NAV: NavItem[] = [
+  { id: "book", label: "Book Appointment", icon: CalendarPlus },
+  { id: "appointments", label: "My Appointments", icon: CalendarDays },
+  { id: "rewards", label: "Loyalty & Rewards", icon: Gift },
+  { id: "membership", label: "Membership", icon: Crown },
+  { id: "profile", label: "Profile", icon: UserRound },
+];
+
 export default function ClientDashboard({ user }: { user: User }) {
-  const [tab, setTab] = useState("appointments");
+  const router = useRouter();
+  // /dashboard?tab=rewards deep links straight to a panel (used by the
+  // booking page's sidebar, which lives on its own route).
+  const requested = useSearchParams().get("tab");
+  const [tab, setTab] = useState(
+    requested && requested !== "book" && CLIENT_NAV.some((t) => t.id === requested)
+      ? requested
+      : "appointments",
+  );
 
   return (
     <DashboardShell
       user={user}
-      tabs={[
-        { id: "appointments", label: "My Appointments", icon: CalendarDays },
-        { id: "rewards", label: "Loyalty & Rewards", icon: Gift },
-        { id: "membership", label: "Membership", icon: Crown },
-        { id: "profile", label: "Profile", icon: UserRound },
-      ]}
+      tabs={CLIENT_NAV}
       activeTab={tab}
-      onTabChange={setTab}
+      onTabChange={(id) => (id === "book" ? router.push("/dashboard/book") : setTab(id))}
     >
       {/* Guest conversion prompt follows the client everywhere in their dashboard. */}
       {user.is_guest && tab !== "profile" && (
@@ -73,7 +89,7 @@ function AppointmentsPanel() {
       <Card
         title="Upcoming & Past Appointments"
         action={
-          <Link href="/booking" className={buttonGold}>
+          <Link href="/dashboard/book" className={buttonGold}>
             + Book New Visit
           </Link>
         }
@@ -81,7 +97,7 @@ function AppointmentsPanel() {
         {isLoading && <p className="gotham text-[var(--dash-text-muted)] text-[15px]">Loading appointments…</p>}
         {!isLoading && (data?.data ?? []).length === 0 && (
           <p className="gotham text-[var(--dash-text-faint)] text-[15px]">
-            Nothing booked yet — <Link href="/booking" className="text-[#cda873] hover:underline">reserve your first visit</Link>.
+            Nothing booked yet — <Link href="/dashboard/book" className="text-[#cda873] hover:underline">reserve your first visit</Link>.
           </p>
         )}
 

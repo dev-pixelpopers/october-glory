@@ -11,7 +11,6 @@ use App\Services\LoyaltyService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class ShoutoutController extends Controller
@@ -43,12 +42,14 @@ class ShoutoutController extends Controller
         }
 
         // Persist the screenshot on the public disk; serve via /storage symlink.
+        // Only the relative path is stored — the resource builds the absolute
+        // URL, so rows survive APP_URL changes between environments.
         $path = $request->file('proof_image')->store('shoutouts', 'public');
 
         $claim = ShoutoutClaim::query()->create([
             'user_id' => $request->user()->id,
             'platform' => $request->validated('platform'),
-            'proof_url' => url(Storage::url($path)),
+            'proof_url' => $path,
         ]);
 
         return new ShoutoutClaimResource($claim);

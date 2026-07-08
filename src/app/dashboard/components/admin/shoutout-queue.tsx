@@ -46,14 +46,32 @@ export default function ShoutoutQueue() {
                 {claim.platform} · {shortDate(claim.created_at)}
               </p>
             </div>
-            <a
-              href={claim.proof_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="gotham text-[#cda873] hover:underline text-[14px] flex-1 truncate max-w-[320px]"
-            >
-              View proof ↗
-            </a>
+            <div className="flex items-center gap-4 flex-1 min-w-[200px]">
+              <a
+                href={claim.proof_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Open full-size proof"
+                className="block w-[72px] h-[72px] shrink-0 rounded-[12px] overflow-hidden border border-[var(--dash-border)] bg-[var(--dash-bg)]"
+              >
+                {/* Served from the public /storage symlink — no auth header needed. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={claim.proof_url}
+                  alt={`${claim.platform} proof from ${claim.user?.name ?? "client"}`}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
+              </a>
+              <a
+                href={claim.proof_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gotham text-[#cda873] hover:underline text-[14px] truncate max-w-[240px]"
+              >
+                View proof ↗
+              </a>
+            </div>
             {claim.status === "pending" ? (
               <div className="flex items-center gap-3 ml-auto">
                 <input

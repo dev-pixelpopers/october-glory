@@ -16,7 +16,7 @@ export default function LoginScreen() {
   // full sign-ins land on their dashboard.
   useEffect(() => {
     if (!me) return;
-    router.replace(me.is_guest || me.session_scope === "guest" ? "/booking" : "/dashboard");
+    router.replace(me.is_guest || me.session_scope === "guest" ? "/dashboard/book" : "/dashboard");
   }, [me, router]);
 
   return (

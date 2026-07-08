@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useSyncExternalStore } from "react";
 import {
   useForgotPassword,
   useGuestSession,
@@ -15,14 +15,19 @@ import { showToast } from "./toast";
 import { ApiError, getToken } from "@/lib/api/client";
 import OtpInput from "./otp-input";
 
+const noopSubscribe = () => () => {};
+
 /**
  * Renders children only for an authenticated user; otherwise shows an
  * inline login / register panel styled to the October Glory brand.
  */
 export default function AuthGate({ children }: { children: React.ReactNode }) {
   const { data: me, isLoading } = useMe();
+  // The auth decision reads localStorage, which the server can't see — show
+  // the loading state until hydration so server and client HTML match.
+  const hydrated = useSyncExternalStore(noopSubscribe, () => true, () => false);
 
-  if (getToken() && isLoading) {
+  if (!hydrated || (getToken() && isLoading)) {
     return (
       <div className="flex justify-center py-24">
         <p className="gotham text-white/60 text-[18px]">Loading…</p>
@@ -51,7 +56,7 @@ type Mode = "login" | "register" | "guest" | "otp" | "forgot" | "reset";
  * Modes:
  *  - login:    email/password, plus an "OR — Continue as Guest" option.
  *  - register: full sign-up; success transitions to OTP verification.
- *  - guest:    name + email only → immediate frictionless session → /booking.
+ *  - guest:    name + email only → immediate frictionless session → /dashboard/book.
  *  - otp:      6-slot code entry with a resend-countdown button.
  *  - forgot:   email entry → emails a 6-digit password-reset code.
  *  - reset:    reset code + new password → fresh signed-in session.
