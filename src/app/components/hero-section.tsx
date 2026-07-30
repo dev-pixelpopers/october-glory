@@ -75,8 +75,8 @@ export default function HeroSection() {
               clipPath: "inset(0% 100% 0% 0%)",
               transition: "clip-path 1s ease-in-out"
             }}>
-            <h1 className="cursive-heading text-center andrea text-[121.771px] text-black mb-[-25px]">More Than</h1>
-            <h2 className="valturin text-center text-[73.063px] text-black">a Salon Luxury Experience</h2>
+            <span className="cursive-heading text-center andrea text-[121.771px] text-black mb-[-25px]">Brooklyn<span className="text-[48px] text-black leading-[0.3]">'</span>s</span>
+            <h1 className="valturin text-center text-[73.063px] text-black">Luxury Hair Salon</h1>
           </div>
 
           <Link href="/dashboard/book" ref={buttonRef} className="book-btn flex mt-[20px] gap-[10px] items-center border-black border-1 text-black rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham opacity-0">

@@ -32,7 +32,7 @@ const cards: OfferCard[] = [
     title: "Wigs",
     subtitle: "Extensions",
     description:
-      "If You Want To Add Length, Thickness And Volume, Hair Extensions By Jhavuanna Will Be The Best You've Experienced In New York! Don't Forget About Our Wig Spa!",
+      "Experience smooth, sleek hair while preserving the health of your natural curls.",
   },
   {
     id: "silk",
@@ -44,7 +44,7 @@ const cards: OfferCard[] = [
     title: "Silk",
     subtitle: "Press",
     description:
-      'Your hair is cleansed and conditioned with our premier spa treatments. We will then "responsibly" press your tresses for a smooth, luxurious finish.',
+      "Looking for premium custom wigs in Brooklyn? We design, install, and maintain custom wigs tailored to your lifestyle and personal style.",
   },
 ];
 

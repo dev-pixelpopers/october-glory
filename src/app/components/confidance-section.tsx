@@ -78,18 +78,18 @@ export default function ConfidenceJourneySection() {
           >
             {/* Headings */}
             <div>
-              <h2 ref={heading1Ref} className="text-white text-[88px] andrea"
+              <span ref={heading1Ref} className="text-white text-[88px] andrea"
                 style={{
                   clipPath: "inset(0% 100% 0% 0%)"
-                }}>The Story</h2>
+                }}>Women Deserve</span>
             </div>
             <div className="pl-[140px]">
               <div className="mb-[40px]">
-                <h3 ref={heading2Ref} className="text-[#c1a073] text-[66px] valturin " style={{
+                <h2 ref={heading2Ref} className="text-[#c1a073] text-[66px] valturin " style={{
                   clipPath: "inset(0% 100% 0% 0%)"
                 }}>
-                  A Confidence Journey
-                </h3>
+                  A Luxury Experience 
+                </h2>
               </div>
 
               {/* Paragraph */}
@@ -98,10 +98,10 @@ export default function ConfidenceJourneySection() {
                   style={{
                     clipPath: "inset(0% 100% 0% 0%)"
                   }}>
-                  Jhavuanna Paterson Is An Artist, Scientist, And Engineer Wrapped
-                  Into A Neat Convenient Package. A Native Of Oakland, California
-                  And Known For Her Blessed Hands, Jhavuanna Always Knew That She
-                  Would Be A Driving Force In The Hair And Make-Up Industries.
+                  October Glory was created to redefine what a salon visit should feel like. 
+                  We believe luxury is more than beautiful interiors, it's about personalized attention, expert knowledge, healthy hair practices, and making every client feel seen, valued, and confident.
+                  Our salon proudly serves women throughout Brooklyn and surrounding New York communities, providing professional hair care rooted in education, integrity, and genuine connection.
+                  Every appointment is an opportunity to help you look and feel your absolute best.
                 </p>
               </div>
 

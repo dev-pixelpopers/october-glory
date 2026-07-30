@@ -96,20 +96,23 @@ export default function WelcomeSection() {
             clipPath: "inset(0% 100% 0% 0%)"
           }}>
             <p className="gotham text-white text-[20px] leading-[40px] capitalize font-light">
-              <strong>October Glory</strong> Salon Is A Luxury Hair Salon Located
+              {/* <strong>October Glory</strong> Salon Is A Luxury Hair Salon Located
               In Brooklyn, Founded By The Talented Hair Artist{" "}
               <strong>Jhavuanna Paterson</strong>. We Specialize In Precision Hair
               Cutting, Expert Styling, Detailed Highlighting, And Customized Hair
               Services Designed To Elevate Your Look And Confidence. Our Mission
               Is To Provide Every Guest With A Refined, Personalized Salon
-              Experience That Exceeds Expectations
+              Experience That Exceeds Expectations */}
+              Finding the right stylist means finding someone who understands your hair, your lifestyle, and your goals. At October Glory, we believe every appointment should leave you feeling confident, cared for, and empowered.
+              Located in the heart of Brooklyn, our salon provides a welcoming environment where luxury meets expertise. Whether you're maintaining healthy natural hair, booking a signature silk press, refreshing your color, investing in custom wigs in Brooklyn, or treating your scalp to professional care, every service is personalized to your unique hair journey.
+
             </p>
 
             <button className="book-btn flex gap-[10px] items-center text-white rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham">
               <span className="btn-icon rotate-305">
                 <img src="/images/btn-arrow.svg" width="53px" height="53px" />
               </span>
-              <span className="underline">More About us</span>
+              <span className="underline">Start with a Consultation</span>
             </button>
           </div>
         </div>
