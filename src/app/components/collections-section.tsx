@@ -236,7 +236,7 @@ export default function CollectionsSection() {
             Explore Curated Collections Designed For Every Mood, Lifestyle, And
             Finish.
           </p>
-          <button className="mt-6 flex items-center gap-4 group">
+          <a className="mt-6 flex items-center gap-4 group" href="/shop">
             <span className="w-12 h-12 rounded-full border border-gray-400 flex items-center justify-center text-gray-300 transition-colors duration-300 group-hover:bg-white group-hover:text-black">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -256,7 +256,7 @@ export default function CollectionsSection() {
             <span className="text-white gotham text-[16px] uppercase tracking-wider">
               Learn More
             </span>
-          </button>
+          </a>
         </div>
       </div>
     </section>

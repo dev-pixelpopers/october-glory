@@ -27,6 +27,11 @@ export interface Product {
   productCta: string;
   productCategory: string;
   productTags: ProductTag[];
+  /**
+   * Marks a product for the featured slot in the full-screen menu's Shop
+   * panel. Exactly two products should carry this — the panel shows two.
+   */
+  showcase?: boolean;
 }
 
 const WIG_IMAGES = [
@@ -49,6 +54,7 @@ export const products: Product[] = [
     productCta: "See Options",
     productCategory: "Bundles",
     productTags: ["new", "styles"],
+    showcase: true,
   },
   {
     productId: "brooklyn-lace-wig",
@@ -61,6 +67,7 @@ export const products: Product[] = [
     productCta: "See Options",
     productCategory: "Wigs",
     productTags: ["hot", "wavy"],
+    showcase: true,
   },
   {
     productId: "glory-closure-piece",

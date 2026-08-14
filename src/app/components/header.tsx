@@ -55,7 +55,7 @@ export default function Header({ theme = "light", bg = "transparent" }: { theme?
           </div>
 
           {/* --- COLUMN 2: Logo --- */}
-          <div className="flex justify-center">
+          <div className="flex justify-center z-10">
             <a href="/" className="flex justify-center">
               <img
                 src="/images/logo.svg"

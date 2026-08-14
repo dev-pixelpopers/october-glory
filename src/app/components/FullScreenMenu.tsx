@@ -1,22 +1,43 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import MenuPreview from './menu/menu-preview';
+import { PRIMARY_LINKS, resolveActiveKey } from './menu/menu-data';
 
 interface FullScreenMenuProps {
   isOpen: boolean;
 }
 
 const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
+  // The nav item matching the page we're currently on.
+  const routeKey = resolveActiveKey(usePathname());
+
+  // Which nav item the preview panel is showing. Once hovered it stays put —
+  // it does not revert when the pointer leaves.
+  const [activeKey, setActiveKey] = useState(routeKey);
+
+  // Reset to the current page's panel when the menu closes, so it always
+  // reopens on the active page. Adjusted during render rather than in an
+  // effect, per React's "adjusting state when props change" pattern.
+  const [wasOpen, setWasOpen] = useState(isOpen);
+  if (wasOpen !== isOpen) {
+    setWasOpen(isOpen);
+    if (!isOpen) setActiveKey(routeKey);
+  }
+
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
+
+  /** Hover and keyboard focus both drive the preview. */
+  const activate = (key: string) => ({
+    onMouseEnter: () => setActiveKey(key),
+    onFocus: () => setActiveKey(key),
+  });
 
   return (
     <div
@@ -29,98 +50,55 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
         pointerEvents: isOpen ? 'all' : 'none',
       }}
     >
-      <div className="w-full px-[120px] pt-[200px] pb-[40px] max-w-[1600px] mx-auto">
+      {/* Sized to sit inside one viewport: the header clears the top, and the
+          two columns are vertically centred in what's left. */}
+      <div className="min-h-full w-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-[100px] pt-[120px] pb-10 flex items-center">
 
-        {/* Main Content Area */}
-        <div className="grid grid-cols-2 gap-20">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-12 lg:gap-14 xl:gap-20 items-center">
 
-          {/* Left Column: Primary Navigation */}
+          {/* Left Column: navigation */}
           <nav>
-            <ul className="list-none p-0 m-0 w-3/4">
-              {['Home', 'About Us', 'Lookbook', 'Glory News', 'Covid-19', 'Contact'].map((item, index) => {
-                const href = item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '-')}`;
-                return (
-                  <li
-                    key={index}
-                    className="mb-6 border-b border-white/80 pb-2"
-                    style={{
-                      opacity: isOpen ? 1 : 0,
-                      transform: isOpen ? 'translateY(0px)' : 'translateY(30px)',
-                      transition: `opacity 0.5s ease ${0.3 + index * 0.08}s, transform 0.5s ease ${0.3 + index * 0.08}s`,
-                    }}
+            <ul className="list-none p-0 m-0 w-full">
+              {PRIMARY_LINKS.map((link, index) => (
+                <li
+                  key={link.key}
+                  className="border-b border-white/70"
+                  style={{
+                    opacity: isOpen ? 1 : 0,
+                    transform: isOpen ? 'translateY(0px)' : 'translateY(30px)',
+                    transition: `opacity 0.5s ease ${0.3 + index * 0.07}s, transform 0.5s ease ${0.3 + index * 0.07}s`,
+                  }}
+                >
+                  <a
+                    href={link.href}
+                    {...activate(link.key)}
+                    className={`flex items-center gap-3 py-3 xl:py-4 text-white no-underline font-serif text-[30px] sm:text-[34px] xl:text-[40px] leading-[1.2] transition-all duration-300 hover:translate-x-2 ${
+                      activeKey === link.key ? 'opacity-100' : 'opacity-55'
+                    }`}
                   >
-                    <a
-                      href={href}
-                      className="text-white no-underline font-serif text-[46px] hover:opacity-70 transition-opacity"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                );
-              })}
+                    <span
+                      className={`h-[1px] bg-white transition-all duration-300 ${
+                        activeKey === link.key ? 'w-[22px]' : 'w-0'
+                      }`}
+                    />
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
 
-          {/* Right Column: Services & Contact Info */}
+          {/* Right Column: hover preview. Hidden below lg — it is hover-driven,
+              and every destination is already reachable from the list. */}
           <div
+            className="hidden lg:block"
             style={{
               opacity: isOpen ? 1 : 0,
               transform: isOpen ? 'translateY(0px)' : 'translateY(30px)',
               transition: 'opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s',
             }}
           >
-            <h2 className="font-serif text-[46px] mt-0 mb-8 font-normal text-white">
-              <a href="/services">Services</a>
-            </h2>
-
-            <div className="grid grid-cols-2 gap-12 mb-16">
-              <ul className="list-none p-0 m-0">
-                {['Natural Styles', 'Relaxers And Colors', 'Weaves And Extensions', 'Haircuts And Styles'].map((item, index) => (
-                  <li key={index} className="mb-4 border-b border-white/50 pb-2">
-                    <a
-                      href={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="text-white no-underline text-[18px] hover:opacity-70 transition-opacity"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <ul className="list-none p-0 m-0">
-                {['Treatments', 'Glorious Packages', 'Bridal Packages'].map((item, index) => (
-                  <li key={index} className="mb-4 border-b border-white/50 pb-2">
-                    <a
-                      href={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="text-white no-underline text-[18px] hover:opacity-70 transition-opacity"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mt-12 w-2/3">
-              <h3 className="text-[18px] font-normal border-b border-white/50 pb-2 mb-6 inline-block w-full">
-                By Appointment Only
-              </h3>
-
-              <div>
-                <p className="flex items-center gap-4 mb-4 text-[16px]">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.864-1.051l-3.219-.536a2.25 2.25 0 00-2.15.586l-1.332 1.332c-1.25-.56-2.43-1.28-3.486-2.136a13.31 13.31 0 01-2.136-3.486l1.332-1.332a2.25 2.25 0 00.586-2.15l-.536-3.22C7.716 2.601 7.266 2.25 6.75 2.25H5.372c-1.12 0-2.072.84-2.146 1.954C3.064 4.887 2.25 5.803 2.25 6.75z" />
-                  </svg>
-                  917 - 905 - 6552
-                </p>
-                <p className="flex items-center gap-4 mb-4 text-[16px]">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                  </svg>
-                  1381 Bedford Avenue Brooklyn, NY 11216
-                </p>
-              </div>
-            </div>
+            <MenuPreview activeKey={activeKey} />
           </div>
 
         </div>

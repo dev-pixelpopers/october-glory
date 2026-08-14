@@ -36,7 +36,7 @@ export default function ShopHero() {
       className="relative w-full h-screen flex items-center justify-center overflow-hidden"
       style={{
         backgroundImage:
-          "url('/images/shop-bg.png')",
+          "linear-gradient(180deg, rgba(27,27,27,0.6) 0%, rgba(27,27,27,0.85) 100%),url('/images/shop-bg.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -46,7 +46,7 @@ export default function ShopHero() {
 
       <div className="relative z-10 text-center flex flex-col items-center px-6">
         <div ref={headingRef}>
-          <h1 className="andrea text-[120px] leading-[2] text-white mb-0 tracking-wide">
+          <h1 className="andrea text-[80px] leading-[2] text-white mb-0 tracking-wide">
             Shop
           </h1>
           <h2 className="valturin text-[80px] text-[#ccb884] mt-[-10px] tracking-widest">

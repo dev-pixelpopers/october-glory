@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-export default function GloriousPackagesHero() {
+export default function MaintenancePackagesHero() {
   const headingRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
@@ -46,7 +46,7 @@ export default function GloriousPackagesHero() {
       <div className="relative z-10 text-center flex flex-col items-center px-6">
         <div ref={headingRef}>
           <h1 className="andrea text-[80px] leading-[2] text-white mb-0 tracking-wide">
-            Glorious
+            MAINTENANCE
           </h1>
           <h2 className="valturin text-[80px] text-[#ccb884] mt-[-10px] tracking-widest">
             Packages

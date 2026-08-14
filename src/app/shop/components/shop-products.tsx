@@ -67,7 +67,7 @@ export default function ShopProducts() {
     100 - ((priceRange[1] - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
 
   return (
-    <section className="relative w-full bg-[#1B1B1B] pt-[160px] pb-[160px] px-[110px]">
+    <section className="shop-products-grid relative w-full bg-[#1B1B1B] pt-[160px] pb-[160px] px-[110px]">
       {/* Header Titles */}
       <div className="text-center mb-20">
         <h2 className="text-white andrea text-[88px]">All Products</h2>
@@ -224,7 +224,10 @@ export default function ShopProducts() {
          {hasMore && (
         <div className="flex justify-center">
           <button
-            onClick={() => setVisibleRows((rows) => rows + 1)}
+            onClick={(e) => {
+              e.currentTarget.blur();
+              setVisibleRows((rows) => rows + 1);
+            }}
             className="flex items-center gap-4 group"
           >
             <span className="w-12 h-12 rounded-full border border-gray-400 flex items-center justify-center text-gray-300 transition-colors duration-300 group-hover:bg-white group-hover:text-black">

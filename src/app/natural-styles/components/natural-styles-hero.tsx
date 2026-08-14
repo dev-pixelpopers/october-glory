@@ -49,7 +49,7 @@ export default function NaturalStylesHero() {
 
       <div className="relative z-10 text-center flex flex-col items-center px-6">
         <div ref={headingRef}>
-          <h1 className="andrea text-[120px] leading-[2] text-white mb-0 tracking-wide">
+          <h1 className="andrea text-[80px] leading-[2] text-white mb-0 tracking-wide">
             Natural
           </h1>
           <h2 className="valturin text-[80px] text-[#ccb884] mt-[-10px] tracking-widest">

@@ -75,8 +75,6 @@ export default function OfferSection() {
       ref={containerRef}
       className="relative w-full min-h-screen bg-[#151515] pt-[250px] pb-[100px] px-[110px] flex flex-col items-center overflow-hidden"
     >
-      {/* Background Dim Image Layer (Optional) */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none bg-[url('/images/bg-faint.png')] bg-cover bg-center"></div>
       <div className="absolute inset-0 z-10">
         <img ref={imageRef} src="/images/servicce.png" alt="" className="object-contain object-top" />
       </div>

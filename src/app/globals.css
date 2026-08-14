@@ -201,6 +201,45 @@ form textarea::Placeholder {
   color: #fff;
 }
 
+/* --- Full-screen menu hover preview --------------------------------------
+   The panel is re-keyed on each hover so this enter animation replays,
+   giving the swap a soft rise-and-fade rather than a hard cut. */
+@keyframes menuPreviewIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-preview-enter {
+  animation: menuPreviewIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-preview-enter {
+    animation: none;
+  }
+}
+
+/* --- Service detail scroll reveals ---------------------------------------
+   Elements marked [data-reveal] inside a .reveal-scope section start hidden
+   and are animated in by the useReveal hook. Anyone who has asked for
+   reduced motion sees them immediately instead. */
+.reveal-scope [data-reveal] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-scope [data-reveal] {
+    opacity: 1;
+  }
+}
+
 
 /* --- MOBILE RESPONSIVE CSS --- */
 @media (max-width: 768px) {
@@ -259,6 +298,13 @@ form textarea::Placeholder {
 
 .dash-theme-light .dash-logo {
   filter: none;
+}
+
+/* Filtering/pagination adds or removes many product cards above the fold
+   at once. Without this, Chrome's scroll anchoring can pick a bad anchor
+   node during that reflow and jump the page down toward the footer. */
+.shop-products-grid {
+  overflow-anchor: none;
 }
 
 /* --- Shop price range slider --------------------------------------------

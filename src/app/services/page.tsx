@@ -10,34 +10,28 @@ export const metadata = {
   alternates: { canonical: "/services" },
 };
 
+/**
+ * Three top-level services. Packages are a separate offering and live on
+ * their own pages, not here.
+ *
+ * Wigs & Extensions and Silk Press each group category pages beneath them;
+ * those groupings live in the `*Children` exports of their data files and are
+ * listed on the service pages themselves.
+ */
 const services = [
     {
-        title: "Natural Styles",
-        slug: "natural-styles",
-        image: "/images/naturalStyle1.webp",
-        description:
-            "Enhance your natural beauty with protective and elegant styling designed for everyday confidence.",
-    },
-    {
-        title: "Relaxers And Colors",
-        slug: "relaxers-and-colors",
-        image: "/images/relaxes1.webp",
-        description:
-            "Smooth relaxers and rich color transformations tailored to your personality and style.",
-    },
-    {
-        title: "Weaves And Extensions",
-        slug: "weaves-and-extensions",
+        title: "Wigs & Extensions",
+        slug: "wigs-and-extensions",
         image: "/images/waves1.webp",
         description:
-            "Premium extensions and weaves for volume, length, and a complete transformation.",
+            "Custom units and sew-in installs built on the health of your natural hair — and finished with a cut made for your face.",
     },
     {
-        title: "Haircuts And Styles",
-        slug: "haircuts-and-styles",
-        image: "/images/haircuts1.webp",
+        title: "Silk Press",
+        slug: "silk-press",
+        image: "/images/SilkPress-01.webp",
         description:
-            "Precision haircuts and modern styling crafted for every face shape and vibe.",
+            "Sleek, smooth and salon-fresh — achieved with heat, tension and technique instead of chemicals.",
     },
     {
         title: "Treatments",
@@ -45,20 +39,6 @@ const services = [
         image: "/images/hairsclapimg.webp",
         description:
             "Deep nourishment and repair treatments that restore health, shine, and strength.",
-    },
-    {
-        title: "Glorious Packages",
-        slug: "glorious-packages",
-        image: "/images/gloreus1.webp",
-        description:
-            "Luxury bundled packages combining multiple premium salon services for complete care.",
-    },
-    {
-        title: "Bridal Packages",
-        slug: "bridal-packages",
-        image: "/images/bridal1.webp",
-        description:
-            "Exclusive bridal experience ensuring flawless hair styling for your special day.",
     },
 ];
 
@@ -115,7 +95,7 @@ export default function ServicesPage() {
 
                 <div className="relative z-10 text-center flex flex-col items-center px-6">
                     <div>
-                        <h1 className="andrea text-[120px] leading-[2] text-white mb-0 tracking-wide">
+                        <h1 className="andrea text-[80px] leading-[2] text-white mb-0 tracking-wide">
                             Service
                         </h1>
                         <h2 className="valturin text-[80px] text-[#ccb884] mt-[-10px] tracking-widest">
@@ -169,7 +149,7 @@ export default function ServicesPage() {
                     {services.map((service, index) => (
                         <Link
                             key={service.slug}
-                            href={`/services/${service.slug}`}
+                            href={`/${service.slug}`}
                             className="group border border-white/20 rounded-[30px] overflow-hidden bg-gradient-to-b from-transparent to-white/5 hover:to-white/10 transition-all duration-500 relative"
                         >
 
