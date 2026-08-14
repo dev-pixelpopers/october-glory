@@ -150,7 +150,7 @@ function VideoTile({ video }: { video: PreviewVideo }) {
 
   const play = () => {
     // play() rejects if the browser blocks it; nothing to recover, so ignore.
-    ref.current?.play().catch(() => {});
+    ref.current?.play().catch(() => { });
   };
 
   const stop = () => {
@@ -388,7 +388,7 @@ function CardsPanel({
             <Frame
               src={card.image}
               alt={card.title}
-              className="w-[92px] shrink-0 aspect-[3/4] rounded-[13px]"
+              className="w-[150px] shrink-0 aspect-[3/4] rounded-[13px]"
             />
 
             <div className="min-w-0 flex flex-col">
