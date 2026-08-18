@@ -15,11 +15,13 @@ export default function Footer() {
           <div className="flex flex-col items-center justify-center md:border-r border-gray-200 md:pr-10 lg:pr-16 pb-8 md:pb-0 border-b md:border-b-0">
             {/* Logo Placeholder */}
             <div className="mb-8 w-[285px] h-[135px]">
+              <a href='/'>
               <img
                 src="/images/logo.svg"
                 alt="October Glory Logo"
                 className="w-full h-full object-contain object-left"
               />
+              </a>
             </div>
 
             {/* Socials */}

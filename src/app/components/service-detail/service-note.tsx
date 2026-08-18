@@ -3,18 +3,26 @@
 import React from "react";
 import { useReveal } from "./use-reveal";
 import type { ServiceNote } from "@/data/services/types";
+import { tone as palette, type Tone } from "./tone";
 
 /**
  * Editorial block for the "why this matters" explainers — the trim rationale
  * on Silk Press and Rod Set, and anything similar on other services.
  */
-export default function ServiceNoteSection({ note }: { note: ServiceNote }) {
+export default function ServiceNoteSection({
+  note,
+  tone = "dark",
+}: {
+  note: ServiceNote;
+  tone?: Tone;
+}) {
   const scope = useReveal<HTMLElement>();
+  const c = palette[tone];
 
   return (
     <section
       ref={scope}
-      className="reveal-scope relative w-full bg-[#1B1B1B] text-white py-[100px] md:py-[140px] px-[24px] md:px-[110px] overflow-hidden"
+      className={`reveal-scope relative w-full ${c.section} py-[100px] md:py-[140px] px-[24px] md:px-[110px] overflow-hidden`}
     >
       {/* Oversized quote mark */}
       <span
@@ -28,7 +36,7 @@ export default function ServiceNoteSection({ note }: { note: ServiceNote }) {
         {note.eyebrow && (
           <p
             data-reveal
-            className="gotham text-[#ccb884] text-[13px] md:text-[14px] tracking-[6px] uppercase mb-5"
+            className={`gotham ${c.eyebrow} text-[13px] md:text-[14px] tracking-[6px] uppercase mb-5`}
           >
             {note.eyebrow}
           </p>
@@ -37,7 +45,7 @@ export default function ServiceNoteSection({ note }: { note: ServiceNote }) {
         <h2
           data-reveal
           data-reveal-delay="1"
-          className="valturin text-[36px] md:text-[54px] leading-[1.2] text-white"
+          className={`valturin text-[36px] md:text-[54px] leading-[1.2] ${c.heading}`}
         >
           {note.heading}
         </h2>
@@ -54,7 +62,7 @@ export default function ServiceNoteSection({ note }: { note: ServiceNote }) {
               key={i}
               data-reveal
               data-reveal-delay={String(3 + i)}
-              className="gotham text-[16px] md:text-[19px] leading-[32px] md:leading-[36px] text-white/70 font-light"
+              className={`gotham text-[16px] md:text-[19px] leading-[32px] md:leading-[36px] ${c.body} font-light`}
             >
               {paragraph}
             </p>

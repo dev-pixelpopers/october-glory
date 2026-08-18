@@ -69,7 +69,7 @@ export default function ServiceHero({ service, parent }: Props) {
       <div className="absolute top-[140px] left-[40px] md:left-[80px] w-[70px] h-[70px] border-t border-l border-[#ccb884]/30" />
       <div className="absolute bottom-[70px] right-[40px] md:right-[80px] w-[70px] h-[70px] border-b border-r border-[#ccb884]/30" />
 
-      <div className="relative z-10 text-center flex flex-col items-center px-6 py-[160px]">
+      <div className="relative z-10 text-center flex flex-col items-center">
         {/* Breadcrumb — a top-level service shows only "Services". */}
         <div
           ref={crumbRef}
@@ -86,7 +86,7 @@ export default function ServiceHero({ service, parent }: Props) {
           {parent && (
             <>
               <Link
-                href={`/${parent.slug}`}
+                href={`/services/${parent.slug}`}
                 className="hover:text-[#ccb884] transition-colors duration-300"
               >
                 {parent.label}
@@ -99,12 +99,13 @@ export default function ServiceHero({ service, parent }: Props) {
         </div>
 
         <div ref={headingRef}>
-          <h1 className="andrea text-[64px] md:text-[110px] leading-[1.4] md:leading-[1.5] text-white tracking-wide">
+          <h1 className="flex flex-col andrea text-[64px] md:text-[110px] leading-[1.4] md:leading-[1.5] text-white tracking-wide">
             {service.hero.display}
-          </h1>
-          <p className="valturin text-[42px] md:text-[72px] text-[#ccb884] mt-[-14px] tracking-widest">
+          
+          <span className="valturin text-[42px] md:text-[72px] text-[#ccb884] mt-[-14px] tracking-widest">
             {service.hero.script}
-          </p>
+          </span>
+          </h1>
         </div>
 
         <div

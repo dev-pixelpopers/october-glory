@@ -1,45 +1,57 @@
-import { naturalStyles } from "./natural-styles";
-import type { ServiceCategory, ServiceDetail } from "./types";
+import { serviceParents } from "./parents";
+import { serviceChildren } from "./children";
+import type { ServiceChild, ServiceParent } from "./types";
 
 export * from "./types";
+export { serviceParents } from "./parents";
+export { serviceChildren } from "./children";
 
-/**
- * Every category that has inner service pages. Adding a new category (e.g.
- * treatments) is two steps: write its data file, then add it here — the
- * route file and the detail template need no changes.
- */
-export const serviceCategories: ServiceCategory[] = [naturalStyles];
+/** Every main service, in display order. */
+export const getParents = (): ServiceParent[] => serviceParents;
 
-export function getCategory(categorySlug: string): ServiceCategory | undefined {
-  return serviceCategories.find((c) => c.slug === categorySlug);
-}
+export const getParent = (slug: string): ServiceParent | undefined =>
+  serviceParents.find((parent) => parent.slug === slug);
 
-export function getService(
-  categorySlug: string,
-  serviceSlug: string
-): ServiceDetail | undefined {
-  return getCategory(categorySlug)?.services.find((s) => s.slug === serviceSlug);
-}
+/** The children belonging to one main service, in the order declared. */
+export const getChildren = (parentSlug: string): ServiceChild[] =>
+  serviceChildren.filter((child) => child.parent === parentSlug);
 
-/** Slugs for `generateStaticParams` on a category's `[slug]` route. */
-export function getServiceSlugs(categorySlug: string): { slug: string }[] {
-  return (
-    getCategory(categorySlug)?.services.map((s) => ({ slug: s.slug })) ?? []
+export const getChild = (
+  parentSlug: string,
+  slug: string
+): ServiceChild | undefined =>
+  serviceChildren.find(
+    (child) => child.parent === parentSlug && child.slug === slug
   );
-}
 
-/**
- * The other services in the same category, used for the "explore more"
- * strip at the bottom of a detail page.
- */
-export function getSiblingServices(
-  categorySlug: string,
-  serviceSlug: string
-): ServiceDetail[] {
-  return (
-    getCategory(categorySlug)?.services.filter((s) => s.slug !== serviceSlug) ??
-    []
-  );
-}
+/** `generateStaticParams` for /services/[service]. */
+export const parentParams = () =>
+  serviceParents.map((parent) => ({ service: parent.slug }));
 
-export { naturalStyles };
+/** `generateStaticParams` for /services/[service]/[slug]. */
+export const childParams = () =>
+  serviceChildren.map((child) => ({ service: child.parent, slug: child.slug }));
+
+/** Canonical path for a service, parent or child. */
+export const servicePath = (service: ServiceParent | ServiceChild): string =>
+  "parent" in service
+    ? `/services/${service.parent}/${service.slug}`
+    : `/services/${service.slug}`;
+
+/** Cards for a "keep exploring" strip: the children of a main service. */
+export const childCards = (parentSlug: string) =>
+  getChildren(parentSlug).map((child) => ({
+    title: child.cardTitle,
+    image: child.cardImage,
+    href: servicePath(child),
+  }));
+
+/** Cards for a child page: its siblings, plus nothing else. */
+export const siblingCards = (parentSlug: string, slug: string) =>
+  getChildren(parentSlug)
+    .filter((child) => child.slug !== slug)
+    .map((child) => ({
+      title: child.cardTitle,
+      image: child.cardImage,
+      href: servicePath(child),
+    }));

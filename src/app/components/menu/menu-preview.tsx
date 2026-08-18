@@ -56,7 +56,7 @@ function PanelHeader({
       </h3>
       <div className="w-[70px] h-[1px] bg-white/35 mt-3 xl:mt-4" />
       {body && (
-        <p className="gotham text-[13px] xl:text-[14px] leading-[24px] xl:leading-[26px] text-white/70 font-light mt-3 xl:mt-4 max-w-[440px]">
+        <p className="gotham text-[13px] xl:text-[14px] leading-[24px] xl:leading-[26px] text-white/70 font-light mt-3 xl:mt-4">
           {body}
         </p>
       )}
@@ -136,7 +136,9 @@ function LookbookPanel({
         title={preview.title}
         body={preview.body}
       />
-      <div className="grid grid-cols-2 gap-4">
+      {/* Wider gap and trailing padding give each tile's offset frame room —
+          at gap-4 the frames overlapped the neighbouring reel. */}
+      <div className="grid grid-cols-2 gap-8 pr-3 pb-3">
         {preview.videos.map((video) => (
           <VideoTile key={video.src} video={video} />
         ))}
@@ -161,33 +163,41 @@ function VideoTile({ video }: { video: PreviewVideo }) {
   };
 
   return (
-    <div
-      onMouseEnter={play}
-      onMouseLeave={stop}
-      className="group/reel relative rounded-[18px] overflow-hidden border border-white/15 hover:border-white/45 transition-colors duration-300"
-    >
-      <video
-        ref={ref}
-        src={video.src}
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        className="w-full aspect-[4/5] max-h-[46vh] object-cover transition-transform duration-700 group-hover/reel:scale-105"
-      />
+    // The frame sits on this outer wrapper rather than the tile itself — the
+    // tile clips its overflow to keep the video inside its rounded corners,
+    // which would cut the offset frame off.
+    <div className="relative">
+      {/* Offset frame, matching the About Us panel */}
+      <div className="absolute -inset-3 border border-white/25 rounded-[22px] translate-x-3 translate-y-3 pointer-events-none" />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+      <div
+        onMouseEnter={play}
+        onMouseLeave={stop}
+        className="group/reel relative rounded-[18px] overflow-hidden border border-white/15 hover:border-white/45 transition-colors duration-300"
+      >
+        <video
+          ref={ref}
+          src={video.src}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="w-full aspect-[4/5] max-h-[46vh] object-cover transition-transform duration-700 group-hover/reel:scale-105"
+        />
 
-      {/* Play affordance, fades out while the reel is playing */}
-      <span className="absolute inset-0 flex items-center justify-center opacity-100 group-hover/reel:opacity-0 transition-opacity duration-300">
-        <span className="w-[38px] h-[38px] rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white text-[12px] pl-[2px]">
-          ▶
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+
+        {/* Play affordance, fades out while the reel is playing */}
+        <span className="absolute inset-0 flex items-center justify-center opacity-100 group-hover/reel:opacity-0 transition-opacity duration-300">
+          <span className="w-[38px] h-[38px] rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white text-[12px] pl-[2px]">
+            ▶
+          </span>
         </span>
-      </span>
 
-      <p className="absolute bottom-3 left-4 right-4 gotham text-[12px] tracking-[1px] text-white truncate">
-        {video.label}
-      </p>
+        <p className="absolute bottom-3 left-4 right-4 gotham text-[12px] tracking-[1px] text-white truncate">
+          {video.label}
+        </p>
+      </div>
     </div>
   );
 }
@@ -310,7 +320,7 @@ function ContactPanel({
   preview: Extract<Preview, { variant: "contact" }>;
 }) {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-12">
       {/* Row 1 — copy left, image right, matching the About Us layout */}
       <div className="flex gap-6 items-center">
         <div className="min-w-0">
@@ -326,11 +336,17 @@ function ContactPanel({
           </p>
         </div>
 
-        <Frame
-          src={preview.image}
-          alt={preview.title}
-          className="w-[42%] shrink-0 aspect-[4/3] max-h-[32vh] rounded-[18px]"
-        />
+        {/* `mr-3` leaves room for the frame's outward offset so it doesn't
+            clip against the panel edge. */}
+        <div className="relative w-[42%] shrink-0 mr-3">
+          {/* Offset frame, matching the About Us panel */}
+          <div className="absolute -inset-3 border border-white/25 rounded-[22px] translate-x-3 translate-y-3 pointer-events-none" />
+          <Frame
+            src={preview.image}
+            alt={preview.title}
+            className="aspect-[4/3] max-h-[32vh] rounded-[18px]"
+          />
+        </div>
       </div>
 
       {/* Row 2 — appointment details */}

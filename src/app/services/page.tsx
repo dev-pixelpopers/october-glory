@@ -2,6 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import InnerPageHero from "../components/inner-page-hero";
+import {
+  getChildren,
+  getParents,
+  servicePath,
+} from "@/data/services";
 
 export const metadata = {
   title: "Our Services | October Glory",
@@ -10,116 +16,38 @@ export const metadata = {
   alternates: { canonical: "/services" },
 };
 
-/**
- * Three top-level services. Packages are a separate offering and live on
- * their own pages, not here.
- *
- * Wigs & Extensions and Silk Press each group category pages beneath them;
- * those groupings live in the `*Children` exports of their data files and are
- * listed on the service pages themselves.
- */
-const services = [
-    {
-        title: "Wigs & Extensions",
-        slug: "wigs-and-extensions",
-        image: "/images/waves1.webp",
-        description:
-            "Custom units and sew-in installs built on the health of your natural hair — and finished with a cut made for your face.",
-    },
-    {
-        title: "Silk Press",
-        slug: "silk-press",
-        image: "/images/SilkPress-01.webp",
-        description:
-            "Sleek, smooth and salon-fresh — achieved with heat, tension and technique instead of chemicals.",
-    },
-    {
-        title: "Treatments",
-        slug: "treatments",
-        image: "/images/hairsclapimg.webp",
-        description:
-            "Deep nourishment and repair treatments that restore health, shine, and strength.",
-    },
-];
+/** The five main services, straight from the data file. */
+const services = getParents();
 
-const stylingOptions = [
-    {
-        title: "Cut & Finish",
-        description:
-            "Whether it’s time for something totally new or you just need some style maintenance our professionalism and attention to detail remains consistent.",
-    },
-    {
-        title: "Extensions / Wigs",
-        description:
-            "If you want to add length, thickness and volume, hair extensions by Jhavuanna will be the best you've experienced in New York! Don't forget about our Wig Spa!",
-    },
-    {
-        title: "Silk Press",
-        description:
-            "Your hair is cleansed and conditioned with our premier spa treatments. We will then responsibly press your tresses for a smooth, luxurious finish.",
-    },
-    {
-        title: "Treatments",
-        description:
-            "All of our treatments are designed to bring out the best from your hair while maintaining your ethical beliefs. All of our products are free from parabens, synthetic fragrance, SLS and carcinogens.",
-    },
-    {
-        title: "Glorious Coloring",
-        description:
-            "Get a sun-kissed look with a full head of foils. Our talented Senior Hair Stylists & Colorist understand how to blend and interconnect different highlight patterns with the base.",
-    },
-    {
-        title: "Blow Dry",
-        description:
-            "Treat your hair to a professional hair styling for any occasion. Book your blow dry service and enjoy an amazing shampoo, relaxing head massage and blow dry.",
-    },
-];
+/**
+ * Every child service, grouped under the main service it belongs to. Adding a
+ * child in `children.ts` makes it appear here — nothing to maintain twice.
+ */
+const signatureServices = services.flatMap((parent) =>
+    getChildren(parent.slug).map((child) => ({
+        title: child.cardTitle,
+        href: servicePath(child),
+        parent: parent.cardTitle,
+        description: child.hero.intro,
+    }))
+);
 
 export default function ServicesPage() {
     return (
         <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">
             <Header theme="dark" />
 
-            {/* --- About Us Page Hero --- */}
-            <section
-                className="relative w-full h-screen flex items-center justify-center overflow-hidden"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(180deg, rgba(27,27,27,0.6) 0%, rgba(27,27,27,0.85) 100%), url('/images/servicce.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                }}
-            >
-                {/* Subtle animated grain overlay */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]" />
-
-                <div className="relative z-10 text-center flex flex-col items-center px-6">
-                    <div>
-                        <h1 className="andrea text-[80px] leading-[2] text-white mb-0 tracking-wide">
-                            Service
-                        </h1>
-                        <h2 className="valturin text-[80px] text-[#ccb884] mt-[-10px] tracking-widest">
-                            Choose Your Service
-                        </h2>
-                    </div>
-
-                    {/* Gold divider */}
-                    <div
-                        className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent my-8 origin-center"
-                    />
-
-                    <p className="gotham text-white/70 text-[20px] leading-[36px] max-w-[600px] font-light"
-                    >
-                        Each of our services are tailored to our client’s personality and style. We pride ourselves in providing an inspiring, relaxed experience offering the latest in hair trends.
-                    </p>
-                </div>
-            </section>
+            <InnerPageHero
+                title="Choose"
+                subtitle="Our Premium Service"
+                description="Each of our services are tailored to our client’s personality and style. We pride ourselves in providing an inspiring, relaxed experience offering the latest in hair trends."
+            />
             <section className="min-h-screen bg-[#1B1B1B] text-white px-[60px] py-[150px] relative overflow-hidden">
 
 
 
 
-                <div className="relative z-10 mb-24 max-w-4xl pt-10">
+                {/* <div className="relative z-10 mb-24 max-w-4xl pt-10">
                     <h2 className="text-[70px] valturin text-[#C0A062] leading-[80px]">
                         Our Premium Services
                     </h2>
@@ -128,7 +56,7 @@ export default function ServicesPage() {
                         Explore our full range of luxury hair services designed to elevate
                         your beauty, confidence, and personal style.
                     </p>
-                </div>
+                </div> */}
 
                 {/* STYLING OPTIONS HEADING */}
                 <div className="relative z-10 mb-16">
@@ -137,7 +65,7 @@ export default function ServicesPage() {
                     </span>
 
                     <h3 className="text-[60px] valturin mt-4 leading-[70px]">
-                        Styling Options
+                        Signature Services
                     </h3>
 
                     <div className="w-[120px] h-[2px] bg-[#C0A062] mt-6"></div>
@@ -149,15 +77,15 @@ export default function ServicesPage() {
                     {services.map((service, index) => (
                         <Link
                             key={service.slug}
-                            href={`/${service.slug}`}
+                            href={servicePath(service)}
                             className="group border border-white/20 rounded-[30px] overflow-hidden bg-gradient-to-b from-transparent to-white/5 hover:to-white/10 transition-all duration-500 relative"
                         >
 
                             {/* IMAGE */}
                             <div className="relative h-120 overflow-hidden">
                                 <Image
-                                    src={service.image}
-                                    alt={service.title}
+                                    src={service.cardImage}
+                                    alt={service.cardTitle}
                                     fill
                                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                                 />
@@ -176,12 +104,12 @@ export default function ServicesPage() {
 
                                 {/* TITLE */}
                                 <h3 className="text-[28px] leading-[38px] valturin mb-4 group-hover:text-[#C0A062] transition">
-                                    {service.title}
+                                    {service.cardTitle}
                                 </h3>
 
                                 {/* DESCRIPTION */}
                                 <p className="text-[16px] gotham leading-[30px] text-gray-300 group-hover:text-white transition">
-                                    {service.description}
+                                    {service.cardBlurb}
                                 </p>
 
                                 {/* BUTTON */}
@@ -202,7 +130,7 @@ export default function ServicesPage() {
                 </div>
 
                 {/* STYLING DETAILS SECTION */}
-                <div className="mt-36 relative z-10">
+                {/* <div className="mt-36 relative z-10">
 
                     <div className="mb-16">
                         <span className="uppercase tracking-[6px] text-[#C0A062] gotham text-[14px]">
@@ -216,11 +144,16 @@ export default function ServicesPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 
-                        {stylingOptions.map((item, index) => (
-                            <div
-                                key={index}
-                                className="border border-white/10 rounded-[24px] p-8 bg-white/[0.03] hover:bg-white/[0.05] transition duration-500"
+                        {signatureServices.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className="group flex flex-col border border-white/10 rounded-[24px] p-8 bg-white/[0.03] hover:bg-white/[0.05] hover:border-[#C0A062]/50 transition duration-500"
                             >
+                                <span className="uppercase tracking-[4px] text-white/40 group-hover:text-[#C0A062]/70 gotham text-[11px] mb-3 transition duration-500">
+                                    {item.parent}
+                                </span>
+
                                 <h4 className="text-[34px] valturin text-[#C0A062] mb-4">
                                     {item.title}
                                 </h4>
@@ -228,12 +161,22 @@ export default function ServicesPage() {
                                 <p className="text-[17px] leading-[32px] gotham text-gray-300">
                                     {item.description}
                                 </p>
-                            </div>
+
+                                <span className="flex items-center gap-3 mt-6 text-[15px] gotham text-white/60 group-hover:text-[#C0A062] transition duration-500">
+                                    Explore
+                                    <span
+                                        aria-hidden="true"
+                                        className="transition-transform duration-500 group-hover:translate-x-1"
+                                    >
+                                        →
+                                    </span>
+                                </span>
+                            </Link>
                         ))}
 
                     </div>
 
-                </div>
+                </div> */}
 
 
 

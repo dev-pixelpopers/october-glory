@@ -1,11 +1,11 @@
 import type { ServiceComparison, ServiceDetail } from "@/data/services/types";
 
 /**
- * Wig maintenance packages, transcribed verbatim from the salon's own
- * "Wig Maintenance Packages" document. Feeds the shared ServiceTiers
- * component used on the natural-styles detail pages.
+ * Wig maintenance packages, following the salon's "Wig Maintenance" Word
+ * document (the SEO rewrite). Feeds the shared ServiceTiers component used on
+ * the natural-styles detail pages.
  *
- * No pricing exists in the source document — tier `price` is intentionally
+ * No pricing exists in either source document — tier `price` is intentionally
  * left unset rather than guessed.
  */
 export const wigMaintenanceTiers: NonNullable<ServiceDetail["tiers"]> = {
@@ -14,50 +14,47 @@ export const wigMaintenanceTiers: NonNullable<ServiceDetail["tiers"]> = {
   items: [
     {
       name: "The Glorious Wig Package",
-      tagline:
-        "Our most comprehensive maintenance package, designed for clients who want their natural hair fully treated and trimmed at every visit. It includes:",
+      tagline: "Complete Care for Your Wig & Natural Hair",
       featured: true,
       includes: [
-        "Washing and styling of your wig, restoring it back to its original look",
-        "Washing of your natural hair underneath",
-        "A spa treatment for your natural hair, where we assess your scalp and hair to determine exactly what it needs — whether that's moisture, protein to strengthen and rebuild the hair shaft, or a scalp treatment to clear away buildup and debris",
-        "A trim to remove any dead or split ends from your natural hair",
-        "Braiding your natural hair down in preparation for reinstall",
-        "Reinstalling your wig, freshly washed and styled",
+        "A professional wig wash and restyle to restore your unit's original beauty, softness, and shape",
+        "A thorough cleanse of your natural hair and scalp",
+        "A personalized spa treatment based on your hair's needs, including moisture, protein, or scalp therapy to promote healthier hair",
+        "A precision trim to remove split or damaged ends",
+        "Professional braiding to create a secure, comfortable foundation",
+        "A complete wig reinstall using your freshly cleaned and styled custom unit",
       ],
       bestFor:
-        "Clients who want the full treatment every visit, including a trim, to keep their natural hair as healthy as possible while wearing a wig long-term.",
+        "Clients who want the highest level of maintenance at every visit, including regular treatments and trims, to keep both their custom wig and natural hair in excellent condition for long-term wear.",
     },
     {
       name: "The Signature Wig Package",
-      tagline:
-        "This tier includes everything from the Glorious Wig Package except the trim — ideal for clients who don't need a trim every visit but still want their natural hair thoroughly treated. It includes:",
+      tagline: "Routine Care to Keep Your Wig Looking Its Best",
       includes: [
-        "Washing and styling of your wig, restoring it back to its original look",
-        "Washing of your natural hair underneath",
-        "A spa treatment for your natural hair, based on a full scalp and hair assessment to determine what your hair needs — moisture, protein, or scalp care",
-        "Braiding your natural hair up in preparation for reinstall",
-        "Reinstalling your wig, freshly washed and styled",
+        "A professional wig wash and restyle to restore your unit's shape, softness, and natural appearance",
+        "A thorough cleanse of your natural hair and scalp",
+        "A personalized spa treatment based on a complete scalp and hair assessment, using moisture, protein, or scalp care treatments as needed",
+        "Professional braiding to prepare your natural hair for reinstallation",
+        "Reinstalling your freshly cleaned and styled wig",
       ],
       notIncluded:
-        "A trim is not included in this package. Since trims are generally recommended quarterly rather than monthly, this option is a great fit for the months in between.",
+        "A precision trim is not included with this package. Since trims are typically recommended every three months rather than at every monthly maintenance visit, this option is ideal for keeping your hair healthy between trim appointments.",
       bestFor:
-        "Clients on a monthly maintenance schedule who want consistent treatment for their natural hair without a trim at every visit.",
+        "Clients following a regular monthly maintenance routine who want professional care for both their custom wig and natural hair, without needing a trim at every visit.",
     },
     {
       name: "The Introductory Wig Package",
-      tagline:
-        "Our most streamlined maintenance option, covering the essentials to keep both your wig and natural hair clean and properly maintained. It includes:",
+      tagline: "Essential Maintenance for Everyday Wig Care",
       includes: [
-        "Washing and styling of your wig",
-        "Washing of your natural hair underneath",
-        "Braiding your natural hair up in preparation for reinstall",
-        "Reinstalling your wig",
+        "A professional wash and restyle of your wig",
+        "A thorough cleanse of your natural hair and scalp",
+        "Expert braiding to create a secure foundation for your reinstall",
+        "A professional wig reinstall using your freshly cleaned and styled unit",
       ],
       notIncluded:
-        "This package does not include a spa treatment or trim. It's a straightforward wash-and-reinstall service for clients who don't need deeper treatment at every visit.",
+        "This package does not include a customized spa treatment or precision trim. It's designed as a straightforward maintenance service for clients who don't require deeper treatments during every appointment.",
       bestFor:
-        "Clients who want reliable, consistent upkeep at a more accessible price point, or who supplement this package with occasional spa treatments or trims as needed.",
+        "Clients looking for reliable, routine wig maintenance at an accessible price point, or those who alternate this package with more comprehensive maintenance services throughout the year.",
     },
   ],
 };
@@ -65,23 +62,23 @@ export const wigMaintenanceTiers: NonNullable<ServiceDetail["tiers"]> = {
 /** Standalone services offered outside a full maintenance appointment. */
 export const wigMaintenanceAlaCarte = {
   eyebrow: "À La Carte",
-  heading: "À La Carte Options",
+  heading: "Flexible Care When You Need It",
   intro:
-    "For clients who don't need a full maintenance appointment, we also offer standalone services:",
+    "Not every visit requires a full maintenance appointment. That's why we offer wig maintenance services in Brooklyn that can be booked individually, giving you the flexibility to refresh either your wig or your natural hair whenever you need it.",
   items: [
     {
       name: "Natural Hair Wash & Braid Down",
       description:
-        "For clients whose wig doesn't need washing this visit. We wash and braid your natural hair underneath, prepping it for you to reinstall your wig yourself or return separately for install.",
+        "Perfect for clients whose wig doesn't need servicing during this visit. We'll thoroughly cleanse your natural hair, braid it down, and prepare it for you to reinstall your wig at home or return later for a professional installation.",
     },
     {
-      name: "Wig Wash & Style",
+      name: "Wig Wash & Restyle",
       description:
-        "For clients whose natural hair doesn't need attention this visit. We wash and style your wig back to its original form, ready to wear.",
+        "Ideal for clients whose natural hair doesn't require maintenance but whose wig needs refreshing. We'll professionally wash, condition, and restyle your unit, restoring its original shape, softness, and polished finish so it's ready to wear again.",
     },
   ],
   bestFor:
-    "Clients who are confident managing part of their own maintenance routine, or who need a quick refresh between full maintenance visits.",
+    "Clients who prefer a more flexible maintenance routine, are comfortable managing part of their wig care at home, or simply need a quick refresh between full maintenance appointments.",
 };
 
 export const wigMaintenanceComparison: ServiceComparison = {

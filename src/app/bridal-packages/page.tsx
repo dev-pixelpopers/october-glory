@@ -1,6 +1,6 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
-import GloriousPackagesHero from "./components/bridal-packages-hero";
+import InnerPageHero from "../components/inner-page-hero";
 import GloriousPackagesServices from "./components/bridal-packages-services";
 import BridalSlider from "./components/bridal-slider";
 
@@ -15,7 +15,10 @@ export default function GloriousPackagesPage() {
   return (
     <div className="main-app bg-[#1B1B1B]">
       <Header theme="dark" />
-      <GloriousPackagesHero />
+      <InnerPageHero
+      title="BRIDAL"
+      description="Indulge in our luxury bundled packages — combining multiple premium services for a complete, head-to-toe hair transformation."
+    />
       {/* --- The Founder's Vision --- */}
       <section className="py-[120px] px-6 md:px-[120px] bg-[#151515] relative overflow-hidden">
 

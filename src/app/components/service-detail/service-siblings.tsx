@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useReveal } from "./use-reveal";
+import { tone as palette, type Tone } from "./tone";
 
 export type RelatedItem = {
   title: string;
@@ -23,31 +24,34 @@ export default function ServiceSiblings({
   items,
   heading,
   eyebrow = "Keep Exploring",
+  tone = "dark",
 }: {
   items: RelatedItem[];
   heading: string;
   eyebrow?: string;
+  tone?: Tone;
 }) {
   const scope = useReveal<HTMLElement>();
+  const c = palette[tone];
 
   if (items.length === 0) return null;
 
   return (
     <section
       ref={scope}
-      className="reveal-scope relative w-full bg-[#1B1B1B] py-[100px] md:py-[130px] px-[24px] md:px-[110px]"
+      className={`reveal-scope relative w-full ${c.section} py-[100px] md:py-[130px] px-[24px] md:px-[110px]`}
     >
       <div className="text-center mb-[60px] md:mb-[80px]">
         <p
           data-reveal
-          className="gotham text-[#ccb884] text-[13px] md:text-[15px] tracking-[6px] uppercase mb-4"
+          className={`gotham ${c.eyebrow} text-[13px] md:text-[15px] tracking-[6px] uppercase mb-4`}
         >
           {eyebrow}
         </p>
         <h2
           data-reveal
           data-reveal-delay="1"
-          className="andrea text-white text-[44px] md:text-[64px] leading-[1.15]"
+          className={`andrea ${c.heading} text-[44px] md:text-[64px] leading-[1.15]`}
         >
           {heading}
         </h2>

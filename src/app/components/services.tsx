@@ -19,6 +19,7 @@ interface OfferCard {
   title: string;
   subtitle: string;
   description: string;
+  link:string;
 }
 
 const cards: OfferCard[] = [
@@ -33,6 +34,7 @@ const cards: OfferCard[] = [
     subtitle: "Extensions",
     description:
       "Experience smooth, sleek hair while preserving the health of your natural curls.",
+    link:"/wigs-and-extensions",
   },
   {
     id: "silk",
@@ -45,7 +47,9 @@ const cards: OfferCard[] = [
     subtitle: "Press",
     description:
       "Looking for premium custom wigs in Brooklyn? We design, install, and maintain custom wigs tailored to your lifestyle and personal style.",
+    link:"/wigs-and-extensions",
   },
+  
 ];
 
 export default function OfferSection() {
@@ -123,12 +127,12 @@ export default function OfferSection() {
                   {card.description}
                 </p>
 
-                <button className="flex items-center gap-3 text-white w-max mt-2 hover:opacity-80 transition">
+                <a href={card.link} className="flex items-center gap-3 text-white w-max mt-2 hover:opacity-80 transition">
                   <span className="flex items-center justify-center border border-white rounded-full w-[55px] h-[55px] text-[22px]">
                     →
                   </span>
                   <span className="gotham text-[20px]">Learn More</span>
-                </button>
+                </a>
               </div>
 
               {/* Title — on image when inactive, translates under description when active */}

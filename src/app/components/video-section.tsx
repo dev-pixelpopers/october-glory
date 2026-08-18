@@ -92,7 +92,7 @@ export default function GloryExperience() {
           <div className="w-[20%]">
             <div className="relative h-[502px] -mt-[320px] -rotate-4 overflow-hidden">
               <video
-                src="/images/1-video.mp4"
+                src="/images/video-8.webm"
                 autoPlay loop muted playsInline
                 className="video-set-1 absolute inset-0 w-full h-[502px] object-cover rounded-2xl shadow-xl"
               />
@@ -150,12 +150,12 @@ export default function GloryExperience() {
           <div className="w-[14%]">
             <div className="relative h-[370px] mt-0 rotate-4 overflow-hidden">
               <video
-                src="/images/video-3.mp4"
+                src="/images/video-5.webm"
                 autoPlay loop muted playsInline
                 className="video-set-1 absolute inset-0 w-full h-[370px] object-cover rounded-2xl shadow-xl"
               />
               <video
-                src="/images/video-2.mp4" // Swap with your actual 2nd set video
+                src="/images/video-9.webm" // Swap with your actual 2nd set video
                 autoPlay loop muted playsInline
                 className="video-set-2 absolute inset-0 w-full h-[370px] object-cover rounded-2xl shadow-xl"
               />
@@ -166,7 +166,7 @@ export default function GloryExperience() {
           <div className="w-[20%]">
             <div className="relative h-[502px] -mt-[300px] rotate-[5deg] overflow-hidden">
               <video
-                src="/images/video-4.mp4"
+                src="/images/video-7.webm"
                 autoPlay loop muted playsInline
                 className="video-set-1 absolute inset-0 w-full h-[502px] object-cover rounded-2xl shadow-xl"
               />

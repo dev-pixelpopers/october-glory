@@ -1,4 +1,5 @@
 import { products } from "@/app/shop/product";
+import { getParents, serviceChildren, servicePath } from "@/data/services";
 
 /**
  * Nav structure and hover-preview content for the full-screen menu.
@@ -123,66 +124,6 @@ const PAGE_PREVIEWS = {
     href: "/about-us",
   },
 
-  // The two main services. Their child categories keep their own entries
-  // below so the panel still resolves when you're on one of those pages.
-  "wigs-and-extensions": {
-    variant: "default",
-    eyebrow: "Services",
-    title: "Wigs & Extensions",
-    body: "Custom units and sew-in installs built on the health of your natural hair — and finished with a cut made for your face.",
-    image: "/images/waves1.webp",
-    href: "/wigs-and-extensions",
-  },
-  "silk-press": {
-    variant: "default",
-    eyebrow: "Services",
-    title: "Silk Press",
-    body: "Sleek, smooth and salon-fresh — achieved with heat, tension and technique instead of chemicals.",
-    image: "/images/SilkPress-01.webp",
-    href: "/silk-press",
-  },
-
-  "natural-styles": {
-    variant: "default",
-    eyebrow: "Services",
-    title: "Natural Styles",
-    body: "Enhance your natural beauty with protective and elegant styling designed for everyday confidence.",
-    image: "/images/naturalStyle1.webp",
-    href: "/natural-styles",
-  },
-  "relaxers-and-colors": {
-    variant: "default",
-    eyebrow: "Services",
-    title: "Relaxers And Colors",
-    body: "Smooth relaxers and rich color transformations tailored to your personality and style.",
-    image: "/images/relaxes1.webp",
-    href: "/relaxers-and-colors",
-  },
-  "weaves-and-extensions": {
-    variant: "default",
-    eyebrow: "Services",
-    title: "Weaves And Extensions",
-    body: "Premium extensions and weaves for volume, length, and a complete transformation.",
-    image: "/images/waves1.webp",
-    href: "/weaves-and-extensions",
-  },
-  "haircuts-and-styles": {
-    variant: "default",
-    eyebrow: "Services",
-    title: "Haircuts And Styles",
-    body: "Precision haircuts and modern styling crafted for every face shape and vibe.",
-    image: "/images/haircuts1.webp",
-    href: "/haircuts-and-styles",
-  },
-  treatments: {
-    variant: "default",
-    eyebrow: "Services",
-    title: "Treatments",
-    body: "Deep nourishment and repair treatments that restore health, shine, and strength.",
-    image: "/images/hairsclapimg.webp",
-    href: "/treatments",
-  },
-
   "glorious-packages": {
     variant: "default",
     eyebrow: "Packages",
@@ -209,6 +150,45 @@ const PAGE_PREVIEWS = {
   },
 } satisfies Record<string, MenuPreview>;
 
+/**
+ * Preview panels for every service, generated from the service data so the
+ * menu can't fall out of step with /services. Parents and children both get an
+ * entry: children need one so `resolveActiveKey` rests on the right panel when
+ * you open the menu on a child page.
+ */
+const SERVICE_PREVIEWS: Record<string, MenuPreview> = Object.fromEntries([
+  ...getParents().map((parent) => [
+    parent.slug,
+    {
+      variant: "default" as const,
+      eyebrow: "Services",
+      title: parent.cardTitle,
+      body: parent.cardBlurb,
+      image: parent.cardImage,
+      href: servicePath(parent),
+    },
+  ]),
+  ...serviceChildren.map((child) => [
+    child.slug,
+    {
+      variant: "default" as const,
+      eyebrow: "Services",
+      title: child.cardTitle,
+      body: child.hero.intro,
+      image: child.cardImage,
+      href: servicePath(child),
+    },
+  ]),
+]);
+
+/** The five main services, as cards for the Services panel. */
+const SERVICE_CARDS: PreviewCard[] = getParents().map((parent) => ({
+  image: parent.cardImage,
+  title: parent.cardTitle,
+  body: parent.cardBlurb,
+  href: servicePath(parent),
+}));
+
 /** Turns page previews into the card rows used by Services and Packages. */
 const cardsFrom = (keys: (keyof typeof PAGE_PREVIEWS)[]): PreviewCard[] =>
   keys.map((key) => {
@@ -223,6 +203,7 @@ const cardsFrom = (keys: (keyof typeof PAGE_PREVIEWS)[]): PreviewCard[] =>
 
 export const PREVIEWS: Record<string, MenuPreview> = {
   ...PAGE_PREVIEWS,
+  ...SERVICE_PREVIEWS,
 
   lookbook: {
     variant: "lookbook",
@@ -293,7 +274,7 @@ export const PREVIEWS: Record<string, MenuPreview> = {
     body: "Each of our services are tailored to our client's personality and style.",
     href: "/services",
     cardCta: "View Service",
-    cards: cardsFrom(["wigs-and-extensions", "silk-press"]),
+    cards: SERVICE_CARDS,
   },
 
   packages: {
@@ -315,7 +296,7 @@ export const DEFAULT_PREVIEW_KEY = "home";
 
 /**
  * Longest-prefix match of the current route to a preview key, so opening the
- * menu on /natural-styles/silk-press rests on the Natural Styles panel.
+ * menu on /services/silk-press/ponytail-and-updo rests on that child's panel.
  */
 export function resolveActiveKey(pathname: string | null): string {
   if (!pathname || pathname === "/") return DEFAULT_PREVIEW_KEY;

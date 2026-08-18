@@ -1,6 +1,6 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
-import GloriousPackagesHero from "./components/glorious-packages-hero";
+import InnerPageHero from "../components/inner-page-hero";
 import GloriousPackagesGallery from "./components/glorious-packages-gallery";
 import GloriousPackagesServices from "./components/glorious-packages-services";
 
@@ -15,7 +15,11 @@ export default function GloriousPackagesPage() {
   return (
     <div className="main-app bg-[#1B1B1B]">
       <Header theme="dark" />
-      <GloriousPackagesHero />
+      <InnerPageHero
+      title="Glorious"
+      subtitle="Packages"
+      description="Indulge in our luxury bundled packages — combining multiple premium services for a complete, head-to-toe hair transformation."
+    />
       <GloriousPackagesGallery />
       <section
         className="h-screen bg-fixed bg-bottom bg-cover bg-no-repeat w-full"

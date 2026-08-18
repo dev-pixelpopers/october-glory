@@ -1,6 +1,6 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
-import MaintenancePackagesHero from "./components/maintenance-packages-hero";
+import InnerPageHero from "../components/inner-page-hero";
 import MaintenancePackagesServices from "./components/maintenance-packages-services";
 import MaintenanceSlider from "./components/maintenance-slider";
 import ServiceTiers from "../components/service-detail/service-tiers";
@@ -23,7 +23,11 @@ export default function MaintenancePackagesPage() {
   return (
     <div className="main-app bg-[#1B1B1B]">
       <Header theme="dark" />
-      <MaintenancePackagesHero />
+      <InnerPageHero
+      title="MAINTENANCE"
+      subtitle="Packages"
+      description="Indulge in our luxury bundled packages — combining multiple premium services for a complete, head-to-toe hair transformation."
+    />
       {/* --- The Founder's Vision --- */}
       <section className="py-[120px] px-6 md:px-[120px] bg-[#151515] relative overflow-hidden">
 
@@ -36,10 +40,10 @@ export default function MaintenancePackagesPage() {
               Day Needs A Glorious Hairstyle
             </h2>
             <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
-              Owning a custom unit is an investment — and like any investment, it needs consistent care to stay looking beautiful and lasting as long as possible. That&rsquo;s why every custom wig client returns monthly for a maintenance appointment, where both your unit and your natural hair underneath are cared for together.
+              Protect your investment with professional wig maintenance in Brooklyn designed to keep your custom unit looking beautiful and performing at its best. At October Glory, we believe caring for your wig also means caring for the natural hair underneath — that&rsquo;s why our maintenance appointments focus on both, helping extend the life of your unit while supporting the health of your natural hair.
             </p>
             <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
-              We offer three maintenance package tiers, plus à la carte options for clients who only need a piece of the service. Below is a full breakdown of what’s included in each.
+              Every custom wig deserves professional care to maintain its beauty, comfort, and longevity. We offer three maintenance packages, along with à la carte services, so you can choose the level of care that&rsquo;s right for your needs.
             </p>
 
             <h2 className="valturin text-[45px] leading-tight text-white uppercase tracking-wider">

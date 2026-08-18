@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import InnerPageHero from "../components/inner-page-hero";
 
 export const metadata = {
   title: "About Us | October Glory",
@@ -15,42 +16,11 @@ export default function AboutUsPage() {
       <Header theme="dark" />
 
       {/* --- About Us Page Hero --- */}
-      <section
-        className="relative w-full h-screen flex items-center justify-center overflow-hidden"
-        style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(27,27,27,0.6) 0%, rgba(27,27,27,0.85) 100%), url('/images/servicce.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Subtle animated grain overlay */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]" />
-
-        <div className="relative z-10 text-center flex flex-col items-center px-6">
-          <div>
-            <h1 className="andrea text-[80px] leading-[2] text-white mb-0 tracking-wide">
-              About
-            </h1>
-            <h2 className="valturin text-[80px] text-[#ccb884] mt-[-10px] tracking-widest">
-              October Glory
-            </h2>
-          </div>
-
-          {/* Gold divider */}
-          <div
-            className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent my-8 origin-center"
-          />
-
-          <p className="gotham text-white/70 text-[20px] leading-[36px] max-w-[600px] font-light"
-          >
-            Owner / Master Hair Stylist
-          </p>
-        </div>
-      </section>
-
-
-
+      <InnerPageHero
+        title="About"
+        subtitle="October Glory"
+        description="Owner / Master Hair Stylist"
+      />
       {/* --- The Founder's Vision --- */}
       <section className="py-[120px] px-6 md:px-[120px] bg-[#151515] relative overflow-hidden">
         {/* Large background letter watermark */}
