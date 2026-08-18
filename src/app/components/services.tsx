@@ -34,7 +34,7 @@ const cards: OfferCard[] = [
     subtitle: "Extensions",
     description:
       "Experience smooth, sleek hair while preserving the health of your natural curls.",
-    link:"/wigs-and-extensions",
+    link:"/services/wigs-and-extensions",
   },
   {
     id: "silk",
@@ -47,7 +47,7 @@ const cards: OfferCard[] = [
     subtitle: "Press",
     description:
       "Looking for premium custom wigs in Brooklyn? We design, install, and maintain custom wigs tailored to your lifestyle and personal style.",
-    link:"/wigs-and-extensions",
+    link:"/services/silk-press",
   },
   
 ];
