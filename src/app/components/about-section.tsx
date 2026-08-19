@@ -108,12 +108,12 @@ export default function WelcomeSection() {
 
             </p>
 
-            <button className="book-btn flex gap-[10px] items-center text-white rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham">
+            <a href="/contact" className="book-btn flex gap-[10px] items-center text-white rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham">
               <span className="btn-icon rotate-305">
                 <img src="/images/btn-arrow.svg" width="53px" height="53px" />
               </span>
               <span className="underline">Start with a Consultation</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>

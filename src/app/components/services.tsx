@@ -32,8 +32,7 @@ const cards: OfferCard[] = [
     alt: "Wigs Model",
     title: "Wigs",
     subtitle: "Extensions",
-    description:
-      "Experience smooth, sleek hair while preserving the health of your natural curls.",
+    description:"Looking for premium custom wigs in Brooklyn? We design, install, and maintain custom wigs tailored to your lifestyle and personal style.",
     link:"/services/wigs-and-extensions",
   },
   {
@@ -46,7 +45,7 @@ const cards: OfferCard[] = [
     title: "Silk",
     subtitle: "Press",
     description:
-      "Looking for premium custom wigs in Brooklyn? We design, install, and maintain custom wigs tailored to your lifestyle and personal style.",
+      "Experience smooth, sleek hair while preserving the health of your natural curls.",
     link:"/services/silk-press",
   },
   

@@ -5,6 +5,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import type { ServiceDetail } from "@/data/services/types";
+import PriceTag from "./price-tag";
 
 type Props = {
   service: ServiceDetail;
@@ -124,11 +125,13 @@ export default function ServiceHero({ service, parent }: Props) {
           ref={metaRef}
           className="mt-10 flex flex-col sm:flex-row items-center gap-6"
         >
-          {service.price && (
-            <span className="gotham text-[13px] tracking-[3px] uppercase text-white/60 border border-white/20 rounded-full px-6 py-3">
-              From <span className="text-[#ccb884]">{service.price}</span>
-            </span>
-          )}
+          <div className="text-white">
+            <PriceTag
+              price={service.price}
+              nonMemberPrice={service.nonMemberPrice}
+              variant="block"
+            />
+          </div>
 
           <a
             href="/dashboard/book"

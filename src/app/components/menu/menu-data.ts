@@ -1,5 +1,5 @@
 import { products } from "@/app/shop/product";
-import { getParents, serviceChildren, servicePath } from "@/data/services";
+import { getParents, hasPage, serviceChildren, servicePath } from "@/data/services";
 
 /**
  * Nav structure and hover-preview content for the full-screen menu.
@@ -168,7 +168,9 @@ const SERVICE_PREVIEWS: Record<string, MenuPreview> = Object.fromEntries([
       href: servicePath(parent),
     },
   ]),
-  ...serviceChildren.map((child) => [
+  // Only sub-services with a page get a preview panel; the rest are boxes
+  // that link to booking and have no page to rest on.
+  ...serviceChildren.filter(hasPage).map((child) => [
     child.slug,
     {
       variant: "default" as const,

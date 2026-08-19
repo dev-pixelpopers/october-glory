@@ -69,14 +69,14 @@ export default function HeroSection() {
           }} />
         </div>
 
-        <div className="text-content text-center flex justify-center items-center flex-col relative mt-[90px]">
+        <div className="text-content text-center flex justify-center items-center flex-col relative mt-[1%]">
           <div className="w-full flex flex-col justify-center items-center" ref={headingTrackRef}
             style={{
               clipPath: "inset(0% 100% 0% 0%)",
               transition: "clip-path 1s ease-in-out"
             }}>
             <span className="cursive-heading text-center andrea text-[121.771px] text-black mb-[-25px]">Brooklyn<span className="text-[48px] text-black leading-[0.3]">'</span>s</span>
-            <h1 className="valturin text-center text-[73.063px] text-black">Luxury Hair Salon</h1>
+            <h1 className="valturin text-center text-[73.063px] text-black">Luxury Boutique Hair Salon</h1>
           </div>
 
           <Link href="/dashboard/book" ref={buttonRef} className="book-btn flex mt-[20px] gap-[10px] items-center border-black border-1 text-black rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham opacity-0">

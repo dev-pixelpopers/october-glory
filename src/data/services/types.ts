@@ -22,7 +22,10 @@ export type ServiceTier = {
   name: string;
   /** One-line positioning shown under the tier name. */
   tagline?: string;
+  /** The member price. The non-member price is derived from it — see pricing.ts. */
   price?: string;
+  /** Overrides the derived non-member price, when the salon has quoted one. */
+  nonMemberPrice?: string;
   duration?: string;
   /** The "What you get" bullets. */
   includes: string[];
@@ -74,7 +77,10 @@ export type ServiceSection = {
 /** A priced item in a service's menu grid — the salon's actual price list. */
 export type ServiceMenuItem = {
   name: string;
+  /** The member price. The non-member price is derived from it — see pricing.ts. */
   price?: string;
+  /** Overrides the derived non-member price, when the salon has quoted one. */
+  nonMemberPrice?: string;
   image: string;
   /** Set when this item has a child page of its own. */
   href?: string;
@@ -98,8 +104,10 @@ export type ServiceDetail = {
   slug: string;
   /** Card label on the parent category page. */
   cardTitle: string;
-  /** Starting price, shown on the hero and the booking CTA. */
+  /** Starting member price, shown on the hero and the booking CTA. */
   price?: string;
+  /** Overrides the derived non-member price, when the salon has quoted one. */
+  nonMemberPrice?: string;
 
   hero: {
     /** Large Andrea-Bellarosa script word. */
@@ -152,15 +160,51 @@ export type ServiceParent = ServiceDetail & {
   cardImage: string;
   /** One-line summary for the index card and the menu panel. */
   cardBlurb: string;
+  /**
+   * Heading and intro for the grid of this service's children. The grid itself
+   * is built from `serviceChildren` — anything listing this slug in `parents`
+   * appears in it — so a service cannot be in the data and missing from the page.
+   */
+  childrenSection?: {
+    eyebrow?: string;
+    heading: string;
+    intro?: string;
+  };
 };
 
 /**
- * A service page nested under one of the five parents, served at
- * /services/<parent>/<slug>.
+ * A service beneath one of the five parents.
+ *
+ * Every sub-service lives here whether or not anyone has written its page yet.
+ * The content sections are all optional: an entry with a `hero` is a full page
+ * served at /services/<parent>/<slug>; an entry without one is a box in its
+ * parent's grid that links straight to booking. Writing the content later adds
+ * the page without moving the entry or changing how the parent renders.
  */
-export type ServiceChild = ServiceDetail & {
-  /** `slug` of the parent it belongs to. */
-  parent: string;
-  /** Card image used wherever this child is listed. */
+export type ServiceChild = Partial<
+  Omit<ServiceDetail, "slug" | "cardTitle" | "price" | "nonMemberPrice">
+> & {
+  slug: string;
+  /** Card label wherever this service is listed. */
+  cardTitle: string;
+  /** Card image used wherever this service is listed. */
   cardImage: string;
+  /**
+   * Slugs of the parents this service belongs to. An array so one service can
+   * sit in several categories, the way a product sits in several collections.
+   * The first entry is canonical: it owns the URL.
+   */
+  parents: string[];
+  /** The member price. The non-member price is derived from it — see pricing.ts. */
+  price?: string;
+  /** Overrides the derived non-member price, when the salon has quoted one. */
+  nonMemberPrice?: string;
 };
+
+/** A sub-service that has had its content written, and so has a page. */
+export type ServiceChildWithPage = ServiceChild &
+  Required<Pick<ServiceDetail, "hero" | "meta">>;
+
+/** Narrows to the sub-services that have a page of their own. */
+export const hasPage = (child: ServiceChild): child is ServiceChildWithPage =>
+  child.hero !== undefined && child.meta !== undefined;

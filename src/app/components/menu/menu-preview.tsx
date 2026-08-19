@@ -228,7 +228,7 @@ function BlogPanel({
             <Frame
               src={post.image}
               alt={post.title}
-              className="w-[150px] shrink-0 aspect-[4/3] rounded-[14px]"
+              className="w-[100px] shrink-0 aspect-[4/3] rounded-[14px]"
             />
 
             <div className="min-w-0">
@@ -404,7 +404,7 @@ function CardsPanel({
             <Frame
               src={card.image}
               alt={card.title}
-              className="w-[150px] shrink-0 aspect-[3/4] rounded-[13px]"
+              className="w-[100px] shrink-0 aspect-[3/4] rounded-[13px]"
             />
 
             <div className="min-w-0 flex flex-col">

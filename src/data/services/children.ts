@@ -11,7 +11,7 @@ import type { ServiceChild } from "./types";
  */
 export const serviceChildren: ServiceChild[] = [
   {
-    parent: "haircuts-and-styles",
+    parents: ["silk-press"],
     cardImage: "/images/RodSet-01.webp",
     slug: "rodset",
     cardTitle: "Rodset",
@@ -102,15 +102,6 @@ export const serviceChildren: ServiceChild[] = [
         },
       ],
     },
-    note: {
-      eyebrow: "Good To Know",
-      heading: "Why the Trim Matters",
-      body: [
-        "Split ends don't stay in one place. Left untreated, they continue traveling up the hair shaft, much like a shoelace that unravels once the plastic tip wears away.",
-        "Regular trims help prevent further damage, improve the overall appearance of your hair, and allow your curls to look smoother, healthier, and more defined.",
-        "While we generally recommend trimming every three months, the ideal schedule depends on how often you heat-style, manipulate, or chemically process your hair.",
-      ],
-    },
     comparison: {
       eyebrow: "At A Glance",
       heading: "Quick Comparison",
@@ -139,7 +130,7 @@ export const serviceChildren: ServiceChild[] = [
     },
   },
   {
-    parent: "haircuts-and-styles",
+    parents: ["silk-press"],
     cardImage: "/images/FlatTwist.jpg",
     slug: "flat-twist",
     cardTitle: "Flat Twist",
@@ -215,7 +206,7 @@ export const serviceChildren: ServiceChild[] = [
     },
   },
   {
-    parent: "haircuts-and-styles",
+    parents: ["silk-press"],
     cardImage: "/images/wash&go.jpg",
     slug: "wash-and-go",
     cardTitle: "Wash & Go",
@@ -278,7 +269,7 @@ export const serviceChildren: ServiceChild[] = [
     },
   },
   {
-    parent: "haircuts-and-styles",
+    parents: ["silk-press"],
     cardImage: "/images/braiddown.jpg",
     slug: "braid-down",
     cardTitle: "Braid Down",
@@ -353,7 +344,7 @@ export const serviceChildren: ServiceChild[] = [
     },
   },
   {
-    parent: "haircuts-and-styles",
+    parents: ["silk-press"],
     cardImage: "/images/2-strand-twist.jpg",
     slug: "2-strand-twist",
     cardTitle: "2 Strand Twist",
@@ -428,7 +419,7 @@ export const serviceChildren: ServiceChild[] = [
     },
   },
   {
-    parent: "haircuts-and-styles",
+    parents: ["silk-press"],
     cardImage: "/images/naturalfrenchroll.jpg",
     slug: "natural-updo",
     cardTitle: "Natural Updo",
@@ -491,7 +482,7 @@ export const serviceChildren: ServiceChild[] = [
     },
   },
   {
-    parent: "haircuts-and-styles",
+    parents: ["haircuts-and-styles"],
     cardImage: "/images/Haircuts-And-Styles-02.webp",
     slug: "ponytail-and-updo",
     cardTitle: "Ponytail & Updo",
@@ -600,7 +591,7 @@ export const serviceChildren: ServiceChild[] = [
     },
   },
   {
-    parent: "wigs-and-extensions",
+    parents: ["wigs-and-extensions"],
     cardImage: "/images/Weaves-And-Extensions-04.webp",
     slug: "custom-wig-design",
     cardTitle: "Custom Wig Design",
@@ -743,5 +734,193 @@ export const serviceChildren: ServiceChild[] = [
       description:
         "Custom wigs in Brooklyn, NY at October Glory — glueless drawstring units handcrafted to your measurements from premium Cambodian and Filipino hair, including custom wigs for hair loss.",
     },
+  },
+  // ---------------------------------------------------------------------
+  // Sub-services whose content has not been written yet. They are boxes in
+  // their parent's grid and link to booking; adding a `hero` and `meta`
+  // turns one into a full page without moving it or touching the parent.
+  // ---------------------------------------------------------------------
+  {
+    parents: ["relaxers-and-colors"],
+    cardImage: "/images/relaxers-colors-01.webp",
+    slug: "relaxer-touch-up",
+    cardTitle: "Relaxer Touch Up",
+    price: "$100",
+  },
+  {
+    parents: ["relaxers-and-colors"],
+    cardImage: "/images/relaxers-colors-02.webp",
+    slug: "virgin-relaxer",
+    cardTitle: "Virgin Relaxer",
+    price: "$225",
+  },
+  {
+    parents: ["relaxers-and-colors"],
+    cardImage: "/images/relaxers-colors-03.webp",
+    slug: "color-retouch",
+    cardTitle: "Color Retouch",
+    price: "$125",
+  },
+  {
+    parents: ["relaxers-and-colors"],
+    cardImage: "/images/relaxers-colors-04.webp",
+    slug: "single-process",
+    cardTitle: "Single Process",
+    price: "$120",
+  },
+  {
+    parents: ["relaxers-and-colors"],
+    cardImage: "/images/relaxers-colors-05.webp",
+    slug: "double-process",
+    cardTitle: "Double Process",
+    price: "$350",
+  },
+  {
+    parents: ["relaxers-and-colors"],
+    cardImage: "/images/relaxers-colors-06.webp",
+    slug: "half-head-highlights",
+    cardTitle: "Half-Head Highlights",
+    price: "$160",
+  },
+  {
+    parents: ["relaxers-and-colors"],
+    cardImage: "/images/relaxers-colors-07.webp",
+    slug: "full-highlights-or-foilayage",
+    cardTitle: "Full Highlights Or Foilayage",
+    price: "$300",
+  },
+  {
+    parents: ["relaxers-and-colors"],
+    cardImage: "/images/relaxers-colors-08.webp",
+    slug: "crown-lights",
+    cardTitle: "Crown Lights",
+    price: "$85",
+  },
+  {
+    parents: ["relaxers-and-colors"],
+    cardImage: "/images/relaxers-colors-09.webp",
+    slug: "color-correction",
+    cardTitle: "Color Correction",
+    price: "$250",
+  },
+  {
+    parents: ["wigs-and-extensions"],
+    cardImage: "/images/Weaves-And-Extensions-01.webp",
+    slug: "single-track",
+    cardTitle: "Single Track",
+  },
+  {
+    parents: ["wigs-and-extensions"],
+    cardImage: "/images/Weaves-And-Extensions-02.webp",
+    slug: "full-weave-with-leave-out",
+    cardTitle: "Full Weave w/ Leave Out",
+  },
+  {
+    parents: ["wigs-and-extensions"],
+    cardImage: "/images/Weaves-And-Extensions-03.webp",
+    slug: "full-head-weave",
+    cardTitle: "Full-Head Weave",
+  },
+  {
+    parents: ["wigs-and-extensions"],
+    cardImage: "/images/Weaves-And-Extensions-04.webp",
+    slug: "wig-unit-consult",
+    cardTitle: "Wig Unit Consult",
+  },
+  {
+    parents: ["wigs-and-extensions"],
+    cardImage: "/images/glorious-packages-04.webp",
+    slug: "wig-prep",
+    cardTitle: "Wig Prep",
+    price: "$120",
+  },
+  {
+    parents: ["wigs-and-extensions"],
+    cardImage: "/images/Weaves-And-Extensions-05-06-07.webp",
+    slug: "wig-wash",
+    cardTitle: "Wig Wash",
+  },
+  {
+    parents: ["wigs-and-extensions"],
+    cardImage: "/images/Weaves-And-Extensions-08.webp",
+    slug: "wig-tighten",
+    cardTitle: "Wig Tighten",
+  },
+  {
+    parents: ["haircuts-and-styles"],
+    cardImage: "/images/Haircuts-And-Styles-03.webp",
+    slug: "glory-girl-precision-cut",
+    cardTitle: "Glory-Girl Precision Cut",
+    price: "$150",
+  },
+  {
+    parents: ["haircuts-and-styles"],
+    cardImage: "/images/Haircuts-And-Styles-04.webp",
+    slug: "weave-precision-cut",
+    cardTitle: "Weave Precision Cut",
+    price: "$100",
+  },
+  {
+    parents: ["haircuts-and-styles"],
+    cardImage: "/images/Haircuts-And-Styles-05.webp",
+    slug: "haircut-only",
+    cardTitle: "Haircut Only",
+    price: "$75",
+  },
+  {
+    parents: ["haircuts-and-styles"],
+    cardImage: "/images/Haircuts-And-Styles-06.webp",
+    slug: "haircut-and-finish",
+    cardTitle: "Haircut & Finish",
+    price: "$125",
+  },
+  {
+    parents: ["haircuts-and-styles"],
+    cardImage: "/images/Haircuts-And-Styles-07.webp",
+    slug: "new-look-haircut",
+    cardTitle: "New Look Haircut",
+    price: "$120",
+  },
+  {
+    parents: ["haircuts-and-styles"],
+    cardImage: "/images/salon-image.webp",
+    slug: "pro-consult",
+    cardTitle: "Pro Consult",
+    price: "$50",
+  },
+  {
+    parents: ["treatments"],
+    cardImage: "/images/TREATMENTS-01.webp",
+    slug: "scalp-relief",
+    cardTitle: "Scalp Relief",
+    price: "$50",
+  },
+  {
+    parents: ["treatments"],
+    cardImage: "/images/TREATMENTS-02.webp",
+    slug: "the-upmost-hydration",
+    cardTitle: "The Upmost Hydration",
+    price: "$50",
+  },
+  {
+    parents: ["treatments"],
+    cardImage: "/images/TREATMENTS-03.webp",
+    slug: "protein-moisture-pack",
+    cardTitle: "Protein Moisture Pack",
+    price: "$55",
+  },
+  {
+    parents: ["treatments"],
+    cardImage: "/images/TREATMENTS-04.webp",
+    slug: "bond-builder",
+    cardTitle: "Bond Builder",
+    price: "$65",
+  },
+  {
+    parents: ["relaxers-and-colors", "wigs-and-extensions"],
+    cardImage: "/images/glorious-packages-03.webp",
+    slug: "glorious-boost",
+    cardTitle: "Glorious Boost",
+    price: "$120",
   },
 ];

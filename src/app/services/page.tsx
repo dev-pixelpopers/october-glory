@@ -4,7 +4,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import InnerPageHero from "../components/inner-page-hero";
 import {
-  getChildren,
+  getChildPages,
   getParents,
   servicePath,
 } from "@/data/services";
@@ -20,11 +20,13 @@ export const metadata = {
 const services = getParents();
 
 /**
- * Every child service, grouped under the main service it belongs to. Adding a
- * child in `children.ts` makes it appear here — nothing to maintain twice.
+ * Every child service that has a page, grouped under the main service it
+ * belongs to. Adding one in `children.ts` makes it appear here — nothing to
+ * maintain twice. Sub-services still awaiting content are boxes on their
+ * parent's page and have nothing to link to here.
  */
 const signatureServices = services.flatMap((parent) =>
-    getChildren(parent.slug).map((child) => ({
+    getChildPages(parent.slug).map((child) => ({
         title: child.cardTitle,
         href: servicePath(child),
         parent: parent.cardTitle,

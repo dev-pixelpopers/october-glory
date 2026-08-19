@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ServiceDetailTemplate from "@/app/components/service-detail";
-import { childCards, getParent, parentParams } from "@/data/services";
+import { childrenMenu, getParent, parentParams } from "@/data/services";
 
 type Params = { service: string };
 
@@ -35,20 +35,8 @@ export default async function ServiceParentPage({
   const parent = getParent(service);
   if (!parent) notFound();
 
-  const children = childCards(parent.slug);
-
-  return (
-    <ServiceDetailTemplate
-      service={parent}
-      related={
-        children.length
-          ? {
-              eyebrow: "Also In This Service",
-              heading: `Explore ${parent.cardTitle}`,
-              items: children,
-            }
-          : undefined
-      }
-    />
-  );
+  // The one section listing this service's children, built from the data rather
+  // than hand-listed on the parent. There is no second strip below it: every
+  // sub-service — page or plain box — appears here and only here.
+  return <ServiceDetailTemplate service={{ ...parent, menu: childrenMenu(parent) }} />;
 }

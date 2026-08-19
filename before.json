@@ -1,0 +1,51 @@
+{
+ "silk-press": [],
+ "relaxers-and-colors": [
+  "Relaxer Touch Up",
+  "Virgin Relaxer",
+  "Color Retouch",
+  "Single Process",
+  "Double Process",
+  "Half-Head Highlights",
+  "Full Highlights Or Foilayage",
+  "Crown Lights",
+  "Color Correction",
+  "Glorious Boost"
+ ],
+ "wigs-and-extensions": [
+  "Single Track",
+  "Full Weave w/ Leave Out",
+  "Full-Head Weave",
+  "Wig Unit Consult",
+  "Wig Prep",
+  "Wig Wash",
+  "Wig Tighten",
+  "Glorious Boost",
+  "Custom Wig Design"
+ ],
+ "haircuts-and-styles": [
+  "Ponytail & Updo",
+  "Glory-Girl Precision Cut",
+  "Weave Precision Cut",
+  "Haircut Only",
+  "Haircut & Finish",
+  "New Look Haircut",
+  "Pro Consult"
+ ],
+ "treatments": [
+  "Scalp Relief",
+  "The Upmost Hydration",
+  "Protein Moisture Pack",
+  "Bond Builder"
+ ],
+ "__children__": [
+  "rodset (parent=silk-press)",
+  "flat-twist (parent=silk-press)",
+  "wash-and-go (parent=silk-press)",
+  "braid-down (parent=silk-press)",
+  "2-strand-twist (parent=silk-press)",
+  "natural-updo (parent=silk-press)",
+  "ponytail-and-updo (parent=haircuts-and-styles)",
+  "custom-wig-design (parent=wigs-and-extensions)"
+ ]
+}

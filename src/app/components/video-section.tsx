@@ -10,12 +10,14 @@ export default function GloryExperience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const heading1Ref = useRef<HTMLDivElement>(null);
   const heading2Ref = useRef<HTMLDivElement>(null);
+  // Paragraph shown with the FIRST set of videos; exits with them.
+  const content1Ref = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   // We pass { scope: containerRef } to safely select class names locally
   useGSAP(() => {
     // 1. Initial Setup
-    gsap.set(contentRef.current, {
+    gsap.set([content1Ref.current, contentRef.current], {
       yPercent: 100,
       opacity: 0, // Added opacity for a cleaner fade-in as it moves up
     });
@@ -36,6 +38,12 @@ export default function GloryExperience() {
     });
 
     // 3. Animation Sequence
+    //
+    // Length of the pause each set gets once it has fully arrived, in the same
+    // units as the durations below. Because the timeline is scrubbed, this is
+    // scroll distance where nothing moves. Nudge it up for a longer beat.
+    const HOLD = 0.25;
+
     tl.to(heading1Ref.current, {
       clipPath: "inset(0% 0% 0% 0%)",
       duration: 1,
@@ -44,12 +52,28 @@ export default function GloryExperience() {
         clipPath: "inset(0% 0% 0% 0%)",
         duration: 1,
       })
-      // First set goes up and fades out
+      // First paragraph arrives while set 1 is still on screen
+      .to(content1Ref.current, {
+        yPercent: 0,
+        opacity: 1,
+        duration: 1,
+      })
+      // First set goes up and fades out. The "+=" offset is a teeny hold: a
+      // sliver of scroll where set 1 and its paragraph just sit there, fully
+      // arrived, before anything moves again.
       .to('.video-set-1', {
         yPercent: -106,
         opacity: 1,
         duration: 1.5,
-      })
+      }, `+=${HOLD}`)
+      // "<" starts this at the same moment as the tween above, and the matching
+      // duration keeps them locked together, so the paragraph leaves with its
+      // videos rather than trailing them.
+      .to(content1Ref.current, {
+        yPercent: -100,
+        opacity: 0,
+        duration: 1.5,
+      }, "<")
       // Second set comes up and fades in (starts immediately after the previous finishes)
       .to('.video-set-2', {
         yPercent: 0,
@@ -61,7 +85,10 @@ export default function GloryExperience() {
         yPercent: 0,
         opacity: 1,
         duration: 1,
-      });
+      })
+      // The matching hold for set 2 — an empty tween, so the finished
+      // composition gets the same beat before the section releases.
+      .to({}, { duration: HOLD });
   }, { scope: containerRef }); // Scope ensures '.video-set-1' only targets elements in this component
 
   return (
@@ -122,8 +149,35 @@ export default function GloryExperience() {
 
           {/* Column 3 (Content) */}
           <div className="w-[30%]">
-            <div className="overflow-hidden">
-              <div ref={contentRef} className="flex flex-col gap-10 items-center justify-center">
+            {/* Both paragraphs occupy the same grid cell, so the wrapper is as
+                tall as the taller one and neither needs absolute positioning.
+                Equal heights also mean the yPercent travel matches exactly. */}
+            <div className="overflow-hidden grid">
+
+              {/* FIRST-SET paragraph — search "Signature Hair Cutting" to edit. */}
+              <div ref={content1Ref} className="col-start-1 row-start-1 flex flex-col gap-10 items-center justify-center">
+                <p className="text-black text-[20px] leading-[40px] gotham text-center">
+                  We Specialize In Signature Hair Cutting, Expert Styling, Detailed
+                  Highlighting, And Customized Hair Services Designed To Elevate Your
+                  Look And Confidence.
+                </p>
+                <button className="flex items-center gap-4 group cursor-pointer">
+                  <div className="w-12 h-12 flex items-center justify-center rounded-full border border-black group-hover:bg-black group-hover:border-black transition-all duration-300">
+                    <svg
+                      className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors"
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </div>
+                  <span className="gotham text-black text-[20px] font-semibold">
+                    Learn More
+                  </span>
+                </button>
+              </div>
+
+              {/* SECOND-SET paragraph — search "Precision Hair Cutting" to edit. */}
+              <div ref={contentRef} className="col-start-1 row-start-1 flex flex-col gap-10 items-center justify-center">
                 <p className="text-black text-[20px] leading-[40px] gotham text-center">
                   We Specialize In Precision Hair Cutting, Expert Styling, Detailed
                   Highlighting, And Customized Hair Services Designed To Elevate Your

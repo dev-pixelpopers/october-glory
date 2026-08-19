@@ -3,6 +3,7 @@
 import React from "react";
 import { useReveal } from "./use-reveal";
 import type { ServiceDetail } from "@/data/services/types";
+import PriceTag from "./price-tag";
 
 /**
  * Tier counts vary by service (Silk Press has 3, Rod Set has 4, Wash & Go
@@ -145,12 +146,12 @@ export default function ServiceTiers({
             )}
 
             {(tier.price || tier.duration) && (
-              <div className="flex items-center gap-3 mb-7">
-                {tier.price && (
-                  <span className="gotham text-[#ccb884] text-[22px] font-medium">
-                    {tier.price}
-                  </span>
-                )}
+              <div className="flex flex-wrap items-center gap-3 mb-7">
+                <PriceTag
+                  price={tier.price}
+                  nonMemberPrice={tier.nonMemberPrice}
+                  variant="block"
+                />
                 {tier.duration && (
                   <span
                     className={`gotham text-[13px] tracking-[2px] uppercase ${

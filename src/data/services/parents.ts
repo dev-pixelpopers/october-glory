@@ -114,6 +114,10 @@ export const serviceParents: ServiceParent[] = [
       footnote:
         "Each service builds on the one before it, so clients can choose based on how much their hair needs beyond a standard press: styling alone, styling with a treatment, or the full reset with a trim included.",
     },
+    childrenSection: {
+      eyebrow: "The Menu",
+      heading: "Other Natural Styles",
+    },
     cta: {
       heading: "Book Your Silk Press Appointment",
     },
@@ -136,23 +140,94 @@ export const serviceParents: ServiceParent[] = [
         "Transform your look with our professional relaxer and coloring services — expertly formulated to deliver smooth, vibrant, and long-lasting results.",
       image: "/images/relaxers-colors-01.webp",
     },
-    menu: {
+    overview: {
+      eyebrow: "The Service",
+      heading: "Choose Your Relaxer Or Color Experience",
+      body: [
+        "Chemical relaxing and hair coloring are among the most transforming services at October Glory, and with good reason. They allow clients to overhaul their texture or express their personal style using expert formulas, precise timing, and custom care techniques instead of off-the-shelf treatments.",
+        "Because every client's hair integrity and history are unique, we offer three tiers of relaxer and color services, each building on the last. Below is a breakdown of what is included in each tier so you can select the perfect service for your hair care goals (and your timeline).",
+      ],
+      image: "/images/relaxers-colors-01.webp",
+    },
+    tiers: {
+      eyebrow: "Choose Your Experience",
+      heading: "Relaxer & Color Tiers",
+      items: [
+        {
+          name: "Essential Retouch & Tone",
+          includes: [
+            "A comprehensive scalp protective shield application to prevent irritation, dryness, and sensitivity prior to chemical processing",
+            "A targeted root application or tonal refresher formulation applied strictly to new growth to preserve previously processed strands",
+            "Custom processing timing monitored continuously based on your hair density and strength, protecting structural integrity while ensuring optimal chemical development",
+            "A full neutralizing and balancing wash to restore scalp pH, remove chemical residues, and seal the hair cuticle smoothly",
+            "Application of finishing leave-in formulas to help your relaxed or colored style maintain softness and shine throughout your daily routine",
+          ],
+          notIncluded:
+            "The Essential Retouch & Tone does not include an in-depth elasticity assessment for a full bond-building spa treatment, steam infusion, or a precision trim. If your hair requires structural bond reconstruction or your ends need reshaping, one of our elevated options will serve you better.",
+          bestFor:
+            "Clients with healthy hair regrowth who seek a prompt, dependable, maintenance-focused chemical touch-up.",
+        },
+        {
+          name: "Chemical Silk & Bond Treatment",
+          featured: true,
+          includes: [
+            "A complete hair history and strand elasticity assessment, where we evaluate your cuticle porosity, structural strength, and scalp health",
+            "A custom bond-building treatment or deep moisture repair mask, formulated specifically according to that detailed evaluation",
+            "Dedicated steam processing, where moist warmth opens cuticle scales to let intensive protein and moisture complexes penetrate deep into the cortex rather than resting on top. This is what renders a steamed bond treatment far superior to a routine conditioner, as key nutrients reach the inner matrix where strands need reinforcement most",
+            "A full chemical application, precision neutralize, and custom finish once the restorative complex has been thoroughly absorbed and rinsed",
+            "Nourishing finishing products applied to seal cuticles and preserve your hair's vibrancy and smoothness for weeks to come",
+          ],
+          notIncluded:
+            "This service does not include a haircut or split-end trim. If your perimeter ends are weathered, split, or uneven, those areas will still remain after your service, as this tier focuses on internal fiber repair and chemical balance, not altering length or shaping.",
+          bestFor:
+            "Clients whose hair feels porous, fragile, chemically treated, or in need of deep structural fortification alongside color or relaxing, with dedicated care for scalp wellness.",
+        },
+        {
+          name: "The Glorious Transformation",
+          includes: [
+            "A thorough hair and scalp diagnosis to craft the exact chemical, color, and restorative formula tailored to your needs",
+            "A custom bond-building or deep hydration spa treatment applied across the scalp and hair according to your individual assessment",
+            "Time under the professional steamer using moist heat to open cuticle layers for complete, deep-level fiber conditioning",
+            "A full master relaxer or custom dimensional color application processed and neutralized to perfection",
+            "A precision haircut or custom trim to eliminate damaged ends, removing split, brittle, or chemically worn hair",
+            "Finishing styling products applied to maintain color luster, silkiness, and humidity protection for your style",
+          ],
+          notIncluded:
+            "Nothing is omitted from this package; it represents our ultimate all-in-one experience, uniting custom chemical work, intensive treatment, and precise perimeter shaping in a single session.",
+          bestFor:
+            "Clients due for a complete makeover, handling split or over-processed ends, or anyone wanting the absolute complete reset, combining chemical service, deep reconstruction, and shape maintenance in one appointment.",
+        },
+      ],
+    },
+    note: {
+      eyebrow: "Good To Know",
+      heading: "Why the Trim Matters",
+      body: [
+        "Think of your hair strand like a woven ribbon. If the tip of a ribbon begins to fray, that separation steadily travels upward along the fibers until the entire ribbon is compromised. Hair behaves identically; once ends split or suffer chemical wear, that damage advances up the shaft unless cut cleanly.",
+        "The longer split ends remain unattended, the more length must eventually be removed to restore health. A regular precision trim stops damage from creeping upward, ensuring a smoother chemical finish, fuller perimeter ends, and a style that holds structure over time.",
+        "We generally recommend a trim with chemical services every 8 to 12 weeks depending on how frequently you heat-style between salon appointments.",
+      ],
+    },
+    comparison: {
+      eyebrow: "At A Glance",
+      heading: "Quick Comparison",
+      columns: ["Essential Retouch & Tone", "Chemical Silk & Bond Treatment", "The Glorious Transformation"],
+      rows: [
+        { label: "Scalp protective shield", values: [true, true, true] },
+        { label: "Restorative treatment", values: ["standard", "customized", "customized"] },
+        { label: "Strand/hair assessment", values: [false, true, true] },
+        { label: "Steam processing", values: [false, true, true] },
+        { label: "Custom chemical process", values: [true, true, true] },
+        { label: "Precision trim / cut", values: [false, false, true] },
+      ],
+      footnote:
+        "Each service builds on the one before it, so clients can choose based on how much their hair needs beyond basic root touch-ups: chemical work alone, chemical work with structural treatment, or the complete transformation with a precision cut included.",
+    },
+    childrenSection: {
       eyebrow: "The Menu",
-      heading: "Relaxer & Color Menu",
+      heading: "Explore Our Services",
       intro:
         "Every relaxer and color service is booked from the menu below. Prices are a starting point — your stylist confirms the final cost at consultation.",
-      items: [
-        { name: "Relaxer Touch Up", price: "$100", image: "/images/relaxers-colors-01.webp" },
-        { name: "Virgin Relaxer", price: "$225", image: "/images/relaxers-colors-02.webp" },
-        { name: "Color Retouch", price: "$125", image: "/images/relaxers-colors-03.webp" },
-        { name: "Single Process", price: "$120", image: "/images/relaxers-colors-04.webp" },
-        { name: "Double Process", price: "$350", image: "/images/relaxers-colors-05.webp" },
-        { name: "Half-Head Highlights", price: "$160", image: "/images/relaxers-colors-06.webp" },
-        { name: "Full Highlights Or Foilayage", price: "$300", image: "/images/relaxers-colors-07.webp" },
-        { name: "Crown Lights", price: "$85", image: "/images/relaxers-colors-08.webp" },
-        { name: "Color Correction", price: "$250", image: "/images/relaxers-colors-09.webp" },
-        { name: "Glorious Boost", price: "$120", image: "/images/relaxers-colors-10.webp" },
-      ],
     },
     cta: {
       display: "Reserve Your Space",
@@ -286,6 +361,12 @@ export const serviceParents: ServiceParent[] = [
         },
       ],
     },
+    childrenSection: {
+      eyebrow: "The Menu",
+      heading: "Explore Our Services",
+      intro:
+        "Installs, consultations and unit care, each booked individually. Prices are a starting point — your stylist confirms the final cost at consultation.",
+    },
     cta: {
       display: "Reserve Your Space",
       heading: "Find the Right Weave Install for Your Hair Goals",
@@ -310,21 +391,94 @@ export const serviceParents: ServiceParent[] = [
         "From precision cuts to glamorous updos and ponytails — our expert stylists deliver flawless results tailored to your unique look.",
       image: "/images/Haircuts-And-Styles-03.webp",
     },
-    menu: {
+    overview: {
+      eyebrow: "The Service",
+      heading: "Choose Your Cut & Style Experience",
+      body: [
+        "A custom haircut and professional style is one of the most expressive services at October Glory, and for good reason. It reshapes your natural silhouette, frames your facial features, and breathes fresh life into your look using precision sectioning, elevation, and tailored technique instead of standard cuts.",
+        "Because every client's curl pattern, density, and lifestyle are unique, we offer three tiers of haircutting and styling services, each building on the last. Below is a breakdown of what is included in each so you can select the ideal styling experience for your hair's needs (and your schedule).",
+      ],
+      image: "/images/Haircuts-And-Styles-03.webp",
+    },
+    tiers: {
+      eyebrow: "Choose Your Experience",
+      heading: "Haircut & Style Tiers",
+      items: [
+        {
+          name: "Essential Cut & Blowout",
+          includes: [
+            "A cleansing shampoo session to remove excess oils, ambient buildup, and styling residue before cutting begins",
+            "A light conditioning rinse to smooth cuticles and improve strand glide during sectioning and cutting",
+            "Custom texturizing and sectioning applied based on your hair density and growth direction, ensuring balanced movement and weight distribution",
+            "A complete blow-dry and classic style finish to leave your hair smooth, voluminous, and free of tangles",
+            "Application of lightweight styling serums to help your cut hold shape and maintain shine through daily wear",
+          ],
+          notIncluded:
+            "The Essential Cut & Blowout does not include an in-depth scalp analysis for a targeted spa treatment, steam processing, or complex thermal styling. If your hair requires intense hydration recovery or specialized heat styling, one of our higher tiers will serve you better.",
+          bestFor:
+            "Clients with manageable hair who want a swift, high-quality, routine haircut and classic blowout refresh.",
+        },
+        {
+          name: "Designer Cut + Spa Treatment",
+          featured: true,
+          includes: [
+            "A complete scalp and hair texture evaluation, where we establish exact moisture balance, fiber elasticity, and scalp requirements",
+            "A targeted spa treatment or restorative mask, chosen specifically according to your diagnostic evaluation",
+            "Dedicated steam processing, where moist therapeutic heat opens the hair cuticle, enabling deep penetration of nourishing lipids into the inner shaft rather than sitting on the outer layer. This is what renders a steamed treatment so superior to basic conditioning, as ingredients reach directly where damage exists",
+            "A full customized haircut and master blowout once the treatment is thoroughly absorbed and rinsed",
+            "Finishing polishes applied to protect your newly shaped style against humidity and ambient environmental friction",
+          ],
+          notIncluded:
+            "This service does not include elaborate multi-step thermal styling or intricate updos. If you require advanced hot tool work or intricate event styling, our top tier addresses these needs in full.",
+          bestFor:
+            "Clients whose hair feels brittle, stressed, or lacks bounce before receiving a cut, and who want both scalp revitalizing and structural shape perfection.",
+        },
+        {
+          name: "The Glorious Crown Cut & Style",
+          includes: [
+            "A comprehensive hair and scalp assessment to craft both the ideal therapeutic formula and your custom haircut silhouette",
+            "A customized deep conditioning spa treatment applied across the hair and scalp based on your diagnostic results",
+            "Time under the steamer using moist heat to open cuticles for maximum product absorption and fiber softening",
+            "A full designer haircut tailored precisely to your head shape, facial contours, and natural hair movement",
+            "A signature thermal style finish or precision hot-tool styling to create long-lasting waves, curls, or sleek elegance",
+            "Luxury finishing products applied to lock in humidity resistance, brilliant shine, and body for your finished style",
+          ],
+          notIncluded:
+            "Nothing is left out here; this is the complete signature haircut and style package, uniting structural care, expert cutting, and luxury thermal finishing in one appointment.",
+          bestFor:
+            "Clients due for a dramatic style change, dealing with uneven perimeter growth, or anyone who wants the complete luxury experience, treatment, cut, and high-end thermal styling in a single salon visit.",
+        },
+      ],
+    },
+    note: {
+      eyebrow: "Good To Know",
+      heading: "Why Precision Shaping Matters",
+      body: [
+        "Think of your hairstyle like a tailored garment. If the seams of a garment are uneven, the entire silhouette pulls and loses its structure over time. Hair functions in the exact same manner; when split ends and uneven lengths are left unchecked, weight distribution shifts and styling becomes difficult.",
+        "Unmaintained ends cause tangling that pulls healthy strands down. Precision cutting removes dead weight, balances density, prevents split ends from climbing up the strand, and allows your style to hold its shape effortlessly between visits.",
+        "We generally suggest a detailed trim or shape-up every 6 to 10 weeks depending on your growth rate and heat usage.",
+      ],
+    },
+    comparison: {
+      eyebrow: "At A Glance",
+      heading: "Quick Comparison",
+      columns: ["Essential Cut & Blowout", "Designer Cut + Spa Treatment", "The Glorious Crown Cut & Style"],
+      rows: [
+        { label: "Cleansing shampoo", values: [true, true, true] },
+        { label: "Conditioning treatment", values: ["standard", "customized", "customized"] },
+        { label: "Scalp/hair assessment", values: [false, true, true] },
+        { label: "Steam processing", values: [false, true, true] },
+        { label: "Designer haircut", values: [true, true, true] },
+        { label: "Signature thermal styling", values: [false, false, true] },
+      ],
+      footnote:
+        "Each service builds on the one before it, so clients can choose based on how much attention their hair needs beyond a simple trim: basic cutting, cut with deep spa care, or the total luxury transformation with advanced thermal styling included.",
+    },
+    childrenSection: {
       eyebrow: "The Menu",
-      heading: "Haircut & Styling Menu",
+      heading: "Explore Our Services",
       intro:
         "Cuts, ponytails and updos, each finished to suit your face shape. Prices are a starting point — your stylist confirms the final cost at consultation.",
-      items: [
-        { name: "Glory-Girl Ponytail", price: "$165", image: "/images/Haircuts-And-Styles-01.webp" },
-        { name: "Glory-Girl Updos", price: "$150", image: "/images/Haircuts-And-Styles-02.webp" },
-        { name: "Glory-Girl Precision Cut", price: "$150", image: "/images/Haircuts-And-Styles-03.webp" },
-        { name: "Weave Precision Cut", price: "$100", image: "/images/Haircuts-And-Styles-04.webp" },
-        { name: "Haircut Only", price: "$75", image: "/images/Haircuts-And-Styles-05.webp" },
-        { name: "Haircut & Finish", price: "$125", image: "/images/Haircuts-And-Styles-06.webp" },
-        { name: "New Look Haircut", price: "$120", image: "/images/Haircuts-And-Styles-07.webp" },
-        { name: "Pro Consult", price: "$50", image: "/images/salon-image.webp" },
-      ],
     },
     cta: {
       display: "Reserve Your Space",
@@ -333,7 +487,7 @@ export const serviceParents: ServiceParent[] = [
     meta: {
       title: "Haircuts And Styles | October Glory",
       description:
-        "Discover our expert haircut and styling services — Glory-Girl Ponytail, Updos, Precision Cut, Weave Precision Cut, Haircut & Finish, New Look Haircut and more. Book your appointment today.",
+        "Discover our expert haircut and styling services — Ponytail & Updo, Glory-Girl Precision Cut, Weave Precision Cut, Haircut Only, Haircut & Finish, New Look Haircut and Pro Consult. Book your appointment today.",
     },
   },
   {
@@ -349,17 +503,94 @@ export const serviceParents: ServiceParent[] = [
         "Restore, repair, and rejuvenate your hair with our premium treatment services — designed to nourish from root to tip.",
       image: "/images/TREATMENTS-01.webp",
     },
-    menu: {
+    overview: {
+      eyebrow: "The Service",
+      heading: "Choose Your Treatment Experience",
+      body: [
+        "An intensive restorative treatment is one of the foundational wellness offerings at October Glory, and for good reason. It revitalizes compromised strands, rebalances scalp health, and restores elasticity using clinical-grade nutrients and moisture systems instead of temporary surface silicones.",
+        "Because every head of hair faces unique stressors, we offer three tiers of specialized treatment services, each building on the last. Below is a breakdown of what is included in each tier so you can choose the restorative care that fits your hair's requirements (and your schedule).",
+      ],
+      image: "/images/TREATMENTS-01.webp",
+    },
+    tiers: {
+      eyebrow: "Choose Your Experience",
+      heading: "Treatment Tiers",
+      items: [
+        {
+          name: "Essential Moisture Therapy",
+          includes: [
+            "A gentle clarifying wash to clear product residue, hard water minerals, and environmental buildup prior to treatment",
+            "A rich moisturizing therapy mask applied evenly from mid-shaft to ends to replenish essential hydration",
+            "Controlled warm towel encapsulation to relax hair cuticles and promote soft product absorption",
+            "A thorough cold-water rinse to lock in hydration, seal cuticle layers, and enhance natural shine",
+            "Application of lightweight leave-in protectants to preserve moisture balance during natural or blow-dry drying",
+          ],
+          notIncluded:
+            "The Essential Moisture Therapy does not include a comprehensive micro-scalp analysis for a fully customized mask, active steam processing, or an end-shaping trim. If your hair suffers from severe breakage or damaged ends, one of our elevated tiers will suit you better.",
+          bestFor:
+            "Clients with relatively healthy hair who need a quick, effective, routine moisture boost between major appointments.",
+        },
+        {
+          name: "Advanced Steam Spa Therapy",
+          featured: true,
+          includes: [
+            "A detailed scalp and strand diagnostic evaluation, where we identify whether your hair needs lipid moisture, amino acid protein, scalp soothing, or a custom blend",
+            "A bespoke therapeutic compound mixed specifically based on your diagnostic results to target weakened areas",
+            "Extended time under the hair steamer, where warm vapor opens the outer hair cuticle and expands pores. This allows therapeutic ingredients to enter deep into the inner cortex rather than resting on top. This is why steamed therapy is far more effective than standard conditioning, as nutrients reach the core where elasticity is restored",
+            "A thorough scalp massage and cool rinse once the treatment has fully infused into the hair shaft",
+            "Protective styling serums applied to lock in deep hydration and guard against thermal or environmental stress",
+          ],
+          notIncluded:
+            "This service does not include a perimeter trim or cut. If your ends are frayed, split, or damaged, those ends will remain after treatment, as this tier focuses purely on moisture restoration and follicle health, not length maintenance.",
+          bestFor:
+            "Clients whose hair is severely dry, chemically damaged, prone to breakage, or suffering from scalp dryness, and who require targeted deep-steam therapy.",
+        },
+        {
+          name: "The Glorious Renewal Experience",
+          includes: [
+            "A comprehensive scalp and strand diagnostic assessment to determine your ideal customized formulation",
+            "A bespoke therapeutic treatment compound mixed and applied directly across the scalp and hair strands",
+            "Dedicated steam processing with therapeutic moist heat to open cuticle scales and infuse active ingredients deep into the shaft",
+            "A thorough scalp massage and refreshing rinse to stimulate circulation and seal cuticles",
+            "A precision trim to remove dead, frayed, or split ends, eliminating brittle sections that compromise hair health",
+            "Finishing luxury serums applied to lock in deep nutrition and maintain smooth, brilliant shine",
+          ],
+          notIncluded:
+            "Nothing is omitted from this package; it is our complete therapeutic reset, uniting scalp therapy, steam repair, and split-end elimination in one restful session.",
+          bestFor:
+            "Clients needing a total hair reset, recovering from protective styling, dealing with split ends, or wanting complete therapeutic care and maintenance in a single visit.",
+        },
+      ],
+    },
+    note: {
+      eyebrow: "Good To Know",
+      heading: "Why the Trim Matters",
+      body: [
+        "Think of a hair strand like a tightly spun rope. If the tip of a rope begins to unlay, the unravelling slowly progresses up the entire line until the rope loses its integrity. Hair functions the same way; once an end splits, that tear travels up the strand if not removed.",
+        "The longer split ends are left alone, the more length must eventually be cut to restore vitality. A regular trim stops damage from spreading, ensuring your treatments yield maximum strength, fuller ends, and styles that last longer.",
+        "We generally recommend pairing a trim with your treatment every 8 to 12 weeks to keep your hair growing long and strong.",
+      ],
+    },
+    comparison: {
+      eyebrow: "At A Glance",
+      heading: "Quick Comparison",
+      columns: ["Essential Moisture Therapy", "Advanced Steam Spa Therapy", "The Glorious Renewal Experience"],
+      rows: [
+        { label: "Clarifying wash", values: [true, true, true] },
+        { label: "Therapeutic mask", values: ["standard", "customized", "customized"] },
+        { label: "Scalp/hair assessment", values: [false, true, true] },
+        { label: "Steam processing", values: [false, true, true] },
+        { label: "Scalp massage", values: [false, true, true] },
+        { label: "Precision trim", values: [false, false, true] },
+      ],
+      footnote:
+        "Each service builds on the one before it, so clients can choose based on how much attention their hair needs beyond basic conditioning: surface moisture, deep steam restoration, or the complete renewal with split-end maintenance included.",
+    },
+    childrenSection: {
       eyebrow: "The Menu",
-      heading: "Treatment Menu",
+      heading: "Explore Our Services",
       intro:
         "Each treatment is chosen for your hair after a scalp and hair assessment. Prices are a starting point — your stylist confirms the final cost at consultation.",
-      items: [
-        { name: "Scalp Relief", price: "$50", image: "/images/TREATMENTS-01.webp" },
-        { name: "The Upmost Hydration", price: "$50", image: "/images/TREATMENTS-02.webp" },
-        { name: "Protein Moisture Pack", price: "$55", image: "/images/TREATMENTS-03.webp" },
-        { name: "Bond Builder", price: "$65", image: "/images/TREATMENTS-04.webp" },
-      ],
     },
     cta: {
       display: "Reserve Your Space",

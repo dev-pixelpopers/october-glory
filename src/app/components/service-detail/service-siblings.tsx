@@ -4,12 +4,14 @@ import React from "react";
 import Link from "next/link";
 import { useReveal } from "./use-reveal";
 import { tone as palette, type Tone } from "./tone";
+import PriceTag from "./price-tag";
 
 export type RelatedItem = {
   title: string;
   image: string;
   href: string;
   price?: string;
+  nonMemberPrice?: string;
 };
 
 /**
@@ -64,7 +66,7 @@ export default function ServiceSiblings({
             href={item.href}
             data-reveal
             data-reveal-delay={String(index)}
-            className="group relative rounded-[20px] overflow-hidden"
+            className="group relative rounded-[20px] overflow-hidden border border-white/10 hover:border-[#ccb884]/60 transition-colors duration-500"
           >
             <div className="aspect-square overflow-hidden bg-[#2a2a2a]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -77,33 +79,18 @@ export default function ServiceSiblings({
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
 
-            {item.price && (
-              <span className="absolute top-5 right-5 bg-[#ccb884] text-[#1B1B1B] gotham font-bold text-[13px] px-4 py-2 rounded-full">
-                {item.price}
-              </span>
-            )}
+            {/* Same stack as the menu cards: prices, title, then the CTA that
+                the parked 28px hides until hover. */}
+            <div className="absolute inset-x-0 bottom-0 flex flex-col p-6 translate-y-[28px] group-hover:translate-y-0 transition-transform duration-500 ease-out motion-reduce:transition-none motion-reduce:translate-y-0">
+              <PriceTag price={item.price} nonMemberPrice={item.nonMemberPrice} />
 
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h3 className="valturin text-white text-[24px] mb-2">
+              <h3 className="valturin text-white text-[24px] md:text-[26px] leading-[1.2] mb-2">
                 {item.title}
               </h3>
-              <span className="inline-flex items-center gap-2 text-[#ccb884] gotham text-[13px] tracking-[2px] uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                View
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                  />
-                </svg>
+
+              <span className="inline-flex items-center gap-2 h-5 leading-5 text-[#ccb884] gotham text-[13px] tracking-[2px] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 motion-reduce:transition-none motion-reduce:opacity-100">
+                View Service
+                <span aria-hidden="true">&rarr;</span>
               </span>
             </div>
           </Link>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useReveal } from "./use-reveal";
 import type { ServiceMenu } from "@/data/services/types";
 import { tone as palette, type Tone } from "./tone";
+import PriceTag from "./price-tag";
 
 /**
  * The salon's priced menu for a service — the grid the standalone gallery
@@ -86,19 +87,18 @@ export default function ServiceMenuGrid({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
               </div>
+              {/* Parked 28px low so the hidden CTA sits below the card edge and
+                  leaves no gap under the title. 28px is exact, not eyeballed:
+                  the CTA's h-5 (20px) plus the title's mb-2 (8px). On hover the
+                  stack rides up and the CTA fades in where the gap used to be. */}
+              <div className="absolute inset-x-0 bottom-0 flex flex-col p-6 translate-y-[28px] group-hover:translate-y-0 transition-transform duration-500 ease-out motion-reduce:transition-none motion-reduce:translate-y-0">
+                <PriceTag price={item.price} nonMemberPrice={item.nonMemberPrice} />
 
-              {item.price && (
-                <span className="absolute top-5 right-5 bg-[#ccb884] text-[#1B1B1B] gotham font-bold text-[14px] px-4 py-2 rounded-full">
-                  {item.price}
-                </span>
-              )}
-
-              <div className="absolute inset-x-0 bottom-0 p-6">
                 <h3 className="valturin text-white text-[24px] md:text-[26px] leading-[1.2] mb-2">
                   {item.name}
                 </h3>
 
-                <span className="inline-flex items-center gap-2 text-[#ccb884] gotham text-[13px] tracking-[2px] uppercase opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 motion-reduce:transition-none motion-reduce:opacity-100">
+                <span className="inline-flex items-center gap-2 h-5 leading-5 text-[#ccb884] gotham text-[13px] tracking-[2px] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 motion-reduce:transition-none motion-reduce:opacity-100">
                   {item.href ? "View Service" : "Book Now"}
                   <span aria-hidden="true">→</span>
                 </span>
