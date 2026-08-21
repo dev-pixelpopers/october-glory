@@ -240,8 +240,7 @@ export default function ReturnsPage() {
               </p>
               <div className="flex flex-col gap-2">
                 <p className="gotham text-[17px] text-gray-300 font-light">
-                  <span className="text-[#cda873]">Phone:</span> 917 - 905 -
-                  6552
+                  <span className="text-[#cda873]">Phone:</span> +1 (718)-614-1118
                 </p>
                 <p className="gotham text-[17px] text-gray-300 font-light">
                   <span className="text-[#cda873]">In-Person:</span> 1381

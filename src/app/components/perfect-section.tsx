@@ -62,8 +62,8 @@ export default function PerfectSection() {
 
 
   return (
-    <section ref={containerRef} className=" min-h-[300vh] relative">
-      <div className="flex flex-col bg-[#1B1B1B] py-[40px] px-[100px] sticky top-0 h-screen overflow-hidden">
+    <section ref={containerRef} className=" min-h-[300dvh] relative">
+      <div className="flex flex-col bg-[#1B1B1B] py-[clamp(20px,15.15px_+_1.294vw,40px)] px-[clamp(32px,15.5px_+_4.401vw,100px)] sticky top-0 h-dvh overflow-hidden">
         <div ref={ogRef} className="absolute inset-0 flex justify-between overflow-hidden pointer-events-none">
           <div className="valturin text-[65vw] leading-[0.75] text-white absolute top-[17%] left-[-0vw]">
             O
@@ -76,8 +76,8 @@ export default function PerfectSection() {
         <div className="flex gap-10 items-center">
           {/* Left column */}
           <div className="w-[40%] flex flex-col gap-10">
-            <div className="w-full text-trd -mt-[160px] ml-[8px]">
-              <h3 ref={heading1Ref} className=" w-[900px] text-[12vw] leading-[1] valtrin capitalize mb-[50px] opacity-22"
+            <div className="w-full text-trd -mt-[clamp(51px,24.54px_+_7.055vw,160px)] ml-[8px]">
+              <h3 ref={heading1Ref} className=" w-[900px] text-[12vw] leading-[1] valturin capitalize mb-[clamp(25px,18.93px_+_1.618vw,50px)] opacity-22"
                 style={{
                   clipPath: "inset(0% 100% 0% 0%)",
                   backgroundImage: "linear-gradient(180deg, #000 13%, #FFF 100%)",
@@ -88,19 +88,19 @@ export default function PerfectSection() {
               </h3>
             </div>
             <div className="relative w-full flex flex-col gap-0">
-              <h2 ref={heading2Ref} className="text-white text-[61px] valtrin text-gold capitalize"
+              <h2 ref={heading2Ref} className="text-white text-[length:clamp(26px,17.5px_+_2.265vw,61px)] valturin text-gold capitalize"
                 style={{
                   clipPath: "inset(0% 100% 0% 0%)"
                 }}>
                 Find the wig that
               </h2>
-              <h2 ref={heading3Ref} className="text-[81px] andrea text-white capitalize"
+              <h2 ref={heading3Ref} className="text-[length:clamp(29px,16.38px_+_3.366vw,81px)] andrea text-white capitalize"
                 style={{
                   clipPath: "inset(0% 100% 0% 0%)"
                 }}>
                 perfectly matches
               </h2>
-              <h2 ref={heading4Ref} className="text-gold text-[61px] valtrin capitalize"
+              <h2 ref={heading4Ref} className="text-gold text-[length:clamp(26px,17.5px_+_2.265vw,61px)] valturin capitalize"
                 style={{
                   clipPath: "inset(0% 100% 0% 0%)"
                 }}>
@@ -129,15 +129,15 @@ export default function PerfectSection() {
                   />
                 </svg>
               </div>
-              <span className="text-white gotham text-[20px] group-hover:text-white transition-colors duration-300">
-                Try On
+              <span className="text-white gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)] group-hover:text-white transition-colors duration-300">
+                Shop Now
               </span>
             </button>
           </div>
 
           {/* right column  */}
-          <div className="w-[60%] relative flex items-center justify-left pt-[100px] ">
-            <div className="w-[64%] h-full required z-1 -ml-[20px]">
+          <div className="w-[60%] relative flex items-center justify-left pt-[clamp(32px,15.5px_+_4.401vw,100px)] ">
+            <div className="w-[64%] h-full required z-1 -ml-[clamp(13px,11.3px_+_0.453vw,20px)]">
               <img
                 ref={imageRef}
                 src="/images/perfect-image.png"
@@ -146,7 +146,7 @@ export default function PerfectSection() {
               />
             </div>
             <div className="w-full text-trd text-right absolute bottom-[10%] right-[-10%]">
-              <h3 ref={heading5Ref} className="text-[12vw] leading-[1] valtrin capitalize opacity-22"
+              <h3 ref={heading5Ref} className="text-[12vw] leading-[1] valturin capitalize opacity-22"
                 style={{
                   clipPath: "inset(0% 100% 0% 0%)",
                   backgroundImage: "linear-gradient(180deg, #000 13%, #FFF 100%)",

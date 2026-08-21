@@ -4,6 +4,7 @@ import React from "react";
 import { useReveal } from "./use-reveal";
 import type { ServiceNote } from "@/data/services/types";
 import { tone as palette, type Tone } from "./tone";
+import BeforeAfter from "./before-after";
 
 /**
  * Editorial block for the "why this matters" explainers — the trim rationale
@@ -68,6 +69,18 @@ export default function ServiceNoteSection({
             </p>
           ))}
         </div>
+
+        {/* The proof for the argument the copy just made, so it lands after
+            the body rather than competing with it. */}
+        {note.compare && (
+          <div
+            data-reveal
+            data-reveal-delay={String(3 + note.body.length)}
+            className="mt-14 md:mt-20"
+          >
+            <BeforeAfter {...note.compare} tone={tone} />
+          </div>
+        )}
       </div>
     </section>
   );

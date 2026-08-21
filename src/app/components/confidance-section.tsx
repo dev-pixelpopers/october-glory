@@ -53,11 +53,13 @@ export default function ConfidenceJourneySection() {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="bg-white min-h-[300vh] relative">
-      <div className="sticky top-0 h-screen pt-[30px] pr-[30px] ">
+    <section ref={containerRef} className="bg-white min-h-[300dvh] relative">
+      
+      {/* <div className="sticky top-0 h-dvh pt-[clamp(20px,17.57px_+_0.647vw,30px)] pr-[clamp(20px,17.57px_+_0.647vw,30px)] "> */}
+      <div className="sticky top-0 h-dvh flex items-end] ">
         <div className="flex flex-col md:flex-row items-stretch w-full overflow-hidden">
           <div className="w-[45%] flex-shrink-0 relative z-2">
-            <div className="w-[100%] min-w-[1100px] h-full absolute bottom-0 left-0">
+            <div className="w-[100%] min-w-[57vw] h-full absolute bottom-0 -left-20">
               <img ref={imageRef}
                 src="/images/confidance-image.png"
                 alt="Woman getting hair done"
@@ -70,7 +72,7 @@ export default function ConfidenceJourneySection() {
           </div>
 
           <div ref={rightBoxRef}
-            className="w-[55%] px-10 py-[40px] h-[90vh] flex flex-col justify-center rounded-[20px] m-[40px]"
+            className="w-[55%] px-10 py-[clamp(20px,15.15px_+_1.294vw,40px)] h-[90dvh] flex flex-col justify-center rounded-[20px] m-[clamp(20px,15.15px_+_1.294vw,40px)]"
             style={{
               backgroundImage: "linear-gradient(270deg, #9C6D51 0%, #000 100%)",
               clipPath: "inset(50% 0% 0% 0%)"
@@ -78,14 +80,14 @@ export default function ConfidenceJourneySection() {
           >
             {/* Headings */}
             <div>
-              <span ref={heading1Ref} className="text-white text-[88px] andrea"
+              <span ref={heading1Ref} className="text-white text-[length:clamp(32px,18.41px_+_3.625vw,88px)] andrea"
                 style={{
                   clipPath: "inset(0% 100% 0% 0%)"
                 }}>Women Deserve</span>
             </div>
-            <div className="pl-[140px]">
-              <div className="mb-[40px]">
-                <h2 ref={heading2Ref} className="text-[#c1a073] text-[66px] valturin " style={{
+            <div className="pl-[clamp(45px,21.94px_+_6.149vw,140px)]">
+              <div className="mb-[clamp(20px,15.15px_+_1.294vw,40px)]">
+                <h2 ref={heading2Ref} className="text-[#c1a073] text-[length:clamp(28px,18.78px_+_2.46vw,66px)] valturin " style={{
                   clipPath: "inset(0% 100% 0% 0%)"
                 }}>
                   A Luxury Experience 
@@ -93,8 +95,8 @@ export default function ConfidenceJourneySection() {
               </div>
 
               {/* Paragraph */}
-              <div className="text-gray-200 text-[22px] leading-[48px] gotham">
-                <p ref={paragraphRef} className="mb-[50px] pr-[60px]"
+              <div className="text-gray-200 text-[length:clamp(19px,18.27px_+_0.194vw,22px)] leading-[clamp(41px,39.3px_+_0.453vw,48px)] gotham">
+                <p ref={paragraphRef} className="mb-[clamp(25px,18.93px_+_1.618vw,50px)] pr-[clamp(24px,15.26px_+_2.33vw,60px)]"
                   style={{
                     clipPath: "inset(0% 100% 0% 0%)"
                   }}>
@@ -127,7 +129,7 @@ export default function ConfidenceJourneySection() {
                     />
                   </svg>
                 </div>
-                <span className="text-white gotham text-[20px] group-hover:text-white transition-colors duration-300">
+                <span className="text-white gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)] group-hover:text-white transition-colors duration-300">
                   Get A Free Consultation
                 </span>
               </button>

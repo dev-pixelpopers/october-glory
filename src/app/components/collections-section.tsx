@@ -162,23 +162,23 @@ export default function CollectionsSection() {
     // Tall parent: gives the sticky stage room to scroll through.
     <section
       ref={sectionRef}
-      className="relative h-[400vh] bg-[#1B1B1B]"
+      className="relative h-[400dvh] bg-[#1B1B1B]"
     >
       {/* Sticky stage: pinned via CSS while the parent scrolls past. */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#1B1B1B] bg-right bg-contain bg-no-repeat">
+      <div className="sticky top-0 h-dvh w-full overflow-hidden bg-[#1B1B1B] bg-right bg-contain bg-no-repeat">
         <div className="absolute w-full h-[700px] -bottom-[150px] left-0 z-10">
           <img src="/images/line.png" alt="" className="object-cover" />
         </div>
         { /* Image */}
-        <div ref={imageRef} className="absolute w-[600px] h-[950px] bottom-0 right-0 z-0">
-          <img src="/images/baloch.png" alt="" className="object-fill" />
+        <div ref={imageRef} className="absolute w-[31.25vw] aspect-[600/950] bottom-0 right-0 z-0">
+          <img src="/images/baloch.png" alt="" className="object-cover" />
         </div>
         {/* Headings */}
-        <div ref={headingRef} className="absolute top-[80px] left-[110px] z-20 flex flex-col">
-          <h2 className="andrea text-[90px] leading-[120px] text-white text-left">
+        <div ref={headingRef} className="absolute top-[10dvh] left-[110px] z-20 flex flex-col">
+          <h2 className="andrea text-[length:clamp(32px,17.92px_+_3.754vw,90px)] leading-[clamp(43px,24.31px_+_4.984vw,120px)] text-white text-left">
             Shop by
           </h2>
-          <h2 className="valturin text-[68px] text-[#C0A062] mt-2 text-left ml-[200px]">
+          <h2 className="valturin text-[length:clamp(29px,19.53px_+_2.524vw,68px)] text-[#C0A062] mt-2 text-left ml-[clamp(56px,21.05px_+_9.32vw,200px)]">
             Collection
           </h2>
         </div>
@@ -207,7 +207,7 @@ export default function CollectionsSection() {
               ref={addToRefs}
               className="absolute left-0 top-0 w-[300px] bg-white rounded-xl p-4 shadow-[0_18px_45px_rgba(0,0,0,0.55)] will-change-transform"
             >
-              <div className="w-full h-[290px] bg-gray-100 rounded-lg mb-5 overflow-hidden">
+              <div className="w-full aspect-[268/290] bg-gray-100 rounded-lg mb-5 overflow-hidden">
                 <img
                   src={card.image}
                   alt={card.label}
@@ -219,9 +219,9 @@ export default function CollectionsSection() {
                 <span className="text-gray-400 text-base font-medium">{card.price}</span>
               </div>
               <div className="flex gap-2.5">
-                <button className="flex-1 bg-[#C0A062] text-white text-xs uppercase tracking-wider font-semibold py-3 rounded-sm hover:bg-[#a6884f] transition-colors">
+                {/* <button className="flex-1 bg-[#C0A062] text-white text-xs uppercase tracking-wider font-semibold py-3 rounded-sm hover:bg-[#a6884f] transition-colors">
                   Try On
-                </button>
+                </button> */}
                 <button className="flex-1 bg-white border border-gray-300 text-gray-500 text-xs uppercase tracking-wider font-semibold py-3 rounded-sm hover:bg-gray-50 transition-colors">
                   Add To Cart
                 </button>

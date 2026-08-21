@@ -40,7 +40,7 @@ export default function HeroSection() {
   });
   return (
     <section
-      className="hero-wrapper pt-[210px] pb-[30px] h-screen items-end"
+      className="hero-wrapper pt-[clamp(59px,22.35px_+_9.773vw,210px)] pb-[clamp(20px,17.57px_+_0.647vw,30px)] h-dvh items-end"
       style={{
         backgroundImage: "url('/images/hero-bg.png')",
         backgroundSize: "cover",
@@ -49,13 +49,13 @@ export default function HeroSection() {
     >
       <div className="background-marquee">
         <div className="marquee-track">
-          <span className="marquee-text text-center valturin text-[296.648px] leading-[296.648px] text-black">
+          <span className="marquee-text text-center valturin text-[length:clamp(98px,49.78px_+_12.857vw,296.648px)] leading-[clamp(98px,49.78px_+_12.857vw,296.648px)] text-black">
             Glory October Glory October Glory October
           </span>
-          <span className="marquee-text text-center valturin text-[296.648px] leading-[296.648px] text-black">
+          <span className="marquee-text text-center valturin text-[length:clamp(98px,49.78px_+_12.857vw,296.648px)] leading-[clamp(98px,49.78px_+_12.857vw,296.648px)] text-black">
             Glory October Glory October Glory October
           </span>
-          <span className="marquee-text text-center valturin text-[296.648px] leading-[296.648px] text-black">
+          <span className="marquee-text text-center valturin text-[length:clamp(98px,49.78px_+_12.857vw,296.648px)] leading-[clamp(98px,49.78px_+_12.857vw,296.648px)] text-black">
             Glory October Glory October Glory October
           </span>
         </div>
@@ -75,11 +75,11 @@ export default function HeroSection() {
               clipPath: "inset(0% 100% 0% 0%)",
               transition: "clip-path 1s ease-in-out"
             }}>
-            <span className="cursive-heading text-center andrea text-[121.771px] text-black mb-[-25px]">Brooklyn<span className="text-[48px] text-black leading-[0.3]">'</span>s</span>
-            <h1 className="valturin text-center text-[73.063px] text-black">Luxury Boutique Hair Salon</h1>
+            <span className="cursive-heading text-center andrea text-[length:clamp(44px,25.12px_+_5.034vw,121.771px)] text-black -mb-[clamp(16px,13.82px_+_0.583vw,25px)]">Brooklyn<span className="text-[length:clamp(17px,9.48px_+_2.006vw,48px)] text-black leading-[0.3]">'</span>s</span>
+            <h1 className="valturin text-center text-[length:clamp(26px,14.58px_+_3.046vw,73.063px)] text-black">Luxury Boutique Hair Salon</h1>
           </div>
 
-          <Link href="/dashboard/book" ref={buttonRef} className="book-btn flex mt-[20px] gap-[10px] items-center border-black border-1 text-black rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham opacity-0">
+          <Link href="/dashboard/book" ref={buttonRef} className="book-btn flex mt-[clamp(13px,11.3px_+_0.453vw,20px)] gap-[10px] items-center border-black border-1 text-black rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham opacity-0">
             <span className="btn-icon"><img src="/images/btn-arrow.svg" width="43px" height="43px" /></span>
             Book Your Visit
           </Link>

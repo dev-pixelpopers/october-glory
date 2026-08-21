@@ -11,7 +11,7 @@ import type { ServiceParent } from "./types";
  */
 export const serviceParents: ServiceParent[] = [
   {
-    cardImage: "/images/SilkPress-01.webp",
+    cardImage: "/images/silk-press-card-img.jpg",
     cardBlurb:
       "Sleek, smooth and salon-fresh — achieved with heat, tension and technique instead of chemicals.",
     slug: "silk-press",
@@ -33,6 +33,7 @@ export const serviceParents: ServiceParent[] = [
         "Explore the options below to find the silk press that's right for you.",
       ],
       image: "/images/SilkPress-01.webp",
+      video: "/images/silk-press-intro.webm",
     },
     tiers: {
       eyebrow: "Choose Your Experience",
@@ -95,6 +96,11 @@ export const serviceParents: ServiceParent[] = [
         "Regular trims help prevent this damage from spreading, keeping your hair looking healthier while allowing your silk press to appear smoother, shinier, and better maintained.",
         "Although we generally recommend a trim every three months, the ideal schedule depends on how often you heat-style or manipulate your hair between visits.",
       ],
+      compare: {
+        before: "/images/silk-press-before.png",
+        after: "/images/silk-press-after.png",
+        caption: "Split, thinning ends before — a clean, blunt perimeter after a precision trim.",
+      },
     },
     comparison: {
       eyebrow: "At A Glance",
@@ -118,6 +124,15 @@ export const serviceParents: ServiceParent[] = [
       eyebrow: "The Menu",
       heading: "Other Natural Styles",
     },
+    ebook: {
+      eyebrow: "The Glorious",
+      display: "Silk Press",
+      script: "Guidebook",
+      body: "Everything we tell our clients in the chair, written down — how to stretch your press between visits, what heat protection actually does, which products undo the work, and when a trim is overdue. Written by our stylists for hair like yours.",
+      image: "/images/guide-silk.jpeg",
+      cta: "Explore The E-Book",
+      href: "#",
+    },
     cta: {
       heading: "Book Your Silk Press Appointment",
     },
@@ -128,11 +143,11 @@ export const serviceParents: ServiceParent[] = [
     },
   },
   {
-    cardImage: "/images/relaxes1.webp",
+    cardImage: "/images/relaxers-card-img.jpg",
     cardBlurb:
       "Smooth relaxers and rich color transformations tailored to your personality and style.",
     slug: "relaxers-and-colors",
-    cardTitle: "Relaxers & Colors",
+    cardTitle: "Color & Other Chemical Services",
     hero: {
       display: "Relaxers",
       script: "And Colors",
@@ -366,6 +381,15 @@ export const serviceParents: ServiceParent[] = [
       heading: "Explore Our Services",
       intro:
         "Installs, consultations and unit care, each booked individually. Prices are a starting point — your stylist confirms the final cost at consultation.",
+    },
+    ebook: {
+      eyebrow: "Free Download",
+      display: "The Wig & Weave",
+      script: "Care Handbook",
+      body: "Choosing a unit, protecting the hair underneath it, and making an install last — laid out step by step. Covers foundation prep, night routines, wash cycles for wigs and weaves, and how to tell when it is time to take it down.",
+      image: "/images/guide-wigs.png",
+      cta: "Explore The E-Book",
+      href: "#",
     },
     cta: {
       display: "Reserve Your Space",

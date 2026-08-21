@@ -55,6 +55,20 @@ export type ServiceNote = {
   heading: string;
   body: string[];
   image?: string;
+  /**
+   * A before/after pair, rendered under the body as a draggable comparison.
+   * Shoot both frames from the same distance and angle — the wipe only reads
+   * as one head of hair if the framing matches.
+   */
+  compare?: {
+    before: string;
+    after: string;
+    /** Defaults to "Before" / "After". */
+    beforeLabel?: string;
+    afterLabel?: string;
+    /** Optional line under the frame — service used, time between shots. */
+    caption?: string;
+  };
 };
 
 /**
@@ -72,6 +86,12 @@ export type ServiceSection = {
   /** Rendered as a gold-checked list beneath the body. */
   bullets?: string[];
   image?: string;
+  /**
+   * Plays in the media box instead of `image`. Keep `image` set alongside it —
+   * it becomes the poster frame, so the block still reads correctly before the
+   * video loads and for anyone who has reduced motion turned on.
+   */
+  video?: string;
 };
 
 /** A priced item in a service's menu grid — the salon's actual price list. */
@@ -97,6 +117,25 @@ export type ServiceFaq = {
   eyebrow?: string;
   heading: string;
   items: { question: string; answer: string }[];
+};
+
+/**
+ * The e-book block: the same two-panel layout as the home page's "Your Guide
+ * to the Perfect Choice", carrying this service's own guide.
+ */
+export type ServiceEbook = {
+  eyebrow?: string;
+  /** Large Andrea-Bellarosa line. */
+  display: string;
+  /** Valturin line underneath, indented like the hero. */
+  script: string;
+  body: string;
+  /** Cover art shown in the white card on the left. */
+  image: string;
+  /** Label on the download CTA. */
+  cta: string;
+  /** The PDF. `#` until the file exists. */
+  href: string;
 };
 
 export type ServiceDetail = {
@@ -138,6 +177,13 @@ export type ServiceDetail = {
   menu?: ServiceMenu;
 
   faq?: ServiceFaq;
+
+  /**
+   * The downloadable guide block. Only the services that have published one
+   * define this — the template renders nothing without it, and the home page's
+   * guide CTAs deep-link here via `#ebook`.
+   */
+  ebook?: ServiceEbook;
 
   cta?: {
     display?: string;

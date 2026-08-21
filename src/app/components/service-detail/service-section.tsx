@@ -45,6 +45,9 @@ export default function ServiceSectionBlock({
   const scope = useReveal<HTMLElement>();
   const c = palette[tone];
   const bulletOffset = 3 + section.body.length;
+  // A section earns the two-column layout if it has any media at all — a
+  // video-only section must not fall back to the centred single-column copy.
+  const hasMedia = Boolean(section.image || section.video);
 
   return (
     <section
@@ -59,12 +62,12 @@ export default function ServiceSectionBlock({
           sitting in half a two-column grid with nothing beside it. */}
       <div
         className={
-          section.image
+          hasMedia
             ? "grid grid-cols-1 lg:grid-cols-2 gap-[60px] lg:gap-[90px] items-center max-w-[1400px] mx-auto"
             : "max-w-[820px] mx-auto"
         }
       >
-        <div className={section.image && flip ? "lg:order-last" : undefined}>
+        <div className={hasMedia && flip ? "lg:order-last" : undefined}>
           {section.eyebrow && (
             <p
               data-reveal
@@ -141,7 +144,7 @@ export default function ServiceSectionBlock({
           </a>
         </div>
 
-        {section.image && (
+        {hasMedia && (
           <div
             data-reveal
             data-reveal-delay="2"
@@ -159,13 +162,27 @@ export default function ServiceSectionBlock({
             />
 
             <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
-              <Image
-                src={section.image}
-                alt={section.heading}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
-              />
+              {section.video ? (
+                <video
+                  src={section.video}
+                  poster={section.image}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  aria-label={section.heading}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
+                />
+              ) : (
+                <Image
+                  src={section.image!}
+                  alt={section.heading}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
+                />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent" />
             </div>
           </div>

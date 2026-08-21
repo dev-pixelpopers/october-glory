@@ -26,7 +26,7 @@ export default function Footer() {
 
             {/* Socials */}
             <div className="flex items-center gap-4">
-              <span className="text-black gotham text-[22px]">
+              <span className="text-black gotham text-[length:clamp(19px,18.27px_+_0.194vw,22px)]">
                 We are social
               </span>
               <div className="flex items-center gap-3">
@@ -52,10 +52,10 @@ export default function Footer() {
 
           {/* Column 2: Contact Info */}
           <div className="flex flex-col md:border-r border-gray-200 md:px-10 lg:px-16 pb-8 md:pb-0 border-b md:border-b-0 py-[80px]">
-            <h3 className="text-gold font-bold text-[26px] gotham mb-4">
+            <h3 className="text-gold font-bold text-[length:clamp(22px,21.03px_+_0.259vw,26px)] gotham mb-4">
               Contact
             </h3>
-            <p className="text-gray-800 text-[22px] gotham mb-6">
+            <p className="text-gray-800 text-[length:clamp(19px,18.27px_+_0.194vw,22px)] gotham mb-6">
               By Appointment Only
             </p>
 
@@ -65,8 +65,8 @@ export default function Footer() {
                 <div className="w-8 h-8 rounded-full border border-[#d4af6e] flex items-center justify-center text-[#d4af6e]">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                 </div>
-                <span className="text-gray-800 text-[22px] gotham w-16">Phone</span>
-                <span className="text-gray-600 text-[18px] gotham">917 - 905 - 6552</span>
+                <span className="text-gray-800 text-[length:clamp(19px,18.27px_+_0.194vw,22px)] gotham w-16">Phone</span>
+                <span className="text-gray-600 text-[18px] gotham">+1 (718)-614-1118</span>
               </div>
 
               {/* Address */}
@@ -74,7 +74,7 @@ export default function Footer() {
                 <div className="w-8 h-8 rounded-full border border-[#d4af6e] flex items-center justify-center text-[#d4af6e] flex-shrink-0">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 </div>
-                <span className="text-gray-800 text-[22px] gotham w-16 mt-1">Address</span>
+                <span className="text-gray-800 text-[length:clamp(19px,18.27px_+_0.194vw,22px)] gotham w-16 mt-1">Address</span>
                 <span className="text-gray-600 text-[18px] gotham  ml-[20px]">
                   1381 Bedford Avenue<br />Brooklyn, NY 11216
                 </span>
@@ -84,22 +84,22 @@ export default function Footer() {
 
           {/* Column 3: Opening Hours */}
           <div className="flex flex-col md:pl-10 lg:pl-16 py-[80px]">
-            <h3 className="text-gold font-bold text-[26px] gotham mb-4">
+            <h3 className="text-gold font-bold text-[length:clamp(22px,21.03px_+_0.259vw,26px)] gotham mb-4">
               Opening Hours
             </h3>
 
             <div className="flex flex-col gap-4 text-sm">
               <div className="flex justify-start items-center gap-[20px]">
-                <span className="text-gray-800 gotham text-[20px]">Sun - Tue</span>
-                <span className="text-gray-600 gotham text-[20px]">Closed</span>
+                <span className="text-gray-800 gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)]">Sun - Tue</span>
+                <span className="text-gray-600 gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)]">Closed</span>
               </div>
               <div className="flex justify-start items-center gap-[20px]">
-                <span className="text-gray-800 gotham text-[20px]">Wed - Fri</span>
-                <span className="text-gray-600 gotham text-[20px]">10:00 am - 4:00 pm</span>
+                <span className="text-gray-800 gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)]">Wed - Fri</span>
+                <span className="text-gray-600 gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)]">10:00 am - 4:00 pm</span>
               </div>
               <div className="flex justify-start items-center gap-[20px]">
-                <span className="text-gray-800 gotham text-[20px]">Saturday</span>
-                <span className="text-gray-600 gotham text-[20px]">10:00 am - 1:00 pm</span>
+                <span className="text-gray-800 gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)]">Saturday</span>
+                <span className="text-gray-600 gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)]">10:00 am - 1:00 pm</span>
               </div>
             </div>
           </div>
@@ -118,9 +118,9 @@ export default function Footer() {
 
           {/* Policy Links */}
           <div className="w-full md:w-1/3 flex justify-center gap-6">
-            <a href="/terms" className="text-gray-800 hover:text-[#d4af6e] text-[20px] gotham transition-colors">Terms</a>
-            <a href="/privacy" className="text-gray-800 hover:text-[#d4af6e] text-[20px] gotham transition-colors">Privacy</a>
-            <a href="/returns" className="text-gray-800 hover:text-[#d4af6e] text-[20px] gotham transition-colors">Returns</a>
+            <a href="/terms" className="text-gray-800 hover:text-[#d4af6e] text-[length:clamp(17px,16.27px_+_0.194vw,20px)] gotham transition-colors">Terms</a>
+            <a href="/privacy" className="text-gray-800 hover:text-[#d4af6e] text-[length:clamp(17px,16.27px_+_0.194vw,20px)] gotham transition-colors">Privacy</a>
+            <a href="/returns" className="text-gray-800 hover:text-[#d4af6e] text-[length:clamp(17px,16.27px_+_0.194vw,20px)] gotham transition-colors">Returns</a>
           </div>
 
           {/* Payment Icons Placeholder */}

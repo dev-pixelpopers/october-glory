@@ -51,7 +51,7 @@ export default function Header({ theme = "light", bg = "transparent" }: { theme?
       <div className={`main-header ${isMenuOpen ? 'fixed' : 'absolute'} top-0 left-0 w-full transition-all duration-500 ${isMenuOpen ? 'z-[10000]' : 'z-2'} ${bg === 'white' ? 'bg-white' : ''}`}>
       <section className="bg-[#000] py-1">
         <div className="container mx-auto">
-          <p className="text-center gotham text-[20px] text-white">
+          <p className="text-center gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)] text-white">
             Great News! Ask How To Get 10% Off Your Next Service
           </p>
         </div>
@@ -126,7 +126,7 @@ export default function Header({ theme = "light", bg = "transparent" }: { theme?
                 <span className="w-full h-[2px] bg-current transition-all"></span>
               </div>
             )}
-            <span className="text-[20px] gotham">
+            <span className="text-[length:clamp(17px,16.27px_+_0.194vw,20px)] gotham">
               {isMenuOpen ? 'Close' : 'Menu'}
             </span>
           </button>

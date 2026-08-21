@@ -49,8 +49,8 @@ export default function WelcomeSection() {
     }, "<")
   }, { scope: containerRef });
   return (
-    <section ref={containerRef} className="welcome-wrapper bg-[#1B1B1B] relative min-h-[300vh]">
-      <div className="w-full sticky top-0 flex flex-col justify-center items-center h-screen overflow-hidden px-[100px]">
+    <section ref={containerRef} className="welcome-wrapper bg-[#1B1B1B] relative min-h-[300dvh]">
+      <div className="w-full sticky top-0 flex flex-col justify-center items-center h-dvh overflow-hidden px-[clamp(32px,15.5px_+_4.401vw,100px)]">
         <div ref={ogRef} className="absolute inset-0 flex justify-center pointer-events-none z-0 rotate-[180deg]">
           <div ref={oRef} className="valturin text-[64vw] leading-[1] text-white absolute rotate-[6deg]"> {/*  left-[-0vw]*/}
             O
@@ -64,16 +64,16 @@ export default function WelcomeSection() {
           {/* Left Column - Titles */}
           <div className="w-[33.5%]">
             <div>
-              <h2 ref={title1Ref} className="andrea text-[90px] leading-[150px] text-white ml-[70px]" style={{
+              <h2 ref={title1Ref} className="andrea text-[length:clamp(32px,17.92px_+_3.754vw,90px)] leading-[clamp(53px,29.46px_+_6.278vw,150px)] text-white ml-[clamp(28px,17.81px_+_2.718vw,70px)]" style={{
                 clipPath: "inset(0% 100% 0% 0%)"
               }}>Welcome</h2>
-              <h1 ref={title2Ref} className="valturin text-gold text-[120px] leading-[1] ml-[224px] relative z-2 w-[500px]" style={{
+              <h2 ref={title2Ref} className="valturin text-gold text-[length:clamp(40px,20.58px_+_5.178vw,120px)] leading-[1] ml-[clamp(63px,23.92px_+_10.421vw,224px)] relative z-2 w-[500px]" style={{
                 clipPath: "inset(0% 100% 0% 0%)"
               }}>
                 October
                 <br />
                 Glory
-              </h1>
+              </h2>
             </div>
           </div>
 
@@ -92,10 +92,10 @@ export default function WelcomeSection() {
           </div>
 
           {/* Right Column - Description & Link */}
-          <div ref={descriptionRef} className="w-[33.5%] px-[31px] flex flex-col gap-10 items-start" style={{
+          <div ref={descriptionRef} className="w-[33.5%] px-[clamp(20px,17.33px_+_0.712vw,31px)] flex flex-col gap-10 items-start" style={{
             clipPath: "inset(0% 100% 0% 0%)"
           }}>
-            <p className="gotham text-white text-[20px] leading-[40px] capitalize font-light">
+            <p className="gotham text-white text-[length:clamp(17px,16.27px_+_0.194vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] capitalize font-light">
               {/* <strong>October Glory</strong> Salon Is A Luxury Hair Salon Located
               In Brooklyn, Founded By The Talented Hair Artist{" "}
               <strong>Jhavuanna Paterson</strong>. We Specialize In Precision Hair

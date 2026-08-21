@@ -39,14 +39,14 @@ export default function TestimonialSlider() {
   };
 
   return (
-    <section className="w-full py-16 bg-white overflow-hidden min-h-screen flex flex-col justify-center">
+    <section className="w-full py-16 bg-white overflow-hidden min-h-dvh flex flex-col justify-center">
 
       {/* Headings - Constrained to 7xl to stay centered */}
       <div className="max-w-7xl mx-auto px-4 w-full text-center mb-12 md:mb-20">
-        <h2 className="text-[50px] md:text-[88px] andrea mb-2 text-black leading-tight">
+        <h2 className="text-[length:clamp(50px,40.78px_+_2.46vw,88px)] andrea mb-2 text-black leading-tight">
           Refined Results.
         </h2>
-        <h3 className="text-gold text-[30px] md:text-[88px] valturin leading-tight">
+        <h3 className="text-gold text-[length:clamp(30px,15.92px_+_3.754vw,88px)] valturin leading-tight">
           Trusted By Many Clients
         </h3>
       </div>
@@ -79,10 +79,10 @@ export default function TestimonialSlider() {
                 key={testimonial.id}
                 className={`col-start-1 row-start-1 w-full max-w-[90%] sm:max-w-lg md:max-w-2xl lg:max-w-3xl px-4 md:px-8 text-center transition-all duration-[800ms] ease-in-out ${positionClass} ${effectClass}`}
               >
-                <p className="text-black text-[16px] md:text-[22px] gotham leading-[35px] md:leading-[54px] mb-6 md:mb-8">
+                <p className="text-black text-[length:clamp(16px,14.54px_+_0.388vw,22px)] gotham leading-[clamp(35px,30.39px_+_1.23vw,54px)] mb-6 md:mb-8">
                   "{testimonial.text}"
                 </p>
-                <h4 className="text-[28px] md:text-[36px] leading-[30px] valturin text-black mb-3">
+                <h4 className="text-[length:clamp(28px,26.06px_+_0.518vw,36px)] leading-[clamp(23px,21.3px_+_0.453vw,30px)] valturin text-black mb-3">
                   {testimonial.name}
                 </h4>
 

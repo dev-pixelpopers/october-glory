@@ -7,6 +7,7 @@ import ServiceTiers from "./service-tiers";
 import ServiceNoteSection from "./service-note";
 import ServiceComparisonTable from "./service-comparison";
 import ServiceFaqSection from "./service-faq";
+import ServiceEbookSection from "./service-ebook";
 import ServiceMenuGrid from "./service-menu";
 import ServiceSiblings, { type RelatedItem } from "./service-siblings";
 import ServiceCta from "./service-cta";
@@ -51,6 +52,8 @@ export default function ServiceDetailTemplate({
   if (service.comparison) blocks.push({ key: "comparison", fixed: "light" });
   if (service.menu) blocks.push({ key: "menu" });
   if (service.faq) blocks.push({ key: "faq" });
+  // The gradient panel and white cover card are built for dark only.
+  if (service.ebook) blocks.push({ key: "ebook", fixed: "dark" });
   if (related) blocks.push({ key: "related" });
 
   // The hero is photo-backed and reads dark, so the run starts from "dark".
@@ -98,6 +101,8 @@ export default function ServiceDetailTemplate({
       {service.faq && (
         <ServiceFaqSection faq={service.faq} tone={toneOf("faq")} />
       )}
+
+      {service.ebook && <ServiceEbookSection ebook={service.ebook} />}
 
       {related && (
         <ServiceSiblings

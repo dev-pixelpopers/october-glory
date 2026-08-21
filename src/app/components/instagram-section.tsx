@@ -27,27 +27,27 @@ export default function InstagramSection() {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top", // Starts when the sticky container hits the top
-        end: "bottom bottom", // Ends when the 200vh section finishes scrolling
+        end: "bottom bottom", // Ends when the 200dvh section finishes scrolling
         scrub: 1, // Smoothly ties the animation to the scrollbar
       },
     });
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="w-full bg-[#1b1b1b] py-16 px-30 relative min-h-[200vh]">
-      <div className="flex flex-col gap-10 sticky top-0 overflow-hidden h-screen justify-center items-center">
+    <section ref={containerRef} className="w-full bg-[#1b1b1b] py-16 px-30 relative min-h-[200dvh]">
+      <div className="flex flex-col gap-10 sticky top-0 overflow-hidden h-dvh justify-center items-center">
         <div className="flex flex-col md:flex-row justify-between items-center w-full gap-6">
           <div className="flex flex-col">
-            <h2 className="text-white text-[88px] andrea z-10">Follow</h2>
+            <h2 className="text-white text-[length:clamp(32px,18.41px_+_3.625vw,88px)] andrea z-10">Follow</h2>
             <div className="flex items-center gap-10">
               <div className="w-30 md:w-30 h-[1px] bg-white"></div>
-              <h3 className="text-gold text-[88px] valturin">
+              <h3 className="text-gold text-[length:clamp(32px,18.41px_+_3.625vw,88px)] valturin">
                 Us On Instagram
               </h3>
             </div>
           </div>
           <div className="mb-2 md:mb-4">
-            <p className="text-white text-[22px] gotham">
+            <p className="text-white text-[length:clamp(19px,18.27px_+_0.194vw,22px)] gotham">
               Real Clients. Real Installs. Real Results.
             </p>
           </div>
@@ -63,7 +63,7 @@ export default function InstagramSection() {
                 loop
                 muted
                 playsInline
-                className="w-full object-cover h-[400px] transition-opacity duration-300 cursor-pointer"
+                className="w-full object-cover aspect-[163/200] transition-opacity duration-300 cursor-pointer"
                 onMouseEnter={(e) => e.currentTarget.play()}
                 onMouseLeave={(e) => {
                   e.currentTarget.pause();
@@ -97,7 +97,7 @@ export default function InstagramSection() {
                   />
                 </svg>
               </div>
-              <span className="px-6 pr-8 text-black tracking-wide text-[24px] gotham font-semibold group-hover:text-[#ee2a7b] transition-colors duration-300">
+              <span className="px-6 pr-8 text-black tracking-wide text-[length:clamp(20px,19.03px_+_0.259vw,24px)] gotham font-semibold group-hover:text-[#ee2a7b] transition-colors duration-300">
                 @OctoberGloryHair
               </span>
             </a>

@@ -365,3 +365,26 @@ form textarea::Placeholder {
   border: 2px solid #1b1b1b;
   cursor: pointer;
 }
+/* --------------------------------------------------------------------------
+   Before/after comparison slider.
+
+   The range input is invisible and stretched over the whole frame, so the
+   thumb is stretched to match: without this the grab target is the browser's
+   default ~16px thumb and only that sliver of the photo would drag.
+   -------------------------------------------------------------------------- */
+.ba-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 54px;
+  height: 100vh;
+  cursor: ew-resize;
+}
+
+.ba-range::-moz-range-thumb {
+  width: 54px;
+  height: 100vh;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: ew-resize;
+}
