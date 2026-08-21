@@ -1,10 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { products, PRODUCT_TAGS, ProductTag } from "../product";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const ITEMS_PER_ROW = 4;
 const INITIAL_ROWS = 2;
+
+/**
+ * The line cards close into, in pixels from the top of the viewport. It does
+ * not move: cards travel up to it and disappear there. The header's menu toggle
+ * and icons sit between 46px and 98px down, so this clears them.
+ */
+const CLIP_LINE = 110;
 
 const PRICE_MIN = Math.min(...products.map((product) => product.productPrice));
 const PRICE_MAX = Math.max(...products.map((product) => product.productPrice));
@@ -61,6 +75,67 @@ export default function ShopProducts() {
     setVisibleRows(INITIAL_ROWS);
   };
 
+  const prodTabRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Each card closes itself into a line that never moves.
+   *
+   * The trick is the 1:1 mapping. A card's clip inset runs from 0 to its own
+   * height across exactly that many pixels of scrolling, so the clipped edge
+   * advances down the card at the same rate the card travels up the screen. The
+   * two cancel, and the edge sits still at CLIP_LINE while the card slides into
+   * it. Animating a percentage instead — as the whole-column version did — moves
+   * the cut through the element independently of the scroll, which is why the
+   * line appeared to drift downward.
+   *
+   * Opacity rides the same range, so a card is fully gone at the moment it is
+   * fully clipped rather than leaving a sliver behind the header.
+   */
+  useGSAP(
+    () => {
+      const tab = prodTabRef.current;
+      if (!tab) return;
+
+      const cards = gsap.utils.toArray<HTMLElement>(".prod-card", tab);
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(cards, { opacity: 1, clipPath: "inset(0px 0px 0px 0px)" });
+        return;
+      }
+
+      cards.forEach((card) => {
+        gsap.fromTo(
+          card,
+          { opacity: 1, clipPath: "inset(0px 0px 0px 0px)" },
+          {
+            // Read at refresh rather than closed over, so a resize that changes
+            // card height re-derives both the distance and the end position.
+            clipPath: () => `inset(${card.offsetHeight}px 0px 0px 0px)`,
+            opacity: 0,
+            // Linear: any easing would break the 1:1 mapping and let the edge
+            // drift again.
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: `top ${CLIP_LINE}px`,
+              end: () => `+=${card.offsetHeight}`,
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      });
+    },
+    // Load More and the filters both swap the card set out.
+    { scope: prodTabRef, dependencies: [visibleProducts.length], revertOnUpdate: true }
+  );
+
+  // Card count changes the column's height, which moves every trigger position
+  // below it on the page.
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  }, [visibleProducts.length]);
+
   const fillLeftPct =
     ((priceRange[0] - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
   const fillRightPct =
@@ -82,7 +157,7 @@ export default function ShopProducts() {
 
       <div className="flex flex-row gap-10 items-start justify-start">
         {/* Filters */}
-        <div className="w-[20%] flex flex-col gap-12 sticky top-[2%]">
+        <div className="w-[20%] flex flex-col gap-12 sticky top-[15%] overflow-y-auto">
           {/* Categories */}
           <div>
             <h4 className="gotham text-white text-sm uppercase tracking-wider mb-5">
@@ -180,12 +255,12 @@ export default function ShopProducts() {
         </div>
 
         {/* Product Grid: 4 per row, wrapping into further rows */}
-        <div className="flex flex-col gap-10 w-[80%]">
+        <div ref={prodTabRef} className="prod-tab flex flex-col gap-10 w-[80%]">
         <div className="grid grid-cols-4 gap-x-6 gap-y-12">
           {visibleProducts.map((product) => (
             <div
               key={product.productId}
-              className="bg-white rounded-xl p-4 shadow-[0_18px_45px_rgba(0,0,0,0.25)]"
+              className="prod-card bg-white rounded-xl p-4 shadow-[0_18px_45px_rgba(0,0,0,0.25)]"
             >
               <div className="w-full h-[360px] bg-gray-100 rounded-lg mb-5 overflow-hidden">
                 <img
