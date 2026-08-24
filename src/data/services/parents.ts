@@ -28,8 +28,8 @@ export const serviceParents: ServiceParent[] = [
       eyebrow: "The Service",
       heading: "Choose Your Silk Press Experience",
       body: [
-        "Experience a flawless silk press in Brooklyn designed to leave your natural hair smooth, sleek, and beautifully polished, without the use of chemical relaxers. At October Glory, every silk press is tailored to your hair's unique texture, condition, and goals, using professional techniques that prioritize healthy hair while delivering long-lasting results. Because every client's hair is different, we offer three levels of silk press services, each designed to provide the right balance of care, maintenance, and styling.",
-        "Every head of hair is unique, which is why we offer more than one natural hair silk press in Brooklyn. Whether you're looking for a simple style refresh, added moisture and repair, or a complete healthy hair experience, each silk press service is tailored to your hair's condition and long-term goals.",
+        "Experience a flawless silk press in Brooklyn designed to leave your natural hair smooth, sleek, and beautifully polished, without the use of chemical relaxers. At October Glory, every silk press is tailored to your hair's unique texture, condition, and goals, using professional techniques that prioritize healthy hair while delivering long-lasting results. Whether you want a quick silk press that still respects your hair’s integrity, or the full spa treatment where you get the works, we offer three levels of silk press service — each one designed with your hair in mind, but offering something different. Choose a classic Silk Press for a smooth, polished finish, add a Trim to keep your ends healthy, or go all in with a Treatment and Trim for the complete restorative experience.",
+        "A silk press isn’t just for one type of natural hair journey. Maybe you’ve committed to going natural to keep your hair strong, but you still love to wear it straight — a silk press gets you there with zero chemicals. Or maybe you wear your curls proudly and only reach for a silk press once a quarter, as a way to check in on your hair’s health and length. Either way, there’s no wrong way to wear a silk press — it’s simply always in season.",
         "Explore the options below to find the silk press that's right for you.",
       ],
       image: "/images/SilkPress-01.webp",
@@ -40,8 +40,8 @@ export const serviceParents: ServiceParent[] = [
       heading: "Silk Press Tiers",
       items: [
         {
-          name: "Classic Silk Press",
-          tagline: "Smooth, Sleek Hair — Simply & Beautifully Styled",
+          name: "The Classic Silk Press",
+          tagline: "Silk press only",
           includes: [
             "A deep cleanse to remove buildup, excess oil, and product residue before styling begins",
             "A nourishing conditioning treatment to restore moisture and improve manageability",
@@ -55,8 +55,8 @@ export const serviceParents: ServiceParent[] = [
             "Clients with healthy, well-maintained hair who want a polished, low-maintenance silk press that's smooth, lightweight, and beautifully finished.",
         },
         {
-          name: "Silk Press + Spa Treatment",
-          tagline: "Healthy Hair Starts Before the Style",
+          name: "The Classic Silk Press+",
+          tagline: "Silk press + Spa treatment",
           featured: true,
           includes: [
             "A personalized scalp and hair assessment to determine whether your hair needs moisture, protein, scalp care, or a combination of treatments",
@@ -71,8 +71,8 @@ export const serviceParents: ServiceParent[] = [
             "Clients with dry, dull, over-processed, or moisture-deprived hair who want to improve the overall health of their hair and scalp while enjoying a smooth, polished silk press.",
         },
         {
-          name: "The Glorious Express",
-          tagline: "The Complete Healthy Hair Experience",
+          name: "The Glorious Silk Press",
+          tagline: "Silk press + spa treatment + trim (full reset / most complete tier)",
           includes: [
             "A personalized scalp and hair assessment to determine your hair's specific needs",
             "A customized spa treatment or deep conditioner applied to the scalp and/or hair",
@@ -105,7 +105,7 @@ export const serviceParents: ServiceParent[] = [
     comparison: {
       eyebrow: "At A Glance",
       heading: "Quick Comparison",
-      columns: ["Classic Silk Press", "Silk Press + Spa Treatment", "The Glorious Express"],
+      columns: ["The Classic Silk Press", "The Classic Silk Press+", "The Glorious Silk Press"],
       rows: [
         { label: "Scalp cleanse", values: [true, false, false] },
         {
@@ -269,9 +269,9 @@ export const serviceParents: ServiceParent[] = [
     },
     overview: {
       eyebrow: "The Service",
-      heading: "Built Around Your Hair, Not On Top Of It",
+      heading: "Woven into your hair’s natural flow — never sitting on top of it.",
       body: [
-        "Looking for a flawless weave install in Brooklyn? At October Glory, every installation is customized to your hair, lifestyle, and desired look, not a one-size-fits-all service. We begin by prioritizing the health of your natural hair before creating a seamless, natural-looking finish tailored to your features. Hair is not included with this service, but premium bundles, closures, and frontals are available for purchase, ensuring you leave with everything needed for beautiful, long-lasting results.",
+        "Whether it’s a full weave, a leave-out install, or simple track extensions, every install starts with your natural hair as the foundation, not an afterthought. Extensions are placed and blended to follow your hair’s own growth pattern and movement, so the result feels like an extension of you — not something added on top. The goal is hair that moves, parts, and falls the way yours naturally would, just longer and fuller.",
       ],
       image: "/images/Weaves-And-Extensions-02.webp",
     },

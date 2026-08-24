@@ -241,7 +241,24 @@ form textarea::Placeholder {
 }
 
 
-/* --- MOBILE RESPONSIVE CSS --- */
+
+
+
+/* ---  RESPONSIVE CSS --- */
+
+@media(max-width: 1681px) {
+
+  .perf-wig-left {
+    width: 45%;
+  }
+
+  .perf-wig-right {
+    width: 55%;
+  }
+  
+}
+
+
 @media (max-width: 768px) {
   .card-info p {
     /* Set a minimum readable size for mobile instead of relying solely on vh */

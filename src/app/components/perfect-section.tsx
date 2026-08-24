@@ -75,7 +75,7 @@ export default function PerfectSection() {
         </div>
         <div className="flex gap-10 items-center">
           {/* Left column */}
-          <div className="w-[40%] flex flex-col gap-10">
+          <div className="perf-wig-left w-[40%] flex flex-col gap-10">
             <div className="w-full text-trd -mt-[clamp(51px,24.54px_+_7.055vw,160px)] ml-[8px]">
               <h3 ref={heading1Ref} className=" w-[900px] text-[12vw] leading-[1] valturin capitalize mb-[clamp(25px,18.93px_+_1.618vw,50px)] opacity-22"
                 style={{
@@ -136,7 +136,7 @@ export default function PerfectSection() {
           </div>
 
           {/* right column  */}
-          <div className="w-[60%] relative flex items-center justify-left pt-[clamp(32px,15.5px_+_4.401vw,100px)] ">
+          <div className="perf-wig-right w-[60%] relative flex items-center justify-left pt-[clamp(32px,15.5px_+_4.401vw,100px)] ">
             <div className="w-[64%] h-full required z-1 -ml-[clamp(13px,11.3px_+_0.453vw,20px)]">
               <img
                 ref={imageRef}

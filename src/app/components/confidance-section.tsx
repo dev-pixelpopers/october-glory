@@ -100,10 +100,7 @@ export default function ConfidenceJourneySection() {
                   style={{
                     clipPath: "inset(0% 100% 0% 0%)"
                   }}>
-                  October Glory was created to redefine what a salon visit should feel like. 
-                  We believe luxury is more than beautiful interiors, it's about personalized attention, expert knowledge, healthy hair practices, and making every client feel seen, valued, and confident.
-                  Our salon proudly serves women throughout Brooklyn and surrounding New York communities, providing professional hair care rooted in education, integrity, and genuine connection.
-                  Every appointment is an opportunity to help you look and feel your absolute best.
+                  October Glory was created to redefine the salon experience. We believe true luxury is personal attention, expert knowledge, healthy hair practices, and making you feel seen, valued, and confident. Proudly serving Brooklyn and surrounding New York communities, we provide professional hair care rooted in education and genuine connection to help you look and feel your absolute best.
                 </p>
               </div>
 
