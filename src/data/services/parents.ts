@@ -147,10 +147,10 @@ export const serviceParents: ServiceParent[] = [
     cardBlurb:
       "Smooth relaxers and rich color transformations tailored to your personality and style.",
     slug: "relaxers-and-colors",
-    cardTitle: "Color & Other Chemical Services",
+    cardTitle: "Chemical Services",
     hero: {
-      display: "Relaxers",
-      script: "And Colors",
+      display: "Chemical",
+      script: "Services",
       intro:
         "Transform your look with our professional relaxer and coloring services — expertly formulated to deliver smooth, vibrant, and long-lasting results.",
       image: "/images/relaxers-colors-01.webp",
