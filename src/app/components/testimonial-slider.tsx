@@ -43,7 +43,7 @@ export default function TestimonialSlider() {
 
       {/* Headings - Constrained to 7xl to stay centered */}
       <div className="max-w-7xl mx-auto px-[clamp(10px,8.54px_+_0.389vw,16px)] w-full text-center mb-[clamp(26px,12.89px_+_3.496vw,80px)]">
-        <h2 className="text-[length:clamp(50px,40.78px_+_2.46vw,88px)] andrea mb-[clamp(5px,4.27px_+_0.195vw,8px)] text-black leading-tight">
+        <h2 className="text-[length:clamp(32px,21.66px_+_2.757vw,64px)] 2xl:text-[length:clamp(64px,6.25vw_-_32px,88px)] andrea mb-[clamp(5px,4.27px_+_0.195vw,8px)] text-black leading-tight">
           Refined Results.
         </h2>
         <h3 className="text-gold text-[length:clamp(30px,15.92px_+_3.754vw,88px)] valturin leading-tight">

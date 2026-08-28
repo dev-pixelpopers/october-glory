@@ -479,8 +479,22 @@ form textarea::Placeholder {
 }
 
  .flo-icon {
-    width: 3.3vw !important;
-    height: 3.3vw !important;
+    width: 4vw;
+    height: 4vw;
+}
+
+.pum-right {
+    display: none;
+}
+
+.pum-left {
+  width: 100%;
+}
+
+.pum-left a {
+    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 
@@ -582,8 +596,7 @@ form textarea::Placeholder {
     font-size: 14px;
     line-height: 1.9;
     /* keep the copy short enough that the whole column fits one screen */
-    max-height: 30vh;
-    overflow: hidden;
+    min-height: 30vh;
   }
 
   /* O + G start stacked in the centre, tilted vertically.
@@ -767,6 +780,14 @@ form textarea::Placeholder {
     font-size: 12px;
 }
 
+.pum-an {
+    font-size: 6vw;
+}
+
+.text-content > div {
+    gap: 20px !important;
+}
+
 
 }
 
@@ -774,8 +795,13 @@ form textarea::Placeholder {
 @media (max-width:500px) {
 
   .fix-head {
-    top: 3% !important;
+    top: 4.4% !important;
     padding: 0 3%;
+}
+
+.flo-icon { 
+  width: 6vw;
+  height: 6vw;
 }
 
 
@@ -793,7 +819,7 @@ form textarea::Placeholder {
 }
 
 .vid-div-1 {
-  height: 40vh ;
+  height: 35vh ;
 }
 
 .shop-item-card {
@@ -840,6 +866,26 @@ form textarea::Placeholder {
 
 .footer-bottom-note * {
     font-size: 12px !important;
+}
+
+.welcome-wrapper .welcome-content {
+  gap: 0;
+}
+
+.text-content > div {
+    gap: 20px !important;
+}
+
+.welcome-img-col {
+  display: none;
+}
+
+.vid-parent {
+    gap: 10px;
+}
+
+.soc-vid-3, .soc-vid-4 {
+    display: none;
 }
 
 }
