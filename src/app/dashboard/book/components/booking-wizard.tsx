@@ -62,7 +62,7 @@ export default function BookingWizard() {
           <React.Fragment key={label}>
             {i > 0 && (
               <div
-                className={`w-10 md:w-20 h-[1px] ${i <= step ? "bg-[#cba660]" : "bg-white/20"}`}
+                className={`w-[clamp(24px,20.12px_+_1.036vw,40px)] md:w-[clamp(48px,40.23px_+_2.071vw,80px)] h-[1px] ${i <= step ? "bg-[#cba660]" : "bg-white/20"}`}
               />
             )}
             <div className="flex flex-col items-center gap-2">

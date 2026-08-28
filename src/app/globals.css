@@ -105,6 +105,11 @@ body {
 
 .background-marquee {
   overflow: hidden;
+  /* .hero-wrapper becomes flex + align-items:center below 1441px, which would
+     make this shrink-to-fit and blow out to the full nowrap track width
+     (~14000px). Stay full-width so the overflow:hidden above actually clips. */
+  width: 100%;
+  align-self: stretch;
 }
 
 .marquee-track {
@@ -248,6 +253,14 @@ form textarea::Placeholder {
 
 @media(max-width: 1681px) {
 
+  .wom-des-rig {
+    width: 40%;
+  }
+  
+  .wom-des-lef {
+    width: 60%;
+  }
+  
   .perf-wig-left {
     width: 45%;
   }
@@ -258,8 +271,221 @@ form textarea::Placeholder {
   
 }
 
+@media (max-width: 1441px) {
+
+  .hero-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ .wom-des-lef p {
+  padding-right: 0px;
+  margin-bottom: 2%;
+ }
+
+ .wom-des-lef-head {
+  padding-right: 0px;
+  margin-bottom: 2%;
+ }
+
+ .welcome-left-col {
+  width: 30%;
+ }
+
+ .welcome-img-col {
+  width: 30%;
+ }
+
+ .welcome-right-col {
+  width: 40%;
+ }
+
+ .offer-cards {
+  width:50%;
+ }
+
+ .perf-wig-right img {
+  object-position: right;
+ }
+
+ .perf-match-sec {
+  justify-content: center;
+ }
+
+ .wom-des-img {
+    object-position: right;
+}
+
+
+
+.og-letter  {
+  line-height: 1.3;
+}
+  
+}
+
+
+@media (max-width: 1367px) {
+
+  .og-letter  {
+  line-height: 1.1;
+}
+
+.hero-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcome-left-col {
+  width: 30%;
+}
+
+.welcome-img-col {
+  width: 23%;
+}
+
+.welcome-right-col {
+  width: 47%;
+}
+
+.offer-cards {
+  top:10%;
+}
+
+.wom-des-rig {
+  width: 30%;
+}
+
+
+.wom-des-lef {
+  width: 70%;
+}
+
+
+.wom-des-img {
+  min-width: 45vw;
+}
+
+.shop-sec-desc {
+  bottom: 5%;
+}
+
+}
+
+@media (max-width: 1281px) {
+
+  .og-letter  {
+  line-height: 1.4;
+}
+
+  .hero-image-box {
+    bottom: 0;
+  }
+
+  .perf-cta-div {
+    flex-direction: column;
+  }
+
+  .perf-wig-left {
+    width: 50%;
+  }
+  
+  .perf-wig-right {
+    width: 50%;
+  }
+
+  .welcome-left-col {
+    width: 25%;
+  }
+
+  .welcome-img-col {
+    width: 25%;
+  }
+
+  .welcome-right-col {
+    padding-right: 0px;
+    width: 50%;
+  }
+
+  .welcome-left-col h2.andrea {
+    margin-left: 1%;
+}
+
+.welcome-left-col h2.valturin {
+    margin-left: 20%;
+}
+  
+
+}
+
+@media (max-width: 1153px) {
+
+  .og-letter  {
+  line-height: 1.3;
+}
+}
+
+
+@media (max-width: 1025px) {
+
+  p {
+    font-size: 16px;
+    line-height: 2;
+  }  
+
+.guide-rig-col {
+  width:70%;
+}
+
+.follow-left-col {
+    width: 65%;
+}
+
+.follow-right-col {
+    width: 35%;
+}
+  
+
+}
+
 
 @media (max-width: 768px) {
+
+  .background-marquee {
+    transform: translateY(13vh);
+}
+
+.hero-image-box {
+  bottom: 10%;
+  height: 68vh;
+}
+
+.hero-image-box img {
+  /* "cover" crops inside the box, so the image never overhangs it and needs
+     no overflow clipping at all. Pan the visible region with object-position
+     instead of zooming with transform: scale(). */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 105%;
+  transform: none;
+}
+
+  .fix-head {
+    max-width: 100vw;
+    padding-inline: 3%;
+    top:4% !important;
+  }
+
+  .flo-icon {
+    width: 30px;
+    height: 30px;
+}
+
   .card-info p {
     /* Set a minimum readable size for mobile instead of relying solely on vh */
     font-size: 14px;
@@ -269,6 +495,321 @@ form textarea::Placeholder {
     /* Slightly subtler shadow on mobile for performance and look */
     box-shadow: 0 0.5vh 2vh rgba(0, 0, 0, 0.1);
   }
+
+  .text-content {
+    position: absolute;
+    bottom: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+
+  /* ---------- About / Welcome section : mobile column layout ---------- */
+  .welcome-wrapper .welcome-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .welcome-wrapper .welcome-left-col {
+    width: 100%;
+    padding-inline: 0;
+  }
+
+  .welcome-img-col {
+    width: 100%;
+    padding-inline: 0;
+  }
+
+ .welcome-wrapper .welcome-right-col {
+    width: 100%;
+    padding-inline: 0;
+  }
+
+
+
+  .welcome-wrapper .welcome-left-col h2.andrea,
+  .welcome-wrapper .welcome-left-col h2.valturin {
+    margin-left: 0;
+    width: auto;
+    text-align: center;
+  }
+
+  .welcome-wrapper .welcome-img-col .image-card {
+    width: 35%;
+    margin: 0 auto;
+  }
+
+  .welcome-wrapper .welcome-right-col {
+    align-items: center;
+  }
+
+  .welcome-wrapper .welcome-right-col p {
+    font-size: 14px;
+    line-height: 1.9;
+    /* keep the copy short enough that the whole column fits one screen */
+    max-height: 30vh;
+    overflow: hidden;
+  }
+
+  /* O + G start stacked in the centre, tilted vertically.
+     GSAP overwrites this inline once it runs — it is here so the
+     pre-hydration paint already matches the animation start state. */
+  .welcome-wrapper .og-wrap {
+    transform: rotate(90deg);
+  }
+
+  .welcome-wrapper .og-letter {
+    font-size: 90vw;
+    line-height: 1.5;
+  }
+
+  .offer-card-con {
+    flex-direction: column;
+  }
+
+  .shop-item-card {
+    width:35vw;
+
+  }
+
+  .wom-des-main {
+    display: flex;
+    flex-direction: column;
+}
+
+  .wom-des-rig {
+    width: 100%;
+    height: 40vh;
+    margin-bottom: -2%;
+}
+
+.wom-des-img {
+    width: 100vw;
+    left:0;
+}
+
+.wom-des-lef {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 60vh;
+    margin: 0;
+    z-index: 10;
+}
+
+
+
+.perf-wif-main {
+    flex-direction: column;
+}
+
+.perf-wig-left {
+    padding-top: 10%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.perf-wig-right {
+    width: 100%;
+    padding: 0;
+}
+
+.perf-oct-text {
+    position: absolute;
+    left: -34%;
+    top: 24%;
+}
+
+.guide-main-con {
+    flex-direction: column;
+}
+
+.offer-card-con {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.vid-div-2,
+  .vid-div-3,
+  .vid-div-4 {
+    display: none;
+  }
+
+  .vid-div-1 {
+    height: 50vh;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: center;
+    display: flex;
+  }
+
+  /* inner wrapper has desktop-only rotate + negative margin + fixed aspect-ratio — reset those */
+  .vid-div-1 > div {
+    margin-top: 0;
+    transform: none;
+    aspect-ratio: auto;
+    width: 100%;
+    height: 100%;
+  }
+
+  .vid-parent {
+    flex-direction: column;
+  }
+
+  .content-col {
+    width: 100%;
+  }
+
+  .offer-img img {
+    object-fit: contain;
+    object-position: left;
+}
+
+.offer-card-main {
+    height: 50vh ;
+}
+
+.guide-lef-col {
+  width: 100%;
+  height: 50vh;
+}
+
+.guide-rig-col {
+    width: 100%;
+    margin: 0;
+    margin-bottom:-2%;
+    border-radius:0 0 20px 20px;
+}
+
+.collection-head {
+    width: 100%;
+    left: 0;
+    align-items: center;
+}
+
+.guide-head {
+    text-align: center;
+}
+
+.guide-head-sec {
+    padding: 0;
+    text-align: center;
+}
+
+.follow-col-main {
+    flex-direction: column;
+}
+
+.follow-left-col {
+    width: 100%;
+}
+
+.follow-right-col {
+    width: 100%;
+    text-align: center;
+}
+
+.footer-main {
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.footer-main div {
+    border: none;
+}
+
+.foot-inner-label {
+  width: 20%;
+}
+
+.foot-inner-content {
+  width:80%;
+}
+
+.head-note {
+    font-size: 12px;
+}
+
+
+}
+
+
+@media (max-width:500px) {
+
+  .fix-head {
+    top: 3% !important;
+    padding: 0 3%;
+}
+
+
+  .offer-cards {
+    top: 5%;
+    width: 80%;
+}
+
+.vid-main {
+  gap:10px;
+}
+
+.vid-head {
+    max-width: 100%;
+}
+
+.vid-div-1 {
+  height: 40vh ;
+}
+
+.shop-item-card {
+    width: 60vw;
+}
+
+.shop-sec-desc {
+    width: 100%;
+}
+
+.collection-img {
+    width: 70vw;
+}
+
+.wom-des-rig {
+  height: 25vh;
+}
+
+.wom-des-lef {
+  height: 75vh;
+}
+
+.wom-des-lef p {
+  padding:0;
+}
+
+.wom-des-lef-inner {
+    padding: 0;
+}
+
+.women-des-pri {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.wom-des-lef-head {
+  text-align: center;
+}
+
+.soc-vid-5 {
+    display: none;
+}
+
+.footer-bottom-note * {
+    font-size: 12px !important;
+}
+
 }
 
 /*end here */

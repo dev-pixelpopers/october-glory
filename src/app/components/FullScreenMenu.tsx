@@ -41,7 +41,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
 
   return (
     <div
-      className="fixed inset-0 w-screen h-screen bg-[#9b7762] text-white z-20 overflow-y-auto"
+      className="fixed inset-0 w-full h-full bg-[#9b7762] text-white z-20 overflow-y-auto"
       style={{
         clipPath: isOpen
           ? 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'  // fully visible

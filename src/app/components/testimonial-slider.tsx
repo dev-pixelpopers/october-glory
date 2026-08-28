@@ -39,11 +39,11 @@ export default function TestimonialSlider() {
   };
 
   return (
-    <section className="w-full py-16 bg-white overflow-hidden min-h-dvh flex flex-col justify-center">
+    <section className="w-full py-[clamp(26px,16.77px_+_2.46vw,64px)] bg-white overflow-hidden min-h-dvh flex flex-col justify-center">
 
       {/* Headings - Constrained to 7xl to stay centered */}
-      <div className="max-w-7xl mx-auto px-4 w-full text-center mb-12 md:mb-20">
-        <h2 className="text-[length:clamp(50px,40.78px_+_2.46vw,88px)] andrea mb-2 text-black leading-tight">
+      <div className="max-w-7xl mx-auto px-[clamp(10px,8.54px_+_0.389vw,16px)] w-full text-center mb-[clamp(26px,12.89px_+_3.496vw,80px)]">
+        <h2 className="text-[length:clamp(50px,40.78px_+_2.46vw,88px)] andrea mb-[clamp(5px,4.27px_+_0.195vw,8px)] text-black leading-tight">
           Refined Results.
         </h2>
         <h3 className="text-gold text-[length:clamp(30px,15.92px_+_3.754vw,88px)] valturin leading-tight">
@@ -77,17 +77,17 @@ export default function TestimonialSlider() {
             return (
               <div
                 key={testimonial.id}
-                className={`col-start-1 row-start-1 w-full max-w-[90%] sm:max-w-lg md:max-w-2xl lg:max-w-3xl px-4 md:px-8 text-center transition-all duration-[800ms] ease-in-out ${positionClass} ${effectClass}`}
+                className={`col-start-1 row-start-1 w-full max-w-[90%] sm:max-w-lg md:max-w-2xl lg:max-w-3xl px-[clamp(16px,12.12px_+_1.036vw,32px)] text-center transition-all duration-[800ms] ease-in-out ${positionClass} ${effectClass}`}
               >
-                <p className="text-black text-[length:clamp(16px,14.54px_+_0.388vw,22px)] gotham leading-[clamp(35px,30.39px_+_1.23vw,54px)] mb-6 md:mb-8">
+                <p className="text-black text-[length:clamp(16px,15.03px_+_0.259vw,20px)] gotham leading-[clamp(35px,30.39px_+_1.23vw,54px)] mb-[clamp(16px,12.12px_+_1.036vw,32px)]">
                   "{testimonial.text}"
                 </p>
-                <h4 className="text-[length:clamp(28px,26.06px_+_0.518vw,36px)] leading-[clamp(23px,21.3px_+_0.453vw,30px)] valturin text-black mb-3">
+                <h4 className="text-[length:clamp(28px,26.06px_+_0.518vw,36px)] leading-[clamp(23px,21.3px_+_0.453vw,30px)] valturin text-black mb-[clamp(8px,7.03px_+_0.259vw,12px)]">
                   {testimonial.name}
                 </h4>
 
                 {/* 5 Stars Rating */}
-                <div className="flex justify-center gap-1.5 text-[#cba660]">
+                <div className="flex justify-center gap-[clamp(4px,3.51px_+_0.13vw,6px)] text-[#cba660]">
                   {[...Array(testimonial.stars)].map((_, i) => (
                     <svg
                       key={i}
@@ -106,23 +106,23 @@ export default function TestimonialSlider() {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-center items-center gap-6 mt-12 md:mt-16 z-30 relative">
+        <div className="flex justify-center items-center gap-[clamp(16px,14.06px_+_0.518vw,24px)] mt-[clamp(26px,16.77px_+_2.46vw,64px)] z-30 relative">
           <button
             onClick={handlePrev}
-            className="w-12 h-12 rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-black hover:text-white hover:border-black transition-all duration-300"
+            className="w-[clamp(44px,43.03px_+_0.259vw,48px)] h-[clamp(44px,43.03px_+_0.259vw,48px)] rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-black hover:text-white hover:border-black transition-all duration-300"
             aria-label="Previous testimonial"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-[clamp(18px,17.51px_+_0.13vw,20px)] h-[clamp(18px,17.51px_+_0.13vw,20px)]">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
           </button>
 
           <button
             onClick={handleNext}
-            className="w-12 h-12 rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-black hover:text-white hover:border-black transition-all duration-300"
+            className="w-[clamp(44px,43.03px_+_0.259vw,48px)] h-[clamp(44px,43.03px_+_0.259vw,48px)] rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-black hover:text-white hover:border-black transition-all duration-300"
             aria-label="Next testimonial"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-[clamp(18px,17.51px_+_0.13vw,20px)] h-[clamp(18px,17.51px_+_0.13vw,20px)]">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </button>

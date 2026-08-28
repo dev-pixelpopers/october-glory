@@ -34,36 +34,36 @@ export default function InstagramSection() {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="w-full bg-[#1b1b1b] py-16 px-30 relative min-h-[200dvh]">
-      <div className="flex flex-col gap-10 sticky top-0 overflow-hidden h-dvh justify-center items-center">
-        <div className="flex flex-col md:flex-row justify-between items-center w-full gap-6">
-          <div className="flex flex-col">
+    <section ref={containerRef} className="w-full bg-[#1b1b1b] py-[clamp(26px,16.77px_+_2.46vw,64px)] px-[clamp(38px,18.09px_+_5.308vw,120px)] relative min-h-[200dvh]">
+      <div className="flex flex-col gap-[clamp(20px,15.14px_+_1.295vw,40px)] sticky top-0 overflow-hidden h-dvh justify-center items-center">
+        <div className="follow-col-main flex flex-col md:flex-row justify-between items-center w-full gap-[clamp(16px,14.06px_+_0.518vw,24px)]">
+          <div className="follow-left-col flex flex-col">
             <h2 className="text-white text-[length:clamp(32px,18.41px_+_3.625vw,88px)] andrea z-10">Follow</h2>
-            <div className="flex items-center gap-10">
-              <div className="w-30 md:w-30 h-[1px] bg-white"></div>
+            <div className="flex items-center gap-[clamp(20px,15.14px_+_1.295vw,40px)]">
+              <div className="w-15 2xl:w-30 h-[1px] bg-white"></div>
               <h3 className="text-gold text-[length:clamp(32px,18.41px_+_3.625vw,88px)] valturin">
                 Us On Instagram
               </h3>
             </div>
           </div>
-          <div className="mb-2 md:mb-4">
-            <p className="text-white text-[length:clamp(19px,18.27px_+_0.194vw,22px)] gotham">
+          <div className="follow-right-col mb-[clamp(10px,8.54px_+_0.389vw,16px)]">
+            <p className="text-white text-[length:clamp(16px,15.03px_+_0.259vw,20px)] gotham">
               Real Clients. Real Installs. Real Results.
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-5 w-full gap-2">
-          {instagramVideos.map((video) => (
+        <div className="grid grid-cols-2 md:grid-cols-5 w-full gap-[clamp(5px,4.27px_+_0.195vw,8px)]">
+          {instagramVideos.map((video , index ) => (
             <div
               key={video.id}
-              className="w-full h-full relative border-r border-[#1c1c1c] last:border-r-0"
+              className={`soc-vid-${index + 1} w-full h-full relative border-r border-[#1c1c1c] last:border-r-0`}
             >
               <video
                 src={video.src}
                 loop
                 muted
                 playsInline
-                className="w-full object-cover aspect-[163/200] transition-opacity duration-300 cursor-pointer"
+                className={` w-full object-cover aspect-[163/200] transition-opacity duration-300 cursor-pointer`}
                 onMouseEnter={(e) => e.currentTarget.play()}
                 onMouseLeave={(e) => {
                   e.currentTarget.pause();
@@ -75,15 +75,25 @@ export default function InstagramSection() {
           ))}
         </div>
 
-        <div className="flex justify-center w-full mt-6 z-10">
-          <div className="rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[4px] w-max shadow-lg hover:shadow-[0_0_20px_rgba(193,53,132,0.5)] transition-shadow duration-300 cursor-pointer">
+        <div className="flex justify-center w-full mt-[clamp(16px,14.06px_+_0.518vw,24px)] z-10">
+          <div className="rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[clamp(3px,2.76px_+_0.065vw,4px)] w-max shadow-lg hover:shadow-[0_0_20px_rgba(193,53,132,0.5)] transition-shadow duration-300 cursor-pointer">
             <a
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center bg-white rounded-full w-max h-[62px]"
+              className="group flex items-center bg-white rounded-full w-max h-[clamp(40px,29.33px_+_1.701vw,62px)]"
             >
-              <div className="w-[90px] h-[90px] rounded-[30px] -ml-[10px] bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] flex items-center justify-center -ml-[1px]">
+              <div className="w-[clamp(45px,26.67px_+_3.299vw,90px)]
+  h-[clamp(45px,26.67px_+_3.299vw,90px)]
+  rounded-[clamp(15px,8.33px_+_1.128vw,30px)]
+  ml-[clamp(-10px,-5.33px_-_0.243vw,-1px)]
+  bg-gradient-to-tr
+  from-[#f9ce34]
+  via-[#ee2a7b]
+  to-[#6228d7]
+  flex
+  items-center
+  justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -97,7 +107,7 @@ export default function InstagramSection() {
                   />
                 </svg>
               </div>
-              <span className="px-6 pr-8 text-black tracking-wide text-[length:clamp(20px,19.03px_+_0.259vw,24px)] gotham font-semibold group-hover:text-[#ee2a7b] transition-colors duration-300">
+              <span className="px-[clamp(16px,14.06px_+_0.518vw,24px)] pr-[clamp(16px,12.12px_+_1.036vw,32px)] text-black tracking-wide text-[length:clamp(20px,19.03px_+_0.259vw,24px)] gotham font-semibold group-hover:text-[#ee2a7b] transition-colors duration-300">
                 @OctoberGloryHair
               </span>
             </a>

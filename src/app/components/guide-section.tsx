@@ -41,8 +41,8 @@ export default function GuidebookSection() {
   })
   return (
     <section ref={containerRef} className="bg-[#1a1a1a] relative min-h-[200dvh]">
-      <div className="w-full flex flex-col md:flex-row items-center sticky top-0 h-dvh justify-center items-center">
-        <div className="w-[55%] flex justify-center items-center bg-white rounded-3xl p-4 md:p-0 shadow-lg">
+      <div className="guide-main-con w-full flex flex-col md:flex-row items-center sticky top-0 h-dvh justify-center items-center">
+        <div className="guide-lef-col w-[55%] flex justify-center items-center bg-white rounded-3xl p-[clamp(10px,8.54px_+_0.389vw,16px)] md:p-0 shadow-lg">
           <img
             src="/images/guide-image.png"
             alt="Tablet showing The Ultimate Buying Guide"
@@ -51,18 +51,18 @@ export default function GuidebookSection() {
         </div>
 
         <div
-          className="relative z-10 w-[50%] px-10 py-[clamp(20px,15.15px_+_1.294vw,40px)] h-[80dvh] flex flex-col justify-center rounded-[20px] -ml-[clamp(32px,15.5px_+_4.401vw,100px)]"
+          className="guide-rig-col relative z-10 w-[50%] px-[clamp(20px,15.14px_+_1.295vw,40px)] py-[clamp(20px,15.15px_+_1.295vw,40px)] h-[80dvh] flex flex-col justify-center rounded-[20px] -ml-[clamp(32px,15.5px_+_4.402vw,100px)]"
           style={{
             backgroundImage: "linear-gradient(270deg, #93674D 0%, #2D2018 100%)",
           }}
         >
-          <div ref={heading1Ref} style={{
+          <div ref={heading1Ref} className="guide-head" style={{
             clipPath: "inset(0% 100% 0% 0%)"
           }}>
             <h2 className="text-white text-[length:clamp(32px,18.41px_+_3.625vw,88px)] leading-[clamp(55px,31.94px_+_6.149vw,150px)] andrea capitalize">Your Guide to</h2>
           </div>
-          <div className="pl-[clamp(42px,20.64px_+_5.696vw,130px)]">
-            <div ref={heading2Ref} className="mb-[clamp(20px,17.57px_+_0.647vw,30px)]" style={{
+          <div className="guide-head-sec pl-[clamp(42px,20.64px_+_5.696vw,130px)]">
+            <div ref={heading2Ref} className="mb-[clamp(20px,17.57px_+_0.648vw,30px)]" style={{
               clipPath: "inset(0% 100% 0% 0%)"
             }}>
               <h3 className="text-[#c1a073] text-[length:clamp(28px,18.78px_+_2.46vw,66px)] valturin capitalize">
@@ -70,11 +70,11 @@ export default function GuidebookSection() {
               </h3>
             </div>
           </div>
-          <div ref={ParaRef} className="text-gray-200 text-[length:clamp(19px,18.27px_+_0.194vw,22px)] leading-[clamp(41px,39.3px_+_0.453vw,48px)] gotham"
+          <div ref={ParaRef} className="text-gray-200 text-[length:clamp(16px,15.03px_+_0.259vw,20px)] leading-[clamp(41px,39.3px_+_0.453vw,48px)] gotham"
             style={{
               clipPath: "inset(0% 100% 0% 0%)"
             }}>
-            <p className="mb-[clamp(25px,18.93px_+_1.618vw,50px)] pr-[clamp(20px,15.15px_+_1.294vw,40px)]">
+            <p className="mb-[clamp(25px,18.93px_+_1.619vw,50px)] pr-[clamp(20px,15.15px_+_1.295vw,40px)]">
               Not sure which service, treatment, or product is right for you?
               Our carefully crafted guidebook is designed to help you
               confidently choose the perfect option based on your hair goals,
@@ -84,7 +84,7 @@ export default function GuidebookSection() {
           {/* Two routes out of the guide — the copy asks "which service is
               right for you", so the answer is a choice, not one download. Both
               share the clip-path reveal, so they wipe in as a single unit. */}
-          <div ref={ctaRef} className="flex flex-row gap-5" style={{
+          <div ref={ctaRef} className="perf-cta-div flex flex-row gap-[clamp(13px,11.3px_+_0.454vw,20px)]" style={{
             clipPath: "inset(0% 100% 0% 0%)"
           }}>
             <GuideLink href="/services/silk-press#ebook">
@@ -109,15 +109,15 @@ function GuideLink({
   children: React.ReactNode;
 }) {
   return (
-    <Link href={href} className="flex items-center gap-4 group w-max">
-      <div className="w-15 h-15 shrink-0 rounded-full border border-gray-400 flex items-center justify-center transition-colors duration-300 group-hover:bg-white group-hover:text-black text-gray-300">
+    <Link href={href} className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group w-max">
+      <div className="w-[clamp(44px,43.03px_+_0.259vw,48px)] h-[clamp(44px,43.03px_+_0.259vw,48px)] shrink-0 rounded-full border border-gray-400 flex items-center justify-center transition-colors duration-300 group-hover:bg-white group-hover:text-black text-gray-300">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-5 h-5"
+          className="w-[clamp(18px,17.51px_+_0.13vw,20px)] h-[clamp(18px,17.51px_+_0.13vw,20px)]"
         >
           <path
             strokeLinecap="round"

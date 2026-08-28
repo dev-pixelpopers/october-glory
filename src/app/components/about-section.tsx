@@ -14,57 +14,127 @@ export default function WelcomeSection() {
   const title2Ref = useRef(null);
   const imageRef = useRef(null);
   const descriptionRef = useRef(null);
+
   useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1,
-      },
+    const mm = gsap.matchMedia();
+
+    /* ---------- DESKTOP / TABLET (769px and up) — original animation ---------- */
+    mm.add("(min-width: 769px)", () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+        },
+      });
+
+      tl.to(ogRef.current, {
+        rotate: 0,
+        duration: 1,
+      }).to(oRef.current, {
+        left: "0vw",
+        duration: 1,
+      }).to(gRef.current, {
+        right: "0vw",
+        duration: 1,
+      }, "<");
+      tl.to(imageRef.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1,
+      }).to(title1Ref.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1,
+      }).to(title2Ref.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1,
+      }, "<").to(descriptionRef.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1,
+      }, "<");
     });
 
-    tl.to(ogRef.current, {
-      rotate: 0,
-      duration: 1,
-    }).to(oRef.current, {
-      left: "0vw",
-      duration: 1,
-    }).to(gRef.current, {
-      right: "0vw",
-      duration: 1,
-    }, "<");
-    tl.to(imageRef.current, {
-      clipPath: "inset(0% 0% 0% 0%)",
-      duration: 1,
-    }).to(title1Ref.current, {
-      clipPath: "inset(0% 0% 0% 0%)",
-      duration: 1,
-    }).to(title2Ref.current, {
-      clipPath: "inset(0% 0% 0% 0%)",
-      duration: 1,
-    }, "<").to(descriptionRef.current, {
-      clipPath: "inset(0% 0% 0% 0%)",
-      duration: 1,
-    }, "<")
+    /* ---------- MOBILE (768px and below) ----------
+       O + G sit stacked in the centre, tilted vertically. On scroll they
+       straighten, then split left / right. After that the column content
+       (heading -> image -> text) slides up one after the other. */
+    mm.add("(max-width: 768px)", () => {
+      // Start state — matchMedia reverts all of this when we leave the breakpoint.
+      gsap.set(ogRef.current, { rotate: 90 });
+      gsap.set(
+        [title1Ref.current, title2Ref.current, imageRef.current, descriptionRef.current],
+        { clipPath: "inset(100% 0% 0% 0%)", y: 60 }
+      );
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+        },
+      });
+
+      // 1. straighten the tilted letters
+      tl.to(ogRef.current, {
+        rotate: 0,
+        duration: 1,
+      });
+
+      // 2. the letters leave the screen entirely — O off to the left, G off to
+      //    the right. Upright they are ~84vw wide and sit centred, so -120vw
+      //    clears the viewport with margin to spare on any phone width.
+      tl.addLabel("exit")
+        .to(oRef.current, {
+          left: "-120vw",
+          duration: 1.6,
+          ease: "none",
+        }, "exit")
+        .to(gRef.current, {
+          right: "-120vw",
+          duration: 1.6,
+          ease: "none",
+        }, "exit");
+
+      // 3. content slides up *while* the letters are still on their way out —
+      //    heading -> image -> text, overlapping the exit rather than following it.
+      tl.to(title1Ref.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        y: 0,
+        duration: 0.8,
+      }, "exit+=0.2").to(title2Ref.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        y: 0,
+        duration: 0.8,
+      }, "<0.15").to(imageRef.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        y: 0,
+        duration: 0.8,
+      }, "<0.25").to(descriptionRef.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        y: 0,
+        duration: 0.8,
+      }, "<0.25");
+    });
   }, { scope: containerRef });
+
   return (
     <section ref={containerRef} className="welcome-wrapper bg-[#1B1B1B] relative min-h-[300dvh]">
-      <div className="w-full sticky top-0 flex flex-col justify-center items-center h-dvh overflow-hidden px-[clamp(32px,15.5px_+_4.401vw,100px)]">
-        <div ref={ogRef} className="absolute inset-0 flex justify-center pointer-events-none z-0 rotate-[180deg]">
-          <div ref={oRef} className="valturin text-[64vw] leading-[1] text-white absolute rotate-[6deg]"> {/*  left-[-0vw]*/}
+      <div className="w-full sticky top-0 flex flex-col justify-center items-center h-dvh overflow-hidden px-[clamp(32px,15.5px_+_4.401vw,72px)] 2xl:px-[clamp(32px,15.5px_+_4.402vw,100px)]">
+        <div ref={ogRef} className="absolute inset-0 flex justify-center pointer-events-none z-0 rotate-[180deg] og-wrap">
+          <div ref={oRef} className="valturin text-[64vw] leading-[1.1] text-white absolute rotate-[6deg] og-letter og-letter-o"> {/*  left-[-0vw]*/}
             O
           </div>
-          <div ref={gRef} className="valturin text-[64vw] leading-[1] text-[#3C3C3C] absolute"> {/*  right-[-2vw]*/}
+          <div ref={gRef} className="valturin text-[64vw] leading-[1.1] text-[#3C3C3C] absolute og-letter og-letter-g"> {/*  right-[-2vw]*/}
             G
           </div>
         </div>
 
-        <div className="flex items-center relative z-2">
+        <div className="flex items-center relative z-2 welcome-content">
           {/* Left Column - Titles */}
-          <div className="w-[33.5%]">
+          <div className="w-[33.5%] welcome-left-col">
             <div>
-              <h2 ref={title1Ref} className="andrea text-[length:clamp(32px,17.92px_+_3.754vw,90px)] leading-[clamp(53px,29.46px_+_6.278vw,150px)] text-white ml-[clamp(28px,17.81px_+_2.718vw,70px)]" style={{
+              <h2 ref={title1Ref} className="andrea text-[length:clamp(32px,17.92px_+_3.754vw,90px)] leading-[clamp(53px,29.46px_+_6.278vw,150px)] text-white ml-[clamp(28px,17.81px_+_2.719vw,70px)]" style={{
                 clipPath: "inset(0% 100% 0% 0%)"
               }}>Welcome</h2>
               <h2 ref={title2Ref} className="valturin text-gold text-[length:clamp(40px,20.58px_+_5.178vw,120px)] leading-[1] ml-[clamp(63px,23.92px_+_10.421vw,224px)] relative z-2 w-[500px]" style={{
@@ -77,7 +147,7 @@ export default function WelcomeSection() {
             </div>
           </div>
 
-          <div className="w-[33%]">
+          <div className="w-[33%] welcome-img-col">
             <div className="image-card">
               <img
                 ref={imageRef}
@@ -92,10 +162,10 @@ export default function WelcomeSection() {
           </div>
 
           {/* Right Column - Description & Link */}
-          <div ref={descriptionRef} className="w-[33.5%] px-[clamp(20px,17.33px_+_0.712vw,31px)] flex flex-col gap-10 items-start" style={{
+          <div ref={descriptionRef} className="w-[33.5%] px-[clamp(20px,17.33px_+_0.712vw,31px)] flex flex-col gap-[clamp(16px,14.06px_+_0.518vw,24px)] items-start welcome-right-col" style={{
             clipPath: "inset(0% 100% 0% 0%)"
           }}>
-            <p className="gotham text-white text-[length:clamp(17px,16.27px_+_0.194vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] capitalize font-light">
+            <p className="gotham text-white text-[length:clamp(16px,15.03px_+_0.259vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] capitalize font-light">
               {/* <strong>October Glory</strong> Salon Is A Luxury Hair Salon Located
               In Brooklyn, Founded By The Talented Hair Artist{" "}
               <strong>Jhavuanna Paterson</strong>. We Specialize In Precision Hair
@@ -103,12 +173,11 @@ export default function WelcomeSection() {
               Services Designed To Elevate Your Look And Confidence. Our Mission
               Is To Provide Every Guest With A Refined, Personalized Salon
               Experience That Exceeds Expectations */}
-              Finding the right stylist means finding someone who understands your hair, your lifestyle, and your goals. At October Glory, we believe every appointment should leave you feeling confident, cared for, and empowered.
-              Located in the heart of Brooklyn, our salon provides a welcoming environment where luxury meets expertise. Whether you're maintaining healthy natural hair, booking a signature silk press, refreshing your color, investing in custom wigs in Brooklyn, or treating your scalp to professional care, every service is personalized to your unique hair journey.
+              Finding the right stylist means finding someone who understands your hair, lifestyle, and goals. At October Glory, every appointment leaves you feeling confident, cared for, and empowered. Located in the heart of Brooklyn, our salon offers a welcoming environment where luxury meets expertise. Whether maintaining natural hair, booking a signature silk press, refreshing your color, investing in custom wigs, or treating your scalp, every service is personalized to your hair journey.
 
             </p>
 
-            <a href="/contact" className="book-btn flex gap-[10px] items-center text-white rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham">
+            <a href="/contact" className="book-btn flex gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center text-white rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[18px] gotham">
               <span className="btn-icon rotate-305">
                 <img src="/images/btn-arrow.svg" width="53px" height="53px" />
               </span>

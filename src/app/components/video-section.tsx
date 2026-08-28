@@ -98,25 +98,26 @@ export default function GloryExperience() {
       className="relative w-full min-h-[400dvh]"
     >
       <div
-        className="w-full sticky top-0 flex flex-col gap-25 items-center justify-center overflow-hidden py-45 px-[clamp(51px,24.54px_+_7.055vw,160px)] bg-no-repeat bg-center bg-cover h-dvh"
+        className="vid-main w-full sticky top-0 flex flex-col gap-[clamp(32px,15.49px_+_4.402vw,100px)] items-center justify-center overflow-hidden py-[clamp(58px,28.39px_+_7.897vw,180px)] px-[clamp(51px,24.54px_+_7.056vw,160px)] bg-no-repeat bg-center bg-cover h-dvh"
         style={{ backgroundImage: "url('/images/video-bg.png')" }}
       >
-        <div className="max-w-[47vw] m-auto w-full flex flex-col gap-0 z-10">
+        <div className="vid-head max-w-[47vw] m-auto w-full flex flex-col gap-0 z-10">
           <div className="flex flex-col">
-            <h2 ref={heading1Ref} className="andrea text-[length:clamp(32px,17.92px_+_3.754vw,90px)] leading-[clamp(53px,29.46px_+_6.278vw,150px)] text-black text-left"
+            <h2 ref={heading1Ref} className="vid-hd-pri andrea text-[length:clamp(32px,17.92px_+_3.754vw,90px)] leading-[clamp(53px,29.46px_+_6.278vw,150px)] text-black text-left"
               style={{ clipPath: "inset(0% 100% 0% 0%)" }}>
               The October
             </h2>
-            <h1 ref={heading2Ref} className="valturin text-[length:clamp(29px,19.53px_+_2.524vw,68px)] text-gold text-right -mt-[clamp(13px,11.3px_+_0.453vw,20px)]"
+            <h2 ref={heading2Ref} className="vid-hd-sec valturin text-[length:clamp(29px,19.53px_+_2.524vw,68px)] text-gold text-right -mt-[clamp(13px,11.3px_+_0.454vw,20px)]"
               style={{ clipPath: "inset(100% 0% 0% 0%)" }}>
               Glory Experience
-            </h1>
+            </h2>
           </div>
         </div>
 
-        <div className="flex gap-12 w-full">
+        <div className="vid-parent flex gap-[clamp(24px,18.17px_+_1.554vw,48px)] w-full">
           {/* Column 1 */}
-          <div className="w-[20%]">
+          <div className="w-[20%] vid-div-1">
+            {/* video-div-1 */}
             <div className="relative aspect-[142/251] -mt-[16.667vw] -rotate-4 overflow-hidden">
               <video
                 src="/images/video-8.webm"
@@ -132,8 +133,9 @@ export default function GloryExperience() {
           </div>
 
           {/* Column 2 */}
-          <div className="w-[14%]">
-            <div className="relative aspect-[199/370] mt-5 -rotate-4 overflow-hidden">
+          <div className="vid-div-2 w-[14%]">
+            {/* video-div-2 */}
+            <div className="relative aspect-[199/370] mt-[clamp(13px,11.3px_+_0.454vw,20px)] -rotate-4 overflow-hidden">
               <video
                 src="/images/video-2.mp4"
                 autoPlay loop muted playsInline
@@ -148,21 +150,21 @@ export default function GloryExperience() {
           </div>
 
           {/* Column 3 (Content) */}
-          <div className="w-[30%]">
+          <div className="content-col w-[30%]">
             {/* Both paragraphs occupy the same grid cell, so the wrapper is as
                 tall as the taller one and neither needs absolute positioning.
                 Equal heights also mean the yPercent travel matches exactly. */}
             <div className="overflow-hidden grid">
 
               {/* FIRST-SET paragraph — search "Signature Hair Cutting" to edit. */}
-              <div ref={content1Ref} className="col-start-1 row-start-1 flex flex-col gap-10 items-center justify-center">
-                <p className="text-black text-[length:clamp(17px,16.27px_+_0.194vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] gotham text-center capitalize">
+              <div ref={content1Ref} className="col-start-1 row-start-1 flex flex-col gap-[clamp(20px,15.14px_+_1.295vw,40px)] items-center justify-center">
+                <p className="text-black text-[length:clamp(16px,15.03px_+_0.259vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] gotham text-center capitalize">
                   We craft each wig specifically to your individual specifications, so every piece you receive remains one of a kind.
                 </p>
-                <button className="flex items-center gap-4 group cursor-pointer">
-                  <div className="w-12 h-12 flex items-center justify-center rounded-full border border-black group-hover:bg-black group-hover:border-black transition-all duration-300">
+                <button className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group cursor-pointer">
+                  <div className="w-[clamp(44px,43.03px_+_0.259vw,48px)] h-[clamp(44px,43.03px_+_0.259vw,48px)] flex items-center justify-center rounded-full border border-black group-hover:bg-black group-hover:border-black transition-all duration-300">
                     <svg
-                      className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors"
+                      className="w-[clamp(18px,17.51px_+_0.13vw,20px)] h-[clamp(18px,17.51px_+_0.13vw,20px)] text-gray-600 group-hover:text-white transition-colors"
                       fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -175,14 +177,14 @@ export default function GloryExperience() {
               </div>
 
               {/* SECOND-SET paragraph — search "Precision Hair Cutting" to edit. */}
-              <div ref={contentRef} className="col-start-1 row-start-1 flex flex-col gap-10 items-center justify-center">
-                <p className="text-black text-[length:clamp(17px,16.27px_+_0.194vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] gotham text-center capitalize">
+              <div ref={contentRef} className="col-start-1 row-start-1 flex flex-col gap-[clamp(20px,15.14px_+_1.295vw,40px)] items-center justify-center">
+                <p className="text-black text-[length:clamp(16px,15.03px_+_0.259vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] gotham text-center capitalize">
                   We Offer Premium Silk Presses, Protective Twists, Custom Extensions, And Dedicated Care Services Designed To Keep Your Natural Hair Looking Healthy.
                 </p>
-                <button className="flex items-center gap-4 group cursor-pointer">
-                  <div className="w-12 h-12 flex items-center justify-center rounded-full border border-black group-hover:bg-black group-hover:border-black transition-all duration-300">
+                <button className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group cursor-pointer">
+                  <div className="w-[clamp(44px,43.03px_+_0.259vw,48px)] h-[clamp(44px,43.03px_+_0.259vw,48px)] flex items-center justify-center rounded-full border border-black group-hover:bg-black group-hover:border-black transition-all duration-300">
                     <svg
-                      className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors"
+                      className="w-[clamp(18px,17.51px_+_0.13vw,20px)] h-[clamp(18px,17.51px_+_0.13vw,20px)] text-gray-600 group-hover:text-white transition-colors"
                       fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -197,8 +199,9 @@ export default function GloryExperience() {
           </div>
 
           {/* Column 4 */}
-          <div className="w-[14%]">
-            <div className="relative aspect-[199/370] mt-0 rotate-4 overflow-hidden">
+          <div className="vid-div-3 w-[14%]">
+            {/* vid-div-3 */}
+            <div className=" relative aspect-[199/370] mt-0 rotate-4 overflow-hidden">
               <video
                 src="/images/video-5.webm"
                 autoPlay loop muted playsInline
@@ -213,7 +216,8 @@ export default function GloryExperience() {
           </div>
 
           {/* Column 5 */}
-          <div className="w-[20%]">
+          <div className="vid-div-4 w-[20%]">
+            {/* vid-div-4 */}
             <div className="relative aspect-[142/251] -mt-[15.625vw] rotate-[5deg] overflow-hidden">
               <video
                 src="/images/video-7.webm"

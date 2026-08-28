@@ -63,7 +63,7 @@ export default function PerfectSection() {
 
   return (
     <section ref={containerRef} className=" min-h-[300dvh] relative">
-      <div className="flex flex-col bg-[#1B1B1B] py-[clamp(20px,15.15px_+_1.294vw,40px)] px-[clamp(32px,15.5px_+_4.401vw,100px)] sticky top-0 h-dvh overflow-hidden">
+      <div className="perf-match-sec flex flex-col bg-[#1B1B1B] py-[clamp(20px,15.15px_+_1.295vw,40px)] px-[clamp(32px,15.5px_+_4.401vw,72px)] 2xl:px-[clamp(32px,15.5px_+_4.402vw,100px)] sticky top-0 h-dvh overflow-hidden">
         <div ref={ogRef} className="absolute inset-0 flex justify-between overflow-hidden pointer-events-none">
           <div className="valturin text-[65vw] leading-[0.75] text-white absolute top-[17%] left-[-0vw]">
             O
@@ -73,11 +73,11 @@ export default function PerfectSection() {
             G
           </div>
         </div>
-        <div className="flex gap-10 items-center">
+        <div className="flex gap-[clamp(20px,15.14px_+_1.295vw,40px)] items-center perf-wif-main">
           {/* Left column */}
-          <div className="perf-wig-left w-[40%] flex flex-col gap-10">
-            <div className="w-full text-trd -mt-[clamp(51px,24.54px_+_7.055vw,160px)] ml-[8px]">
-              <h3 ref={heading1Ref} className=" w-[900px] text-[12vw] leading-[1] valturin capitalize mb-[clamp(25px,18.93px_+_1.618vw,50px)] opacity-22"
+          <div className="perf-wig-left w-[40%] flex flex-col gap-[clamp(20px,15.14px_+_1.295vw,40px)]">
+            <div className="w-full text-trd -mt-[clamp(51px,24.54px_+_7.056vw,160px)] ml-[clamp(5px,4.27px_+_0.195vw,8px)]">
+              <h3 ref={heading1Ref} className="perf-oct-text w-[900px] text-[12vw] leading-[1] valturin capitalize mb-[clamp(25px,18.93px_+_1.619vw,50px)] opacity-22"
                 style={{
                   clipPath: "inset(0% 100% 0% 0%)",
                   backgroundImage: "linear-gradient(180deg, #000 13%, #FFF 100%)",
@@ -108,11 +108,11 @@ export default function PerfectSection() {
               </h2>
             </div>
 
-            <button ref={buttonRef} className="flex items-center gap-4 group w-max"
+            <button ref={buttonRef} className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group w-max"
               style={{
                 clipPath: "inset(0% 100% 0% 0%)"
               }}>
-              <div className="w-15 h-15 rounded-full border border-gray-400 flex items-center justify-center transition-colors duration-300 group-hover:bg-white group-hover:text-black text-gray-300">
+              <div className="w-[clamp(44px,43.03px_+_0.259vw,48px)] h-[clamp(44px,43.03px_+_0.259vw,48px)] rounded-full border border-gray-400 flex items-center justify-center transition-colors duration-300 group-hover:bg-white group-hover:text-black text-gray-300">
                 {/* SVG Arrow */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +120,7 @@ export default function PerfectSection() {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-5 h-5"
+                  className="w-[clamp(18px,17.51px_+_0.13vw,20px)] h-[clamp(18px,17.51px_+_0.13vw,20px)]"
                 >
                   <path
                     strokeLinecap="round"
@@ -136,8 +136,8 @@ export default function PerfectSection() {
           </div>
 
           {/* right column  */}
-          <div className="perf-wig-right w-[60%] relative flex items-center justify-left pt-[clamp(32px,15.5px_+_4.401vw,100px)] ">
-            <div className="w-[64%] h-full required z-1 -ml-[clamp(13px,11.3px_+_0.453vw,20px)]">
+          <div className="perf-wig-right w-[60%] relative flex items-center justify-left pt-[clamp(32px,15.5px_+_4.402vw,100px)] ">
+            <div className="w-[64%] h-full required z-1 -ml-[clamp(13px,11.3px_+_0.454vw,20px)]">
               <img
                 ref={imageRef}
                 src="/images/perfect-image.png"
@@ -146,7 +146,7 @@ export default function PerfectSection() {
               />
             </div>
             <div className="w-full text-trd text-right absolute bottom-[10%] right-[-10%]">
-              <h3 ref={heading5Ref} className="text-[12vw] leading-[1] valturin capitalize opacity-22"
+              <h3 ref={heading5Ref} className="perf-glo-text text-[12vw] leading-[1] valturin capitalize opacity-22"
                 style={{
                   clipPath: "inset(0% 100% 0% 0%)",
                   backgroundImage: "linear-gradient(180deg, #000 13%, #FFF 100%)",

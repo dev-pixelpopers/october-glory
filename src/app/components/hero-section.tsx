@@ -40,7 +40,7 @@ export default function HeroSection() {
   });
   return (
     <section
-      className="hero-wrapper pt-[clamp(59px,22.35px_+_9.773vw,210px)] pb-[clamp(20px,17.57px_+_0.647vw,30px)] h-dvh items-end"
+      className="hero-wrapper pt-[clamp(59px,22.35px_+_9.774vw,210px)] pb-[clamp(20px,17.57px_+_0.648vw,30px)] h-dvh items-end"
       style={{
         backgroundImage: "url('/images/hero-bg.png')",
         backgroundSize: "cover",
@@ -79,7 +79,7 @@ export default function HeroSection() {
             <h1 className="valturin text-center text-[length:clamp(26px,14.58px_+_3.046vw,73.063px)] text-black">Luxury Boutique Hair Salon</h1>
           </div>
 
-          <Link href="/dashboard/book" ref={buttonRef} className="book-btn flex mt-[clamp(13px,11.3px_+_0.453vw,20px)] gap-[10px] items-center border-black border-1 text-black rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham opacity-0">
+          <Link href="/dashboard/book" ref={buttonRef} className="book-btn flex mt-[clamp(13px,11.3px_+_0.454vw,20px)] gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-black border-1 text-black rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[18px] gotham opacity-0">
             <span className="btn-icon"><img src="/images/btn-arrow.svg" width="43px" height="43px" /></span>
             Book Your Visit
           </Link>

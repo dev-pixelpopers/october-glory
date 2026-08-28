@@ -205,7 +205,7 @@ export default function ContactPage() {
                     viewBox="0 0 24 24"
                     strokeWidth={2}
                     stroke="currentColor"
-                    className="w-10 h-10 text-[#cda873]"
+                    className="w-[clamp(24px,20.12px_+_1.036vw,40px)] h-[clamp(24px,20.12px_+_1.036vw,40px)] text-[#cda873]"
                   >
                     <path
                       strokeLinecap="round"
@@ -418,7 +418,7 @@ export default function ContactPage() {
                 </p>
                 <div className="w-full h-[1px] bg-white/10"></div>
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#cda873]/10 border border-[#cda873]/30 flex items-center justify-center flex-shrink-0">
+                  <div className="w-[clamp(24px,20.12px_+_1.036vw,40px)] h-[clamp(24px,20.12px_+_1.036vw,40px)] rounded-full bg-[#cda873]/10 border border-[#cda873]/30 flex items-center justify-center flex-shrink-0">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
