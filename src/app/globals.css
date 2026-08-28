@@ -323,6 +323,23 @@ form textarea::Placeholder {
 .og-letter  {
   line-height: 1.3;
 }
+
+.pum-an {
+    font-size: 2.1vw;
+}
+
+.pmu-inner h3 {
+    font-size: 2.1vw;
+}
+
+/* .pum-card-image {
+    width: 8vw !important;
+} */
+
+.pum-card-desc {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+}
   
 }
 
@@ -448,6 +465,25 @@ form textarea::Placeholder {
 .follow-right-col {
     width: 35%;
 }
+
+.img-w-c {
+    width: 50px;
+}
+
+.pmu-inner p {
+    font-size: 12px;
+}
+
+.pmu-it-od {
+    inset: 3px;
+}
+
+ .flo-icon {
+    width: 3.3vw !important;
+    height: 3.3vw !important;
+}
+
+
   
 
 }
@@ -481,10 +517,6 @@ form textarea::Placeholder {
     top:4% !important;
   }
 
-  .flo-icon {
-    width: 30px;
-    height: 30px;
-}
 
   .card-info p {
     /* Set a minimum readable size for mobile instead of relying solely on vh */

@@ -52,17 +52,17 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
     >
       {/* Sized to sit inside one viewport: the header clears the top, and the
           two columns are vertically centred in what's left. */}
-      <div className="min-h-full w-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-[100px] pt-[120px] pb-10 flex items-center">
+      <div className="min-h-full w-full max-w-[1600px] mx-auto px-[clamp(24px,5.55px_+_4.919vw,100px)] pt-[clamp(88px,80.23px_+_2.071vw,120px)] pb-[clamp(20px,15.15px_+_1.294vw,40px)] flex items-center">
 
-        <div className="w-full grid grid-cols-1 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-12 lg:gap-14 xl:gap-20 items-center">
+        <div className="pmu-inner w-full flex gap-[clamp(48px,40.23px_+_2.071vw,80px)] items-center">
 
           {/* Left Column: navigation */}
-          <nav>
-            <ul className="list-none p-0 m-0 w-full">
+          <nav className='w-[35%] pum-left'>
+            <ul className="list-none p-0 m-0 w-full pum-ul">
               {PRIMARY_LINKS.map((link, index) => (
                 <li
                   key={link.key}
-                  className="border-b border-white/70"
+                  className="pum-li border-b border-white/50 hover:border-white"
                   style={{
                     opacity: isOpen ? 1 : 0,
                     transform: isOpen ? 'translateY(0px)' : 'translateY(30px)',
@@ -72,13 +72,13 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
                   <a
                     href={link.href}
                     {...activate(link.key)}
-                    className={`flex items-center gap-3 py-3 xl:py-4 text-white no-underline font-serif text-[30px] sm:text-[34px] xl:text-[40px] leading-[1.2] transition-all duration-300 hover:translate-x-2 ${
+                    className={`pum-an flex items-center gap-[clamp(8px,7.03px_+_0.259vw,12px)] py-[clamp(12px,11.03px_+_0.259vw,16px)] text-white no-underline font-serif text-[length:clamp(30px,27.57px_+_0.647vw,40px)] leading-[1.2] transition-all duration-300 hover:translate-x-2 ${
                       activeKey === link.key ? 'opacity-100' : 'opacity-55'
                     }`}
                   >
                     <span
                       className={`h-[1px] bg-white transition-all duration-300 ${
-                        activeKey === link.key ? 'w-[22px]' : 'w-0'
+                        activeKey === link.key ? 'w-[clamp(14px,12.06px_+_0.518vw,22px)]' : 'w-0'
                       }`}
                     />
                     {link.label}
@@ -91,7 +91,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
           {/* Right Column: hover preview. Hidden below lg — it is hover-driven,
               and every destination is already reachable from the list. */}
           <div
-            className="hidden lg:block"
+            className="hidden lg:block w-[65%] pum-right"
             style={{
               opacity: isOpen ? 1 : 0,
               transform: isOpen ? 'translateY(0px)' : 'translateY(30px)',

@@ -47,16 +47,16 @@ function PanelHeader({
   body?: string;
 }) {
   return (
-    <div className="mb-6">
-      <p className="gotham text-[11px] tracking-[5px] uppercase text-white/55 mb-3">
+    <div className="mb-[clamp(18px,11.14px_+_0.670vw,24px)]">
+      <p className="gotham text-[length:clamp(10px,8.86px_+_0.112vw,11px)] tracking-[clamp(3px,0.71px_+_0.223vw,5px)] uppercase text-white/55 mb-[clamp(9px,5.57px_+_0.335vw,12px)]">
         {eyebrow}
       </p>
-      <h3 className="valturin text-[27px] xl:text-[32px] leading-[1.15] text-white">
+      <h3 className="valturin text-[length:clamp(27px,21.29px_+_0.558vw,32px)] leading-[1.15] text-white">
         {title}
       </h3>
-      <div className="w-[70px] h-[1px] bg-white/35 mt-3 xl:mt-4" />
+      <div className="w-[clamp(52px,31.43px_+_2.009vw,70px)] h-[1px] bg-white/35 mt-[clamp(12px,7.43px_+_0.446vw,16px)]" />
       {body && (
-        <p className="gotham text-[13px] xl:text-[14px] leading-[24px] xl:leading-[26px] text-white/70 font-light mt-3 xl:mt-4">
+        <p className="gotham text-[length:clamp(13px,11.86px_+_0.112vw,14px)] leading-[clamp(24px,21.71px_+_0.223vw,26px)] text-white/70 font-light mt-[clamp(12px,7.43px_+_0.446vw,16px)]">
           {body}
         </p>
       )}
@@ -93,23 +93,23 @@ function DefaultPanel({
   preview: Extract<Preview, { variant: "default" }>;
 }) {
   return (
-    <div className="grid grid-cols-[1fr_1fr] gap-8 items-center">
+    <div className="grid grid-cols-[1fr_1fr] gap-[clamp(24px,14.86px_+_0.893vw,32px)] items-center">
       <div>
-        <p className="gotham text-[11px] tracking-[5px] uppercase text-white/55 mb-3">
+        <p className="gotham text-[length:clamp(10px,8.86px_+_0.112vw,11px)] tracking-[clamp(3px,0.71px_+_0.223vw,5px)] uppercase text-white/55 mb-[clamp(9px,5.57px_+_0.335vw,12px)]">
           {preview.eyebrow}
         </p>
-        <h3 className="valturin text-[29px] xl:text-[34px] leading-[1.15] text-white">
+        <h3 className="valturin text-[length:clamp(29px,23.29px_+_0.558vw,34px)] leading-[1.15] text-white">
           {preview.title}
         </h3>
-        <div className="w-[70px] h-[1px] bg-white/35 mt-4 mb-5" />
-        <p className="gotham text-[14px] xl:text-[15px] leading-[26px] xl:leading-[28px] text-white/70 font-light">
+        <div className="w-[clamp(52px,31.43px_+_2.009vw,70px)] h-[1px] bg-white/35 mt-[clamp(12px,7.43px_+_0.446vw,16px)] mb-[clamp(15px,9.29px_+_0.558vw,20px)]" />
+        <p className="gotham text-[length:clamp(14px,12.86px_+_0.112vw,15px)] leading-[clamp(26px,23.71px_+_0.223vw,28px)] text-white/70 font-light">
           {preview.body}
         </p>
       </div>
 
       <div className="relative">
         {/* Offset frame, echoing the service-detail overview treatment */}
-        <div className="absolute -inset-3 border border-white/25 rounded-[22px] translate-x-3 translate-y-3 pointer-events-none" />
+        <div className="absolute -inset-3 border border-white/25 rounded-[22px] translate-x-3 translate-y-3 pointer-events-none pmu-it-od" />
         <Frame
           src={preview.image}
           alt={preview.title}
@@ -138,7 +138,7 @@ function LookbookPanel({
       />
       {/* Wider gap and trailing padding give each tile's offset frame room —
           at gap-4 the frames overlapped the neighbouring reel. */}
-      <div className="grid grid-cols-2 gap-8 pr-3 pb-3">
+      <div className="grid grid-cols-2 gap-[clamp(24px,14.86px_+_0.893vw,32px)] pr-3 pb-3">
         {preview.videos.map((video) => (
           <VideoTile key={video.src} video={video} />
         ))}
@@ -168,7 +168,7 @@ function VideoTile({ video }: { video: PreviewVideo }) {
     // which would cut the offset frame off.
     <div className="relative">
       {/* Offset frame, matching the About Us panel */}
-      <div className="absolute -inset-3 border border-white/25 rounded-[22px] translate-x-3 translate-y-3 pointer-events-none" />
+      <div className="absolute -inset-3 border border-white/25 rounded-[22px] translate-x-3 translate-y-3 pointer-events-none pmu-it-od" />
 
       <div
         onMouseEnter={play}
@@ -189,12 +189,12 @@ function VideoTile({ video }: { video: PreviewVideo }) {
 
         {/* Play affordance, fades out while the reel is playing */}
         <span className="absolute inset-0 flex items-center justify-center opacity-100 group-hover/reel:opacity-0 transition-opacity duration-300">
-          <span className="w-[38px] h-[38px] rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white text-[12px] pl-[2px]">
+          <span className="w-[clamp(30px,20.86px_+_0.893vw,38px)] h-[clamp(30px,20.86px_+_0.893vw,38px)] rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white text-[length:clamp(11px,9.86px_+_0.112vw,12px)] pl-[2px]">
             ▶
           </span>
         </span>
 
-        <p className="absolute bottom-3 left-4 right-4 gotham text-[12px] tracking-[1px] text-white truncate">
+        <p className="absolute bottom-[clamp(9px,5.57px_+_0.335vw,12px)] left-[clamp(12px,7.43px_+_0.446vw,16px)] right-[clamp(12px,7.43px_+_0.446vw,16px)] gotham text-[length:clamp(11px,9.86px_+_0.112vw,12px)] tracking-[1px] text-white truncate">
           {video.label}
         </p>
       </div>
@@ -219,34 +219,34 @@ function BlogPanel({
         body={preview.body}
       />
 
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-[clamp(15px,9.29px_+_0.558vw,20px)]">
         {preview.posts.map((post, index) => (
           <article
             key={index}
-            className="group/post flex gap-5 rounded-[18px] border border-white/15 hover:border-white/40 bg-black/10 p-4 transition-colors duration-300"
+            className="group/post flex gap-[clamp(15px,9.29px_+_0.558vw,20px)] rounded-[18px] border border-white/15 hover:border-white/40 bg-black/10 p-[clamp(12px,7.43px_+_0.446vw,16px)] transition-colors duration-300"
           >
             <Frame
               src={post.image}
               alt={post.title}
-              className="w-[100px] shrink-0 aspect-[4/3] rounded-[14px]"
+              className="w-[clamp(78px,52.86px_+_2.455vw,100px)] shrink-0 aspect-[4/3] rounded-[14px]"
             />
 
             <div className="min-w-0">
-              <p className="gotham text-[11px] tracking-[2px] uppercase text-white/50 mb-2">
+              <p className="gotham text-[length:clamp(10px,8.86px_+_0.112vw,11px)] tracking-[clamp(1.5px,0.93px_+_0.056vw,2px)] uppercase text-white/50 mb-[clamp(6px,3.71px_+_0.223vw,8px)]">
                 {post.date} · {post.readTime}
               </p>
 
-              <h4 className="valturin text-[17px] leading-[24px] text-white mb-2 line-clamp-2">
+              <h4 className="valturin text-[length:clamp(15px,12.71px_+_0.223vw,17px)] leading-[clamp(20px,15.43px_+_0.446vw,24px)] text-white mb-[clamp(6px,3.71px_+_0.223vw,8px)] line-clamp-2">
                 {post.title}
               </h4>
 
-              <p className="gotham text-[13px] leading-[22px] text-white/65 font-light line-clamp-2">
+              <p className="pum-card-desc gotham text-[length:clamp(12px,10.86px_+_0.112vw,13px)] leading-[clamp(20px,17.71px_+_0.223vw,22px)] text-white/65 font-light line-clamp-2">
                 {post.excerpt}
               </p>
 
               <a
                 href={post.href}
-                className="inline-flex items-center gap-2 mt-3 gotham text-[11px] tracking-[2px] uppercase text-white hover:text-[#f3e3c6] transition-colors duration-300"
+                className="inline-flex items-center gap-[clamp(6px,3.71px_+_0.223vw,8px)] mt-[clamp(9px,5.57px_+_0.335vw,12px)] gotham text-[length:clamp(10px,8.86px_+_0.112vw,11px)] tracking-[clamp(1.5px,0.93px_+_0.056vw,2px)] uppercase text-white hover:text-[#f3e3c6] transition-colors duration-300"
               >
                 Read More
                 <span className="inline-block transition-transform duration-300 group-hover/post:translate-x-1">
@@ -274,14 +274,14 @@ function ShopPanel({
     <div>
       <PanelHeader eyebrow={preview.eyebrow} title={preview.title} />
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-2 gap-[clamp(15px,9.29px_+_0.558vw,20px)]">
         {preview.products.map((product) => (
           <a
             key={product.title}
             href="/shop"
             className="group/product relative block rounded-[20px] overflow-hidden border border-white/15 hover:border-[#f3e3c6]/60 bg-gradient-to-b from-white/[0.08] to-white/[0.02] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)]"
           >
-            <div className="relative aspect-square max-h-[38vh] overflow-hidden">
+            <div className="relative aspect-square overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={product.image}
@@ -290,16 +290,16 @@ function ShopPanel({
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
 
-              <span className="absolute top-3 right-3 rounded-full bg-[#f3e3c6] text-[#5c4436] gotham text-[11px] font-bold px-3 py-[5px]">
+              <span className="absolute top-3 right-3 rounded-full bg-[#f3e3c6] text-[#5c4436] gotham text-[length:clamp(10px,8.86px_+_0.112vw,11px)] font-bold px-[clamp(9px,5.57px_+_0.335vw,12px)] py-[clamp(4px,2.86px_+_0.112vw,5px)]">
                 {product.price}
               </span>
             </div>
 
-            <div className="px-4 py-3.5 flex items-center justify-between gap-2">
-              <p className="gotham text-[13px] leading-[19px] text-white truncate">
+            <div className="px-[clamp(12px,7.43px_+_0.446vw,16px)] py-[clamp(10px,5.43px_+_0.446vw,14px)] flex items-center justify-between gap-[clamp(6px,3.71px_+_0.223vw,8px)]">
+              <p className="gotham text-[length:clamp(12px,10.86px_+_0.112vw,13px)] leading-[clamp(17px,14.71px_+_0.223vw,19px)] text-white truncate">
                 {product.title}
               </p>
-              <span className="gotham text-[13px] text-white/45 shrink-0 transition-all duration-300 group-hover/product:text-white group-hover/product:translate-x-0.5">
+              <span className="gotham text-[length:clamp(12px,10.86px_+_0.112vw,13px)] text-white/45 shrink-0 transition-all duration-300 group-hover/product:text-white group-hover/product:translate-x-0.5">
                 →
               </span>
             </div>
@@ -320,18 +320,18 @@ function ContactPanel({
   preview: Extract<Preview, { variant: "contact" }>;
 }) {
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-[clamp(36px,22.29px_+_1.339vw,48px)]">
       {/* Row 1 — copy left, image right, matching the About Us layout */}
-      <div className="flex gap-6 items-center">
+      <div className="flex gap-[clamp(18px,11.14px_+_0.670vw,24px)] items-center">
         <div className="min-w-0">
-          <p className="gotham text-[11px] tracking-[5px] uppercase text-white/55 mb-3">
+          <p className="gotham text-[length:clamp(10px,8.86px_+_0.112vw,11px)] tracking-[clamp(3px,0.71px_+_0.223vw,5px)] uppercase text-white/55 mb-[clamp(9px,5.57px_+_0.335vw,12px)]">
             {preview.eyebrow}
           </p>
-          <h3 className="valturin text-[26px] xl:text-[30px] leading-[1.15] text-white mb-3">
+          <h3 className="valturin text-[length:clamp(26px,21.43px_+_0.446vw,30px)] leading-[1.15] text-white mb-[clamp(9px,5.57px_+_0.335vw,12px)]">
             {preview.title}
           </h3>
-          <div className="w-[60px] h-[1px] bg-white/35 mb-4" />
-          <p className="gotham text-[13px] leading-[23px] text-white/70 font-light line-clamp-4">
+          <div className="w-[clamp(45px,27.86px_+_1.674vw,60px)] h-[1px] bg-white/35 mb-[clamp(12px,7.43px_+_0.446vw,16px)]" />
+          <p className="gotham text-[length:clamp(12px,10.86px_+_0.112vw,13px)] leading-[clamp(21px,18.71px_+_0.223vw,23px)] text-white/70 font-light line-clamp-4">
             {preview.body}
           </p>
         </div>
@@ -340,7 +340,7 @@ function ContactPanel({
             clip against the panel edge. */}
         <div className="relative w-[42%] shrink-0 mr-3">
           {/* Offset frame, matching the About Us panel */}
-          <div className="absolute -inset-3 border border-white/25 rounded-[22px] translate-x-3 translate-y-3 pointer-events-none" />
+          <div className="absolute -inset-3 border border-white/25 rounded-[22px] translate-x-3 translate-y-3 pointer-events-none pmu-it-od" />
           <Frame
             src={preview.image}
             alt={preview.title}
@@ -350,16 +350,16 @@ function ContactPanel({
       </div>
 
       {/* Row 2 — appointment details */}
-      <div className="rounded-[18px] border border-white/15 bg-black/10 p-6">
-        <h4 className="gotham text-[11px] tracking-[4px] uppercase text-white/55 border-b border-white/20 pb-3 mb-5">
+      <div className="rounded-[18px] border border-white/15 bg-black/10 p-[clamp(18px,11.14px_+_0.670vw,24px)]">
+        <h4 className="gotham text-[length:clamp(10px,8.86px_+_0.112vw,11px)] tracking-[clamp(3px,1.86px_+_0.112vw,4px)] uppercase text-white/55 border-b border-white/20 pb-[clamp(9px,5.57px_+_0.335vw,12px)] mb-[clamp(15px,9.29px_+_0.558vw,20px)]">
           By Appointment Only
         </h4>
 
         <a
           href={preview.phoneHref}
-          className="flex items-center gap-4 mb-4 text-[15px] gotham text-white hover:text-[#f3e3c6] transition-colors duration-300"
+          className="flex items-center gap-[clamp(12px,7.43px_+_0.446vw,16px)] mb-[clamp(12px,7.43px_+_0.446vw,16px)] text-[length:clamp(14px,12.86px_+_0.112vw,15px)] gotham text-white hover:text-[#f3e3c6] transition-colors duration-300"
         >
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" className="shrink-0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" className="shrink-0 w-[clamp(14px,10.57px_+_0.335vw,17px)] h-[clamp(14px,10.57px_+_0.335vw,17px)]">
             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.864-1.051l-3.219-.536a2.25 2.25 0 00-2.15.586l-1.332 1.332c-1.25-.56-2.43-1.28-3.486-2.136a13.31 13.31 0 01-2.136-3.486l1.332-1.332a2.25 2.25 0 00.586-2.15l-.536-3.22C7.716 2.601 7.266 2.25 6.75 2.25H5.372c-1.12 0-2.072.84-2.146 1.954C3.064 4.887 2.25 5.803 2.25 6.75z" />
           </svg>
           {preview.phone}
@@ -368,9 +368,9 @@ function ContactPanel({
         {/* Map link — set CONTACT_MAP_HREF in menu-data.ts */}
         <a
           href={preview.mapHref}
-          className="flex items-center gap-4 text-[15px] gotham text-white hover:text-[#f3e3c6] transition-colors duration-300"
+          className="flex items-center gap-[clamp(12px,7.43px_+_0.446vw,16px)] text-[length:clamp(14px,12.86px_+_0.112vw,15px)] gotham text-white hover:text-[#f3e3c6] transition-colors duration-300"
         >
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" className="shrink-0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" className="shrink-0 w-[clamp(14px,10.57px_+_0.335vw,17px)] h-[clamp(14px,10.57px_+_0.335vw,17px)]">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
           </svg>
@@ -394,29 +394,29 @@ function CardsPanel({
     <div>
       <PanelHeader eyebrow={preview.eyebrow} title={preview.title} />
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-[clamp(12px,7.43px_+_0.446vw,16px)] pum-cards">
         {preview.cards.map((card) => (
           <a
             key={card.href}
             href={card.href}
-            className="group/card flex gap-4 rounded-[18px] border border-white/15 hover:border-[#f3e3c6]/60 bg-black/10 p-3.5 transition-all duration-500 hover:-translate-y-1"
+            className="group/card flex gap-[clamp(12px,7.43px_+_0.446vw,16px)] rounded-[18px] border border-white/15 hover:border-[#f3e3c6]/60 bg-black/10 p-[clamp(10px,5.43px_+_0.446vw,14px)] transition-all duration-500 hover:-translate-y-1"
           >
             <Frame
               src={card.image}
               alt={card.title}
-              className="w-[100px] shrink-0 aspect-[3/4] rounded-[13px]"
+              className="img-w-c  w-[clamp(60px,52.86px_+_2.455vw,100px)] shrink-0 aspect-[3/4] rounded-[13px]"
             />
 
             <div className="min-w-0 flex flex-col">
-              <h4 className="valturin text-[16px] leading-[21px] text-white mb-2 line-clamp-2">
+              <h4 className="valturin text-[length:clamp(14px,11.71px_+_0.223vw,16px)] leading-[clamp(18px,14.57px_+_0.335vw,21px)] text-white mb-[clamp(6px,3.71px_+_0.223vw,8px)] line-clamp-2">
                 {card.title}
               </h4>
 
-              <p className="gotham text-[12px] leading-[19px] text-white/60 font-light line-clamp-3">
+              <p className="pum-card-desc gotham text-[length:clamp(11px,9.86px_+_0.112vw,12px)] leading-[clamp(17px,14.71px_+_0.223vw,19px)] text-white/60 font-light line-clamp-3">
                 {card.body}
               </p>
 
-              <span className="inline-flex items-center gap-1.5 mt-auto pt-2.5 gotham text-[10px] tracking-[2px] uppercase text-white/75 group-hover/card:text-[#f3e3c6] transition-colors duration-300">
+              <span className="inline-flex items-center gap-[clamp(5px,3.86px_+_0.112vw,6px)] mt-auto pt-[clamp(8px,5.71px_+_0.223vw,10px)] gotham text-[length:clamp(9px,7.86px_+_0.112vw,10px)] tracking-[clamp(1.5px,0.93px_+_0.056vw,2px)] uppercase text-white/75 group-hover/card:text-[#f3e3c6] transition-colors duration-300">
                 {preview.cardCta}
                 <span className="inline-block transition-transform duration-300 group-hover/card:translate-x-1">
                   →
