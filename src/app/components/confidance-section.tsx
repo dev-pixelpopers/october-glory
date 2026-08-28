@@ -63,7 +63,7 @@ export default function ConfidenceJourneySection() {
               <img ref={imageRef}
                 src="/images/confidance-image.png"
                 alt="Woman getting hair done"
-                className="w-full h-full object-cover object-top wom-des-img"
+                className="w-full h-full object-cover object-right wom-des-img"
                 style={{
                   clipPath: "inset(100% 0% 0% 0%)"
                 }}
