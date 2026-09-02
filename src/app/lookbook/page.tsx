@@ -105,13 +105,13 @@ export default function LookbookPage() {
       {/* ============================
           FILTER BAR
       ============================ */}
-      <section className="bg-[#151515] py-10 px-6 md:px-[120px] border-b border-white/5">
-        <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-center gap-4">
+      <section className="bg-[#151515] py-[var(--space-40)] px-[var(--space-section-x)] border-b border-white/5">
+        <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-center gap-[var(--space-16)]">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
-              className={`gotham text-[16px] tracking-wider uppercase px-8 py-3 rounded-full border transition-all duration-300 cursor-pointer ${activeFilter === cat
+              className={`gotham text-[16px] tracking-wider uppercase px-[var(--space-32)] py-3 rounded-full border transition-all duration-300 cursor-pointer ${activeFilter === cat
                 ? "bg-[#C0A062] border-[#C0A062] text-black font-semibold"
                 : "bg-transparent border-white/20 text-gray-300 hover:border-[#C0A062] hover:text-[#C0A062]"
                 }`}
@@ -125,12 +125,12 @@ export default function LookbookPage() {
       {/* ============================
           MASONRY GALLERY
       ============================ */}
-      <section className="py-[80px] px-6 md:px-[120px] bg-[#1B1B1B]">
-        <div className="max-w-[1400px] mx-auto columns-1 md:columns-2 lg:columns-3 gap-6">
+      <section className="py-[var(--space-section-y)] px-[var(--space-section-x)] bg-[#1B1B1B]">
+        <div className="max-w-[1400px] mx-auto columns-1 md:columns-2 lg:columns-3 gap-[var(--space-32)]">
           {filteredItems.map((item) => (
             <div
               key={item.id}
-              className="break-inside-avoid mb-6 group relative rounded-[1.5rem] overflow-hidden cursor-pointer"
+              className="break-inside-avoid mb-[var(--space-24)] group relative rounded-[1.5rem] overflow-hidden cursor-pointer"
               onMouseEnter={() => setHoveredId(item.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
@@ -156,17 +156,17 @@ export default function LookbookPage() {
 
               {/* Overlay */}
               <div
-                className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent rounded-[1.5rem] flex flex-col justify-end p-8 transition-opacity duration-500 ${hoveredId === item.id ? "opacity-100" : "opacity-0"
+                className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent rounded-[1.5rem] flex flex-col justify-end p-[var(--space-32)] transition-opacity duration-500 ${hoveredId === item.id ? "opacity-100" : "opacity-0"
                   }`}
               >
                 {/* Category Badge */}
                 <span className="gotham text-[12px] uppercase tracking-[3px] text-[#C0A062] mb-2 font-semibold">
                   {item.category}
                 </span>
-                <h3 className="valturin text-[28px] text-white mb-2 leading-tight">
+                <h3 className="valturin text-[length:clamp(20px,17.65px_+_0.988vw,28px)] text-white mb-2 leading-tight">
                   {item.title}
                 </h3>
-                <p className="gotham text-[14px] text-gray-300 font-light leading-relaxed max-w-[320px]">
+                <p className="gotham text-[length:var(--fs-small)] text-gray-300 font-light leading-relaxed max-w-[320px]">
                   {item.description}
                 </p>
               </div>
@@ -176,7 +176,7 @@ export default function LookbookPage() {
                 className={`absolute top-5 left-5 transition-opacity duration-500 ${hoveredId === item.id ? "opacity-0" : "opacity-100"
                   }`}
               >
-                <span className="gotham text-[11px] uppercase tracking-[2px] text-white bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full font-medium">
+                <span className="gotham text-[11px] uppercase tracking-[2px] text-white bg-black/50 backdrop-blur-sm px-[var(--space-16)] py-2 rounded-full font-medium">
                   {item.category}
                 </span>
               </div>
@@ -188,25 +188,25 @@ export default function LookbookPage() {
       {/* ============================
           VIDEO REEL SECTION
       ============================ */}
-      <section className="bg-[#151515] py-[100px] px-6 md:px-[120px] relative overflow-hidden">
+      <section className="bg-[#151515] py-[var(--space-section-y)] px-[var(--space-section-x)] relative overflow-hidden">
         {/* Watermark */}
         <div className="absolute inset-0 flex justify-center overflow-hidden pointer-events-none z-0 select-none opacity-[0.04]">
           <div className="valturin text-[40vw] leading-none text-white">G</div>
         </div>
 
         <div className="relative z-10 max-w-[1400px] mx-auto">
-          <div className="flex flex-col items-center text-center mb-16">
-            <span className="andrea text-[60px] text-gold mb-[-10px]">Behind</span>
-            <h2 className="valturin text-[45px] md:text-[60px] text-white uppercase tracking-widest">
+          <div className="flex flex-col items-center text-center mb-[var(--space-64)]">
+            <span className="andrea text-[length:var(--fs-accent)] text-gold mb-[-10px]">Behind</span>
+            <h2 className="valturin text-[length:var(--fs-h2)] text-white uppercase tracking-widest">
               The Chair
             </h2>
-            <p className="gotham text-[18px] text-gray-400 font-light mt-6 max-w-[600px]">
+            <p className="gotham text-[length:var(--fs-body)] text-gray-400 font-light mt-[var(--space-24)] max-w-[600px]">
               Watch our stylists craft each look with precision, passion, and an artist's eye for detail.
             </p>
           </div>
 
           {/* Video Reel Row */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-[var(--space-32)]">
             {[
               { src: "/images/1-video.mp4", label: "Sew-In Install" },
               { src: "/images/video-2.mp4", label: "Silk Press" },
@@ -222,7 +222,7 @@ export default function LookbookPage() {
                   playsInline
                   className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-8">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-[var(--space-32)]">
                   <span className="valturin text-[22px] text-white tracking-wider">{vid.label}</span>
                 </div>
                 {/* Gold top-border accent on hover */}
@@ -237,21 +237,21 @@ export default function LookbookPage() {
           CTA SECTION
       ============================ */}
       <section
-        className="py-[120px] px-6 bg-cover bg-center text-center relative"
+        className="py-[var(--space-section-y)] px-[var(--space-section-x)] bg-cover bg-center text-center relative"
         style={{ backgroundImage: "url('/images/servicce.png')" }}
       >
         <div className="absolute inset-0 bg-black/90 z-0"></div>
-        <div className="relative z-10 flex flex-col items-center max-w-[800px] mx-auto gap-8">
-          <h2 className="andrea text-[70px] text-white mb-[-30px]">Your Look</h2>
-          <h3 className="valturin text-[35px] md:text-[50px] text-gold uppercase tracking-wider">
+        <div className="relative z-10 flex flex-col items-center max-w-[800px] mx-auto gap-[var(--space-32)]">
+          <h2 className="andrea text-[length:var(--fs-h2)] text-white mb-[calc(var(--space-32)*-1)]">Your Look</h2>
+          <h3 className="valturin text-[length:var(--fs-h3)] text-gold uppercase tracking-wider">
             Awaits You
           </h3>
-          <p className="gotham text-[18px] text-gray-300 max-w-[600px] font-light leading-relaxed">
+          <p className="gotham text-[length:var(--fs-body)] text-gray-300 max-w-[600px] font-light leading-relaxed">
             Inspired by what you see? Let us create your signature look. Book a private consultation today.
           </p>
           <a
             href="/dashboard/book"
-            className="flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
+            className="flex mt-[var(--space-16)] gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
           >
             <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
               →

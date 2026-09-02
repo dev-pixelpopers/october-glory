@@ -142,28 +142,29 @@ export default function ShopProducts() {
     100 - ((priceRange[1] - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
 
   return (
-    <section className="shop-products-grid relative w-full bg-[#1B1B1B] pt-[160px] pb-[160px] px-[110px]">
+    <section className="shop-products-grid relative w-full bg-[#1B1B1B] py-[var(--space-section-y)] px-[var(--space-section-x)]">
       {/* Header Titles */}
-      <div className="text-center mb-20">
-        <h2 className="text-white andrea text-[88px]">All Products</h2>
-        <h3 className="text-[#cda873] valturin text-[66px] mt-2">
+      <div className="text-center mb-[var(--space-64)]">
+        <h2 className="text-white andrea text-[length:var(--fs-h2)]">All Products</h2>
+        <h3 className="text-[#cda873] valturin text-[length:var(--fs-h3)] mt-2">
           Shop The Collection
         </h3>
-        <p className="text-gray-300 gotham text-[18px] leading-[30px] max-w-[560px] mx-auto mt-6">
+        <p className="text-gray-300 gotham text-[length:var(--fs-body)] leading-[1.7] max-w-[560px] mx-auto mt-[var(--space-24)]">
           Explore Curated Collections Designed For Every Mood, Lifestyle, And
           Finish.
         </p>
       </div>
 
-      <div className="flex flex-row gap-10 items-start justify-start">
-        {/* Filters */}
-        <div className="w-[20%] flex flex-col gap-12 sticky top-[15%] overflow-y-auto">
+      <div className="flex flex-col lg:flex-row gap-[var(--space-40)] items-start justify-start">
+        {/* Filters. Full width above the grid on narrow screens; only wide
+            enough to sit beside it — and only then worth pinning — from lg up. */}
+        <div className="w-full lg:w-[20%] flex flex-col gap-[var(--space-48)] lg:sticky lg:top-[15%] overflow-y-auto">
           {/* Categories */}
           <div>
-            <h4 className="gotham text-white text-sm uppercase tracking-wider mb-5">
+            <h4 className="gotham text-white text-sm uppercase tracking-wider mb-[var(--space-20)]">
               Categories
             </h4>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-[var(--space-16)]">
               {PRODUCT_TAGS.map((tag) => (
                 <label
                   key={tag}
@@ -185,14 +186,14 @@ export default function ShopProducts() {
 
           {/* Sort By Price */}
           <div>
-            <h4 className="gotham text-white text-sm uppercase tracking-wider mb-5">
+            <h4 className="gotham text-white text-sm uppercase tracking-wider mb-[var(--space-20)]">
               Sort By Price
             </h4>
             <div className="relative">
               <select
                 value={sortOrder}
                 onChange={(e) => handleSortChange(e.target.value as SortOrder)}
-                className="w-full appearance-none bg-transparent border border-gray-500 text-gray-300 gotham text-sm rounded-md pl-4 pr-10 py-2.5 cursor-pointer focus:outline-none focus:border-[#C0A062] transition-colors"
+                className="w-full appearance-none bg-transparent border border-gray-500 text-gray-300 gotham text-sm rounded-md pl-[var(--space-16)] pr-[var(--space-40)] py-2.5 cursor-pointer focus:outline-none focus:border-[#C0A062] transition-colors"
               >
                 <option className="bg-[#1B1B1B]" value="none">
                   Default
@@ -223,7 +224,7 @@ export default function ShopProducts() {
 
           {/* Price Range */}
           <div>
-            <h4 className="gotham text-white text-sm uppercase tracking-wider mb-5">
+            <h4 className="gotham text-white text-sm uppercase tracking-wider mb-[var(--space-20)]">
               Price Range
             </h4>
             <div className="price-slider relative h-1 mt-2">
@@ -247,7 +248,7 @@ export default function ShopProducts() {
                 onChange={(e) => handleMaxPriceChange(Number(e.target.value))}
               />
             </div>
-            <div className="flex justify-between mt-5 gotham text-gray-300 text-xs">
+            <div className="flex justify-between mt-[var(--space-20)] gotham text-gray-300 text-xs">
               <span>${priceRange[0]}</span>
               <span>${priceRange[1]}</span>
             </div>
@@ -255,21 +256,21 @@ export default function ShopProducts() {
         </div>
 
         {/* Product Grid: 4 per row, wrapping into further rows */}
-        <div ref={prodTabRef} className="prod-tab flex flex-col gap-10 w-[80%]">
-        <div className="grid grid-cols-4 gap-x-6 gap-y-12">
+        <div ref={prodTabRef} className="prod-tab flex flex-col gap-[var(--space-40)] w-full lg:w-[80%]">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-[var(--space-32)] gap-y-[var(--space-64)]">
           {visibleProducts.map((product) => (
             <div
               key={product.productId}
-              className="prod-card bg-white rounded-xl p-4 shadow-[0_18px_45px_rgba(0,0,0,0.25)]"
+              className="prod-card bg-white rounded-xl p-[var(--space-16)] shadow-[0_18px_45px_rgba(0,0,0,0.25)]"
             >
-              <div className="w-full h-[360px] bg-gray-100 rounded-lg mb-5 overflow-hidden">
+              <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg mb-[var(--space-20)] overflow-hidden">
                 <img
                   src={product.productImage}
                   alt={product.productTitle}
                   className="w-full h-full object-cover object-top"
                 />
               </div>
-              <div className="flex justify-between items-center mb-4 px-1">
+              <div className="flex justify-between items-center mb-[var(--space-16)] px-1">
                 <h3 className="text-gray-500 font-medium text-base">
                   {product.productTitle}
                 </h3>
@@ -289,7 +290,7 @@ export default function ShopProducts() {
           ))}
 
           {visibleProducts.length === 0 && (
-            <p className="col-span-4 text-center gotham text-gray-400 text-base py-20">
+            <p className="col-span-full text-center gotham text-gray-400 text-base py-[var(--space-80)]">
               No products match your filters.
             </p>
           )}
@@ -303,7 +304,7 @@ export default function ShopProducts() {
               e.currentTarget.blur();
               setVisibleRows((rows) => rows + 1);
             }}
-            className="flex items-center gap-4 group"
+            className="flex items-center gap-[var(--space-16)] group"
           >
             <span className="w-12 h-12 rounded-full border border-gray-400 flex items-center justify-center text-gray-300 transition-colors duration-300 group-hover:bg-white group-hover:text-black">
               <svg
@@ -321,7 +322,7 @@ export default function ShopProducts() {
                 />
               </svg>
             </span>
-            <span className="text-white gotham text-[16px] uppercase tracking-wider">
+            <span className="text-white gotham text-[length:var(--fs-body)] uppercase tracking-wider">
               Load More
             </span>
           </button>

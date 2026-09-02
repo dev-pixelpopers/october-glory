@@ -70,13 +70,13 @@ export default function BeforeAfter({
           {/* Corner labels. Each one fades out as the divider passes it, so a
               label never sits over the half it doesn't describe. */}
           <span
-            className="absolute top-4 left-4 md:top-6 md:left-6 gotham text-[11px] md:text-[12px] tracking-[3px] uppercase text-white px-4 py-2 rounded-full bg-black/45 backdrop-blur-sm transition-opacity duration-300 pointer-events-none"
+            className="absolute top-4 left-4 md:top-6 md:left-6 gotham text-[11px] md:text-[12px] tracking-[3px] uppercase text-white px-[var(--space-16)] py-2 rounded-full bg-black/45 backdrop-blur-sm transition-opacity duration-300 pointer-events-none"
             style={{ opacity: position < 18 ? 0 : 1 }}
           >
             {beforeLabel}
           </span>
           <span
-            className="absolute top-4 right-4 md:top-6 md:right-6 gotham text-[11px] md:text-[12px] tracking-[3px] uppercase text-white px-4 py-2 rounded-full bg-black/45 backdrop-blur-sm transition-opacity duration-300 pointer-events-none"
+            className="absolute top-4 right-4 md:top-6 md:right-6 gotham text-[11px] md:text-[12px] tracking-[3px] uppercase text-white px-[var(--space-16)] py-2 rounded-full bg-black/45 backdrop-blur-sm transition-opacity duration-300 pointer-events-none"
             style={{ opacity: position > 82 ? 0 : 1 }}
           >
             {afterLabel}
@@ -110,7 +110,7 @@ export default function BeforeAfter({
 
       {caption && (
         <figcaption
-          className={`gotham ${c.muted} text-[13px] md:text-[14px] leading-[24px] mt-8 md:mt-10 text-center font-light`}
+          className={`gotham ${c.muted} text-[13px] md:text-[14px] leading-[24px] mt-[var(--space-32)] md:mt-[var(--space-40)] text-center font-light`}
         >
           {caption}
         </figcaption>

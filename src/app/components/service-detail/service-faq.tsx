@@ -23,14 +23,14 @@ export default function ServiceFaqSection({
   return (
     <section
       ref={scope}
-      className={`reveal-scope relative w-full ${c.section} py-[100px] md:py-[140px] px-[24px] md:px-[110px]`}
+      className={`reveal-scope relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)]`}
     >
       <div className="max-w-[900px] mx-auto">
-        <div className="text-center mb-[60px] md:mb-[80px]">
+        <div className="text-center mb-[var(--space-64)]">
           {faq.eyebrow && (
             <p
               data-reveal
-              className={`gotham ${c.eyebrow} text-[13px] md:text-[15px] tracking-[6px] uppercase mb-5`}
+              className={`gotham ${c.eyebrow} text-[length:var(--fs-small)] tracking-[6px] uppercase mb-[var(--space-20)]`}
             >
               {faq.eyebrow}
             </p>
@@ -39,7 +39,7 @@ export default function ServiceFaqSection({
           <h2
             data-reveal
             data-reveal-delay="1"
-            className={`andrea ${c.heading} text-[46px] md:text-[68px] leading-[1.15]`}
+            className={`andrea ${c.heading} text-[length:var(--fs-h2)] leading-[1.15]`}
           >
             {faq.heading}
           </h2>
@@ -47,20 +47,20 @@ export default function ServiceFaqSection({
           <div
             data-reveal
             data-reveal-delay="2"
-            className="w-[110px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent mx-auto mt-7"
+            className="w-[110px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent mx-auto mt-[var(--space-28)]"
           />
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-[var(--space-16)]">
           {faq.items.map((item, i) => (
             <details
               key={item.question}
               data-reveal
               data-reveal-delay={String(i)}
-              className={`group rounded-[18px] border ${c.cardBorder} ${c.card} px-6 md:px-8 py-1 transition-colors duration-300 hover:border-[#ccb884]/60 open:border-[#ccb884]/60`}
+              className={`group rounded-[18px] border ${c.cardBorder} ${c.card} px-[var(--space-24)] md:px-[var(--space-32)] py-1 transition-colors duration-300 hover:border-[#ccb884]/60 open:border-[#ccb884]/60`}
             >
-              <summary className="flex items-start gap-5 cursor-pointer list-none py-6 [&::-webkit-details-marker]:hidden">
-                <span className={`gotham text-[17px] md:text-[19px] leading-[30px] font-medium flex-1 ${c.bodyStrong}`}>
+              <summary className="flex items-start gap-[var(--space-20)] cursor-pointer list-none py-[var(--space-24)] [&::-webkit-details-marker]:hidden">
+                <span className={`gotham text-[length:var(--fs-body)] leading-[1.7] font-medium flex-1 ${c.bodyStrong}`}>
                   {item.question}
                 </span>
                 <span
@@ -73,7 +73,7 @@ export default function ServiceFaqSection({
                 </span> 
               </summary>
 
-              <p className={`gotham text-[15px] md:text-[16px] leading-[30px] ${c.body} font-light pb-7 pr-[52px]`}>
+              <p className={`gotham text-[length:var(--fs-body)] leading-[1.7] ${c.body} font-light pb-[var(--space-28)] pr-[var(--space-48)]`}>
                 {item.answer}
               </p>
             </details>

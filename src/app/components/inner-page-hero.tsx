@@ -77,14 +77,14 @@ export default function InnerPageHero({
       {/* Subtle grain overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]" />
 
-      <div className="relative z-10 text-center flex flex-col items-center px-6">
+      <div className="relative z-10 text-center flex flex-col items-center px-[var(--space-24)]">
         <h1
           ref={headingRef}
-          className="andrea text-[80px] leading-[2] text-white mb-0 tracking-wide flex flex-col"
+          className="andrea text-[length:var(--fs-h1)] leading-[2] text-white mb-0 tracking-wide flex flex-col"
         >
           {title}
           {subtitle && (
-            <span className="valturin text-[80px] text-[#ccb884] mt-[-10px] tracking-widest">
+            <span className="valturin text-[length:var(--fs-h1)] text-[#ccb884] mt-[-10px] tracking-widest">
               {subtitle}
             </span>
           )}
@@ -93,13 +93,13 @@ export default function InnerPageHero({
         {/* Gold divider */}
         <div
           ref={dividerRef}
-          className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent my-8 origin-center"
+          className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent my-[var(--space-32)] origin-center"
         />
 
         {(description || children) && (
           <div ref={bodyRef} className="flex flex-col items-center">
             {description && (
-              <p className="gotham text-white/70 text-[20px] leading-[36px] max-w-[600px] font-light">
+              <p className="gotham text-white/70 text-[length:var(--fs-body)] leading-[1.8] max-w-[600px] font-light">
                 {description}
               </p>
             )}

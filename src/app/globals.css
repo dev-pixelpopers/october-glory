@@ -38,6 +38,53 @@ font-face {
 :root {
   --background: #5f5353;
   --foreground: #171717;
+
+  /* --- Inner-page fluid scale -------------------------------------------
+     Same 375px -> 1920px interpolation the homepage sections already use
+     (see about-section.tsx / collections-section.tsx clamp() values).
+     One variable per heading level, so every h1 across every inner page
+     matches every other h1 (same for h2, h3, h4, and body copy) instead of
+     each page picking its own one-off pixel value. A span nested inside a
+     heading tag takes that heading's variable (the hero title+subtitle
+     pattern); a standalone script "eyebrow" line that isn't real body copy
+     uses --fs-accent so it doesn't collapse to paragraph size. */
+  --fs-h1: clamp(26px, 14.58px + 3.046vw, 73.063px);
+  --fs-h2: clamp(24px, 15.75px + 2.201vw, 58px);
+  --fs-h3: clamp(20px, 14.66px + 1.424vw, 42px);
+  --fs-h4: clamp(18px, 15.09px + 0.777vw, 30px);
+  --fs-accent: clamp(28px, 19.26px + 2.33vw, 64px);
+  --fs-body: clamp(16px, 15.03px + 0.259vw, 20px);
+  --fs-small: clamp(13px, 12.27px + 0.194vw, 16px);
+
+  /* --- Fluid spacing scale ----------------------------------------------
+     Same 375px -> 1920px interpolation as the type scale above. Each token
+     is NAMED FOR ITS DESKTOP VALUE, so `--space-24` is the fluid version of
+     what used to be a hard-coded 24px: it still lands on 24px at 1920px and
+     eases down to ~16px at 375px. That makes the conversion of an existing
+     `gap-6` / `mb-6` mechanical and reversible at a glance.
+
+     Only spacing of 16px and up is tokenised. Below that we are inside
+     buttons, badges and icon rows, where a couple of fluid pixels are
+     invisible and the fixed value is what keeps the alignment honest. */
+  --space-16: clamp(12px, 11.03px + 0.259vw, 16px);
+  --space-20: clamp(14px, 12.54px + 0.388vw, 20px);
+  --space-24: clamp(16px, 14.06px + 0.518vw, 24px);
+  --space-28: clamp(20px, 18.06px + 0.518vw, 28px);
+  --space-32: clamp(22px, 19.57px + 0.647vw, 32px);
+  --space-36: clamp(24px, 21.09px + 0.777vw, 36px);
+  --space-40: clamp(28px, 25.09px + 0.777vw, 40px);
+  --space-48: clamp(32px, 28.12px + 1.036vw, 48px);
+  --space-56: clamp(36px, 31.15px + 1.294vw, 56px);
+  --space-64: clamp(40px, 34.17px + 1.553vw, 64px);
+  --space-72: clamp(44px, 37.20px + 1.812vw, 72px);
+  --space-80: clamp(48px, 40.23px + 2.071vw, 80px);
+  --space-96: clamp(56px, 46.29px + 2.589vw, 96px);
+  --space-144: clamp(72px, 54.52px + 4.660vw, 144px);
+
+  /* Page gutters. Kept separate from the scale because they are the one
+     pair every inner-page section shares, and they interpolate harder. */
+  --space-section-y: clamp(60px, 45.44px + 3.883vw, 120px);
+  --space-section-x: clamp(24px, 0.7px + 6.214vw, 120px);
 }
 
 @theme inline {
@@ -852,6 +899,10 @@ form textarea::Placeholder {
     padding: 0;
 }
 
+.wom-des-img img {
+    object-position: 50% 40%;
+}
+
 .women-des-pri {
     width: 100%;
     display: flex;
@@ -888,6 +939,19 @@ form textarea::Placeholder {
 
 .soc-vid-3, .soc-vid-4 {
     display: none;
+}
+
+.perf-oct-text {
+    top: 10%;
+    left: -95%;
+}
+
+.guide-lef-col{
+  height: 30vh;
+}
+
+.guide-rig-col {
+  height: 70vh;
 }
 
 }

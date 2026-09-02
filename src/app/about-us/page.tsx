@@ -22,31 +22,31 @@ export default function AboutUsPage() {
         description="Owner / Master Hair Stylist"
       />
       {/* --- The Founder's Vision --- */}
-      <section className="py-[120px] px-6 md:px-[120px] bg-[#151515] relative overflow-hidden">
+      <section className="py-[var(--space-section-y)] px-[var(--space-section-x)] bg-[#151515] relative overflow-hidden">
         {/* Large background letter watermark */}
         <div className="absolute inset-0 flex justify-between overflow-hidden pointer-events-none z-0 select-none opacity-20">
           <div className="valturin text-[50vw] leading-none text-white absolute top-[-10%] left-[-5vw]">O</div>
           <div className="valturin text-[50vw] leading-none text-[#3C3C3C] absolute bottom-[-10%] right-[-5vw]">G</div>
         </div>
 
-        <div className="relative z-10 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-center">
           {/* Left Column: Vision Text */}
-          <div className="flex flex-col gap-8">
-            <span className="andrea text-[70px] text-gold">The Vision</span>
-            <h2 className="valturin text-[45px] leading-tight text-white uppercase tracking-wider">
+          <div className="flex flex-col gap-[var(--space-32)]">
+            <span className="andrea text-[length:var(--fs-accent)] text-gold">The Vision</span>
+            <h2 className="valturin text-[length:var(--fs-h2)] leading-tight text-white uppercase tracking-wider">
               Jhavuanna Paterson
             </h2>
-            <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+            <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
               Jhavuanna Paterson is an artist, scientist, and engineer wrapped into a neat convenient package.  A native of Oakland, California and known for her blessed hands, Jhavuanna always knew that she would be a driving force in the hair and make-up industries. It all began when she was in third grade where she realized the one -to-three pony-tail hairstyles her mom gave her were not "glorious" enough. Jhavuanna is a purist whose indulgent personality and extreme attention to detail, yields exceptional results for her clients as she only works with top-of-the-line tools and products.  Jhavuanna's passion is to help her clients achieve any and every look that flatters, and accentuates their natural beauty.  Jhavuanna truly believes that because a woman's hair is her glory, proper care and maintenance are vital to its overall strength and health.
             </p>
-            <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+            <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
               Jhavuanna believes the way you wear your hair is an outward expression of your perception of yourself and how you want others to perceive you. For generations black women have been plagued with the notion that they have “bad hair” or that their hair could not grow. After servicing client after client, she realized that women needed more education about their hair and that intuitive insight didn’t come natural to everyone. And just like that, October Salon and Wig Spa was born. Jhavuanna is committed to making the idea of “bad hair” a thing of the past, and for every woman to fall in love with their hair, one head at a time.
             </p>
           </div>
 
           {/* Right Column: Beautifully framed image */}
           <div className="flex justify-center items-center">
-            <div className="relative border border-[#d4af6e]/30 rounded-[2rem] p-4 bg-[#1B1B1B]/40 max-w-[500px] shadow-2xl">
+            <div className="relative border border-[#d4af6e]/30 rounded-[2rem] p-[var(--space-16)] bg-[#1B1B1B]/40 max-w-[500px] shadow-2xl">
               <img
                 src="/images/about-img.png"
                 alt="Jhavuanna Paterson styling hair"
@@ -56,13 +56,13 @@ export default function AboutUsPage() {
           </div>
         </div>
 
-        <div className="relative z-10 max-w-[1400px] mx-auto gap-16 items-center mt-[60px]">
-          <div className="flex flex-col gap-8 w-full">
-            <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+        <div className="relative z-10 max-w-[1400px] mx-auto gap-[var(--space-64)] items-center mt-[var(--space-64)]">
+          <div className="flex flex-col gap-[var(--space-32)] w-full">
+            <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
               Jhavuanna has developed products, systems and subscription plans to help her clients reach full hair growth potential. October Glory Salon and Wig Spa has become a powerful community of beautiful women enthused about self care and, of course, healthy hair - who Jhavuanna, endearingly calls her, “Glory Girls”.
             </p>
 
-            <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+            <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
               While a highly educated, trained and skilled cosmetologist, Jhavuanna is committed to continuous learning.  It is her goal to impart knowledge and to increase her Glory Girls’ capacity of love and knowledge of their natural hair. She believes as she grows, October Glory will breed women who will evangelize a positive narrative about Black womens’ hair.
             </p>
 
@@ -84,43 +84,43 @@ export default function AboutUsPage() {
       </section>
 
       {/* --- The Glory Experience (Core Values) --- */}
-      <section className="py-[120px] px-6 md:px-[120px] bg-[#1B1B1B] relative">
+      <section className="py-[var(--space-section-y)] px-[var(--space-section-x)] bg-[#1B1B1B] relative">
         <div className="max-w-[1400px] mx-auto flex flex-col items-center">
-          <span className="andrea text-[60px] text-gold mb-2">Our Pillars</span>
-          <h2 className="valturin text-[45px] md:text-[60px] text-white text-center mb-16 uppercase tracking-widest">
+          <span className="andrea text-[length:var(--fs-accent)] text-gold mb-2">Our Pillars</span>
+          <h2 className="valturin text-[length:var(--fs-h2)] text-white text-center mb-[var(--space-64)] uppercase tracking-widest">
             The Glory Experience
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-64)] w-full">
             {/* Value Card 1 */}
-            <div className="border border-[#cda873]/20 bg-[#151515] p-10 rounded-[2rem] flex flex-col gap-6 hover:border-[#cda873]/50 transition-all duration-300 group">
+            <div className="border border-[#cda873]/20 bg-[#151515] p-[var(--space-40)] rounded-[2rem] flex flex-col gap-[var(--space-32)] hover:border-[#cda873]/50 transition-all duration-300 group">
               <div className="w-16 h-16 rounded-full bg-[#cda873]/10 border border-[#cda873]/30 flex items-center justify-center text-gold font-serif text-[28px]">
                 01
               </div>
-              <h3 className="valturin text-[28px] text-white group-hover:text-gold transition-colors">Bespoke Styling</h3>
-              <p className="gotham text-[16px] leading-[28px] text-gray-400 font-light">
+              <h3 className="valturin text-[length:var(--fs-h3)] text-white group-hover:text-gold transition-colors">Bespoke Styling</h3>
+              <p className="gotham text-[length:var(--fs-body)] leading-[1.6] text-gray-400 font-light">
                 Every service begins with a comprehensive consultation. We analyze your hair type, lifestyle, and aesthetic preferences to construct a customized hair design.
               </p>
             </div>
 
             {/* Value Card 2 */}
-            <div className="border border-[#cda873]/20 bg-[#151515] p-10 rounded-[2rem] flex flex-col gap-6 hover:border-[#cda873]/50 transition-all duration-300 group">
+            <div className="border border-[#cda873]/20 bg-[#151515] p-[var(--space-40)] rounded-[2rem] flex flex-col gap-[var(--space-32)] hover:border-[#cda873]/50 transition-all duration-300 group">
               <div className="w-16 h-16 rounded-full bg-[#cda873]/10 border border-[#cda873]/30 flex items-center justify-center text-gold font-serif text-[28px]">
                 02
               </div>
-              <h3 className="valturin text-[28px] text-white group-hover:text-gold transition-colors">Premium Products</h3>
-              <p className="gotham text-[16px] leading-[28px] text-gray-400 font-light">
+              <h3 className="valturin text-[length:var(--fs-h3)] text-white group-hover:text-gold transition-colors">Premium Products</h3>
+              <p className="gotham text-[length:var(--fs-body)] leading-[1.6] text-gray-400 font-light">
                 We curate only the finest luxury hair treatments and products. This ensures your hair is not only visually stunning but structurally healthy and vibrant.
               </p>
             </div>
 
             {/* Value Card 3 */}
-            <div className="border border-[#cda873]/20 bg-[#151515] p-10 rounded-[2rem] flex flex-col gap-6 hover:border-[#cda873]/50 transition-all duration-300 group">
+            <div className="border border-[#cda873]/20 bg-[#151515] p-[var(--space-40)] rounded-[2rem] flex flex-col gap-[var(--space-32)] hover:border-[#cda873]/50 transition-all duration-300 group">
               <div className="w-16 h-16 rounded-full bg-[#cda873]/10 border border-[#cda873]/30 flex items-center justify-center text-gold font-serif text-[28px]">
                 03
               </div>
-              <h3 className="valturin text-[28px] text-white group-hover:text-gold transition-colors">By Appointment Only</h3>
-              <p className="gotham text-[16px] leading-[28px] text-gray-400 font-light">
+              <h3 className="valturin text-[length:var(--fs-h3)] text-white group-hover:text-gold transition-colors">By Appointment Only</h3>
+              <p className="gotham text-[length:var(--fs-body)] leading-[1.6] text-gray-400 font-light">
                 By booking one-on-one appointments, we commit our full attention to you. Enjoy a private, relaxing experience without rush or crowds in Brooklyn.
               </p>
             </div>
@@ -130,23 +130,23 @@ export default function AboutUsPage() {
 
       {/* --- Action CTA Section --- */}
       <section
-        className="py-[120px] px-6 bg-cover bg-center text-center relative"
+        className="py-[var(--space-section-y)] px-[var(--space-section-x)] bg-cover bg-center text-center relative"
         style={{
           backgroundImage: "url('/images/servicce.png')",
         }}
       >
         <div className="absolute inset-0 bg-black/90 z-0"></div>
-        <div className="relative z-10 flex flex-col items-center max-w-[800px] mx-auto gap-8">
-          <h2 className="andrea text-[70px] text-white mb-[-30px]">Reserve Your Space</h2>
-          <h3 className="valturin text-[35px] md:text-[50px] text-gold uppercase tracking-wider">
+        <div className="relative z-10 flex flex-col items-center max-w-[800px] mx-auto gap-[var(--space-32)]">
+          <h2 className="andrea text-[length:var(--fs-h2)] text-white mb-[calc(var(--space-32)*-1)]">Reserve Your Space</h2>
+          <h3 className="valturin text-[length:var(--fs-h3)] text-gold uppercase tracking-wider">
             Begin Your Transformation
           </h3>
-          <p className="gotham text-[18px] text-gray-300 max-w-[600px] font-light leading-relaxed">
+          <p className="gotham text-[length:var(--fs-body)] text-gray-300 max-w-[600px] font-light leading-relaxed">
             Let us tailor an unforgettable styling experience for you. Schedule your private appointment with Jhavuanna Paterson today.
           </p>
           <a
             href="/dashboard/book"
-            className="flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
+            className="flex mt-[var(--space-16)] gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
           >
             <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
               →

@@ -58,13 +58,13 @@ export default function ServiceComparisonTable({
   return (
     <section
       ref={scope}
-      className="reveal-scope relative w-full bg-white text-[#1B1B1B] py-[100px] md:py-[140px] px-[24px] md:px-[110px]"
+      className="reveal-scope relative w-full bg-white text-[#1B1B1B] py-[var(--space-section-y)] px-[var(--space-section-x)]"
     >
-      <div className="text-center mb-[60px] md:mb-[80px]">
+      <div className="text-center mb-[var(--space-64)]">
         {comparison.eyebrow && (
           <p
             data-reveal
-            className="gotham text-[#9C6D51] text-[13px] md:text-[14px] tracking-[6px] uppercase mb-5"
+            className="gotham text-[#9C6D51] text-[length:var(--fs-small)] tracking-[6px] uppercase mb-[var(--space-20)]"
           >
             {comparison.eyebrow}
           </p>
@@ -73,7 +73,7 @@ export default function ServiceComparisonTable({
         <h2
           data-reveal
           data-reveal-delay="1"
-          className="andrea text-[44px] md:text-[64px] leading-[1.15] text-[#1B1B1B]"
+          className="andrea text-[length:var(--fs-h2)] leading-[1.15] text-[#1B1B1B]"
         >
           {comparison.heading}
         </h2>
@@ -81,7 +81,7 @@ export default function ServiceComparisonTable({
         <div
           data-reveal
           data-reveal-delay="2"
-          className="w-[110px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent mx-auto mt-7"
+          className="w-[110px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent mx-auto mt-[var(--space-28)]"
         />
       </div>
 
@@ -94,13 +94,13 @@ export default function ServiceComparisonTable({
         <table className="w-full min-w-[640px] border-collapse">
           <thead>
             <tr className="bg-[#FAF8F4]">
-              <th className="text-left gotham text-[12px] tracking-[3px] uppercase text-[#999] font-normal px-6 py-6 border-b border-[#1B1B1B]/10">
+              <th className="text-left gotham text-[12px] tracking-[3px] uppercase text-[#999] font-normal px-[var(--space-24)] py-[var(--space-24)] border-b border-[#1B1B1B]/10">
                 Included
               </th>
               {comparison.columns.map((column) => (
                 <th
                   key={column}
-                  className="text-center valturin text-[17px] md:text-[19px] text-[#9C6D51] px-5 py-6 border-b border-[#1B1B1B]/10 border-l border-l-[#1B1B1B]/[0.06]"
+                  className="text-center valturin text-[17px] md:text-[19px] text-[#9C6D51] px-[var(--space-20)] py-[var(--space-24)] border-b border-[#1B1B1B]/10 border-l border-l-[#1B1B1B]/[0.06]"
                 >
                   {column}
                 </th>
@@ -118,7 +118,7 @@ export default function ServiceComparisonTable({
               >
                 <th
                   scope="row"
-                  className="text-left gotham text-[15px] leading-[26px] font-light text-[#444] px-6 py-5 border-b border-[#1B1B1B]/[0.07]"
+                  className="text-left gotham text-[15px] leading-[26px] font-light text-[#444] px-[var(--space-24)] py-[var(--space-20)] border-b border-[#1B1B1B]/[0.07]"
                 >
                   {row.label}
                 </th>
@@ -126,7 +126,7 @@ export default function ServiceComparisonTable({
                 {row.values.map((value, i) => (
                   <td
                     key={`${row.label}-${comparison.columns[i] ?? i}`}
-                    className="text-center px-5 py-5 border-b border-[#1B1B1B]/[0.07] border-l border-l-[#1B1B1B]/[0.06]"
+                    className="text-center px-[var(--space-20)] py-[var(--space-20)] border-b border-[#1B1B1B]/[0.07] border-l border-l-[#1B1B1B]/[0.06]"
                   >
                     <Cell value={value} />
                   </td>
@@ -141,7 +141,7 @@ export default function ServiceComparisonTable({
         <p
           data-reveal
           data-reveal-delay="4"
-          className="gotham text-[15px] md:text-[17px] leading-[32px] text-[#555] font-light max-w-[840px] mx-auto text-center mt-12"
+          className="gotham text-[length:var(--fs-body)] leading-[1.8] text-[#555] font-light max-w-[840px] mx-auto text-center mt-[var(--space-48)]"
         >
           {comparison.footnote}
         </p>

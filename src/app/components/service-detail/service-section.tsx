@@ -52,7 +52,7 @@ export default function ServiceSectionBlock({
   return (
     <section
       ref={scope}
-      className={`reveal-scope relative w-full ${c.section} py-[100px] md:py-[150px] px-[24px] md:px-[110px] overflow-hidden`}
+      className={`reveal-scope relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)] overflow-hidden`}
     >
       {hairline && (
         <div className={`absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent ${c.hairline} to-transparent`} />
@@ -63,7 +63,7 @@ export default function ServiceSectionBlock({
       <div
         className={
           hasMedia
-            ? "grid grid-cols-1 lg:grid-cols-2 gap-[60px] lg:gap-[90px] items-center max-w-[1400px] mx-auto"
+            ? "grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-center max-w-[1400px] mx-auto"
             : "max-w-[820px] mx-auto"
         }
       >
@@ -71,7 +71,7 @@ export default function ServiceSectionBlock({
           {section.eyebrow && (
             <p
               data-reveal
-              className={`gotham ${c.eyebrow} text-[13px] md:text-[14px] tracking-[6px] uppercase mb-5`}
+              className={`gotham ${c.eyebrow} text-[length:var(--fs-small)] tracking-[6px] uppercase mb-[var(--space-20)]`}
             >
               {section.eyebrow}
             </p>
@@ -80,7 +80,7 @@ export default function ServiceSectionBlock({
           <h2
             data-reveal
             data-reveal-delay="1"
-            className={`valturin text-[38px] md:text-[58px] leading-[1.15] ${c.heading}`}
+            className={`valturin text-[length:var(--fs-h2)] leading-[1.15] ${c.heading}`}
           >
             {section.heading}
           </h2>
@@ -88,26 +88,26 @@ export default function ServiceSectionBlock({
           <div
             data-reveal
             data-reveal-delay="2"
-            className="w-[100px] h-[2px] bg-[#ccb884] mt-7 mb-9"
+            className="w-[100px] h-[2px] bg-[#ccb884] mt-[var(--space-28)] mb-[var(--space-36)]"
           />
 
           {section.tagline && (
             <p
               data-reveal
               data-reveal-delay="2"
-              className="andrea text-[#ccb884] text-[26px] md:text-[32px] leading-[1.3] mb-7"
+              className="andrea text-[#ccb884] text-[length:var(--fs-accent)] leading-[1.3] mb-[var(--space-28)]"
             >
               {section.tagline}
             </p>
           )}
 
-          <div className="space-y-6">
+          <div className="space-y-[var(--space-24)]">
             {section.body.map((paragraph, i) => (
               <p
                 key={i}
                 data-reveal
                 data-reveal-delay={String(3 + i)}
-                className={`gotham text-[16px] md:text-[18px] leading-[32px] md:leading-[34px] ${c.body} font-light`}
+                className={`gotham text-[length:var(--fs-body)] leading-[1.8] ${c.body} font-light`}
               >
                 {paragraph}
               </p>
@@ -115,7 +115,7 @@ export default function ServiceSectionBlock({
           </div>
 
           {section.bullets && (
-            <ul className="space-y-[14px] mt-9">
+            <ul className="space-y-[14px] mt-[var(--space-36)]">
               {section.bullets.map((line, i) => (
                 <li
                   key={i}
@@ -126,7 +126,7 @@ export default function ServiceSectionBlock({
                   <span className="text-[#ccb884] mt-[7px]">
                     <CheckIcon />
                   </span>
-                  <span className={`gotham text-[15px] md:text-[16px] leading-[28px] ${c.body} font-light`}>
+                  <span className={`gotham text-[length:var(--fs-body)] leading-[1.7] ${c.body} font-light`}>
                     {line}
                   </span>
                 </li>
@@ -135,7 +135,7 @@ export default function ServiceSectionBlock({
           )}
           <a
             href="/dashboard/book"
-            className="justify-self-start flex gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[16px] md:text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300 mt-6"
+            className="justify-self-start flex gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[16px] md:text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300 mt-[var(--space-24)]"
           >
             <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
               →

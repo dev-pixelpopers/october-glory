@@ -29,41 +29,41 @@ export default function MaintenancePackagesPage() {
       description="Indulge in our luxury bundled packages — combining multiple premium services for a complete, head-to-toe hair transformation."
     />
       {/* --- The Founder's Vision --- */}
-      <section className="py-[120px] px-6 md:px-[120px] bg-[#151515] relative overflow-hidden">
+      <section className="py-[var(--space-section-y)] px-[var(--space-section-x)] bg-[#151515] relative overflow-hidden">
 
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-center">
           {/* Left Column: Vision Text */}
-          <div className="flex flex-col gap-8">
-            <span className="andrea text-[70px] text-gold">Your Glorious </span>
-            <h2 className="valturin text-[45px] leading-tight text-white uppercase tracking-wider">
+          <div className="flex flex-col gap-[var(--space-32)]">
+            <span className="andrea text-[length:var(--fs-accent)] text-gold">Your Glorious </span>
+            <h2 className="valturin text-[length:var(--fs-h2)] leading-tight text-white uppercase tracking-wider">
               Day Needs A Glorious Hairstyle
             </h2>
-            <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+            <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
               Protect your investment with professional wig maintenance in Brooklyn designed to keep your custom unit looking beautiful and performing at its best. At October Glory, we believe caring for your wig also means caring for the natural hair underneath — that&rsquo;s why our maintenance appointments focus on both, helping extend the life of your unit while supporting the health of your natural hair.
             </p>
-            <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+            <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
               Every custom wig deserves professional care to maintain its beauty, comfort, and longevity. We offer three maintenance packages, along with à la carte services, so you can choose the level of care that&rsquo;s right for your needs.
             </p>
 
-            <h2 className="valturin text-[45px] leading-tight text-white uppercase tracking-wider">
+            <h2 className="valturin text-[length:var(--fs-h2)] leading-tight text-white uppercase tracking-wider">
               Package Includes:
             </h2>
             <div className="grid grid-cols-2">
-              <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
                 The Glorious Wig Package  -  $200
               </p>
-              <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
                 The Signature Wig Package  -  $150
               </p>
-              <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
                 The Introductory Wig Package -  $2400
               </p>
             </div>
             <div className="flex justify-start">
               <a
                 href="/dashboard/book"
-                className="flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
+                className="flex mt-[var(--space-16)] gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
               >
                 <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
                   →

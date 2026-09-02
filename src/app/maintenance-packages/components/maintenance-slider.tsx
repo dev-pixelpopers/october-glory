@@ -29,7 +29,7 @@ export default function MaintenanceSlider() {
   return (
     <div className="relative w-full max-w-[500px]">
       {/* Slides */}
-      <div className="relative border border-[#d4af6e]/30 rounded-[2rem] p-4 bg-[#1B1B1B]/40 shadow-2xl overflow-hidden">
+      <div className="relative border border-[#d4af6e]/30 rounded-[2rem] p-[var(--space-16)] bg-[#1B1B1B]/40 shadow-2xl overflow-hidden">
         <div className="relative w-full aspect-[3/4] rounded-[1.5rem] overflow-hidden">
           {slides.map((slide, index) => (
             <img
@@ -44,7 +44,7 @@ export default function MaintenanceSlider() {
       </div>
 
       {/* Numbered Pagination */}
-      <div className="flex justify-center items-center gap-3 mt-6">
+      <div className="flex justify-center items-center gap-3 mt-[var(--space-24)]">
         {slides.map((_, index) => (
           <button
             key={index}

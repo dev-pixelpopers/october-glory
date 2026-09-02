@@ -23,7 +23,7 @@ export default function ServiceNoteSection({
   return (
     <section
       ref={scope}
-      className={`reveal-scope relative w-full ${c.section} py-[100px] md:py-[140px] px-[24px] md:px-[110px] overflow-hidden`}
+      className={`reveal-scope relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)] overflow-hidden`}
     >
       {/* Oversized quote mark */}
       <span
@@ -37,7 +37,7 @@ export default function ServiceNoteSection({
         {note.eyebrow && (
           <p
             data-reveal
-            className={`gotham ${c.eyebrow} text-[13px] md:text-[14px] tracking-[6px] uppercase mb-5`}
+            className={`gotham ${c.eyebrow} text-[length:var(--fs-small)] tracking-[6px] uppercase mb-[var(--space-20)]`}
           >
             {note.eyebrow}
           </p>
@@ -46,7 +46,7 @@ export default function ServiceNoteSection({
         <h2
           data-reveal
           data-reveal-delay="1"
-          className={`valturin text-[36px] md:text-[54px] leading-[1.2] ${c.heading}`}
+          className={`valturin text-[length:var(--fs-h2)] leading-[1.2] ${c.heading}`}
         >
           {note.heading}
         </h2>
@@ -54,16 +54,16 @@ export default function ServiceNoteSection({
         <div
           data-reveal
           data-reveal-delay="2"
-          className="w-[110px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent mx-auto mt-7 mb-10"
+          className="w-[110px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent mx-auto mt-[var(--space-28)] mb-[var(--space-40)]"
         />
 
-        <div className="space-y-6">
+        <div className="space-y-[var(--space-24)]">
           {note.body.map((paragraph, i) => (
             <p
               key={i}
               data-reveal
               data-reveal-delay={String(3 + i)}
-              className={`gotham text-[16px] md:text-[19px] leading-[32px] md:leading-[36px] ${c.body} font-light`}
+              className={`gotham text-[length:var(--fs-body)] leading-[1.8] ${c.body} font-light`}
             >
               {paragraph}
             </p>
@@ -76,7 +76,7 @@ export default function ServiceNoteSection({
           <div
             data-reveal
             data-reveal-delay={String(3 + note.body.length)}
-            className="mt-14 md:mt-20"
+            className="mt-[var(--space-56)] md:mt-[var(--space-80)]"
           >
             <BeforeAfter {...note.compare} tone={tone} />
           </div>

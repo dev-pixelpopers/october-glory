@@ -32,10 +32,10 @@ export default function GloryNewsPage() {
               description="Style Trends, Maintenance & How To's for the Modern Glory Girl"
             />
 
-            <section className="pb-[150px] px-[50px]">
+            <section className="pb-[var(--space-section-y)] px-[var(--space-section-x)]">
                 <div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[var(--space-64)]">
 
                         {blogs.map((blog) => (
                             <article
@@ -50,22 +50,22 @@ export default function GloryNewsPage() {
                                     />
                                 </div>
 
-                                <div className="pt-6 pb-4 px-2">
-                                    <h3 className="gotham text-[26px] font-medium leading-[1.3] mb-4 line-clamp-2">
+                                <div className="pt-[var(--space-24)] pb-[var(--space-16)] px-2">
+                                    <h3 className="gotham text-[length:clamp(20px,17.65px_+_0.988vw,28px)] font-medium leading-[1.3] mb-[var(--space-16)] line-clamp-2">
                                         {blog.title}
                                     </h3>
 
-                                    <div className="flex items-center gap-3 text-white/70 text-[14px] mb-4">
+                                    <div className="flex items-center gap-3 text-white/70 text-[length:var(--fs-small)] mb-[var(--space-16)]">
                                         <span>{blog.date}</span>
                                         <span>•</span>
                                         <span>{blog.time}</span>
                                     </div>
 
-                                    <p className="gotham text-[16px] text-white/80 leading-[1.7] line-clamp-2 mb-6">
+                                    <p className="gotham text-[length:var(--fs-body)] text-white/80 leading-[1.7] line-clamp-2 mb-[var(--space-24)]">
                                         {blog.excerpt}
                                     </p>
 
-                                    <button className="border border-white rounded-full px-6 py-3 text-[15px] gotham uppercase tracking-[1px] transition-all duration-300 hover:bg-white hover:text-[#5F3A21]">
+                                    <button className="border border-white rounded-full px-[var(--space-24)] py-3 text-[15px] gotham uppercase tracking-[1px] transition-all duration-300 hover:bg-white hover:text-[#5F3A21]">
                                         Read More
                                     </button>
                                 </div>
@@ -76,7 +76,7 @@ export default function GloryNewsPage() {
 
                     {/* Pagination */}
 
-                    <div className="flex justify-center items-center gap-4 mt-[80px]">
+                    <div className="flex justify-center items-center gap-[var(--space-16)] mt-[var(--space-80)]">
 
                         <button className="w-[55px] h-[55px] rounded-full border border-white/20 bg-gold text-white font-semibold">
                             1

@@ -74,7 +74,7 @@ export default function ServiceHero({ service, parent }: Props) {
         {/* Breadcrumb — a top-level service shows only "Services". */}
         <div
           ref={crumbRef}
-          className="gotham text-[12px] md:text-[13px] tracking-[4px] uppercase text-white/50 mb-10 flex items-center gap-3 flex-wrap justify-center"
+          className="gotham text-[12px] md:text-[13px] tracking-[4px] uppercase text-white/50 mb-[var(--space-40)] flex items-center gap-3 flex-wrap justify-center"
         >
           <Link
             href="/services"
@@ -100,10 +100,10 @@ export default function ServiceHero({ service, parent }: Props) {
         </div>
 
         <div ref={headingRef}>
-          <h1 className="flex flex-col andrea text-[64px] md:text-[110px] leading-[1.4] md:leading-[1.5] text-white tracking-wide">
+          <h1 className="flex flex-col andrea text-[length:var(--fs-h1)] leading-[1.4] text-white tracking-wide">
             {service.hero.display}
-          
-          <span className="valturin text-[42px] md:text-[72px] text-[#ccb884] mt-[-14px] tracking-widest">
+
+          <span className="valturin text-[length:var(--fs-h1)] text-[#ccb884] mt-[-14px] tracking-widest">
             {service.hero.script}
           </span>
           </h1>
@@ -111,19 +111,19 @@ export default function ServiceHero({ service, parent }: Props) {
 
         <div
           ref={dividerRef}
-          className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent my-8 origin-center"
+          className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent my-[var(--space-32)] origin-center"
         />
 
         <p
           ref={introRef}
-          className="gotham text-white/70 text-[17px] md:text-[20px] leading-[32px] md:leading-[36px] max-w-[620px] font-light"
+          className="gotham text-white/70 text-[length:var(--fs-body)] leading-[1.8] max-w-[620px] font-light"
         >
           {service.hero.intro}
         </p>
 
         <div
           ref={metaRef}
-          className="mt-10 flex flex-col sm:flex-row items-center gap-6"
+          className="mt-[var(--space-40)] flex flex-col sm:flex-row items-center gap-[var(--space-24)]"
         >
           <div className="text-white">
             <PriceTag
@@ -135,7 +135,7 @@ export default function ServiceHero({ service, parent }: Props) {
 
           <a
             href="/dashboard/book"
-            className="flex gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[16px] md:text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
+            className="flex gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[16px] md:text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
           >
             <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
               →

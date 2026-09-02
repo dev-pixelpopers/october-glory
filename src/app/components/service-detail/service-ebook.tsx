@@ -28,12 +28,12 @@ export default function ServiceEbookSection({ ebook }: { ebook: ServiceEbook }) 
       ref={scope}
       id="ebook"
       // Cleared by the fixed header when arriving via the anchor.
-      className={`reveal-scope scroll-mt-[100px] relative w-full ${c.section} py-[100px] md:py-[140px] px-[24px] md:px-[110px] overflow-hidden`}
+      className={`reveal-scope scroll-mt-[100px] relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)] overflow-hidden`}
     >
       <div className="w-full max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-center">
         <div
           data-reveal
-          className="w-full md:w-[55%] bg-white rounded-3xl p-4 md:p-0 shadow-lg overflow-hidden"
+          className="w-full md:w-[55%] bg-white rounded-3xl p-[var(--space-16)] md:p-0 shadow-lg overflow-hidden"
         >
           <img
             src={ebook.image}
@@ -44,7 +44,7 @@ export default function ServiceEbookSection({ ebook }: { ebook: ServiceEbook }) 
 
         {/* Overlaps the card's right edge, so it has to paint above it. */}
         <div
-          className="relative z-10 w-full md:w-[50%] px-8 md:px-10 py-[clamp(28px,15.15px_+_1.294vw,48px)] flex flex-col justify-center rounded-[20px] -mt-8 md:mt-0 md:-ml-[clamp(32px,15.5px_+_4.401vw,100px)]"
+          className="relative z-10 w-full md:w-[50%] px-[var(--space-32)] md:px-[var(--space-40)] py-[clamp(28px,15.15px_+_1.294vw,48px)] flex flex-col justify-center rounded-[20px] -mt-[var(--space-32)] md:mt-0 md:-ml-[clamp(32px,15.5px_+_4.401vw,100px)]"
           style={{
             backgroundImage: "linear-gradient(270deg, #93674D 0%, #2D2018 100%)",
           }}
@@ -53,7 +53,7 @@ export default function ServiceEbookSection({ ebook }: { ebook: ServiceEbook }) 
             <p
               data-reveal
               data-reveal-delay="1"
-              className={`gotham ${c.eyebrow} text-[13px] md:text-[14px] tracking-[6px] uppercase mb-4`}
+              className={`gotham ${c.eyebrow} text-[13px] md:text-[14px] tracking-[6px] uppercase mb-[var(--space-16)]`}
             >
               {ebook.eyebrow}
             </p>
@@ -89,7 +89,7 @@ export default function ServiceEbookSection({ ebook }: { ebook: ServiceEbook }) 
             data-reveal
             data-reveal-delay="5"
             href={ebook.href}
-            className="flex items-center gap-4 group w-max"
+            className="flex items-center gap-[var(--space-16)] group w-max"
           >
             <div className="w-15 h-15 shrink-0 rounded-full border border-gray-400 flex items-center justify-center transition-colors duration-300 group-hover:bg-white group-hover:text-black text-gray-300">
               {/* Download arrow — this CTA hands over a file rather than

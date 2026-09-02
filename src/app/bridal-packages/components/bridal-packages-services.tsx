@@ -96,26 +96,26 @@ export default function GloriousPackagesServices() {
     <div>
       <section
         ref={sectionRef}
-        className="relative w-full bg-white py-[120px] px-[60px] md:px-[110px]"
+        className="relative w-full bg-white py-[var(--space-section-y)] px-[var(--space-section-x)]"
       >
         {/* Decorative top border */}
         <div className="absolute top-0 left-[110px] right-[110px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884]/30 to-transparent" />
 
         {/* Section header */}
-        <div className="text-center mb-[80px]">
-          <p className="gotham text-[#9C6D51] text-[16px] tracking-[6px] uppercase mb-4">
+        <div className="text-center mb-[var(--space-64)]">
+          <p className="gotham text-[#9C6D51] text-[length:var(--fs-small)] tracking-[6px] uppercase mb-[var(--space-16)]">
             What We Offer
           </p>
-          <h2 className="andrea text-[#1B1B1B] text-[72px] leading-[1.1]">
+          <h2 className="andrea text-[#1B1B1B] text-[length:var(--fs-h2)] leading-[1.1]">
             Our Expertise
           </h2>
-          <p className="valturin text-[#ccb884] text-[42px] mt-2">
+          <p className="valturin text-[#ccb884] text-[length:var(--fs-accent)] mt-2">
             It&apos;s Your Time To Shine
           </p>
         </div>
 
         {/* Service detail cards — 3 columns, 2 rows */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-16 mb-[80px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-[var(--space-48)] gap-y-[var(--space-64)] mb-[var(--space-64)]">
           {serviceDetails.map((svc, idx) => (
             <div
               key={svc.title}
@@ -126,17 +126,17 @@ export default function GloriousPackagesServices() {
               style={{ opacity: 0 }}
             >
               {/* Gold numbered accent */}
-              <div className="flex items-center gap-4 mb-5">
+              <div className="flex items-center gap-[var(--space-16)] mb-[var(--space-20)]">
                 <span className="w-[36px] h-[36px] rounded-full border border-[#ccb884] flex items-center justify-center text-[#ccb884] gotham text-[14px] font-medium group-hover:bg-[#ccb884] group-hover:text-white transition-all duration-300">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
                 <div className="flex-1 h-[1px] bg-gradient-to-r from-[#ccb884]/40 to-transparent" />
               </div>
 
-              <h3 className="valturin text-[#1B1B1B] text-[28px] mb-4 group-hover:text-[#9C6D51] transition-colors duration-300">
+              <h3 className="valturin text-[#1B1B1B] text-[length:var(--fs-h3)] mb-[var(--space-16)] group-hover:text-[#9C6D51] transition-colors duration-300">
                 {svc.title}
               </h3>
-              <p className="gotham text-[#555] text-[16px] leading-[30px] font-light">
+              <p className="gotham text-[#555] text-[length:var(--fs-body)] leading-[1.9] font-light">
                 {svc.description}
                 {svc.link && (
                   <>
@@ -158,7 +158,7 @@ export default function GloriousPackagesServices() {
         <div className="flex justify-center">
           <a
             href="/dashboard/book"
-            className="flex mt-4 gap-[10px] items-center border-[#000] border text-[#000] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
+            className="flex mt-[var(--space-16)] gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#000] border text-[#000] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
           >
             <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
               →

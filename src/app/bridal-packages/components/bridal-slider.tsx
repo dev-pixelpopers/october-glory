@@ -26,7 +26,7 @@ export default function BridalSlider() {
   return (
     <div className="relative w-full max-w-[500px] flex flex-row">
       {/* Slides */}
-      <div className="relative border border-[#d4af6e]/30 rounded-[2rem] p-4 bg-[#1B1B1B]/40 shadow-2xl overflow-hidden w-[85%]">
+      <div className="relative border border-[#d4af6e]/30 rounded-[2rem] p-[var(--space-16)] bg-[#1B1B1B]/40 shadow-2xl overflow-hidden w-[85%]">
         <div className="relative w-full aspect-[3/4] rounded-[1.5rem] overflow-hidden">
           {slides.map((slide, index) => (
             <img

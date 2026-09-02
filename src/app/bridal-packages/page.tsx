@@ -20,44 +20,44 @@ export default function GloriousPackagesPage() {
       description="Indulge in our luxury bundled packages — combining multiple premium services for a complete, head-to-toe hair transformation."
     />
       {/* --- The Founder's Vision --- */}
-      <section className="py-[120px] px-6 md:px-[120px] bg-[#151515] relative overflow-hidden">
+      <section className="py-[var(--space-section-y)] px-[var(--space-section-x)] bg-[#151515] relative overflow-hidden">
 
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-center">
           {/* Left Column: Vision Text */}
-          <div className="flex flex-col gap-8">
-            <span className="andrea text-[70px] text-gold">Your Glorious </span>
-            <h2 className="valturin text-[45px] leading-tight text-white uppercase tracking-wider">
+          <div className="flex flex-col gap-[var(--space-32)]">
+            <span className="andrea text-[length:var(--fs-accent)] text-gold">Your Glorious </span>
+            <h2 className="valturin text-[length:var(--fs-h2)] leading-tight text-white uppercase tracking-wider">
               Day Needs A Glorious Hairstyle
             </h2>
-            <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+            <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
               Our Master Hair Artists will create a wedding day look that is worthy of red carpets and beauty magazines—and above all else, represents you. We are committed to your satisfaction every step of the way, from your trial appointment to your big day.
             </p>
-            <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+            <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
               Jhavuanna believes the way you wear your hair is an outward expression of your perception of yourself and how you want others to perceive you. For generations black women have been plagued with the notion that they have “bad hair” or that their hair could not grow. After servicing client after client, she realized that women needed more education about their hair and that intuitive insight didn’t come natural to everyone. And just like that, October Salon and Wig Spa was born. Jhavuanna is committed to making the idea of “bad hair” a thing of the past, and for every woman to fall in love with their hair, one head at a time.
             </p>
 
-            <h2 className="valturin text-[45px] leading-tight text-white uppercase tracking-wider">
+            <h2 className="valturin text-[length:var(--fs-h2)] leading-tight text-white uppercase tracking-wider">
               Package Includes:
             </h2>
             <div className="grid grid-cols-2">
-              <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
                 Bride Trial Appointment  -  $200
               </p>
-              <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
                 Bridesmaid's Trial Appointment  -  $150
               </p>
-              <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
                 Full Day -  $2400
               </p>
-              <p className="gotham text-[18px] leading-[36px] text-gray-300 font-light">
+              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
                 Half Day -  $1200
               </p>
             </div>
             <div className="flex justify-start">
               <a
                 href="/dashboard/book"
-                className="flex mt-4 gap-[10px] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[4px] pl-[5px] pr-[25px] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
+                className="flex mt-[var(--space-16)] gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
               >
                 <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
                   →

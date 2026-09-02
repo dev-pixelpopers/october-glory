@@ -41,25 +41,25 @@ export default function ServiceSiblings({
   return (
     <section
       ref={scope}
-      className={`reveal-scope relative w-full ${c.section} py-[100px] md:py-[130px] px-[24px] md:px-[110px]`}
+      className={`reveal-scope relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)]`}
     >
-      <div className="text-center mb-[60px] md:mb-[80px]">
+      <div className="text-center mb-[var(--space-64)]">
         <p
           data-reveal
-          className={`gotham ${c.eyebrow} text-[13px] md:text-[15px] tracking-[6px] uppercase mb-4`}
+          className={`gotham ${c.eyebrow} text-[length:var(--fs-small)] tracking-[6px] uppercase mb-[var(--space-16)]`}
         >
           {eyebrow}
         </p>
         <h2
           data-reveal
           data-reveal-delay="1"
-          className={`andrea ${c.heading} text-[44px] md:text-[64px] leading-[1.15]`}
+          className={`andrea ${c.heading} text-[length:var(--fs-h2)] leading-[1.15]`}
         >
           {heading}
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-[1500px] mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[var(--space-32)] max-w-[1500px] mx-auto">
         {items.map((item, index) => (
           <Link
             key={item.href}
@@ -81,10 +81,10 @@ export default function ServiceSiblings({
 
             {/* Same stack as the menu cards: prices, title, then the CTA that
                 the parked 28px hides until hover. */}
-            <div className="absolute inset-x-0 bottom-0 flex flex-col p-6 translate-y-[28px] group-hover:translate-y-0 transition-transform duration-500 ease-out motion-reduce:transition-none motion-reduce:translate-y-0">
+            <div className="absolute inset-x-0 bottom-0 flex flex-col p-[var(--space-24)] translate-y-[28px] group-hover:translate-y-0 transition-transform duration-500 ease-out motion-reduce:transition-none motion-reduce:translate-y-0">
               <PriceTag price={item.price} nonMemberPrice={item.nonMemberPrice} />
 
-              <h3 className="valturin text-white text-[24px] md:text-[26px] leading-[1.2] mb-2">
+              <h3 className="valturin text-white text-[length:clamp(20px,18.06px_+_0.518vw,28px)] leading-[1.2] mb-2">
                 {item.title}
               </h3>
 
