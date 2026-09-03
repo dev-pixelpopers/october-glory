@@ -87,6 +87,45 @@ export interface ServicePriceHistoryEntry {
   created_by: Pick<User, "id" | "name"> | null;
 }
 
+/**
+ * A bundle of services sold as one item. Duration and `services_total` are
+ * derived from the member services; `price` is the salon's single adjustable
+ * package price (append-only ledger), which may differ from that total.
+ */
+export interface Package {
+  id: number;
+  category_id: number | null;
+  category?: ServiceCategory | null;
+  /** Routes the package to a public page: "maintenance" | "glorious" | "bridal". */
+  collection: string | null;
+  name: string;
+  slug: string;
+  tagline: string | null;
+  description: string | null;
+  /** The "what you get" bullets. */
+  includes: string[];
+  not_included: string | null;
+  best_for: string | null;
+  is_featured: boolean;
+  is_active: boolean;
+  /** Summed duration of the bundled services (derived). */
+  duration_minutes: number;
+  /** Summed current price of the bundled services (derived, suggested total). */
+  services_total: string;
+  /** The salon's set package price — the active package_price_history row. */
+  price: string;
+  services: Service[];
+}
+
+export interface PackagePriceHistoryEntry {
+  id: number;
+  package_id: number;
+  price: string;
+  effective_from: string;
+  effective_until: string | null;
+  created_by: Pick<User, "id" | "name"> | null;
+}
+
 export interface WorkerSchedule {
   id: number;
   worker_profile_id: number;

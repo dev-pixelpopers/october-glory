@@ -3,14 +3,12 @@ import Footer from "../components/footer";
 import InnerPageHero from "../components/inner-page-hero";
 import MaintenancePackagesServices from "./components/maintenance-packages-services";
 import MaintenanceSlider from "./components/maintenance-slider";
-import ServiceTiers from "../components/service-detail/service-tiers";
+import MaintenanceTiers from "./components/maintenance-tiers";
+import MaintenancePriceList from "./components/maintenance-price-list";
 import ServiceComparisonTable from "../components/service-detail/service-comparison";
 import ServiceCta from "../components/service-detail/service-cta";
 import AlaCarteSection from "./components/alacarte-section";
-import {
-  wigMaintenanceComparison,
-  wigMaintenanceTiers,
-} from "@/data/packages/wig-maintenance";
+import { wigMaintenanceComparison } from "@/data/packages/wig-maintenance";
 
 export const metadata = {
   title: "Maintenance Packages | October Glory",
@@ -49,17 +47,7 @@ export default function MaintenancePackagesPage() {
             <h2 className="valturin text-[length:var(--fs-h2)] leading-tight text-white uppercase tracking-wider">
               Package Includes:
             </h2>
-            <div className="grid grid-cols-2">
-              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
-                The Glorious Wig Package  -  $200
-              </p>
-              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
-                The Signature Wig Package  -  $150
-              </p>
-              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
-                The Introductory Wig Package -  $2400
-              </p>
-            </div>
+            <MaintenancePriceList />
             <div className="flex justify-start">
               <a
                 href="/dashboard/book"
@@ -83,8 +71,8 @@ export default function MaintenancePackagesPage() {
       </section>
 
       {/* Package tiers — shares the hover-to-focus card treatment used on the
-          natural-styles service pages. */}
-      <ServiceTiers tiers={wigMaintenanceTiers} />
+          natural-styles service pages. Sourced from the backend packages API. */}
+      <MaintenanceTiers />
 
       <AlaCarteSection />
 

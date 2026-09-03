@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { usePackages } from "@/lib/api/hooks/catalog";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -12,30 +13,45 @@ if (typeof window !== "undefined") {
 const BOOKING_URL =
   "/dashboard/book";
 
-const services = [
-  {
-    name: "GLORIOUS RODSET",
-    price: "$230",
-    image: "/images/glorious-packages-01.webp",
-  },
-  {
-    name: "GLORIOUS SILK PRESS",
-    price: "$245",
-    image: "/images/glorious-packages-02.webp",
-  },
-  {
-    name: "GLORIOUS BOOST",
-    price: "$120",
-    image: "/images/glorious-packages-03.webp",
-  },
-  {
-    name: "WIG PREP",
-    price: "$120",
-    image: "/images/glorious-packages-04.webp",
-  },
+// Cover art keyed by package slug (falls back to the ordered gallery images).
+const IMAGE_BY_SLUG: Record<string, string> = {
+  "glorious-rodset": "/images/glorious-packages-01.webp",
+  "glorious-silk-press": "/images/glorious-packages-02.webp",
+  "glorious-boost": "/images/glorious-packages-03.webp",
+  "wig-prep": "/images/glorious-packages-04.webp",
+};
+const FALLBACK_IMAGES = [
+  "/images/glorious-packages-01.webp",
+  "/images/glorious-packages-02.webp",
+  "/images/glorious-packages-03.webp",
+  "/images/glorious-packages-04.webp",
 ];
 
+const FALLBACK_SERVICES = [
+  { name: "GLORIOUS RODSET", price: "$230", image: FALLBACK_IMAGES[0] },
+  { name: "GLORIOUS SILK PRESS", price: "$245", image: FALLBACK_IMAGES[1] },
+  { name: "GLORIOUS BOOST", price: "$120", image: FALLBACK_IMAGES[2] },
+  { name: "WIG PREP", price: "$120", image: FALLBACK_IMAGES[3] },
+];
+
+/** "230.00" -> "$230". */
+function priceLabel(price: string): string {
+  const n = parseFloat(price);
+  return Number.isFinite(n) ? `$${n.toLocaleString("en-US")}` : price;
+}
+
 export default function GloriousPackagesGallery() {
+  const { data: packages } = usePackages("glorious");
+
+  const services =
+    packages && packages.length > 0
+      ? packages.map((p, i) => ({
+          name: p.name.toUpperCase(),
+          price: priceLabel(p.price),
+          image: IMAGE_BY_SLUG[p.slug] ?? FALLBACK_IMAGES[i % FALLBACK_IMAGES.length],
+        }))
+      : FALLBACK_SERVICES;
+
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 

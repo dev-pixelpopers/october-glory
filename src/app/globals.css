@@ -305,11 +305,11 @@ form textarea::Placeholder {
   .wom-des-rig {
     width: 40%;
   }
-  
+
   .wom-des-lef {
     width: 60%;
   }
-  
+
   .perf-wig-left {
     width: 45%;
   }
@@ -317,7 +317,7 @@ form textarea::Placeholder {
   .perf-wig-right {
     width: 55%;
   }
-  
+
 }
 
 @media (max-width: 1441px) {
@@ -327,126 +327,126 @@ form textarea::Placeholder {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-}
+  }
 
- .wom-des-lef p {
-  padding-right: 0px;
-  margin-bottom: 2%;
- }
+  .wom-des-lef p {
+    padding-right: 0px;
+    margin-bottom: 2%;
+  }
 
- .wom-des-lef-head {
-  padding-right: 0px;
-  margin-bottom: 2%;
- }
+  .wom-des-lef-head {
+    padding-right: 0px;
+    margin-bottom: 2%;
+  }
 
- .welcome-left-col {
-  width: 30%;
- }
+  .welcome-left-col {
+    width: 30%;
+  }
 
- .welcome-img-col {
-  width: 30%;
- }
+  .welcome-img-col {
+    width: 30%;
+  }
 
- .welcome-right-col {
-  width: 40%;
- }
+  .welcome-right-col {
+    width: 40%;
+  }
 
- .offer-cards {
-  width:50%;
- }
+  .offer-cards {
+    width: 50%;
+  }
 
- .perf-wig-right img {
-  object-position: right;
- }
-
- .perf-match-sec {
-  justify-content: center;
- }
-
- .wom-des-img {
+  .perf-wig-right img {
     object-position: right;
-}
+  }
+
+  .perf-match-sec {
+    justify-content: center;
+  }
+
+  .wom-des-img {
+    object-position: right;
+  }
 
 
 
-.og-letter  {
-  line-height: 1.3;
-}
+  .og-letter {
+    line-height: 1.3;
+  }
 
-.pum-an {
+  .pum-an {
     font-size: 2.1vw;
-}
+  }
 
-.pmu-inner h3 {
+  .pmu-inner h3 {
     font-size: 2.1vw;
-}
+  }
 
-/* .pum-card-image {
+  /* .pum-card-image {
     width: 8vw !important;
 } */
 
-.pum-card-desc {
+  .pum-card-desc {
     -webkit-line-clamp: 1;
     line-clamp: 1;
-}
-  
+  }
+
 }
 
 
 @media (max-width: 1367px) {
 
-  .og-letter  {
-  line-height: 1.1;
-}
+  .og-letter {
+    line-height: 1.1;
+  }
 
-.hero-wrapper {
+  .hero-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-}
+  }
 
-.welcome-left-col {
-  width: 30%;
-}
+  .welcome-left-col {
+    width: 30%;
+  }
 
-.welcome-img-col {
-  width: 23%;
-}
+  .welcome-img-col {
+    width: 23%;
+  }
 
-.welcome-right-col {
-  width: 47%;
-}
+  .welcome-right-col {
+    width: 47%;
+  }
 
-.offer-cards {
-  top:10%;
-}
+  .offer-cards {
+    top: 10%;
+  }
 
-.wom-des-rig {
-  width: 30%;
-}
-
-
-.wom-des-lef {
-  width: 70%;
-}
+  .wom-des-rig {
+    width: 30%;
+  }
 
 
-.wom-des-img {
-  min-width: 45vw;
-}
+  .wom-des-lef {
+    width: 70%;
+  }
 
-.shop-sec-desc {
-  bottom: 5%;
-}
+
+  .wom-des-img {
+    min-width: 45vw;
+  }
+
+  .shop-sec-desc {
+    bottom: 5%;
+  }
 
 }
 
 @media (max-width: 1281px) {
 
-  .og-letter  {
-  line-height: 1.4;
-}
+  .og-letter {
+    line-height: 1.4;
+  }
 
   .hero-image-box {
     bottom: 0;
@@ -459,7 +459,7 @@ form textarea::Placeholder {
   .perf-wig-left {
     width: 50%;
   }
-  
+
   .perf-wig-right {
     width: 50%;
   }
@@ -479,20 +479,20 @@ form textarea::Placeholder {
 
   .welcome-left-col h2.andrea {
     margin-left: 1%;
-}
+  }
 
-.welcome-left-col h2.valturin {
+  .welcome-left-col h2.valturin {
     margin-left: 20%;
-}
-  
+  }
+
 
 }
 
 @media (max-width: 1153px) {
 
-  .og-letter  {
-  line-height: 1.3;
-}
+  .og-letter {
+    line-height: 1.3;
+  }
 }
 
 
@@ -501,53 +501,53 @@ form textarea::Placeholder {
   p {
     font-size: 16px;
     line-height: 2;
-  }  
+  }
 
-.guide-rig-col {
-  width:70%;
-}
+  .guide-rig-col {
+    width: 70%;
+  }
 
-.follow-left-col {
+  .follow-left-col {
     width: 65%;
-}
+  }
 
-.follow-right-col {
+  .follow-right-col {
     width: 35%;
-}
+  }
 
-.img-w-c {
+  .img-w-c {
     width: 50px;
-}
+  }
 
-.pmu-inner p {
+  .pmu-inner p {
     font-size: 12px;
-}
+  }
 
-.pmu-it-od {
+  .pmu-it-od {
     inset: 3px;
-}
+  }
 
- .flo-icon {
+  .flo-icon {
     width: 4vw;
     height: 4vw;
-}
+  }
 
-.pum-right {
+  .pum-right {
     display: none;
-}
+  }
 
-.pum-left {
-  width: 100%;
-}
+  .pum-left {
+    width: 100%;
+  }
 
-.pum-left a {
+  .pum-left a {
     text-align: center;
     display: flex;
     justify-content: center;
-}
+  }
 
 
-  
+
 
 }
 
@@ -556,28 +556,28 @@ form textarea::Placeholder {
 
   .background-marquee {
     transform: translateY(13vh);
-}
+  }
 
-.hero-image-box {
-  bottom: 10%;
-  height: 68vh;
-}
+  .hero-image-box {
+    bottom: 10%;
+    height: 68vh;
+  }
 
-.hero-image-box img {
-  /* "cover" crops inside the box, so the image never overhangs it and needs
+  .hero-image-box img {
+    /* "cover" crops inside the box, so the image never overhangs it and needs
      no overflow clipping at all. Pan the visible region with object-position
      instead of zooming with transform: scale(). */
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 105%;
-  transform: none;
-}
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 105%;
+    transform: none;
+  }
 
   .fix-head {
     max-width: 100vw;
     padding-inline: 3%;
-    top:4% !important;
+    top: 4% !important;
   }
 
 
@@ -597,7 +597,7 @@ form textarea::Placeholder {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-}
+  }
 
   /* ---------- About / Welcome section : mobile column layout ---------- */
   .welcome-wrapper .welcome-content {
@@ -618,7 +618,7 @@ form textarea::Placeholder {
     padding-inline: 0;
   }
 
- .welcome-wrapper .welcome-right-col {
+  .welcome-wrapper .welcome-right-col {
     width: 100%;
     padding-inline: 0;
   }
@@ -665,27 +665,27 @@ form textarea::Placeholder {
   }
 
   .shop-item-card {
-    width:35vw;
+    width: 35vw;
 
   }
 
   .wom-des-main {
     display: flex;
     flex-direction: column;
-}
+  }
 
   .wom-des-rig {
     width: 100%;
     height: 40vh;
     margin-bottom: -2%;
-}
+  }
 
-.wom-des-img {
+  .wom-des-img {
     width: 100vw;
-    left:0;
-}
+    left: 0;
+  }
 
-.wom-des-lef {
+  .wom-des-lef {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -693,43 +693,43 @@ form textarea::Placeholder {
     height: 60vh;
     margin: 0;
     z-index: 10;
-}
+  }
 
 
 
-.perf-wif-main {
+  .perf-wif-main {
     flex-direction: column;
-}
+  }
 
-.perf-wig-left {
+  .perf-wig-left {
     padding-top: 10%;
     width: 100%;
     justify-content: center;
     align-items: center;
     text-align: center;
-}
+  }
 
-.perf-wig-right {
+  .perf-wig-right {
     width: 100%;
     padding: 0;
-}
+  }
 
-.perf-oct-text {
+  .perf-oct-text {
     position: absolute;
     left: -34%;
     top: 24%;
-}
+  }
 
-.guide-main-con {
+  .guide-main-con {
     flex-direction: column;
-}
+  }
 
-.offer-card-con {
+  .offer-card-con {
     width: 100%;
     min-height: 100vh;
-}
+  }
 
-.vid-div-2,
+  .vid-div-2,
   .vid-div-3,
   .vid-div-4 {
     display: none;
@@ -744,7 +744,7 @@ form textarea::Placeholder {
   }
 
   /* inner wrapper has desktop-only rotate + negative margin + fixed aspect-ratio — reset those */
-  .vid-div-1 > div {
+  .vid-div-1>div {
     margin-top: 0;
     transform: none;
     aspect-ratio: auto;
@@ -763,79 +763,79 @@ form textarea::Placeholder {
   .offer-img img {
     object-fit: contain;
     object-position: left;
-}
+  }
 
-.offer-card-main {
-    height: 50vh ;
-}
+  .offer-card-main {
+    height: 50vh;
+  }
 
-.guide-lef-col {
-  width: 100%;
-  height: 50vh;
-}
+  .guide-lef-col {
+    width: 100%;
+    height: 50vh;
+  }
 
-.guide-rig-col {
+  .guide-rig-col {
     width: 100%;
     margin: 0;
-    margin-bottom:-2%;
-    border-radius:0 0 20px 20px;
-}
+    margin-bottom: -2%;
+    border-radius: 0 0 20px 20px;
+  }
 
-.collection-head {
+  .collection-head {
     width: 100%;
     left: 0;
     align-items: center;
-}
+  }
 
-.guide-head {
+  .guide-head {
     text-align: center;
-}
+  }
 
-.guide-head-sec {
+  .guide-head-sec {
     padding: 0;
     text-align: center;
-}
+  }
 
-.follow-col-main {
+  .follow-col-main {
     flex-direction: column;
-}
+  }
 
-.follow-left-col {
+  .follow-left-col {
     width: 100%;
-}
+  }
 
-.follow-right-col {
+  .follow-right-col {
     width: 100%;
     text-align: center;
-}
+  }
 
-.footer-main {
+  .footer-main {
     grid-template-columns: repeat(1, 1fr);
-}
+  }
 
-.footer-main div {
+  .footer-main div {
     border: none;
-}
+  }
 
-.foot-inner-label {
-  width: 20%;
-}
+  .foot-inner-label {
+    width: 20%;
+  }
 
-.foot-inner-content {
-  width:80%;
-}
+  .foot-inner-content {
+    width: 80%;
+  }
 
-.head-note {
+  .head-note {
     font-size: 12px;
-}
+  }
 
-.pum-an {
+  .pum-an {
     font-size: 6vw;
-}
+  }
 
-.text-content > div {
+  .text-content>div {
     gap: 20px !important;
-}
+  }
 
 
 }
@@ -846,113 +846,114 @@ form textarea::Placeholder {
   .fix-head {
     top: 4.4% !important;
     padding: 0 3%;
-}
+  }
 
-.flo-icon { 
-  width: 6vw;
-  height: 6vw;
-}
+  .flo-icon {
+    width: 6vw;
+    height: 6vw;
+  }
 
 
   .offer-cards {
     top: 5%;
     width: 80%;
-}
+  }
 
-.vid-main {
-  gap:10px;
-}
+  .vid-main {
+    gap: 10px;
+  }
 
-.vid-head {
+  .vid-head {
     max-width: 100%;
-}
+  }
 
-.vid-div-1 {
-  height: 35vh ;
-}
+  .vid-div-1 {
+    height: 35vh;
+  }
 
-.shop-item-card {
+  .shop-item-card {
     width: 60vw;
-}
+  }
 
-.shop-sec-desc {
+  .shop-sec-desc {
     width: 100%;
-}
+  }
 
-.collection-img {
+  .collection-img {
     width: 70vw;
-}
+  }
 
-.wom-des-rig {
-  height: 25vh;
-}
+  .wom-des-rig {
+    height: 25vh;
+  }
 
-.wom-des-lef {
-  height: 75vh;
-}
+  .wom-des-lef {
+    height: 75vh;
+  }
 
-.wom-des-lef p {
-  padding:0;
-}
-
-.wom-des-lef-inner {
+  .wom-des-lef p {
     padding: 0;
-}
+  }
 
-.wom-des-img img {
+  .wom-des-lef-inner {
+    padding: 0;
+  }
+
+  .wom-des-img img {
     object-position: 50% 40%;
-}
+  }
 
-.women-des-pri {
+  .women-des-pri {
     width: 100%;
     display: flex;
     justify-content: center;
-}
+  }
 
-.wom-des-lef-head {
-  text-align: center;
-}
+  .wom-des-lef-head {
+    text-align: center;
+  }
 
-.soc-vid-5 {
+  .soc-vid-5 {
     display: none;
-}
+  }
 
-.footer-bottom-note * {
+  .footer-bottom-note * {
     font-size: 12px !important;
-}
+  }
 
-.welcome-wrapper .welcome-content {
-  gap: 0;
-}
+  .welcome-wrapper .welcome-content {
+    gap: 0;
+  }
 
-.text-content > div {
+  .text-content>div {
     gap: 20px !important;
-}
+  }
 
-.welcome-img-col {
-  display: none;
-}
-
-.vid-parent {
-    gap: 10px;
-}
-
-.soc-vid-3, .soc-vid-4 {
+  .welcome-img-col {
     display: none;
-}
+  }
 
-.perf-oct-text {
+  .vid-parent {
+    gap: 10px;
+  }
+
+  .soc-vid-3,
+  .soc-vid-4 {
+    display: none;
+  }
+
+  .perf-oct-text {
     top: 10%;
     left: -95%;
-}
+  }
 
-.guide-lef-col{
-  height: 30vh;
-}
+  .guide-lef-col {
+    height: 30vh;
+  }
 
-.guide-rig-col {
-  height: 70vh;
-}
+  .guide-rig-col {
+    height: 70vh;
+  }
 
 }
 
@@ -1067,6 +1068,7 @@ form textarea::Placeholder {
   border: 2px solid #1b1b1b;
   cursor: pointer;
 }
+
 /* --------------------------------------------------------------------------
    Before/after comparison slider.
 

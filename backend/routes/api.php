@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuditLogController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AvailabilityController;
 use App\Http\Controllers\Api\LoyaltyController;
+use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ServiceCategoryController;
 use App\Http\Controllers\Api\ServiceController;
@@ -25,6 +26,7 @@ Route::post('/auth/reset-password', [AuthController::class, 'resetPassword'])->m
 
 Route::get('/categories', [ServiceCategoryController::class, 'index']);
 Route::get('/services', [ServiceController::class, 'index']);
+Route::get('/packages', [PackageController::class, 'index']);
 Route::get('/workers', [WorkerController::class, 'index']);
 Route::get('/availability', [AvailabilityController::class, 'index']);
 
@@ -60,6 +62,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/services', [ServiceController::class, 'store']);
         Route::put('/services/{service}', [ServiceController::class, 'update']);
         Route::get('/services/{service}/price-history', [ServiceController::class, 'priceHistory']);
+
+        Route::post('/categories', [ServiceCategoryController::class, 'store']);
+        Route::put('/categories/{category}', [ServiceCategoryController::class, 'update']);
+        Route::delete('/categories/{category}', [ServiceCategoryController::class, 'destroy']);
+
+        Route::post('/packages', [PackageController::class, 'store']);
+        Route::put('/packages/{package}', [PackageController::class, 'update']);
+        Route::delete('/packages/{package}', [PackageController::class, 'destroy']);
+        Route::get('/packages/{package}/price-history', [PackageController::class, 'priceHistory']);
 
         Route::get('/workers', [WorkerController::class, 'adminIndex']);
         Route::post('/workers', [WorkerController::class, 'store']);

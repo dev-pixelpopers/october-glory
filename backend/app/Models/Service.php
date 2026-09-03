@@ -43,4 +43,11 @@ class Service extends Model
     {
         return $this->belongsToMany(WorkerProfile::class, 'worker_services');
     }
+
+    /** Packages this service is bundled into. */
+    public function packages(): BelongsToMany
+    {
+        return $this->belongsToMany(Package::class, 'package_service')
+            ->withPivot('position');
+    }
 }
