@@ -92,11 +92,11 @@ export default function ServiceDetailTemplate({
         <ServiceComparisonTable comparison={service.comparison} />
       )}
 
+      {service.ebook && <ServiceEbookSection ebook={service.ebook} />}
+
       {service.faq && (
         <ServiceFaqSection faq={service.faq} tone={toneOf("faq")} />
       )}
-
-      {service.ebook && <ServiceEbookSection ebook={service.ebook} />}
 
       {related && (
         <ServiceSiblings

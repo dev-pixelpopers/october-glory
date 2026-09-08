@@ -600,7 +600,7 @@ export const serviceChildren: ServiceChild[] = [
       script: "Design",
       intro:
         "More than purchasing a wig — a personalized experience created entirely around you.",
-      image: "/images/Weaves-And-Extensions-04.webp",
+      image: "/images/shop-bg.png",
     },
     overview: {
       heading: "Custom Wig Design",

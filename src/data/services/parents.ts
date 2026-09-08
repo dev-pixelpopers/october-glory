@@ -265,7 +265,7 @@ export const serviceParents: ServiceParent[] = [
       script: "& Extensions",
       intro:
         "Custom units and sew-in installs built on the health of your natural hair — and finished with a cut made for your face.",
-      image: "/images/Weaves-And-Extensions-01.webp",
+      image: "/images/shop-bg.png",
     },
     overview: {
       eyebrow: "The Service",
