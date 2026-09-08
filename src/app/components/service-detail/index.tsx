@@ -55,7 +55,7 @@ export default function ServiceDetailTemplate({
   );
   if (service.comparison) blocks.push({ key: "comparison", fixed: "light" });
   if (service.menu) blocks.push({ key: "menu" });
-  if (service.shopProductIds) blocks.push({ key: "shop-preview" });
+  if (service.shopProductIds || service.shopProducts) blocks.push({ key: "shop-preview" });
   if (service.instagram) blocks.push({ key: "instagram" });
   if (service.faq) blocks.push({ key: "faq" });
   // The gradient panel and white cover card are built for dark only.
@@ -85,8 +85,11 @@ export default function ServiceDetailTemplate({
         <ServiceMenuGrid menu={service.menu} tone={toneOf("menu")} />
       )}
 
-      {service.shopProductIds && (
-        <ServiceShopPreview productIds={service.shopProductIds} />
+      {(service.shopProductIds || service.shopProducts) && (
+        <ServiceShopPreview
+          productIds={service.shopProductIds}
+          items={service.shopProducts}
+        />
       )}
 
       {service.instagram && <InstagramSection content={service.instagram} />}

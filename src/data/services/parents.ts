@@ -268,11 +268,11 @@ export const serviceParents: ServiceParent[] = [
       image: "/images/shop-bg.png",
     },
     welcomeVideo: "/images/video-3.mp4",
-    shopProductIds: [
-      "brooklyn-lace-wig",
-      "brooklyn-bob-wig",
-      "glory-headband-wig",
-      "glory-ponytail",
+    shopProducts: [
+      { title: "Braided Wigs", image: "/images/collections/wigs-1.png" },
+      { title: "Glueless Wigs", image: "/images/collections/wigs-2.png" },
+      { title: "Veralux Wigs", image: "/images/collections/wigs-3.png" },
+      { title: "Half Wigs", image: "/images/collections/wigs-4.png" },
     ],
     instagram: {
       heading: "See",

@@ -103,6 +103,13 @@ export type ServiceInstagram = {
   showProfileLink?: boolean;
 };
 
+export type ServiceShopProduct = {
+  title: string;
+  image: string;
+  price?: number;
+  cta?: string;
+};
+
 /** A priced item in a service's menu grid — the salon's actual price list. */
 export type ServiceMenuItem = {
   name: string;
@@ -171,6 +178,9 @@ export type ServiceDetail = {
 
   /** Product IDs shown in the service's shop preview, in display order. */
   shopProductIds?: string[];
+
+  /** Service-specific products shown in the shop preview, in display order. */
+  shopProducts?: ServiceShopProduct[];
 
   /** Optional Instagram showcase rendered only for services that configure it. */
   instagram?: ServiceInstagram;
