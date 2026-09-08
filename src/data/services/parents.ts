@@ -267,9 +267,30 @@ export const serviceParents: ServiceParent[] = [
         "Custom units and sew-in installs built on the health of your natural hair — and finished with a cut made for your face.",
       image: "/images/shop-bg.png",
     },
+    welcomeVideo: "/images/video-3.mp4",
+    shopProductIds: [
+      "brooklyn-lace-wig",
+      "brooklyn-bob-wig",
+      "glory-headband-wig",
+      "glory-ponytail",
+    ],
+    instagram: {
+      heading: "See",
+      headingAccent: "The Glory",
+      body: "Fresh installs, custom units, and real results from our Brooklyn salon.",
+      videos: [
+        "/images/video-01.mp4",
+        "/images/video-02.mp4",
+        "/images/video-03.mp4",
+        "/images/video-04.mp4",
+        "/images/video-05.mp4",
+      ],
+      showProfileLink: false,
+    },
     overview: {
       eyebrow: "The Service",
-      heading: "Woven into your hair’s natural flow — never sitting on top of it.",
+      heading: "Naturally",
+      headingAccent: "Woven",
       body: [
         "Whether it’s a full weave, a leave-out install, or simple track extensions, every install starts with your natural hair as the foundation, not an afterthought. Extensions are placed and blended to follow your hair’s own growth pattern and movement, so the result feels like an extension of you — not something added on top. The goal is hair that moves, parts, and falls the way yours naturally would, just longer and fuller.",
       ],

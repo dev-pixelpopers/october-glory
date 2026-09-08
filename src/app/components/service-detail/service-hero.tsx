@@ -56,9 +56,9 @@ export default function ServiceHero({ service, parent }: Props) {
 
   return (
     <section
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative w-full min-h-screen flex items-end justify-center overflow-hidden pb-[clamp(20px,17.57px_+_0.648vw,30px)]"
       style={{
-        backgroundImage: `linear-gradient(180deg, rgba(27,27,27,0.65) 0%, rgba(27,27,27,0.88) 100%), url('${service.hero.image}')`,
+        backgroundImage: `linear-gradient(180deg, rgba(27,27,27,0.0) 0%, rgba(27,27,27,0.88) 100%), url('${service.hero.image}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

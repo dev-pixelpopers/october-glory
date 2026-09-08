@@ -3,17 +3,22 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { ServiceInstagram } from "@/data/services/types";
 gsap.registerPlugin(ScrollTrigger);
 
-export default function InstagramSection() {
+export default function InstagramSection({
+  content,
+}: {
+  content?: ServiceInstagram;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const instagramVideos = [
-    { id: 1, src: "/images/video-01.mp4" },
-    { id: 2, src: "/images/video-02.mp4" },
-    { id: 3, src: "/images/video-03.mp4" },
-    { id: 4, src: "/images/video-04.mp4" },
-    { id: 5, src: "/images/video-05.mp4" },
-  ];
+  const instagramVideos = (content?.videos ?? [
+    "/images/video-01.mp4",
+    "/images/video-02.mp4",
+    "/images/video-03.mp4",
+    "/images/video-04.mp4",
+    "/images/video-05.mp4",
+  ]).map((src, id) => ({ id, src }));
 
   useGSAP(() => {
     // Select all the direct div children of the grid
@@ -35,20 +40,20 @@ export default function InstagramSection() {
 
   return (
     <section ref={containerRef} className="w-full bg-[#1b1b1b] py-[clamp(26px,16.77px_+_2.46vw,64px)] px-[clamp(38px,18.09px_+_5.308vw,120px)] relative min-h-[200dvh]">
-      <div className="flex flex-col gap-[clamp(20px,15.14px_+_1.295vw,40px)] sticky top-0 overflow-hidden h-dvh justify-center items-center">
+      <div className="flex flex-col gap-0 2xl:gap-[clamp(20px,15.14px_+_1.295vw,40px)] sticky top-0 overflow-hidden h-dvh justify-center items-center">
         <div className="follow-col-main flex flex-col md:flex-row justify-between items-center w-full gap-[clamp(16px,14.06px_+_0.518vw,24px)]">
           <div className="follow-left-col flex flex-col">
-            <h2 className="text-white text-[length:clamp(32px,18.41px_+_3.625vw,88px)] andrea z-10">Follow</h2>
+            <h2 className="text-white text-[length:clamp(32px,18.41px_+_3.625vw,88px)] andrea z-10">{content?.heading ?? "Follow"}</h2>
             <div className="flex items-center gap-[clamp(20px,15.14px_+_1.295vw,40px)]">
               <div className="w-15 2xl:w-30 h-[1px] bg-white"></div>
               <h3 className="text-gold text-[length:clamp(32px,18.41px_+_3.625vw,88px)] valturin">
-                Us On Instagram
+              {content?.headingAccent ?? "Us On Instagram"}
               </h3>
             </div>
           </div>
           <div className="follow-right-col mb-[clamp(10px,8.54px_+_0.389vw,16px)]">
             <p className="text-white text-[length:clamp(16px,15.03px_+_0.259vw,20px)] gotham">
-              Real Clients. Real Installs. Real Results.
+              {content?.body ?? "Real Clients. Real Installs. Real Results."}
             </p>
           </div>
         </div>
@@ -75,6 +80,7 @@ export default function InstagramSection() {
           ))}
         </div>
 
+        {content?.showProfileLink !== false && (
         <div className="flex justify-center w-full mt-[clamp(16px,14.06px_+_0.518vw,24px)] z-10">
           <div className="rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[clamp(3px,2.76px_+_0.065vw,4px)] w-max shadow-lg hover:shadow-[0_0_20px_rgba(193,53,132,0.5)] transition-shadow duration-300 cursor-pointer">
             <a
@@ -113,6 +119,7 @@ export default function InstagramSection() {
             </a>
           </div>
         </div>
+        )}
       </div>
     </section>
   );

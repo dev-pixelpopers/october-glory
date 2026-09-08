@@ -11,8 +11,11 @@ import ServiceEbookSection from "./service-ebook";
 import ServiceMenuGrid from "./service-menu";
 import ServiceSiblings, { type RelatedItem } from "./service-siblings";
 import ServiceCta from "./service-cta";
+import ServiceShopPreview from "./service-shop-preview";
+import InstagramSection from "@/app/components/instagram-section";
 import { assignTones, type Block } from "./tone";
 import type { ServiceDetail } from "@/data/services/types";
+import WelcomeSection from "@/app/components/about-section";
 
 type Props = {
   service: ServiceDetail;
@@ -43,7 +46,8 @@ export default function ServiceDetailTemplate({
   // one tone — the tier cards and comparison grid are built for light.
   const blocks: Block[] = [];
 
-  if (service.overview) blocks.push({ key: "overview", fixed: "light" });
+  if (service.welcomeVideo) blocks.push({ key: "welcome" });
+  else if (service.overview) blocks.push({ key: "overview", fixed: "light" });
   if (service.tiers) blocks.push({ key: "tiers", fixed: "light" });
   if (service.note) blocks.push({ key: "note" });
   service.sections?.forEach((section, i) =>
@@ -51,6 +55,8 @@ export default function ServiceDetailTemplate({
   );
   if (service.comparison) blocks.push({ key: "comparison", fixed: "light" });
   if (service.menu) blocks.push({ key: "menu" });
+  if (service.shopProductIds) blocks.push({ key: "shop-preview" });
+  if (service.instagram) blocks.push({ key: "instagram" });
   if (service.faq) blocks.push({ key: "faq" });
   // The gradient panel and white cover card are built for dark only.
   if (service.ebook) blocks.push({ key: "ebook", fixed: "dark" });
@@ -65,17 +71,25 @@ export default function ServiceDetailTemplate({
 
       <ServiceHero service={service} parent={parent} />
 
-      {service.overview && (
+      {service.welcomeVideo ? (
+        <WelcomeSection video={service.welcomeVideo} section={service.overview} />
+      ) : service.overview ? (
         <ServiceSectionBlock
           section={service.overview}
           tone={toneOf("overview")}
           hairline
         />
-      )}
+      ) : null}
 
       {service.menu && (
         <ServiceMenuGrid menu={service.menu} tone={toneOf("menu")} />
       )}
+
+      {service.shopProductIds && (
+        <ServiceShopPreview productIds={service.shopProductIds} />
+      )}
+
+      {service.instagram && <InstagramSection content={service.instagram} />}
 
       {/* Alternating sides continue the count from `overview`, so the first
           extra section lands opposite it rather than repeating its layout. */}

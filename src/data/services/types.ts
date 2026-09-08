@@ -80,6 +80,7 @@ export type ServiceNote = {
 export type ServiceSection = {
   eyebrow?: string;
   heading: string;
+  headingAccent?: string;
   /** Optional line under the heading, before the body copy. */
   tagline?: string;
   body: string[];
@@ -92,6 +93,14 @@ export type ServiceSection = {
    * video loads and for anyone who has reduced motion turned on.
    */
   video?: string;
+};
+
+export type ServiceInstagram = {
+  heading: string;
+  headingAccent: string;
+  body: string;
+  videos: string[];
+  showProfileLink?: boolean;
 };
 
 /** A priced item in a service's menu grid — the salon's actual price list. */
@@ -156,6 +165,15 @@ export type ServiceDetail = {
     intro: string;
     image: string;
   };
+
+  /** Uses the home page welcome section immediately below the hero. */
+  welcomeVideo?: string;
+
+  /** Product IDs shown in the service's shop preview, in display order. */
+  shopProductIds?: string[];
+
+  /** Optional Instagram showcase rendered only for services that configure it. */
+  instagram?: ServiceInstagram;
 
   overview?: ServiceSection;
 

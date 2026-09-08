@@ -3,9 +3,15 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import type { ServiceSection } from "@/data/services/types";
 gsap.registerPlugin(ScrollTrigger);
 
-export default function WelcomeSection() {
+type Props = {
+  video?: string;
+  section?: Pick<ServiceSection, "heading" | "headingAccent" | "body">;
+};
+
+export default function WelcomeSection({ video, section }: Props) {
   const containerRef = useRef(null);
   const ogRef = useRef(null);
   const oRef = useRef(null);
@@ -136,28 +142,53 @@ export default function WelcomeSection() {
             <div>
               <h2 ref={title1Ref} className="andrea text-[length:clamp(32px,17.92px_+_3.754vw,90px)] leading-[clamp(53px,29.46px_+_6.278vw,150px)] text-white ml-[clamp(28px,17.81px_+_2.719vw,70px)]" style={{
                 clipPath: "inset(0% 100% 0% 0%)"
-              }}>Welcome</h2>
-              <h2 ref={title2Ref} className="valturin text-gold text-[length:clamp(40px,20.58px_+_5.178vw,120px)] leading-[1] ml-[clamp(63px,23.92px_+_10.421vw,224px)] relative z-2 w-[500px]" style={{
-                clipPath: "inset(0% 100% 0% 0%)"
-              }}>
-                October
-                <br />
-                Glory
-              </h2>
+              }}>{section?.heading ?? "Welcome"}</h2>
+              {section?.headingAccent ? (
+                <h2 ref={title2Ref} className="valturin text-gold text-[length:clamp(40px,20.58px_+_5.178vw,120px)] leading-[1] ml-[clamp(63px,23.92px_+_10.421vw,224px)] relative z-2 w-[500px]" style={{
+                  clipPath: "inset(0% 100% 0% 0%)"
+                }}>
+                  {section.headingAccent}
+                </h2>
+              ) : !section && (
+                <h2 ref={title2Ref} className="valturin text-gold text-[length:clamp(40px,20.58px_+_5.178vw,120px)] leading-[1] ml-[clamp(63px,23.92px_+_10.421vw,224px)] relative z-2 w-[500px]" style={{
+                  clipPath: "inset(0% 100% 0% 0%)"
+                }}>
+                  October
+                  <br />
+                  Glory
+                </h2>
+              )}
             </div>
           </div>
 
           <div className="w-[33%] welcome-img-col">
             <div className="image-card">
-              <img
-                ref={imageRef}
-                src="/images/about-img.png"
-                alt="Model"
-                className="w-full h-full"
-                style={{
-                  clipPath: "inset(100% 0% 0% 0%)"
-                }}
-              />
+              {video ? (
+                <video
+                  ref={imageRef}
+                  src={video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  aria-label="October Glory welcome video"
+                  className="w-full h-full object-cover"
+                  style={{
+                    clipPath: "inset(100% 0% 0% 0%)"
+                  }}
+                />
+              ) : (
+                <img
+                  ref={imageRef}
+                  src="/images/about-img.png"
+                  alt="Model"
+                  className="w-full h-full"
+                  style={{
+                    clipPath: "inset(100% 0% 0% 0%)"
+                  }}
+                />
+              )}
             </div>
           </div>
 
@@ -165,7 +196,7 @@ export default function WelcomeSection() {
           <div ref={descriptionRef} className="w-[33.5%] px-[clamp(20px,17.33px_+_0.712vw,31px)] flex flex-col gap-[clamp(16px,14.06px_+_0.518vw,24px)] items-start welcome-right-col" style={{
             clipPath: "inset(0% 100% 0% 0%)"
           }}>
-            <p className="gotham text-white text-[length:clamp(16px,15.03px_+_0.259vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] capitalize font-light">
+            <div className="gotham text-white text-[length:clamp(16px,15.03px_+_0.259vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] capitalize font-light">
               {/* <strong>October Glory</strong> Salon Is A Luxury Hair Salon Located
               In Brooklyn, Founded By The Talented Hair Artist{" "}
               <strong>Jhavuanna Paterson</strong>. We Specialize In Precision Hair
@@ -173,9 +204,10 @@ export default function WelcomeSection() {
               Services Designed To Elevate Your Look And Confidence. Our Mission
               Is To Provide Every Guest With A Refined, Personalized Salon
               Experience That Exceeds Expectations */}
-              Finding the right stylist means finding someone who understands your hair, lifestyle, and goals. At October Glory, every appointment leaves you feeling confident, cared for, and empowered. Located in the heart of Brooklyn, our salon offers a welcoming environment where luxury meets expertise. Whether maintaining natural hair, booking a signature silk press, refreshing your color, investing in custom wigs, or treating your scalp, every service is personalized to your hair journey.
-
-            </p>
+              {section
+                ? section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+                : "Finding the right stylist means finding someone who understands your hair, lifestyle, and goals. At October Glory, every appointment leaves you feeling confident, cared for, and empowered. Located in the heart of Brooklyn, our salon offers a welcoming environment where luxury meets expertise. Whether maintaining natural hair, booking a signature silk press, refreshing your color, investing in custom wigs, or treating your scalp, every service is personalized to your hair journey."}
+            </div>
 
             <a href="/contact" className="book-btn flex gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center text-white rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[18px] gotham">
               <span className="btn-icon rotate-305">
