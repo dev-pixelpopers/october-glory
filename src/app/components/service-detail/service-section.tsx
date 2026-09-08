@@ -148,17 +148,15 @@ export default function ServiceSectionBlock({
           <div
             data-reveal
             data-reveal-delay="2"
-            className={`relative group ${
-              flip ? "lg:order-first" : "order-first lg:order-last"
-            }`}
+            className={`relative group ${flip ? "lg:order-first" : "order-first lg:order-last"
+              }`}
           >
             {/* Offset gold frame */}
             <div
-              className={`absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none ${
-                flip
+              className={`absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none ${flip
                   ? "-translate-x-3 translate-y-3 md:-translate-x-5 md:translate-y-5"
                   : "translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5"
-              }`}
+                }`}
             />
 
             <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#2a2a2a]">

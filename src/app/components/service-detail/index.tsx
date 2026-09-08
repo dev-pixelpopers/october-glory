@@ -43,7 +43,7 @@ export default function ServiceDetailTemplate({
   // one tone — the tier cards and comparison grid are built for light.
   const blocks: Block[] = [];
 
-  if (service.overview) blocks.push({ key: "overview" });
+  if (service.overview) blocks.push({ key: "overview", fixed: "light" });
   if (service.tiers) blocks.push({ key: "tiers", fixed: "light" });
   if (service.note) blocks.push({ key: "note" });
   service.sections?.forEach((section, i) =>
@@ -73,10 +73,8 @@ export default function ServiceDetailTemplate({
         />
       )}
 
-      {service.tiers && <ServiceTiers tiers={service.tiers} />}
-
-      {service.note && (
-        <ServiceNoteSection note={service.note} tone={toneOf("note")} />
+      {service.menu && (
+        <ServiceMenuGrid menu={service.menu} tone={toneOf("menu")} />
       )}
 
       {/* Alternating sides continue the count from `overview`, so the first
@@ -92,10 +90,6 @@ export default function ServiceDetailTemplate({
 
       {service.comparison && (
         <ServiceComparisonTable comparison={service.comparison} />
-      )}
-
-      {service.menu && (
-        <ServiceMenuGrid menu={service.menu} tone={toneOf("menu")} />
       )}
 
       {service.faq && (
