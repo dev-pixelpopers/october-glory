@@ -3,7 +3,7 @@ import React from 'react';
 export default function Footer() {
   return (
     // Dark background wrapper
-    <footer className="w-full bg-[#1B1B1B] p-[clamp(16px,8.23px_+_2.072vw,48px)] h-screen flex items-end justify-center">
+    <footer className="w-full bg-[#1B1B1B] p-[clamp(16px,8.23px_+_2.072vw,48px)] min-h-screen flex items-end justify-center">
 
       {/* Inner White Container */}
       <div className="bg-white rounded-[2rem] pt-[clamp(60px,26.02px_+_9.062vw,200px)] px-[clamp(20px,10.29px_+_2.59vw,60px)] pb-[clamp(20px,17.57px_+_0.648vw,30px)] flex flex-col w-full">
@@ -12,9 +12,9 @@ export default function Footer() {
         <div className="footer-main grid grid-cols-1 md:grid-cols-3 gap-[clamp(16px,12.12px_+_1.036vw,32px)] md:gap-0">
 
           {/* Column 1: Logo & Socials */}
-          <div className="flex flex-col items-center justify-center md:border-r border-gray-200 md:pr-[clamp(40px,24px_+_2.084vw,64px)] pb-[clamp(24px,16.37px_+_2.036vw,32px)] md:pb-0 border-b md:border-b-0">
+          <div className="foot-col-1 flex flex-col items-center justify-center md:border-r border-gray-200 md:pr-[clamp(40px,24px_+_2.084vw,64px)] pb-[clamp(24px,16.37px_+_2.036vw,32px)] md:pb-0 border-b md:border-b-0">
             {/* Logo Placeholder */}
-            <div className="mb-[clamp(16px,12.12px_+_1.036vw,32px)] w-[285px] h-[135px]">
+            <div className="foot-logo mb-[clamp(16px,12.12px_+_1.036vw,32px)] w-[15dvw] h-[15dvh]">
               <a href='/'>
               <img
                 src="/images/logo.svg"
@@ -51,7 +51,7 @@ export default function Footer() {
           </div>
 
           {/* Column 2: Contact Info */}
-          <div className="flex flex-col md:border-r border-gray-200 md:px-[clamp(40px,24px_+_2.084vw,64px)] pb-[clamp(24px,16.37px_+_2.036vw,32px)] md:pb-0 border-b md:border-b-0 py-[clamp(32px,20.35px_+_3.107vw,80px)]">
+          <div className="foot-col-2 flex flex-col md:border-r border-gray-200 md:px-[clamp(40px,24px_+_2.084vw,64px)] pb-[clamp(24px,16.37px_+_2.036vw,32px)] md:pb-0 border-b md:border-b-0 py-[clamp(32px,20.35px_+_3.107vw,80px)]">
             <h3 className="text-gold font-bold text-[length:clamp(22px,21.03px_+_0.259vw,26px)] gotham mb-[clamp(10px,8.54px_+_0.389vw,16px)]">
               Contact
             </h3>
@@ -83,7 +83,7 @@ export default function Footer() {
           </div>
 
           {/* Column 3: Opening Hours */}
-          <div className="flex flex-col md:pl-[clamp(40px,24px_+_2.084vw,64px)] py-[clamp(32px,20.35px_+_3.107vw,80px)]">
+          <div className="foot-col-3 flex flex-col md:pl-[clamp(40px,24px_+_2.084vw,64px)] py-[clamp(32px,20.35px_+_3.107vw,80px)]">
             <h3 className="text-gold font-bold text-[length:clamp(22px,21.03px_+_0.259vw,26px)] gotham mb-[clamp(10px,8.54px_+_0.389vw,16px)]">
               Opening Hours
             </h3>

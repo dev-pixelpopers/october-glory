@@ -257,7 +257,7 @@ export default function ShopProducts() {
 
         {/* Product Grid: 4 per row, wrapping into further rows */}
         <div ref={prodTabRef} className="prod-tab flex flex-col gap-[var(--space-40)] w-full lg:w-[80%]">
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-[var(--space-32)] gap-y-[var(--space-64)]">
+        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[var(--space-32)] gap-y-[var(--space-64)]">
           {visibleProducts.map((product) => (
             <div
               key={product.productId}

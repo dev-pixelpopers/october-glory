@@ -32,7 +32,7 @@ export default function ServiceShopPreview({
         </h2>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-[var(--space-32)] gap-y-[var(--space-64)] max-w-[1400px] mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[var(--space-32)] gap-y-[var(--space-64)] max-w-[1400px] mx-auto">
         {selectedProducts.map((product) => (
           <div
             key={product.title}

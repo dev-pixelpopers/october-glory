@@ -390,6 +390,14 @@ form textarea::Placeholder {
     line-clamp: 1;
   }
 
+  .collection-head {
+    padding-left: 2%;
+}
+
+.shop-item-card {
+    width: 12vw;
+}
+
 }
 
 
@@ -440,13 +448,43 @@ form textarea::Placeholder {
     bottom: 5%;
   }
 
+  .welcome-content {
+    padding-top: 2%;
+}
+
+.vid-div-1, .vid-div-4 {
+    padding-top: 6vh;
+}
+
+
 }
 
 @media (max-width: 1281px) {
 
-  .og-letter {
+  /* .og-letter {
     line-height: 1.4;
-  }
+  } */
+
+  .guide-rig-col p {
+    line-height: 2;
+    margin: 0;
+    padding: 0;
+    padding-bottom:2%;
+}
+
+.guide-head-sec div {
+    margin: 0;
+}
+
+.perf-cta-div {flex-direction: row;}
+
+  .wom-des-lef-inner p {
+    line-height: 2;
+}
+
+  .vid-div-1, .vid-div-4 {
+    padding-top: 8vh;
+}
 
   .hero-image-box {
     bottom: 0;
@@ -508,11 +546,11 @@ form textarea::Placeholder {
   }
 
   .follow-left-col {
-    width: 65%;
+    width: 63%;
   }
 
   .follow-right-col {
-    width: 35%;
+    width: 37%;
   }
 
   .img-w-c {
@@ -546,13 +584,39 @@ form textarea::Placeholder {
     justify-content: center;
   }
 
+  .offer-img img {
+    object-fit: contain;
+    object-position: left;
+}
 
+.footer-main {
+    grid-template-columns: repeat(1, 1fr);
+    gap:20px;
+  }
+
+  .footer-main div {
+    border: none;
+    padding:0;
+  }
+
+  .foot-inner-label {
+    width: 20%;
+  }
+
+  .foot-inner-content {
+    width: 80%;
+  }
 
 
 }
 
 
 @media (max-width: 768px) {
+
+  img.site-logo {
+    max-width: 100%;
+    object-fit: contain;
+}
 
   .background-marquee {
     transform: translateY(13vh);
@@ -954,6 +1018,19 @@ form textarea::Placeholder {
   .guide-rig-col {
     height: 70vh;
   }
+
+  .welcome-wrapper > div {
+    padding-inline: 2%;
+}
+
+.perf-let {
+    opacity: 0.2;
+}
+
+.foot-logo {
+    width: 60%;
+}
+
 
 }
 
