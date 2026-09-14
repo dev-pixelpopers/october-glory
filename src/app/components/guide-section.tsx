@@ -90,7 +90,7 @@ export default function GuidebookSection() {
             <GuideLink href="/services/silk-press#ebook">
               Explore Silk Press
             </GuideLink>
-            <GuideLink href="/services/wigs-and-extensions#ebook">
+            <GuideLink href="/wigs#ebook">
               Explore Wigs &amp; Extensions
             </GuideLink>
           </div>

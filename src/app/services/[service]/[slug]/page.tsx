@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ServiceDetailTemplate from "@/app/components/service-detail";
-import { childParams, getChild, getParent, siblingCards } from "@/data/services";
+import {
+  childParams,
+  getChild,
+  getParent,
+  servicePath,
+  siblingCards,
+} from "@/data/services";
 
 type Params = { service: string; slug: string };
 
@@ -41,7 +47,7 @@ export default async function ServiceChildPage({
   return (
     <ServiceDetailTemplate
       service={child}
-      parent={{ slug: parent.slug, label: parent.cardTitle }}
+      parent={{ href: servicePath(parent), label: parent.cardTitle }}
       related={
         siblings.length
           ? {

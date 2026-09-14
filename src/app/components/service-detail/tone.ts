@@ -46,9 +46,19 @@ const flip = (value: Tone): Tone => (value === "dark" ? "light" : "dark");
 
 /**
  * Walks the blocks and hands each one a tone, flipping on every step so no two
- * neighbours match. Pinned blocks keep their tone; where a pinned block would
- * collide with the block before it, the earlier one gives way instead — which
- * can cascade back up the page, so the pass repeats until it settles.
+ * neighbours match.
+ *
+ * Pinned blocks keep their tone. Where a pinned block lands on the same tone as
+ * the block before it, the conflict is pushed *back up* the page: every free
+ * block behind it flips, all the way to the previous pinned block or the top.
+ * Flipping a whole alternating run keeps it alternating, so one pass resolves
+ * it — unlike flipping the single neighbour, which just moves the collision one
+ * step and can flip back and forth forever.
+ *
+ * Two pinned blocks with an even number of free blocks between them cannot
+ * alternate at all. That run is left as it is rather than looped over; if you
+ * see two sections of the same tone touching, that is the shape of the page,
+ * not a bug in the walk — move a section or unpin one of the two.
  *
  * Returns a lookup rather than an array so the JSX can ask for a block by key
  * without tracking indices.
@@ -58,24 +68,20 @@ export function assignTones(blocks: Block[], startAfter: Tone = "dark") {
 
   blocks.forEach((block, i) => {
     const previous = i === 0 ? startAfter : tones[i - 1];
-    tones.push(block.fixed ?? flip(previous));
-  });
 
-  // Settle collisions introduced by pinned blocks.
-  for (let pass = 0; pass < blocks.length; pass += 1) {
-    let collided = false;
-
-    for (let i = 1; i < blocks.length; i += 1) {
-      if (tones[i] !== tones[i - 1]) continue;
-      collided = true;
-
-      if (!blocks[i].fixed) tones[i] = flip(tones[i]);
-      else if (!blocks[i - 1].fixed) tones[i - 1] = flip(tones[i - 1]);
-      // Two adjacent pinned blocks can't be separated; leave them.
+    if (!block.fixed) {
+      tones.push(flip(previous));
+      return;
     }
 
-    if (!collided) break;
-  }
+    tones.push(block.fixed);
+    if (i === 0 || tones[i - 1] !== block.fixed) return;
+
+    // Collision with a pinned block: flip the free run behind it.
+    for (let j = i - 1; j >= 0 && !blocks[j].fixed; j -= 1) {
+      tones[j] = flip(tones[j]);
+    }
+  });
 
   const byKey = new Map(blocks.map((block, i) => [block.key, tones[i]]));
   return (key: string): Tone => byKey.get(key) ?? "dark";

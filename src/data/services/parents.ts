@@ -1,7 +1,7 @@
 import type { ServiceParent } from "./types";
 
 /**
- * The five main services, in the order they appear on /services.
+ * The main services, in the order they appear on /services.
  *
  * Each one is served at /services/<slug>. Reordering this array reorders the
  * boxes on the index, the cards in the menu panel, and everything else that
@@ -87,6 +87,17 @@ export const serviceParents: ServiceParent[] = [
             "Clients whose hair is due for a trim, those experiencing split or damaged ends, or anyone looking for a complete healthy hair reset with treatment, maintenance, and a flawless silk press, all in a single appointment.",
         },
       ],
+    },
+    beforeAfter: {
+      eyebrow: "The Difference",
+      heading: "Before",
+      headingAccent: "& After",
+      intro:
+        "Drag the divider to see the same head of hair either side of one silk press appointment.",
+      before: "/images/silk-press-before.png",
+      after: "/images/silk-press-after.png",
+      caption:
+        "Split, thinning ends before — a clean, blunt perimeter after a precision trim.",
     },
     note: {
       eyebrow: "Good To Know",
@@ -255,37 +266,17 @@ export const serviceParents: ServiceParent[] = [
     },
   },
   {
-    cardImage: "/images/waves1.webp",
+    cardImage: "/images/Weaves-And-Extensions-02.webp",
     cardBlurb:
-      "Custom units and sew-in installs built on the health of your natural hair — and finished with a cut made for your face.",
-    slug: "wigs-and-extensions",
-    cardTitle: "Wigs & Extensions",
+      "Sew-in installs built on a custom braid foundation — leave-out or closure, finished with a cut made for your face.",
+    slug: "weaves",
+    cardTitle: "Weaves",
     hero: {
-      display: "Wigs",
-      script: "& Extensions",
+      display: "Naturally",
+      script: "Woven",
       intro:
-        "Custom units and sew-in installs built on the health of your natural hair — and finished with a cut made for your face.",
-      image: "/images/shop-bg.png",
-    },
-    welcomeVideo: "/images/video-3.mp4",
-    shopProducts: [
-      { title: "Braided Wigs", image: "/images/collections/wigs-1.png" },
-      { title: "Glueless Wigs", image: "/images/collections/wigs-2.png" },
-      { title: "Veralux Wigs", image: "/images/collections/wigs-3.png" },
-      { title: "Half Wigs", image: "/images/collections/wigs-4.png" },
-    ],
-    instagram: {
-      heading: "See",
-      headingAccent: "The Glory",
-      body: "Fresh installs, custom units, and real results from our Brooklyn salon.",
-      videos: [
-        "/images/video-01.mp4",
-        "/images/video-02.mp4",
-        "/images/video-03.mp4",
-        "/images/video-04.mp4",
-        "/images/video-05.mp4",
-      ],
-      showProfileLink: false,
+        "Sew-in installs built on the health of your natural hair — and finished with a cut made for your face.",
+      image: "/images/Weaves-And-Extensions-02.webp",
     },
     overview: {
       eyebrow: "The Service",
@@ -399,18 +390,9 @@ export const serviceParents: ServiceParent[] = [
     },
     childrenSection: {
       eyebrow: "The Menu",
-      heading: "Explore Our Services",
+      heading: "Explore Our Weaves",
       intro:
-        "Installs, consultations and unit care, each booked individually. Prices are a starting point — your stylist confirms the final cost at consultation.",
-    },
-    ebook: {
-      eyebrow: "Free Download",
-      display: "The Wig & Weave",
-      script: "Care Handbook",
-      body: "Choosing a unit, protecting the hair underneath it, and making an install last — laid out step by step. Covers foundation prep, night routines, wash cycles for wigs and weaves, and how to tell when it is time to take it down.",
-      image: "/images/guide-wigs.png",
-      cta: "Explore The E-Book",
-      href: "#",
+        "Installs booked individually, leave-out or full head. Prices are a starting point — your stylist confirms the final cost at consultation.",
     },
     cta: {
       display: "Reserve Your Space",
@@ -418,9 +400,81 @@ export const serviceParents: ServiceParent[] = [
       body: "Not sure which option is right for you? Our stylists will recommend the installation that best suits your hair goals, texture, and lifestyle. Premium bundles, closures, and frontals are also available to complete your service.",
     },
     meta: {
-      title: "Wigs & Extensions | October Glory",
+      title: "Weaves | October Glory",
       description:
         "Sew-in weave installs at October Glory — leave-out and full closure, each built on a custom foundation and finished with a personalized cut.",
+    },
+  },
+  {
+    cardImage: "/images/Weaves-And-Extensions-01.webp",
+    cardBlurb:
+      "Added length and volume, placed where your hair needs it and blended into your own so the join never shows.",
+    slug: "extensions",
+    cardTitle: "Extensions",
+    hero: {
+      display: "Length",
+      script: "& Volume",
+      intro:
+        "Added length and volume, placed to follow your own growth pattern so the extensions move the way your hair does.",
+      image: "/images/Weaves-And-Extensions-01.webp",
+    },
+    overview: {
+      eyebrow: "The Service",
+      heading: "Length That",
+      headingAccent: "Belongs To You",
+      body: [
+        "Extensions are the lightest way to add length and fullness without committing to a full install. A few tracks placed exactly where your hair needs them can fill in a thinning crown, carry a blunt cut past your shoulders, or give a style the weight it needs to hold its shape — and nothing else about your routine has to change.",
+        "Every placement starts with an assessment of your density and growth pattern, because extensions only disappear when they follow the hair they sit against. We match texture and colour first, then place and blend, then cut — in that order, so the finished head reads as one head of hair rather than yours plus something added.",
+      ],
+      image: "/images/Weaves-And-Extensions-01.webp",
+    },
+    note: {
+      eyebrow: "Good To Know",
+      heading: "Making Extensions Last",
+      body: [
+        "Extensions are only as healthy as the hair they are attached to. The tracks carry weight, and that weight sits on your own strands — so the foundation underneath has to be strong before anything goes on top, and cared for while it is there.",
+        "Sleep in a satin or silk bonnet, or on a satin pillowcase. Keep the scalp and your own hair moisturised with something light and water-based, and keep heavy oils away from the roots, where they build up around the braids and loosen the hold.",
+        "Come back before the tracks start to travel. Growth moves them away from the scalp, and extensions left too long pull at the root rather than sitting against it — which is where the damage people blame on extensions actually comes from.",
+      ],
+    },
+    comparison: {
+      eyebrow: "At A Glance",
+      heading: "Tracks Or A Full Weave?",
+      columns: ["Single Track", "Full Weave"],
+      rows: [
+        { label: "Adds length and volume", values: [true, true] },
+        { label: "Placed where the hair needs it", values: [true, false] },
+        {
+          label: "Your own hair left out",
+          values: [{ text: "Almost all of it" }, { text: "A leave-out, or none" }],
+        },
+        { label: "Braid foundation across the head", values: [false, true] },
+        { label: "Protects the hair underneath", values: [false, true] },
+        { label: "Customized cut and style", values: [true, true] },
+        { label: "Hair included", values: [false, false] },
+        {
+          label: "Typical appointment",
+          values: [{ text: "Around an hour" }, { text: "Half a day" }],
+        },
+      ],
+      footnote:
+        "A track or two is the lighter option: quick to place, easy to live with, and no commitment to a full install. When you want length across the whole head, or you want your own hair protected while it rests, a weave is the better answer — see Weaves for those.",
+    },
+    childrenSection: {
+      eyebrow: "The Menu",
+      heading: "Explore Our Extensions",
+      intro:
+        "Booked individually, from a single track to the braid-down that prepares your hair for it. Prices are a starting point — your stylist confirms the final cost at consultation.",
+    },
+    cta: {
+      display: "Reserve Your Space",
+      heading: "Not Sure How Much Length You Need?",
+      body: "Book a consultation and we will look at your density, your growth pattern, and the style you are after, then recommend the placement that gets you there without stressing the hair underneath.",
+    },
+    meta: {
+      title: "Extensions | October Glory",
+      description:
+        "Hair extensions at October Glory in Brooklyn — added length and volume matched to your texture, placed to follow your growth pattern and blended with a personalized cut.",
     },
   },
   {

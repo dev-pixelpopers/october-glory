@@ -13,6 +13,25 @@ export * from "./pricing";
 export { serviceParents } from "./parents";
 export { serviceChildren } from "./children";
 
+/**
+ * Parent slugs that are not main services and so do not live under /services.
+ * Wigs left the service list to become its own destination; its sub-services
+ * still sit in `children.ts` (Glorious Boost belongs to a service *and* to
+ * Wigs, so one list has to hold both), and this map is what keeps every
+ * derived link pointing at the right root.
+ */
+const EXTERNAL_PARENT_ROOTS: Record<string, string> = {
+  wigs: "/wigs",
+};
+
+/** Where a parent's pages live: /wigs for Wigs, /services/<slug> otherwise. */
+export const parentRoot = (parentSlug: string): string =>
+  EXTERNAL_PARENT_ROOTS[parentSlug] ?? `/services/${parentSlug}`;
+
+/** True for a parent that has left /services, such as Wigs. */
+export const isExternalParent = (parentSlug: string): boolean =>
+  parentSlug in EXTERNAL_PARENT_ROOTS;
+
 /** Every main service, in display order. */
 export const getParents = (): ServiceParent[] => serviceParents;
 
@@ -56,13 +75,14 @@ export const parentParams = () =>
 export const childParams = () =>
   serviceChildren
     .filter(hasPage)
+    .filter((child) => !isExternalParent(child.parents[0]))
     .map((child) => ({ service: child.parents[0], slug: child.slug }));
 
 /** Canonical path for a service. A sub-service without a page books instead. */
 export const servicePath = (service: ServiceParent | ServiceChild): string => {
-  if (!("parents" in service)) return `/services/${service.slug}`;
+  if (!("parents" in service)) return parentRoot(service.slug);
   return hasPage(service)
-    ? `/services/${service.parents[0]}/${service.slug}`
+    ? `${parentRoot(service.parents[0])}/${service.slug}`
     : "/dashboard/book";
 };
 
@@ -88,7 +108,7 @@ export const childrenMenu = (parent: ServiceParent): ServiceMenu | undefined => 
       nonMemberPrice: child.nonMemberPrice,
       image: child.cardImage,
       href: hasPage(child)
-        ? `/services/${child.parents[0]}/${child.slug}`
+        ? `${parentRoot(child.parents[0])}/${child.slug}`
         : undefined,
     })),
   };

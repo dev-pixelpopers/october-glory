@@ -1,5 +1,6 @@
 import { products } from "@/app/shop/product";
 import { getParents, hasPage, serviceChildren, servicePath } from "@/data/services";
+import { wigsPage } from "@/data/wigs";
 
 /**
  * Nav structure and hover-preview content for the full-screen menu.
@@ -79,6 +80,7 @@ export const CONTACT_MAP_HREF = "#";
  */
 export const PRIMARY_LINKS: MenuLink[] = [
   { key: "about-us", label: "About Us", href: "/about-us" },
+  { key: "wigs", label: "Wigs", href: "/wigs" },
   { key: "services", label: "Services", href: "/services" },
   { key: "packages", label: "Packages", href: "/services" },
   { key: "lookbook", label: "Lookbook", href: "/lookbook" },
@@ -122,6 +124,15 @@ const PAGE_PREVIEWS = {
     body: "Meet Jhavuanna Paterson — owner and master hair stylist — and the philosophy that shaped the salon.",
     image: "/images/about-img.png",
     href: "/about-us",
+  },
+
+  wigs: {
+    variant: "default",
+    eyebrow: "Wigs",
+    title: wigsPage.cardTitle,
+    body: wigsPage.cardBlurb,
+    image: wigsPage.cardImage,
+    href: "/wigs",
   },
 
   "glorious-packages": {
@@ -183,7 +194,7 @@ const SERVICE_PREVIEWS: Record<string, MenuPreview> = Object.fromEntries([
   ]),
 ]);
 
-/** The five main services, as cards for the Services panel. */
+/** The main services, as cards for the Services panel. */
 const SERVICE_CARDS: PreviewCard[] = getParents().map((parent) => ({
   image: parent.cardImage,
   title: parent.cardTitle,

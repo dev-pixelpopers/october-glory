@@ -7,13 +7,34 @@ import { useGSAP } from "@gsap/react";
 import type { ServiceDetail } from "@/data/services/types";
 import PriceTag from "./price-tag";
 
+type Crumb = { href: string; label: string };
+
 type Props = {
   service: ServiceDetail;
   /** Breadcrumb parent. Omit on a top-level service, which has none. */
-  parent?: { slug: string; label: string };
+  parent?: Crumb;
+  /**
+   * The first crumb. Defaults to Services; the Wigs page, which no longer sits
+   * under /services, passes its own.
+   */
+  root?: Crumb;
+  /**
+   * Breadcrumb and intro paragraph. The Wigs page turns both off so its hero
+   * is just the wordmark over the photograph, the way the home page reads.
+   */
+  showCrumbs?: boolean;
+  showIntro?: boolean;
 };
 
-export default function ServiceHero({ service, parent }: Props) {
+const SERVICES_CRUMB: Crumb = { href: "/services", label: "Services" };
+
+export default function ServiceHero({
+  service,
+  parent,
+  root,
+  showCrumbs = true,
+  showIntro = true,
+}: Props) {
   const crumbRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
@@ -23,35 +44,44 @@ export default function ServiceHero({ service, parent }: Props) {
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
+    // The crumb and the intro are optional, so each tween is added only when
+    // its element is on the page — GSAP throws on a null target, and the
+    // heading has to start the timeline when there is no crumb before it.
+    if (crumbRef.current) {
+      tl.fromTo(
+        crumbRef.current,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6 }
+      );
+    }
+
     tl.fromTo(
-      crumbRef.current,
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6 }
-    )
-      .fromTo(
-        headingRef.current,
-        { y: 60, opacity: 0, clipPath: "inset(100% 0% 0% 0%)" },
-        { y: 0, opacity: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 1.2 },
-        "-=0.3"
-      )
-      .fromTo(
-        dividerRef.current,
-        { scaleX: 0 },
-        { scaleX: 1, duration: 0.8 },
-        "-=0.5"
-      )
-      .fromTo(
+      headingRef.current,
+      { y: 60, opacity: 0, clipPath: "inset(100% 0% 0% 0%)" },
+      { y: 0, opacity: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 1.2 },
+      crumbRef.current ? "-=0.3" : 0
+    ).fromTo(
+      dividerRef.current,
+      { scaleX: 0 },
+      { scaleX: 1, duration: 0.8 },
+      "-=0.5"
+    );
+
+    if (introRef.current) {
+      tl.fromTo(
         introRef.current,
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8 },
         "-=0.4"
-      )
-      .fromTo(
-        metaRef.current,
-        { y: 24, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7 },
-        "-=0.5"
       );
+    }
+
+    tl.fromTo(
+      metaRef.current,
+      { y: 24, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7 },
+      "-=0.5"
+    );
   });
 
   return (
@@ -72,22 +102,23 @@ export default function ServiceHero({ service, parent }: Props) {
 
       <div className="relative z-10 text-center flex flex-col items-center">
         {/* Breadcrumb — a top-level service shows only "Services". */}
+        {showCrumbs && (
         <div
           ref={crumbRef}
           className="gotham text-[12px] md:text-[13px] tracking-[4px] uppercase text-white/50 mb-[var(--space-40)] flex items-center gap-3 flex-wrap justify-center"
         >
           <Link
-            href="/services"
+            href={(root ?? SERVICES_CRUMB).href}
             className="hover:text-[#ccb884] transition-colors duration-300"
           >
-            Services
+            {(root ?? SERVICES_CRUMB).label}
           </Link>
           <span className="text-[#ccb884]/60">/</span>
 
           {parent && (
             <>
               <Link
-                href={`/services/${parent.slug}`}
+                href={parent.href}
                 className="hover:text-[#ccb884] transition-colors duration-300"
               >
                 {parent.label}
@@ -98,6 +129,7 @@ export default function ServiceHero({ service, parent }: Props) {
 
           <span className="text-[#ccb884]">{service.cardTitle}</span>
         </div>
+        )}
 
         <div ref={headingRef}>
           <h1 className="flex flex-col andrea text-[length:var(--fs-h1)] leading-[1.4] text-white tracking-wide">
@@ -114,12 +146,14 @@ export default function ServiceHero({ service, parent }: Props) {
           className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884] to-transparent my-[var(--space-32)] origin-center"
         />
 
-        <p
-          ref={introRef}
-          className="gotham text-white/70 text-[length:var(--fs-body)] leading-[1.8] max-w-[620px] font-light"
-        >
-          {service.hero.intro}
-        </p>
+        {showIntro && (
+          <p
+            ref={introRef}
+            className="gotham text-white/70 text-[length:var(--fs-body)] leading-[1.8] max-w-[620px] font-light"
+          >
+            {service.hero.intro}
+          </p>
+        )}
 
         <div
           ref={metaRef}

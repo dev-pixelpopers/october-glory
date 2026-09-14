@@ -63,7 +63,7 @@ export default function PerfectSection() {
 
   return (
     <section ref={containerRef} className=" min-h-[300dvh] relative">
-      <div className="perf-match-sec flex flex-col bg-[#1B1B1B] py-[clamp(20px,15.15px_+_1.295vw,40px)] px-[clamp(32px,15.5px_+_4.401vw,72px)] 2xl:px-[clamp(32px,15.5px_+_4.402vw,100px)] sticky top-0 h-dvh overflow-hidden">
+      <div className="perf-match-sec flex flex-col justify-center bg-[#1B1B1B] py-[clamp(20px,15.15px_+_1.295vw,40px)] px-[clamp(32px,15.5px_+_4.401vw,72px)] 2xl:px-[clamp(32px,15.5px_+_4.402vw,100px)] sticky top-0 h-dvh overflow-hidden">
         <div ref={ogRef} className="absolute inset-0 flex justify-between overflow-hidden pointer-events-none">
           <div className="perf-let valturin text-[65vw] leading-[0.75] text-white absolute top-[17%] left-[-0vw]">
             O

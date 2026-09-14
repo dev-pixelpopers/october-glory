@@ -591,13 +591,16 @@ export const serviceChildren: ServiceChild[] = [
     },
   },
   {
-    parents: ["wigs-and-extensions"],
+    // Custom Wig Design and the old Wig Unit Consult, merged: the consultation
+    // was never bookable on its own in practice, and this page already walks
+    // through it as the first stage of the design.
+    parents: ["wigs"],
     cardImage: "/images/Weaves-And-Extensions-04.webp",
-    slug: "custom-wig-design",
-    cardTitle: "Custom Wig Design",
+    slug: "wig-design-and-consult",
+    cardTitle: "Wig Design & Consult",
     hero: {
-      display: "Custom Wig",
-      script: "Design",
+      display: "Wig Design",
+      script: "& Consult",
       intro:
         "More than purchasing a wig — a personalized experience created entirely around you.",
       image: "/images/shop-bg.png",
@@ -730,7 +733,7 @@ export const serviceChildren: ServiceChild[] = [
       heading: "Book Your Personal Consultation",
     },
     meta: {
-      title: "Custom Wig Design | October Glory",
+      title: "Wig Design & Consult | October Glory",
       description:
         "Custom wigs in Brooklyn, NY at October Glory — glueless drawstring units handcrafted to your measurements from premium Cambodian and Filipino hair, including custom wigs for hair loss.",
     },
@@ -804,44 +807,38 @@ export const serviceChildren: ServiceChild[] = [
     price: "$250",
   },
   {
-    parents: ["wigs-and-extensions"],
+    parents: ["extensions"],
     cardImage: "/images/Weaves-And-Extensions-01.webp",
     slug: "single-track",
     cardTitle: "Single Track",
   },
   {
-    parents: ["wigs-and-extensions"],
+    parents: ["weaves"],
     cardImage: "/images/Weaves-And-Extensions-02.webp",
     slug: "full-weave-with-leave-out",
     cardTitle: "Full Weave w/ Leave Out",
   },
   {
-    parents: ["wigs-and-extensions"],
+    parents: ["weaves"],
     cardImage: "/images/Weaves-And-Extensions-03.webp",
     slug: "full-head-weave",
     cardTitle: "Full-Head Weave",
   },
   {
-    parents: ["wigs-and-extensions"],
-    cardImage: "/images/Weaves-And-Extensions-04.webp",
-    slug: "wig-unit-consult",
-    cardTitle: "Wig Unit Consult",
-  },
-  {
-    parents: ["wigs-and-extensions"],
+    parents: ["extensions"],
     cardImage: "/images/glorious-packages-04.webp",
     slug: "wig-prep",
     cardTitle: "Wig Prep",
     price: "$120",
   },
   {
-    parents: ["wigs-and-extensions"],
+    parents: ["wigs"],
     cardImage: "/images/Weaves-And-Extensions-05-06-07.webp",
     slug: "wig-wash",
     cardTitle: "Wig Wash",
   },
   {
-    parents: ["wigs-and-extensions"],
+    parents: ["wigs"],
     cardImage: "/images/Weaves-And-Extensions-08.webp",
     slug: "wig-tighten",
     cardTitle: "Wig Tighten",
@@ -917,7 +914,7 @@ export const serviceChildren: ServiceChild[] = [
     price: "$65",
   },
   {
-    parents: ["relaxers-and-colors", "wigs-and-extensions"],
+    parents: ["relaxers-and-colors"],
     cardImage: "/images/glorious-packages-03.webp",
     slug: "glorious-boost",
     cardTitle: "Glorious Boost",

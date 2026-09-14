@@ -3,6 +3,8 @@ import Header from "../header";
 import Footer from "../footer";
 import ServiceHero from "./service-hero";
 import ServiceSectionBlock from "./service-section";
+import ServiceProcessSection from "./service-process";
+import ServiceBeforeAfterSection from "./service-before-after";
 import ServiceTiers from "./service-tiers";
 import ServiceNoteSection from "./service-note";
 import ServiceComparisonTable from "./service-comparison";
@@ -11,16 +13,17 @@ import ServiceEbookSection from "./service-ebook";
 import ServiceMenuGrid from "./service-menu";
 import ServiceSiblings, { type RelatedItem } from "./service-siblings";
 import ServiceCta from "./service-cta";
-import ServiceShopPreview from "./service-shop-preview";
-import InstagramSection from "@/app/components/instagram-section";
+import MembershipCta from "./membership-cta";
 import { assignTones, type Block } from "./tone";
+import { serviceBeforeAfter, serviceProcess } from "@/data/services/defaults";
 import type { ServiceDetail } from "@/data/services/types";
-import WelcomeSection from "@/app/components/about-section";
 
 type Props = {
   service: ServiceDetail;
   /** Breadcrumb parent. Omit on a top-level service, which has none. */
-  parent?: { slug: string; label: string };
+  parent?: { href: string; label: string };
+  /** First breadcrumb. Defaults to Services; /wigs passes its own. */
+  root?: { href: string; label: string };
   /** "Keep exploring" strip: sibling services, or child categories. */
   related?: { heading: string; eyebrow?: string; items: RelatedItem[] };
 };
@@ -40,27 +43,32 @@ type Props = {
 export default function ServiceDetailTemplate({
   service,
   parent,
+  root,
   related,
 }: Props) {
-  // Collected in render order. `fixed` pins a block whose design only works on
-  // one tone — the tier cards and comparison grid are built for light.
+  // Exactly the sections this page renders, in the order it renders them. The
+  // walk only alternates correctly against real neighbours, so a block that is
+  // not rendered must not appear here — it would shift every tone after it.
+  // `fixed` pins a block whose design only works on one tone.
   const blocks: Block[] = [];
 
-  if (service.welcomeVideo) blocks.push({ key: "welcome" });
-  else if (service.overview) blocks.push({ key: "overview", fixed: "light" });
-  if (service.tiers) blocks.push({ key: "tiers", fixed: "light" });
-  if (service.note) blocks.push({ key: "note" });
+  if (service.overview) blocks.push({ key: "overview" });
+  // Process and before/after are universal — every service shows one, its own
+  // or the house default from defaults.ts — so neither is conditional.
+  blocks.push({ key: "process" });
+  if (service.menu) blocks.push({ key: "menu" });
   service.sections?.forEach((section, i) =>
     blocks.push({ key: `section-${i}` })
   );
   if (service.comparison) blocks.push({ key: "comparison", fixed: "light" });
-  if (service.menu) blocks.push({ key: "menu" });
-  if (service.shopProductIds || service.shopProducts) blocks.push({ key: "shop-preview" });
-  if (service.instagram) blocks.push({ key: "instagram" });
-  if (service.faq) blocks.push({ key: "faq" });
   // The gradient panel and white cover card are built for dark only.
   if (service.ebook) blocks.push({ key: "ebook", fixed: "dark" });
+  if (service.faq) blocks.push({ key: "faq" });
+  // The proof, then the ask: before/after sits directly above the membership
+  // CTA, which closes every page.
+  blocks.push({ key: "before-after" });
   if (related) blocks.push({ key: "related" });
+  blocks.push({ key: "membership" });
 
   // The hero is photo-backed and reads dark, so the run starts from "dark".
   const toneOf = assignTones(blocks, "dark");
@@ -69,30 +77,24 @@ export default function ServiceDetailTemplate({
     <div className="main-app bg-[#1B1B1B]">
       <Header theme="dark" />
 
-      <ServiceHero service={service} parent={parent} />
+      <ServiceHero service={service} parent={parent} root={root} />
 
-      {service.welcomeVideo ? (
-        <WelcomeSection video={service.welcomeVideo} section={service.overview} />
-      ) : service.overview ? (
+      {service.overview && (
         <ServiceSectionBlock
           section={service.overview}
           tone={toneOf("overview")}
           hairline
         />
-      ) : null}
+      )}
+
+      <ServiceProcessSection
+        process={serviceProcess(service)}
+        tone={toneOf("process")}
+      />
 
       {service.menu && (
         <ServiceMenuGrid menu={service.menu} tone={toneOf("menu")} />
       )}
-
-      {(service.shopProductIds || service.shopProducts) && (
-        <ServiceShopPreview
-          productIds={service.shopProductIds}
-          items={service.shopProducts}
-        />
-      )}
-
-      {service.instagram && <InstagramSection content={service.instagram} />}
 
       {/* Alternating sides continue the count from `overview`, so the first
           extra section lands opposite it rather than repeating its layout. */}
@@ -109,11 +111,17 @@ export default function ServiceDetailTemplate({
         <ServiceComparisonTable comparison={service.comparison} />
       )}
 
+
       {service.ebook && <ServiceEbookSection ebook={service.ebook} />}
 
       {service.faq && (
         <ServiceFaqSection faq={service.faq} tone={toneOf("faq")} />
       )}
+
+      <ServiceBeforeAfterSection
+        beforeAfter={serviceBeforeAfter(service)}
+        tone={toneOf("before-after")}
+      />
 
       {related && (
         <ServiceSiblings
@@ -123,6 +131,8 @@ export default function ServiceDetailTemplate({
           tone={toneOf("related")}
         />
       )}
+
+      <MembershipCta tone={toneOf("membership")} />
 
       <ServiceCta cta={service.cta} image={service.hero.image} />
 

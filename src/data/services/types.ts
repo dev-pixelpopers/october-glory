@@ -47,6 +47,51 @@ export type ServiceComparison = {
 };
 
 /**
+ * A before/after pair, shot from the same distance and angle — the wipe only
+ * reads as one head of hair if the framing matches.
+ */
+export type ServiceCompare = {
+  before: string;
+  after: string;
+  /** Defaults to "Before" / "After". */
+  beforeLabel?: string;
+  afterLabel?: string;
+  /** Optional line under the frame — service used, time between shots. */
+  caption?: string;
+};
+
+/**
+ * The before/after block, as its own section rather than the tail of a note.
+ * Every service page shows one; `defaults.ts` supplies the fallback for the
+ * services that have not had their own pair shot yet.
+ */
+export type ServiceBeforeAfter = ServiceCompare & {
+  eyebrow?: string;
+  heading?: string;
+  headingAccent?: string;
+  intro?: string;
+};
+
+/**
+ * The "how it works" walkthrough — a video of the service being performed,
+ * beside the numbered steps it goes through.
+ *
+ * Every service page shows one. A service that has not had its own filmed
+ * falls back to the house process in `defaults.ts`, and `image` defaults to
+ * the page's hero so the frame still reads before the video loads.
+ */
+export type ServiceProcess = {
+  eyebrow?: string;
+  heading: string;
+  headingAccent?: string;
+  intro?: string;
+  /** Plays in the frame. `image` is its poster. */
+  video?: string;
+  image?: string;
+  steps: { title: string; body: string }[];
+};
+
+/**
  * A free-form editorial block — used for things like the "Why the trim
  * matters" explainer that sits between the tiers and the comparison table.
  */
@@ -55,20 +100,8 @@ export type ServiceNote = {
   heading: string;
   body: string[];
   image?: string;
-  /**
-   * A before/after pair, rendered under the body as a draggable comparison.
-   * Shoot both frames from the same distance and angle — the wipe only reads
-   * as one head of hair if the framing matches.
-   */
-  compare?: {
-    before: string;
-    after: string;
-    /** Defaults to "Before" / "After". */
-    beforeLabel?: string;
-    afterLabel?: string;
-    /** Optional line under the frame — service used, time between shots. */
-    caption?: string;
-  };
+  /** A before/after pair, rendered under the body as a draggable comparison. */
+  compare?: ServiceCompare;
 };
 
 /**
@@ -186,6 +219,19 @@ export type ServiceDetail = {
   instagram?: ServiceInstagram;
 
   overview?: ServiceSection;
+
+  /**
+   * The process walkthrough. Every service page renders one — `serviceProcess()`
+   * in `defaults.ts` falls back to the house process when a service has not
+   * had its own written.
+   */
+  process?: ServiceProcess;
+
+  /**
+   * The before/after comparison. Every service page renders one — see
+   * `serviceBeforeAfter()` in `defaults.ts` for the fallback pair.
+   */
+  beforeAfter?: ServiceBeforeAfter;
 
   tiers?: {
     eyebrow?: string;

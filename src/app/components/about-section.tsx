@@ -127,7 +127,7 @@ export default function WelcomeSection({ video, section }: Props) {
   return (
     <section ref={containerRef} className="welcome-wrapper bg-[#1B1B1B] relative min-h-[300dvh]">
       <div className="w-full sticky top-0 flex flex-col justify-center items-center h-dvh overflow-hidden px-[clamp(32px,15.5px_+_4.401vw,72px)] 2xl:px-[clamp(32px,15.5px_+_4.402vw,100px)]">
-        <div ref={ogRef} className="absolute inset-0 flex justify-center pointer-events-none z-0 rotate-[180deg] og-wrap">
+        <div ref={ogRef} className="absolute inset-0 flex justify-center items-center pointer-events-none z-0 rotate-[180deg] og-wrap">
           <div ref={oRef} className="valturin text-[64vw] leading-[1.1] text-white absolute rotate-[6deg] og-letter og-letter-o"> {/*  left-[-0vw]*/}
             O
           </div>

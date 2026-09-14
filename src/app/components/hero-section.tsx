@@ -40,14 +40,14 @@ export default function HeroSection() {
   });
   return (
     <section
-      className="hero-wrapper pt-[clamp(59px,22.35px_+_9.774vw,210px)] pb-[clamp(20px,17.57px_+_0.648vw,30px)] h-dvh items-end"
+      className="hero-wrapper pt-[clamp(59px,22.35px_+_9.774vw,210px)] pb-[clamp(20px,17.57px_+_0.648vw,30px)] h-[min(100dvh,1000px)] items-end overflow-hidden relative"
       style={{
         backgroundImage: "url('/images/hero-bg.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="background-marquee">
+      {/* <div className="background-marquee">
         <div className="marquee-track">
           <span className="marquee-text text-center valturin text-[length:clamp(98px,49.78px_+_12.857vw,296.648px)] leading-[clamp(98px,49.78px_+_12.857vw,296.648px)] text-black">
             Glory October Glory October Glory October
@@ -59,17 +59,17 @@ export default function HeroSection() {
             Glory October Glory October Glory October
           </span>
         </div>
-      </div>
+      </div> */}
 
       <div className="foreground-container">
-        <div className="hero-image-box absolute left-0 bottom-[-100px]">
+        <div className="hero-image-box absolute left-1/2 bottom-0 -translate-x-1/2 w-[max(100%,1200px)]">
           <img ref={imageRef} src="/images/hero-girls.png" alt="Glory October Team" style={{
             clipPath: "inset(100% 0% 0% 0%)",
             transition: "clip-path 1s ease-in-out"
           }} />
         </div>
 
-        <div className="text-content text-center flex justify-center items-center flex-col relative mt-[1%]">
+        <div className="text-content text-center flex justify-center items-center flex-col absolute left-0 bottom-[3%] w-full">
           <div className="w-full flex flex-col justify-center items-center" ref={headingTrackRef}
             style={{
               clipPath: "inset(0% 100% 0% 0%)",

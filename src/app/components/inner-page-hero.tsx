@@ -20,7 +20,7 @@ export type InnerPageHeroProps = {
   children?: React.ReactNode;
 };
 
-const DEFAULT_IMAGE = "/images/servicce.png";
+const  DEFAULT_IMAGE = "/images/servicce.png";
 
 /**
  * The full-height banner at the top of every inner page.

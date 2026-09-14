@@ -4,6 +4,7 @@ import "./globals.css";
 import Preloader from "./components/preloader";
 import QueryProvider from "@/lib/api/query-provider";
 import { ToastHost } from "./components/salon/toast";
+import BackToTop from "./components/back-to-top";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default function RootLayout({
         <QueryProvider>
           <Preloader />
           {children}
+          <BackToTop />
           <ToastHost />
         </QueryProvider>
       </body>

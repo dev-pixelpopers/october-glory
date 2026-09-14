@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -118,6 +119,7 @@ export default function Footer() {
 
           {/* Policy Links */}
           <div className="w-full md:w-1/3 flex justify-center gap-[clamp(16px,14.06px_+_0.518vw,24px)]">
+            <Link href="/wigs" className="text-gray-800 hover:text-[#d4af6e] text-[length:clamp(17px,16.27px_+_0.194vw,20px)] gotham transition-colors">Wigs</Link>
             <a href="/terms" className="text-gray-800 hover:text-[#d4af6e] text-[length:clamp(17px,16.27px_+_0.194vw,20px)] gotham transition-colors">Terms</a>
             <a href="/privacy" className="text-gray-800 hover:text-[#d4af6e] text-[length:clamp(17px,16.27px_+_0.194vw,20px)] gotham transition-colors">Privacy</a>
             <a href="/returns" className="text-gray-800 hover:text-[#d4af6e] text-[length:clamp(17px,16.27px_+_0.194vw,20px)] gotham transition-colors">Returns</a>
