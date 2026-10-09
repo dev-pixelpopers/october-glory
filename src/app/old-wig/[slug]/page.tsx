@@ -22,7 +22,7 @@ export async function generateMetadata({
   return {
     title: child.meta.title,
     description: child.meta.description,
-    alternates: { canonical: `/wigs/${slug}` },
+    alternates: { canonical: `/old-wig/${slug}` },
   };
 }
 
@@ -31,7 +31,7 @@ export async function generateMetadata({
  * pages — only the breadcrumb differs, because Wigs sits beside /services
  * rather than inside it.
  */
-export default async function WigsChildPage({
+export default async function OldWigChildPage({
   params,
 }: {
   params: Promise<Params>;
@@ -46,7 +46,7 @@ export default async function WigsChildPage({
     <ServiceDetailTemplate
       service={child}
       root={{ href: "/", label: "Home" }}
-      parent={{ href: "/wigs", label: wigsPage.cardTitle }}
+      parent={{ href: "/old-wig", label: wigsPage.cardTitle }}
       related={
         siblings.length
           ? {

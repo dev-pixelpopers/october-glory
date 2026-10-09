@@ -21,10 +21,10 @@ export { serviceChildren } from "./children";
  * derived link pointing at the right root.
  */
 const EXTERNAL_PARENT_ROOTS: Record<string, string> = {
-  wigs: "/wigs",
+  wigs: "/old-wig",
 };
 
-/** Where a parent's pages live: /wigs for Wigs, /services/<slug> otherwise. */
+/** Where a parent's pages live: /old-wig for Wigs, /services/<slug> otherwise. */
 export const parentRoot = (parentSlug: string): string =>
   EXTERNAL_PARENT_ROOTS[parentSlug] ?? `/services/${parentSlug}`;
 

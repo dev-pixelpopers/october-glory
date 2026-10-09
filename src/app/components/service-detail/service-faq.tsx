@@ -65,7 +65,7 @@ export default function ServiceFaqSection({
                 </span>
                 <span
                   aria-hidden="true"
-                  className="shrink-0 w-[32px] h-[32px] rounded-full border border-[#ccb884] text-[#9C6D51] flex items-center justify-center text-[18px] leading-none transition-transform duration-300 group-open:rotate-45 motion-reduce:transition-none"
+                  className="shrink-0 w-[32px] h-[32px] rounded-full border border-[#ccb884] text-[#9C6D51] flex items-center justify-center text-[18px] leading-none transition-transform duration-300 group-open:rotate-90 motion-reduce:transition-none"
                 >
                   <svg width="10" height="10" viewBox="0 0 14 14" className="transition-transform duration-300 group-open:rotate-45">
   <path d="M7 0v14M0 7h14" stroke="currentColor" strokeWidth="1.5"/>

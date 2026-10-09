@@ -14,9 +14,16 @@ import { NON_MEMBER_MARKUP } from "@/data/services/pricing";
  * rule and an outlined button on the page's own ground, against the booking
  * band's full-bleed photograph. Two photo CTAs back to back would read as the
  * page ending twice. It takes a tone like every other block so it alternates
- * with whatever precedes it.
+ * with whatever precedes it, and it closes every wig page.
  */
-export default function MembershipCta({ tone = "dark" }: { tone?: Tone }) {
+export default function MembershipCta({
+  tone = "dark",
+  /** Overrides the default body, which refers to prices on the page. */
+  body = MEMBERSHIP_CTA.body,
+}: {
+  tone?: Tone;
+  body?: string;
+}) {
   const scope = useReveal<HTMLElement>();
   const c = palette[tone];
   const savingPercent = Math.round(
@@ -53,7 +60,7 @@ export default function MembershipCta({ tone = "dark" }: { tone?: Tone }) {
         <h3
           data-reveal
           data-reveal-delay="2"
-          className="valturin text-[length:var(--fs-h3)] text-gold uppercase tracking-wider mt-[var(--space-12)]"
+          className="valturin text-[length:var(--fs-h3)] text-gold uppercase tracking-wider mt-[12px]"
         >
           {MEMBERSHIP_CTA.heading}
         </h3>
@@ -63,7 +70,7 @@ export default function MembershipCta({ tone = "dark" }: { tone?: Tone }) {
           data-reveal-delay="3"
           className={`gotham text-[length:var(--fs-body)] leading-[1.8] ${c.body} font-light max-w-[620px] mt-[var(--space-28)]`}
         >
-          {MEMBERSHIP_CTA.body}
+          {body}
         </p>
 
         <p

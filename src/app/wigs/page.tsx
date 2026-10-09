@@ -1,83 +1,84 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
-import WelcomeSection from "../components/about-section";
-import InstagramSection from "../components/instagram-section";
-import ServiceHero from "../components/service-detail/service-hero";
-import ServiceProcessSection from "../components/service-detail/service-process";
-import ServiceBeforeAfterSection from "../components/service-detail/service-before-after";
-import ServiceMenuGrid from "../components/service-detail/service-menu";
-import ServiceShopPreview from "../components/service-detail/service-shop-preview";
-import ServiceComparisonTable from "../components/service-detail/service-comparison";
-import ServiceEbookSection from "../components/service-detail/service-ebook";
-import ServiceFaqSection from "../components/service-detail/service-faq";
-import ServiceCta from "../components/service-detail/service-cta";
+import UnitHero from "../components/units/unit-hero";
+import UnitPoster from "../components/units/unit-poster";
+import InstallFlow from "../components/units/install-flow";
+import UnitCatalog from "../components/units/unit-catalog";
+import WigSideTab from "../components/wig-services/wig-side-tab";
 import MembershipCta from "../components/service-detail/membership-cta";
-import { childrenMenu } from "@/data/services";
-import { serviceBeforeAfter, serviceProcess } from "@/data/services/defaults";
-import { wigsPage } from "@/data/wigs";
+import ServiceCta from "../components/service-detail/service-cta";
+import { unitsPage } from "@/data/units";
+
+/** The page carries no prices, so the default membership line does not fit. */
+const MEMBER_BODY =
+  "Members book every October Glory service at the member price, with priority booking, member-only treatments, and loyalty points on everything — including the consultation that starts a custom unit.";
 
 export const metadata = {
-  title: wigsPage.meta.title,
-  description: wigsPage.meta.description,
+  title: unitsPage.meta.title,
+  description: unitsPage.meta.description,
   alternates: { canonical: "/wigs" },
 };
 
 /**
- * The Wigs page. It reads like a service page and reuses the same section
- * components, but it is a destination in its own right rather than one of the
- * main services, so it is composed here instead of going through
- * `ServiceDetailTemplate`.
+ * October Glory Units.
  *
- * Three sections live only on this page — the sticky welcome video, the unit
- * shop strip, and the Instagram reel — which is why the template no longer
- * carries branches for them.
+ * The wig section of the site, built from the handoff deck: the poster the
+ * client asked for, the installation flow with its start-to-finish video, and
+ * the ten units as a catalogue ordered by length, where each portrait is also
+ * that unit's video and opens the client's own page.
  *
- * The light/dark tones are pinned rather than alternated. The template's
- * `assignTones` walks a variable block list; this page's sections are fixed,
- * and these are the tones that walk produces for them.
+ * The catalog replaced a plain photo grid here: it carries everything the
+ * grid did plus the spec and the video, and two listings of the same ten
+ * units on one page was duplication. The grid still runs on a unit's own
+ * page, as the strip of the other nine.
+ *
+ * The service page this replaced is parked at /old-wig.
+ *
+ * Tones are pinned rather than walked — the section list here is fixed, so
+ * there is nothing for `assignTones` to resolve.
  */
-export default function WigsPage() {
-  // The sub-services listed on this page, built from `children.ts` the same way
-  // a service builds its own grid — so a wig service cannot be in the data and
-  // missing from the page.
-  const menu = childrenMenu(wigsPage);
-
+export default function UnitsPage() {
   return (
     <div className="main-app bg-[#1B1B1B]">
       <Header theme="dark" />
 
-      {/* No breadcrumb and no intro paragraph: the hero is the wordmark over
-          the photograph, the way the home page hero reads. */}
-      <ServiceHero service={wigsPage} showCrumbs={false} showIntro={false} />
+      <WigSideTab href="/wigs/services" label="Explore Our Wig Services" />
 
-      <WelcomeSection video={wigsPage.welcomeVideo} section={wigsPage.overview} />
-
-      <ServiceProcessSection process={serviceProcess(wigsPage)} tone="light" />
-
-      {menu && <ServiceMenuGrid menu={menu} tone="dark" />}
-
-      <ServiceShopPreview items={wigsPage.shopProducts} />
-
-      {wigsPage.instagram && <InstagramSection content={wigsPage.instagram} />}
-
-      {wigsPage.comparison && (
-        <ServiceComparisonTable comparison={wigsPage.comparison} />
-      )}
-
-      {wigsPage.ebook && <ServiceEbookSection ebook={wigsPage.ebook} />}
-
-      {wigsPage.faq && <ServiceFaqSection faq={wigsPage.faq} tone="light" />}
-
-      <ServiceBeforeAfterSection
-        beforeAfter={serviceBeforeAfter(wigsPage)}
-        tone="dark"
+      <UnitHero
+        image={unitsPage.hero.image}
+        display={unitsPage.hero.display}
+        script={unitsPage.hero.script}
+        scale="display"
       />
 
-      <MembershipCta tone="light" />
+      <UnitPoster tone="light" />
 
-      <ServiceCta cta={wigsPage.cta} image={wigsPage.hero.image} />
+      <InstallFlow tone="dark" />
 
-      <Footer />
+      <UnitCatalog tone="light" />
+
+      {/* Book first, while the catalogue is still in view. The hand-off to
+          the services side sits between the two CTAs that were already here,
+          in the light tone so three closing panels don't read as one slab,
+          and membership closes the page.
+
+          Everything from the hand-off down is raised above the fixed side
+          tab, so reaching it retires the tab for the rest of the page. */}
+      <ServiceCta cta={unitsPage.cta} image={unitsPage.hero.image} />
+
+      <div className="relative z-50">
+        <ServiceCta
+          cta={unitsPage.servicesCta}
+          image="/images/Weaves-And-Extensions-04.webp"
+          action={{ href: "/wigs/services", label: "Explore Wig Services" }}
+          tone="light"
+          elevated
+        />
+
+        <MembershipCta tone="dark" body={MEMBER_BODY} />
+
+        <Footer />
+      </div>
     </div>
   );
 }

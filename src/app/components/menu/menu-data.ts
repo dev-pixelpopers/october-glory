@@ -1,6 +1,7 @@
 import { products } from "@/app/shop/product";
 import { getParents, hasPage, serviceChildren, servicePath } from "@/data/services";
-import { wigsPage } from "@/data/wigs";
+import { unitsPage } from "@/data/units";
+import { wigServicesPage } from "@/data/wig-services";
 
 /**
  * Nav structure and hover-preview content for the full-screen menu.
@@ -124,15 +125,6 @@ const PAGE_PREVIEWS = {
     body: "Meet Jhavuanna Paterson — owner and master hair stylist — and the philosophy that shaped the salon.",
     image: "/images/about-img.png",
     href: "/about-us",
-  },
-
-  wigs: {
-    variant: "default",
-    eyebrow: "Wigs",
-    title: wigsPage.cardTitle,
-    body: wigsPage.cardBlurb,
-    image: wigsPage.cardImage,
-    href: "/wigs",
   },
 
   "glorious-packages": {
@@ -278,6 +270,34 @@ export const PREVIEWS: Record<string, MenuPreview> = {
     phoneHref: "tel:+17186141118",
     address: "1381 Bedford Avenue Brooklyn, NY 11216",
     mapHref: CONTACT_MAP_HREF,
+  },
+
+  /**
+   * Wigs opens as a two-card panel rather than a single image, because the
+   * wig section is two destinations — the units and the services around
+   * them — and the menu is where that split should first be visible.
+   */
+  wigs: {
+    variant: "cards",
+    eyebrow: "Custom Luxury Units",
+    title: "October Glory Units",
+    body: "Two halves of one section: the units we have built, and everything we do around them.",
+    href: "/wigs",
+    cardCta: "Explore",
+    cards: [
+      {
+        image: unitsPage.hero.image,
+        title: "The Units",
+        body: "Ten custom units, each built for the client wearing it — what she asked for, what we made, and how it turned out.",
+        href: "/wigs",
+      },
+      {
+        image: wigServicesPage.hero.image,
+        title: "Wig Services",
+        body: "Consultation and custom design, three maintenance packages, and the wig services you can book on their own.",
+        href: "/wigs/services",
+      },
+    ],
   },
 
   services: {
