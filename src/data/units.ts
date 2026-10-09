@@ -178,7 +178,14 @@ export const unitsPage = {
     images: ["/images/Weaves-And-Extensions-02.webp", "/images/Weaves-And-Extensions-03.webp"],
   },
 
-  /** The installation flow, exactly as specified on the handoff deck. */
+  /**
+   * The installation flow, exactly as specified on the handoff deck.
+   *
+   * `at` is where each stage begins in `video`, in seconds, as timed by the
+   * salon — the stages are not equal lengths. A stage runs until the next
+   * one starts, and the last runs to the end of the clip, so re-timing the
+   * sequence is a matter of editing these four numbers.
+   */
   install: {
     eyebrow: "The Process",
     heading: "From Your Hair",
@@ -190,24 +197,28 @@ export const unitsPage = {
     steps: [
       {
         title: "Big natural hair",
+        at: 0,
         body: "We start with your own hair — assessed, cleansed and treated, so the foundation is healthy before anything is built on it.",
         /** PLACEHOLDER — replace with /images/units/process-natural.webp */
         image: "/images/naturalStyle1.webp",
       },
       {
         title: "Braid the hair down securely",
+        at: 45,
         body: "A braid pattern matched to your density, flat and secure, so the unit sits close to the scalp and your own hair is protected underneath.",
         /** PLACEHOLDER — replace with /images/units/process-braided.webp */
         image: "/images/braiddown.jpg",
       },
       {
         title: "Install the wig",
+        at: 65,
         body: "The unit goes on and is fitted to your head, not to a standard size — the reason a custom unit reads as your own hair rather than something worn.",
         /** PLACEHOLDER — replace with /images/units/process-install.webp */
         image: "/images/Weaves-And-Extensions-04.webp",
       },
       {
         title: "Style and finish",
+        at: 80,
         body: "Trimmed, shaped and styled while you are wearing it, so the finished look is cut to your face rather than to a mannequin.",
         /** PLACEHOLDER — replace with /images/units/process-finish.webp */
         image: "/images/SilkPress-01.webp",

@@ -69,7 +69,12 @@ export default function UnitHero({
         // The scrim has to carry the title, not just the bottom edge. These
         // photographs are bright and warm, and a gradient that only darkens
         // the last few percent left white script sitting on skin tones.
-        backgroundImage: `linear-gradient(180deg, rgba(27,27,27,0.25) 0%, rgba(27,27,27,0.12) 30%, rgba(27,27,27,0.62) 62%, rgba(27,27,27,0.94) 100%), url('${image}')`,
+        // Three jobs, one gradient. The top band matches the 0.6 the other
+        // inner-page heroes use, so the header's wordmark and menu bars stay
+        // legible over a bright photograph. It falls away through the middle
+        // so the picture is still a picture. It closes dark enough to carry
+        // the title, which sits at the bottom.
+        backgroundImage: `linear-gradient(180deg, rgba(27,27,27,0.62) 0%, rgba(27,27,27,0.30) 24%, rgba(27,27,27,0.22) 44%, rgba(27,27,27,0.66) 70%, rgba(27,27,27,0.95) 100%), url('${image}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
