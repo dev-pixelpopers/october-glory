@@ -2,6 +2,7 @@ import { products } from "@/app/shop/product";
 import { getParents, hasPage, serviceChildren, servicePath } from "@/data/services";
 import { unitsPage } from "@/data/units";
 import { wigServicesPage } from "@/data/wig-services";
+import { silkPressPage } from "@/data/silk-press-new";
 
 /**
  * Nav structure and hover-preview content for the full-screen menu.
@@ -82,6 +83,7 @@ export const CONTACT_MAP_HREF = "#";
 export const PRIMARY_LINKS: MenuLink[] = [
   { key: "about-us", label: "About Us", href: "/about-us" },
   { key: "wigs", label: "Wigs", href: "/wigs" },
+  { key: "silk-press-new", label: "Silk Press", href: "/silk-press-new" },
   { key: "services", label: "Services", href: "/services" },
   { key: "packages", label: "Packages", href: "/services" },
   { key: "lookbook", label: "Lookbook", href: "/lookbook" },
@@ -298,6 +300,20 @@ export const PREVIEWS: Record<string, MenuPreview> = {
         href: "/wigs/services",
       },
     ],
+  },
+
+  /**
+   * The Silk Press showcase. Keyed `silk-press-new` rather than `silk-press`
+   * so it does not collide with the preview SERVICE_PREVIEWS still generates
+   * for the live service page at /services/silk-press.
+   */
+  "silk-press-new": {
+    variant: "default",
+    eyebrow: "Premier Service",
+    title: "The Glorious Silk Press",
+    body: silkPressPage.hero.intro,
+    image: silkPressPage.hero.image,
+    href: "/silk-press-new",
   },
 
   services: {

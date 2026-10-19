@@ -2,7 +2,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import UnitHero from "../components/units/unit-hero";
 import UnitPoster from "../components/units/unit-poster";
-import InstallFlow from "../components/units/install-flow";
+import ProcessFlow from "../components/process/process-flow";
 import UnitCatalog from "../components/units/unit-catalog";
 import WigSideTab from "../components/wig-services/wig-side-tab";
 import MembershipCta from "../components/service-detail/membership-cta";
@@ -53,7 +53,7 @@ export default function UnitsPage() {
 
       <UnitPoster tone="light" />
 
-      <InstallFlow tone="dark" />
+      <ProcessFlow flow={unitsPage.install} tone="dark" />
 
       <UnitCatalog tone="light" />
 

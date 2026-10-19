@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useReveal } from "./use-reveal";
-import { tone as palette } from "./tone";
+import { tone as palette, type Tone } from "./tone";
 import type { ServiceEbook } from "@/data/services/types";
 
 /**
@@ -18,10 +18,21 @@ import type { ServiceEbook } from "@/data/services/types";
  * text is still clipped to nothing.
  *
  * Rendered only for services whose data defines `ebook`.
+ *
+ * `tone` changes the ground the block sits on, not the block itself: the
+ * brown gradient panel and the white cover card are the artwork, and they
+ * read the same either way. Only the section background and the eyebrow
+ * follow the page.
  */
-export default function ServiceEbookSection({ ebook }: { ebook: ServiceEbook }) {
+export default function ServiceEbookSection({
+  ebook,
+  tone = "dark",
+}: {
+  ebook: ServiceEbook;
+  tone?: Tone;
+}) {
   const scope = useReveal<HTMLElement>();
-  const c = palette.dark;
+  const c = palette[tone];
 
   return (
     <section
