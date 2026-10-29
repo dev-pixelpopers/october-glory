@@ -36,6 +36,11 @@ export interface User {
   /** Passwordless account created via "Continue as Guest". */
   is_guest: boolean;
   has_password: boolean;
+  /** Has a membership in force now — books at the member discount. */
+  is_member: boolean;
+  membership_ends_at: string | null;
+  /** Fraction members save, e.g. 0.3 — the same rate the API applies at booking. */
+  member_discount_rate: number;
   /**
    * "guest" = ability-scoped guest-session on a full account: booking works,
    * but loyalty redemption / history / role-gated areas are locked until the
@@ -63,7 +68,12 @@ export interface AuthResponse {
 export interface ServiceCategory {
   id: number;
   name: string;
+  /** The site page's URL slug (/services/<slug>); kept fixed on rename. */
   slug: string;
+  image: string | null;
+  /** A service page or a package page on the site. */
+  kind: "services" | "packages";
+  sort_order: number;
 }
 
 export interface Service {
@@ -71,11 +81,18 @@ export interface Service {
   category_id: number | null;
   category?: ServiceCategory | null;
   name: string;
+  /** Matches the site page (/services/<category>/<slug>) when one exists. */
+  slug: string | null;
+  sort_order: number;
   description: string | null;
+  /** Site path (e.g. /images/RodSet-01.webp) or full URL. */
+  image: string | null;
   duration_minutes: number;
   is_active: boolean;
   /** Derived from the service_price_history row where effective_until IS NULL. */
   current_price: string;
+  /** Quoted at consultation (e.g. custom units); current_price is then 0.00. */
+  price_by_consultation: boolean;
 }
 
 export interface ServicePriceHistoryEntry {
@@ -102,6 +119,8 @@ export interface Package {
   slug: string;
   tagline: string | null;
   description: string | null;
+  /** Site path (e.g. /images/GLORIOUS-PACKAGES-01.webp) or full URL. */
+  image: string | null;
   /** The "what you get" bullets. */
   includes: string[];
   not_included: string | null;
@@ -115,6 +134,28 @@ export interface Package {
   /** The salon's set package price — the active package_price_history row. */
   price: string;
   services: Service[];
+}
+
+/** A shop product. Wig units also carry their length / texture / colour spec. */
+export interface Product {
+  id: number;
+  name: string;
+  slug: string;
+  /** Shop grouping, e.g. "Wigs". */
+  category: string | null;
+  description: string | null;
+  image: string | null;
+  gallery: string[];
+  price: string;
+  /** Shop filter tags, e.g. ["wavy", "new"]. */
+  tags: string[];
+  length: string | null;
+  texture: string | null;
+  color: string | null;
+  /** Shown in the full-screen menu's Shop panel. */
+  is_featured: boolean;
+  is_active: boolean;
+  sort_order: number;
 }
 
 export interface PackagePriceHistoryEntry {
@@ -165,6 +206,7 @@ export interface AppointmentLineItem {
   service_id: number;
   service_name: string;
   price_at_booking: string;
+  price_by_consultation: boolean;
   duration_at_booking: number;
 }
 
@@ -177,7 +219,10 @@ export interface Appointment {
   end_time: string;
   total_duration_minutes: number;
   subtotal_amount: string;
+  /** Member discount, applied before loyalty points. */
+  member_discount_amount: string;
   loyalty_points_used: number;
+  /** Loyalty-points discount. */
   discount_amount: string;
   total_amount: string;
   payment_method: PaymentMethod;
@@ -296,6 +341,20 @@ export interface WorkerMetrics {
 }
 
 /* --------------------------------- Pagination --------------------------------- */
+
+/** A client as the admin Clients tab sees them. */
+export interface Client {
+  id: number;
+  name: string;
+  email: string;
+  phone: string | null;
+  is_guest: boolean;
+  is_member: boolean;
+  membership_since: string | null;
+  membership_ends_at: string | null;
+  appointments_count: number;
+  created_at: string | null;
+}
 
 export interface Paginated<T> {
   data: T[];

@@ -10,7 +10,17 @@ class ServiceCategory extends Model
 {
     use Auditable;
 
-    protected $fillable = ['name', 'slug'];
+    /** A category is either a service page or a package page on the site. */
+    public const KIND_SERVICES = 'services';
+
+    public const KIND_PACKAGES = 'packages';
+
+    protected $fillable = ['name', 'slug', 'image', 'kind', 'sort_order'];
+
+    protected function casts(): array
+    {
+        return ['sort_order' => 'integer'];
+    }
 
     public function services(): HasMany
     {

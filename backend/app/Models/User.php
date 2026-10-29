@@ -70,6 +70,29 @@ class User extends Authenticatable
         return $this->hasMany(Appointment::class, 'worker_id');
     }
 
+    public function memberships(): HasMany
+    {
+        return $this->hasMany(UserMembership::class);
+    }
+
+    /** The membership in force right now: active, started, and not yet ended. */
+    public function activeMembership(): HasOne
+    {
+        return $this->hasOne(UserMembership::class)
+            ->where('status', 'active')
+            ->where('starts_at', '<=', now())
+            ->where(fn ($q) => $q->whereNull('ends_at')->orWhere('ends_at', '>', now()))
+            ->latest('starts_at');
+    }
+
+    /** Members get the member discount on every booking. */
+    public function isMember(): bool
+    {
+        return $this->relationLoaded('activeMembership')
+            ? $this->activeMembership !== null
+            : $this->activeMembership()->exists();
+    }
+
     public function loyaltyTransactions(): HasMany
     {
         return $this->hasMany(LoyaltyTransaction::class);

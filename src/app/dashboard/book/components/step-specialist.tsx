@@ -75,12 +75,10 @@ export default function StepSpecialist({
               }`}
             >
               {worker.avatar_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={worker.avatar_url}
-                  alt={worker.name}
-                  className="w-16 h-16 rounded-full object-cover mb-5"
-                />
+                <div className="w-16 h-16 rounded-full overflow-hidden mb-5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={worker.avatar_url} alt={worker.name} className="object-cover" />
+                </div>
               ) : (
                 <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-b from-[#9C6D51] to-[#5F3A21] text-white andrea text-[26px] mb-5">
                   {worker.name.charAt(0)}

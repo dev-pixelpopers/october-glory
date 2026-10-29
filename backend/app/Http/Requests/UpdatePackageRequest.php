@@ -19,13 +19,15 @@ class UpdatePackageRequest extends FormRequest
             'category_id' => ['nullable', 'integer', 'exists:service_categories,id'],
             'tagline' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'image' => ['nullable', 'string', 'max:2048'],
             'includes' => ['nullable', 'array'],
             'includes.*' => ['string'],
             'not_included' => ['nullable', 'string'],
             'best_for' => ['nullable', 'string'],
             'is_featured' => ['sometimes', 'boolean'],
             'is_active' => ['sometimes', 'boolean'],
-            'service_ids' => ['sometimes', 'array', 'min:1'],
+            // May be empty for flat-priced packages (e.g. bridal); the package keeps its set price.
+            'service_ids' => ['sometimes', 'array'],
             'service_ids.*' => ['integer', 'exists:services,id'],
             // A changed price never mutates history — it opens a new ledger row.
             'price' => ['sometimes', 'nullable', 'numeric', 'min:0', 'max:99999999.99'],

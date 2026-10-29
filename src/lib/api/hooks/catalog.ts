@@ -5,6 +5,7 @@ import { api } from "../client";
 import type {
   Package,
   PackagePriceHistoryEntry,
+  Product,
   Service,
   ServiceCategory,
   ServicePriceHistoryEntry,
@@ -22,8 +23,8 @@ export function useCategories() {
 export function useCreateCategory() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (name: string) =>
-      api.post<{ data: ServiceCategory }>("/admin/categories", { name }),
+    mutationFn: (payload: { name: string; kind?: ServiceCategory["kind"] }) =>
+      api.post<{ data: ServiceCategory }>("/admin/categories", payload),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["categories"] }),
   });
 }
@@ -31,8 +32,8 @@ export function useCreateCategory() {
 export function useUpdateCategory() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, name }: { id: number; name: string }) =>
-      api.put<{ data: ServiceCategory }>(`/admin/categories/${id}`, { name }),
+    mutationFn: ({ id, ...payload }: { id: number; name: string; image?: string | null }) =>
+      api.put<{ data: ServiceCategory }>(`/admin/categories/${id}`, payload),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["categories"] });
       qc.invalidateQueries({ queryKey: ["services"] });
@@ -60,6 +61,18 @@ export function useServices(categoryId?: number) {
       api
         .get<{ data: Service[] }>("/services", { params: { category_id: categoryId } })
         .then((r) => r.data),
+  });
+}
+
+/** One site page's live services, by its category slug (the /services/<slug> URL). */
+export function useCategoryServices(categorySlug: string | undefined) {
+  return useQuery({
+    queryKey: ["services", "category", categorySlug],
+    queryFn: () =>
+      api
+        .get<{ data: Service[] }>("/services", { params: { category: categorySlug } })
+        .then((r) => r.data),
+    enabled: !!categorySlug,
   });
 }
 
@@ -91,9 +104,12 @@ export function usePriceHistory(serviceId: number | null) {
 export interface ServicePayload {
   name: string;
   description?: string;
+  image?: string | null;
   category_id?: number | null;
   duration_minutes: number;
+  /** Ignored by the API when price_by_consultation is true. */
   price: string;
+  price_by_consultation?: boolean;
   is_active?: boolean;
 }
 
@@ -148,6 +164,7 @@ export interface PackagePayload {
   category_id?: number | null;
   tagline?: string | null;
   description?: string | null;
+  image?: string | null;
   includes?: string[];
   not_included?: string | null;
   best_for?: string | null;
@@ -187,6 +204,69 @@ export function useDeletePackage() {
   });
 }
 
+/* ------------------------------- Products ------------------------------------ */
+
+/** Public shop catalog: active products, optionally one category. */
+export function useProducts(category?: string) {
+  return useQuery({
+    queryKey: ["products", category ?? "all"],
+    queryFn: () =>
+      api
+        .get<{ data: Product[] }>("/products", { params: { category } })
+        .then((r) => r.data),
+  });
+}
+
+/** Admin: every product including inactive ones. */
+export function useAdminProducts() {
+  return useQuery({
+    queryKey: ["products", "admin"],
+    queryFn: () => api.get<{ data: Product[] }>("/admin/products").then((r) => r.data),
+  });
+}
+
+export interface ProductPayload {
+  name: string;
+  category?: string | null;
+  description?: string | null;
+  image?: string | null;
+  gallery?: string[];
+  price: string;
+  tags?: string[];
+  length?: string | null;
+  texture?: string | null;
+  color?: string | null;
+  is_featured?: boolean;
+  is_active?: boolean;
+  sort_order?: number;
+}
+
+export function useCreateProduct() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: ProductPayload) =>
+      api.post<{ data: Product }>("/admin/products", payload),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["products"] }),
+  });
+}
+
+export function useUpdateProduct() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, ...payload }: Partial<ProductPayload> & { id: number }) =>
+      api.put<{ data: Product }>(`/admin/products/${id}`, payload),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["products"] }),
+  });
+}
+
+export function useDeleteProduct() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => api.delete<void>(`/admin/products/${id}`),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["products"] }),
+  });
+}
+
 /* ------------------------------- Admin: workers ------------------------------- */
 
 export function useWorkers() {
@@ -223,6 +303,15 @@ export function useUpdateWorker() {
   return useMutation({
     mutationFn: ({ id, ...payload }: Partial<WorkerPayload> & { id: number }) =>
       api.put<{ data: Worker }>(`/admin/workers/${id}`, payload),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["workers"] }),
+  });
+}
+
+/** Fails with 409 (code WORKER_HAS_HISTORY) if the worker has appointments or reviews. */
+export function useDeleteWorker() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => api.delete<void>(`/admin/workers/${id}`),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["workers"] }),
   });
 }

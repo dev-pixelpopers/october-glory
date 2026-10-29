@@ -13,18 +13,13 @@ if (typeof window !== "undefined") {
 const BOOKING_URL =
   "/dashboard/book";
 
-// Cover art keyed by package slug (falls back to the ordered gallery images).
-const IMAGE_BY_SLUG: Record<string, string> = {
-  "glorious-rodset": "/images/glorious-packages-01.webp",
-  "glorious-silk-press": "/images/glorious-packages-02.webp",
-  "glorious-boost": "/images/glorious-packages-03.webp",
-  "wig-prep": "/images/glorious-packages-04.webp",
-};
+// Used when a package has no image set in the dashboard, and while the API
+// loads. Case-exact: the files are upper-case, and production is case-sensitive.
 const FALLBACK_IMAGES = [
-  "/images/glorious-packages-01.webp",
-  "/images/glorious-packages-02.webp",
-  "/images/glorious-packages-03.webp",
-  "/images/glorious-packages-04.webp",
+  "/images/GLORIOUS-PACKAGES-01.webp",
+  "/images/GLORIOUS-PACKAGES-02.webp",
+  "/images/GLORIOUS-PACKAGES-03.webp",
+  "/images/GLORIOUS-PACKAGES-04.webp",
 ];
 
 const FALLBACK_SERVICES = [
@@ -48,7 +43,7 @@ export default function GloriousPackagesGallery() {
       ? packages.map((p, i) => ({
           name: p.name.toUpperCase(),
           price: priceLabel(p.price),
-          image: IMAGE_BY_SLUG[p.slug] ?? FALLBACK_IMAGES[i % FALLBACK_IMAGES.length],
+          image: p.image || FALLBACK_IMAGES[i % FALLBACK_IMAGES.length],
         }))
       : FALLBACK_SERVICES;
 

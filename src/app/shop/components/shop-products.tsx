@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { products, PRODUCT_TAGS, ProductTag } from "../product";
+import { useProducts } from "@/lib/api/hooks/catalog";
+import type { Product } from "@/lib/api/types";
+import { getUnit } from "@/data/units";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -20,40 +23,61 @@ const INITIAL_ROWS = 2;
  */
 const CLIP_LINE = 110;
 
-const PRICE_MIN = Math.min(...products.map((product) => product.productPrice));
-const PRICE_MAX = Math.max(...products.map((product) => product.productPrice));
-
 type SortOrder = "none" | "asc" | "desc";
 
+const priceOf = (product: Product) => parseFloat(product.price);
+
+/** "1800.00" -> "$1,800". */
+const priceLabel = (product: Product) =>
+  priceOf(product).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  });
+
+/** Wig units link to their own page at /wigs/<slug>. */
+const productHref = (product: Product) =>
+  getUnit(product.slug) ? `/wigs/${product.slug}` : undefined;
+
 export default function ShopProducts() {
+  const { data, isLoading, error } = useProducts();
+  const products = useMemo(() => data ?? [], [data]);
+
+  // Filter options follow whatever the admin has tagged products with.
+  const productTags = useMemo(
+    () => [...new Set(products.flatMap((product) => product.tags))].sort(),
+    [products]
+  );
+  const prices = products.map(priceOf);
+  const PRICE_MIN = prices.length ? Math.floor(Math.min(...prices)) : 0;
+  const PRICE_MAX = prices.length ? Math.ceil(Math.max(...prices)) : 0;
+
   const [visibleRows, setVisibleRows] = useState(INITIAL_ROWS);
-  const [selectedTags, setSelectedTags] = useState<ProductTag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortOrder, setSortOrder] = useState<SortOrder>("none");
-  const [priceRange, setPriceRange] = useState<[number, number]>([
-    PRICE_MIN,
-    PRICE_MAX,
-  ]);
+  // null = the full range, so it tracks the catalog once it has loaded.
+  const [chosenRange, setPriceRange] = useState<[number, number] | null>(null);
+  const priceRange: [number, number] = chosenRange ?? [PRICE_MIN, PRICE_MAX];
 
   const filteredProducts = products.filter((product) => {
     const matchesTags =
       selectedTags.length === 0 ||
-      product.productTags.some((tag) => selectedTags.includes(tag));
+      product.tags.some((tag) => selectedTags.includes(tag));
     const matchesPrice =
-      product.productPrice >= priceRange[0] &&
-      product.productPrice <= priceRange[1];
+      priceOf(product) >= priceRange[0] && priceOf(product) <= priceRange[1];
     return matchesTags && matchesPrice;
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortOrder === "asc") return a.productPrice - b.productPrice;
-    if (sortOrder === "desc") return b.productPrice - a.productPrice;
+    if (sortOrder === "asc") return priceOf(a) - priceOf(b);
+    if (sortOrder === "desc") return priceOf(b) - priceOf(a);
     return 0;
   });
 
   const visibleProducts = sortedProducts.slice(0, visibleRows * ITEMS_PER_ROW);
   const hasMore = visibleProducts.length < sortedProducts.length;
 
-  const toggleTag = (tag: ProductTag) => {
+  const toggleTag = (tag: string) => {
     setSelectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
@@ -66,12 +90,12 @@ export default function ShopProducts() {
   };
 
   const handleMinPriceChange = (value: number) => {
-    setPriceRange(([, max]) => [Math.min(value, max), max]);
+    setPriceRange([Math.min(value, priceRange[1]), priceRange[1]]);
     setVisibleRows(INITIAL_ROWS);
   };
 
   const handleMaxPriceChange = (value: number) => {
-    setPriceRange(([min]) => [min, Math.max(value, min)]);
+    setPriceRange([priceRange[0], Math.max(value, priceRange[0])]);
     setVisibleRows(INITIAL_ROWS);
   };
 
@@ -136,10 +160,10 @@ export default function ShopProducts() {
     ScrollTrigger.refresh();
   }, [visibleProducts.length]);
 
-  const fillLeftPct =
-    ((priceRange[0] - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
-  const fillRightPct =
-    100 - ((priceRange[1] - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
+  // Guard the single-price (or empty) catalog, where the span is zero.
+  const priceSpan = PRICE_MAX - PRICE_MIN || 1;
+  const fillLeftPct = ((priceRange[0] - PRICE_MIN) / priceSpan) * 100;
+  const fillRightPct = 100 - ((priceRange[1] - PRICE_MIN) / priceSpan) * 100;
 
   return (
     <section className="shop-products-grid relative w-full bg-[#1B1B1B] py-[var(--space-section-y)] px-[var(--space-section-x)]">
@@ -165,7 +189,7 @@ export default function ShopProducts() {
               Categories
             </h4>
             <div className="flex flex-col gap-[var(--space-16)]">
-              {PRODUCT_TAGS.map((tag) => (
+              {productTags.map((tag) => (
                 <label
                   key={tag}
                   className="flex items-center gap-3 cursor-pointer group"
@@ -249,8 +273,8 @@ export default function ShopProducts() {
               />
             </div>
             <div className="flex justify-between mt-[var(--space-20)] gotham text-gray-300 text-xs">
-              <span>${priceRange[0]}</span>
-              <span>${priceRange[1]}</span>
+              <span>${priceRange[0].toLocaleString("en-US")}</span>
+              <span>${priceRange[1].toLocaleString("en-US")}</span>
             </div>
           </div>
         </div>
@@ -258,40 +282,55 @@ export default function ShopProducts() {
         {/* Product Grid: 4 per row, wrapping into further rows */}
         <div ref={prodTabRef} className="prod-tab flex flex-col gap-[var(--space-40)] w-full lg:w-[80%]">
         <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[var(--space-32)] gap-y-[var(--space-64)]">
-          {visibleProducts.map((product) => (
-            <div
-              key={product.productId}
-              className="prod-card bg-white rounded-xl p-[var(--space-16)] shadow-[0_18px_45px_rgba(0,0,0,0.25)]"
-            >
-              <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg mb-[var(--space-20)] overflow-hidden">
-                <img
-                  src={product.productImage}
-                  alt={product.productTitle}
-                  className="w-full h-full object-cover object-top"
-                />
+          {visibleProducts.map((product) => {
+            const href = productHref(product);
+            const ctaClass =
+              "flex-1 text-center bg-white border border-gray-300 text-gray-500 text-xs uppercase tracking-wider font-semibold py-3 rounded-sm hover:bg-gray-50 transition-colors";
+            return (
+              <div
+                key={product.id}
+                className="prod-card bg-white rounded-xl p-[var(--space-16)] shadow-[0_18px_45px_rgba(0,0,0,0.25)]"
+              >
+                <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg mb-[var(--space-20)] overflow-hidden">
+                  {product.image && (
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  )}
+                </div>
+                <div className="flex justify-between items-center mb-[var(--space-16)] px-1">
+                  <h3 className="text-gray-500 font-medium text-base">
+                    {product.name}
+                  </h3>
+                  <span className="text-gray-400 text-base font-medium">
+                    {priceLabel(product)}
+                  </span>
+                </div>
+                <div className="flex gap-2.5">
+                  <button className="flex-1 bg-[#C0A062] text-white text-xs uppercase tracking-wider font-semibold py-3 rounded-sm hover:bg-[#a6884f] transition-colors">
+                    Try On
+                  </button>
+                  {href ? (
+                    <Link href={href} className={ctaClass}>
+                      See Options
+                    </Link>
+                  ) : (
+                    <button className={ctaClass}>See Options</button>
+                  )}
+                </div>
               </div>
-              <div className="flex justify-between items-center mb-[var(--space-16)] px-1">
-                <h3 className="text-gray-500 font-medium text-base">
-                  {product.productTitle}
-                </h3>
-                <span className="text-gray-400 text-base font-medium">
-                  ${product.productPrice.toFixed(2)}
-                </span>
-              </div>
-              <div className="flex gap-2.5">
-                <button className="flex-1 bg-[#C0A062] text-white text-xs uppercase tracking-wider font-semibold py-3 rounded-sm hover:bg-[#a6884f] transition-colors">
-                  Try On
-                </button>
-                <button className="flex-1 bg-white border border-gray-300 text-gray-500 text-xs uppercase tracking-wider font-semibold py-3 rounded-sm hover:bg-gray-50 transition-colors">
-                  {product.productCta}
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
 
           {visibleProducts.length === 0 && (
             <p className="col-span-full text-center gotham text-gray-400 text-base py-[var(--space-80)]">
-              No products match your filters.
+              {isLoading
+                ? "Loading products…"
+                : error
+                  ? "The shop couldn't be loaded right now. Please try again shortly."
+                  : "No products match your filters."}
             </p>
           )}
          

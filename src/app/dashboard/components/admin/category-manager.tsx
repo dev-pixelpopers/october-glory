@@ -9,59 +9,91 @@ import {
 } from "@/lib/api/hooks/catalog";
 import type { ServiceCategory } from "@/lib/api/types";
 import { buttonGhost, buttonGold, Card, inputClass } from "../dashboard-shell";
+import ImageField from "./image-field";
+
+const KIND_LABEL: Record<ServiceCategory["kind"], string> = {
+  services: "Service pages",
+  packages: "Package pages",
+};
 
 /**
- * Service categories CRUD. Categories group both services and packages; deleting
- * one leaves its services/packages in place (their category simply clears).
+ * Categories — one per page of the website. Service categories group the
+ * services on a /services/<slug> page (that page loads them by this slug);
+ * package categories group the packages on a package page. Deleting one
+ * leaves its services/packages in place (their category simply clears).
  */
 export default function CategoryManager() {
   const { data: categories } = useCategories();
   const create = useCreateCategory();
   const [newName, setNewName] = useState("");
+  const [newKind, setNewKind] = useState<ServiceCategory["kind"]>("services");
   const [editing, setEditing] = useState<ServiceCategory | null>(null);
 
   const add = (e: React.FormEvent) => {
     e.preventDefault();
     const name = newName.trim();
     if (!name) return;
-    create.mutate(name, { onSuccess: () => setNewName("") });
+    create.mutate({ name, kind: newKind }, { onSuccess: () => setNewName("") });
   };
 
   return (
-    <Card title="Service Categories">
-      <form onSubmit={add} className="flex gap-3 mb-5">
+    <Card title="Categories">
+      <form onSubmit={add} className="flex flex-wrap gap-3 mb-6">
         <input
-          className={inputClass}
-          placeholder="New category name (e.g. Bridal)"
+          className={`${inputClass} !w-auto flex-1 min-w-[220px]`}
+          placeholder="New category name"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
         />
+        <select
+          className={`${inputClass} !w-auto`}
+          value={newKind}
+          onChange={(e) => setNewKind(e.target.value as ServiceCategory["kind"])}
+        >
+          <option value="services">Service page</option>
+          <option value="packages">Package page</option>
+        </select>
         <button type="submit" disabled={create.isPending || !newName.trim()} className={buttonGold}>
           {create.isPending ? "Adding…" : "Add Category"}
         </button>
       </form>
       {create.error && <p className="gotham text-red-400 text-[14px] mb-3">{create.error.message}</p>}
 
-      <div className="flex flex-wrap gap-2.5">
-        {(categories ?? []).map((c) => (
-          <span
-            key={c.id}
-            className="inline-flex items-center gap-2 gotham text-[var(--dash-text)] text-[14px] px-3.5 py-2 rounded-full border border-[var(--dash-border)] bg-[var(--dash-card-soft)]"
-          >
-            {c.name}
-            <button
-              onClick={() => setEditing(c)}
-              className="text-[var(--dash-text-muted)] hover:text-[#cda873] cursor-pointer"
-              aria-label={`Rename ${c.name}`}
-            >
-              ✎
-            </button>
-          </span>
-        ))}
-        {(categories ?? []).length === 0 && (
-          <p className="gotham text-[var(--dash-text-faint)] text-[14px]">No categories yet.</p>
-        )}
-      </div>
+      {(["services", "packages"] as const).map((kind) => {
+        const group = (categories ?? []).filter((c) => c.kind === kind);
+        if (group.length === 0) return null;
+        return (
+          <div key={kind} className="mb-6 last:mb-0">
+            <p className="gotham text-[var(--dash-text-faint)] text-[12px] uppercase tracking-widest mb-3">
+              {KIND_LABEL[kind]}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+              {group.map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => setEditing(c)}
+                  className="flex items-center gap-3 text-left border border-[var(--dash-border)] rounded-[14px] p-2.5 hover:border-[#cba660]/60 transition-colors cursor-pointer"
+                >
+                  {/* Sized by the wrapper — the global img rule overrides size utilities on img. */}
+                  <div className="w-11 h-11 rounded-[10px] overflow-hidden bg-[var(--dash-border)] shrink-0">
+                    {c.image && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={c.image} alt="" className="object-cover" />
+                    )}
+                  </div>
+                  <span className="min-w-0">
+                    <span className="block gotham text-[var(--dash-text)] text-[14px] truncate">{c.name}</span>
+                    <span className="block gotham text-[var(--dash-text-faint)] text-[12px] truncate">/{c.slug}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+      {(categories ?? []).length === 0 && (
+        <p className="gotham text-[var(--dash-text-faint)] text-[14px]">No categories yet.</p>
+      )}
 
       {editing && <CategoryEditModal category={editing} onClose={() => setEditing(null)} />}
     </Card>
@@ -73,13 +105,14 @@ function CategoryEditModal({ category, onClose }: { category: ServiceCategory; o
   const del = useDeleteCategory();
   const [name, setName] = useState(category.name);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [image, setImage] = useState(category.image ?? "");
 
   const pending = update.isPending || del.isPending;
   const error = update.error ?? del.error;
 
   const save = (e: React.FormEvent) => {
     e.preventDefault();
-    update.mutate({ id: category.id, name: name.trim() }, { onSuccess: onClose });
+    update.mutate({ id: category.id, name: name.trim(), image: image || null }, { onSuccess: onClose });
   };
 
   return (
@@ -96,6 +129,11 @@ function CategoryEditModal({ category, onClose }: { category: ServiceCategory; o
         </div>
         <form onSubmit={save} className="flex flex-col gap-4">
           <input className={inputClass} value={name} onChange={(e) => setName(e.target.value)} required />
+          <ImageField folder="categories" value={image} onChange={setImage} />
+          <p className="gotham text-[var(--dash-text-faint)] text-[12px]">
+            Page address stays <span className="text-[var(--dash-text-soft)]">/{category.slug}</span> when renamed,
+            so the site keeps finding this category&apos;s services.
+          </p>
           {error && <p className="gotham text-red-400 text-[14px]">{error.message}</p>}
 
           {confirmDelete ? (

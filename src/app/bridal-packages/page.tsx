@@ -3,6 +3,7 @@ import Footer from "../components/footer";
 import InnerPageHero from "../components/inner-page-hero";
 import GloriousPackagesServices from "./components/bridal-packages-services";
 import BridalSlider from "./components/bridal-slider";
+import BridalPriceList from "./components/bridal-price-list";
 
 export const metadata = {
   title: "Bridal Packages | October Glory",
@@ -40,20 +41,7 @@ export default function GloriousPackagesPage() {
             <h2 className="valturin text-[length:var(--fs-h2)] leading-tight text-white uppercase tracking-wider">
               Package Includes:
             </h2>
-            <div className="grid grid-cols-2">
-              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
-                Bride Trial Appointment  -  $200
-              </p>
-              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
-                Bridesmaid's Trial Appointment  -  $150
-              </p>
-              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
-                Full Day -  $2400
-              </p>
-              <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light">
-                Half Day -  $1200
-              </p>
-            </div>
+            <BridalPriceList />
             <div className="flex justify-start">
               <a
                 href="/dashboard/book"

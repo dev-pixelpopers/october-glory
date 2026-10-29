@@ -30,7 +30,7 @@ class Appointment extends Model
 
     protected $fillable = [
         'booking_reference', 'client_id', 'worker_id', 'start_time', 'end_time',
-        'total_duration_minutes', 'subtotal_amount', 'loyalty_points_used',
+        'total_duration_minutes', 'subtotal_amount', 'member_discount_amount', 'loyalty_points_used',
         'discount_amount', 'total_amount', 'payment_method', 'payment_status',
         'status', 'notes',
     ];
@@ -43,6 +43,7 @@ class Appointment extends Model
             'total_duration_minutes' => 'integer',
             'loyalty_points_used' => 'integer',
             'subtotal_amount' => 'decimal:2',
+            'member_discount_amount' => 'decimal:2',
             'discount_amount' => 'decimal:2',
             'total_amount' => 'decimal:2',
         ];

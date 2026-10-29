@@ -149,7 +149,7 @@ export default function ServiceTiers({
               <div className="flex flex-wrap items-center gap-3 mb-[var(--space-28)]">
                 <PriceTag
                   price={tier.price}
-                  nonMemberPrice={tier.nonMemberPrice}
+                  memberPrice={tier.memberPrice}
                   variant="block"
                 />
                 {tier.duration && (

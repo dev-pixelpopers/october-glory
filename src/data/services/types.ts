@@ -22,10 +22,10 @@ export type ServiceTier = {
   name: string;
   /** One-line positioning shown under the tier name. */
   tagline?: string;
-  /** The member price. The non-member price is derived from it — see pricing.ts. */
+  /** The regular (non-member) price. The member price is derived from it — see pricing.ts. */
   price?: string;
-  /** Overrides the derived non-member price, when the salon has quoted one. */
-  nonMemberPrice?: string;
+  /** Overrides the derived member price, when the salon has quoted one. */
+  memberPrice?: string;
   duration?: string;
   /** The "What you get" bullets. */
   includes: string[];
@@ -146,13 +146,15 @@ export type ServiceShopProduct = {
 /** A priced item in a service's menu grid — the salon's actual price list. */
 export type ServiceMenuItem = {
   name: string;
-  /** The member price. The non-member price is derived from it — see pricing.ts. */
+  /** The regular (non-member) price. The member price is derived from it — see pricing.ts. */
   price?: string;
-  /** Overrides the derived non-member price, when the salon has quoted one. */
-  nonMemberPrice?: string;
+  /** Overrides the derived member price, when the salon has quoted one. */
+  memberPrice?: string;
   image: string;
   /** Set when this item has a child page of its own. */
   href?: string;
+  /** The sub-service's slug — matches the API service, so live prices can replace these. */
+  slug?: string;
 };
 
 export type ServiceMenu = {
@@ -160,6 +162,12 @@ export type ServiceMenu = {
   heading: string;
   intro?: string;
   items: ServiceMenuItem[];
+  /**
+   * The API category slug for this menu (the page's /services/<slug>). When
+   * set, the grid shows that category's live services from the backend, with
+   * `items` as the fallback while loading or if the API is unreachable.
+   */
+  category?: string;
 };
 
 export type ServiceFaq = {
@@ -192,10 +200,10 @@ export type ServiceDetail = {
   slug: string;
   /** Card label on the parent category page. */
   cardTitle: string;
-  /** Starting member price, shown on the hero and the booking CTA. */
+  /** Starting regular price, shown on the hero and the booking CTA. */
   price?: string;
-  /** Overrides the derived non-member price, when the salon has quoted one. */
-  nonMemberPrice?: string;
+  /** Overrides the derived member price, when the salon has quoted one. */
+  memberPrice?: string;
 
   hero: {
     /** Large Andrea-Bellarosa script word. */
@@ -302,7 +310,7 @@ export type ServiceParent = ServiceDetail & {
  * the page without moving the entry or changing how the parent renders.
  */
 export type ServiceChild = Partial<
-  Omit<ServiceDetail, "slug" | "cardTitle" | "price" | "nonMemberPrice">
+  Omit<ServiceDetail, "slug" | "cardTitle" | "price" | "memberPrice">
 > & {
   slug: string;
   /** Card label wherever this service is listed. */
@@ -315,10 +323,10 @@ export type ServiceChild = Partial<
    * The first entry is canonical: it owns the URL.
    */
   parents: string[];
-  /** The member price. The non-member price is derived from it — see pricing.ts. */
+  /** The regular (non-member) price. The member price is derived from it — see pricing.ts. */
   price?: string;
-  /** Overrides the derived non-member price, when the salon has quoted one. */
-  nonMemberPrice?: string;
+  /** Overrides the derived member price, when the salon has quoted one. */
+  memberPrice?: string;
 };
 
 /** A sub-service that has had its content written, and so has a page. */

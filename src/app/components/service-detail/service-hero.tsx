@@ -162,7 +162,7 @@ export default function ServiceHero({
           <div className="text-white">
             <PriceTag
               price={service.price}
-              nonMemberPrice={service.nonMemberPrice}
+              memberPrice={service.memberPrice}
               variant="block"
             />
           </div>

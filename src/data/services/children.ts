@@ -826,7 +826,7 @@ export const serviceChildren: ServiceChild[] = [
   },
   {
     parents: ["extensions"],
-    cardImage: "/images/glorious-packages-04.webp",
+    cardImage: "/images/GLORIOUS-PACKAGES-04.webp",
     slug: "wig-prep",
     cardTitle: "Wig Prep",
     price: "$120",
@@ -915,7 +915,7 @@ export const serviceChildren: ServiceChild[] = [
   },
   {
     parents: ["relaxers-and-colors"],
-    cardImage: "/images/glorious-packages-03.webp",
+    cardImage: "/images/GLORIOUS-PACKAGES-03.webp",
     slug: "glorious-boost",
     cardTitle: "Glorious Boost",
     price: "$120",

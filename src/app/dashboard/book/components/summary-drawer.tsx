@@ -7,6 +7,8 @@ import { durationLabel, money, timeLabel, shortDate } from "@/lib/format";
 interface Props {
   count: number;
   subtotal: number;
+  /** Some selected service is priced at consultation, so the subtotal is partial. */
+  hasConsultation?: boolean;
   totalDuration: number;
   slot: AvailabilitySlot | null;
   workerName: string | null;
@@ -18,6 +20,7 @@ interface Props {
 export default function SummaryDrawer({
   count,
   subtotal,
+  hasConsultation,
   totalDuration,
   slot,
   workerName,
@@ -42,7 +45,12 @@ export default function SummaryDrawer({
             <span className="gotham text-white/50 text-[12px] uppercase tracking-widest">
               Subtotal
             </span>
-            <span className="gotham font-bold text-white text-[20px]">{money(subtotal)}</span>
+            <span className="gotham font-bold text-white text-[20px]">
+              {money(subtotal)}
+              {hasConsultation && (
+                <span className="font-light text-white/50 text-[14px]"> + consultation</span>
+              )}
+            </span>
           </div>
 
           <div className="flex flex-col">

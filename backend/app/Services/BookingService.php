@@ -19,6 +19,7 @@ class BookingService
     public function __construct(
         protected AvailabilityService $availability,
         protected LoyaltyService $loyalty,
+        protected MembershipService $membership,
     ) {}
 
     /**
@@ -85,8 +86,13 @@ class BookingService
 
             $subtotal = $services->sum(fn (Service $s) => (float) $s->currentPrice->price);
 
-            [$discount, $pointsUsed] = $this->resolveRedemption($client, $loyaltyPointsUsed, $subtotal);
-            $total = round(max(0, $subtotal - $discount), 2);
+            // Members' discount comes off first; loyalty points then redeem
+            // against what is left, so points never pay for the member saving.
+            $memberDiscount = $this->membership->discountFor($client, $subtotal);
+            $afterMember = round($subtotal - $memberDiscount, 2);
+
+            [$discount, $pointsUsed] = $this->resolveRedemption($client, $loyaltyPointsUsed, $afterMember);
+            $total = round(max(0, $afterMember - $discount), 2);
 
             $appointment = Appointment::query()->create([
                 'booking_reference' => $this->generateReference(),
@@ -96,6 +102,7 @@ class BookingService
                 'end_time' => $end,
                 'total_duration_minutes' => $duration,
                 'subtotal_amount' => $subtotal,
+                'member_discount_amount' => $memberDiscount,
                 'loyalty_points_used' => $pointsUsed,
                 'discount_amount' => $discount,
                 'total_amount' => $total,

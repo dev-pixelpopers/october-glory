@@ -107,6 +107,6 @@ export const MEMBERSHIP_CTA = {
   eyebrow: "Members Save On Every Visit",
   display: "Become A",
   heading: "Glory Member",
-  body: "Every price on this page is the member price. Membership also brings priority booking, member-only treatments, and loyalty points on everything you book.",
+  body: "Members pay 30% less than the listed price on every service. Membership also brings priority booking, member-only treatments, and loyalty points on everything you book.",
   cta: "Become A Member",
 };

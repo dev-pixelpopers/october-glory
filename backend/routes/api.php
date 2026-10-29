@@ -5,12 +5,15 @@ use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\AuditLogController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AvailabilityController;
+use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\LoyaltyController;
 use App\Http\Controllers\Api\PackageController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ServiceCategoryController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\ShoutoutController;
+use App\Http\Controllers\Api\UploadController;
 use App\Http\Controllers\Api\WorkerController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +30,7 @@ Route::post('/auth/reset-password', [AuthController::class, 'resetPassword'])->m
 Route::get('/categories', [ServiceCategoryController::class, 'index']);
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/packages', [PackageController::class, 'index']);
+Route::get('/products', [ProductController::class, 'index']);
 Route::get('/workers', [WorkerController::class, 'index']);
 Route::get('/availability', [AvailabilityController::class, 'index']);
 
@@ -72,9 +76,20 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/packages/{package}', [PackageController::class, 'destroy']);
         Route::get('/packages/{package}/price-history', [PackageController::class, 'priceHistory']);
 
+        Route::post('/uploads/image', [UploadController::class, 'image']);
+
+        Route::get('/clients', [ClientController::class, 'index']);
+        Route::put('/clients/{client}/membership', [ClientController::class, 'updateMembership']);
+
+        Route::get('/products', [ProductController::class, 'adminIndex']);
+        Route::post('/products', [ProductController::class, 'store']);
+        Route::put('/products/{product}', [ProductController::class, 'update']);
+        Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+
         Route::get('/workers', [WorkerController::class, 'adminIndex']);
         Route::post('/workers', [WorkerController::class, 'store']);
         Route::put('/workers/{worker}', [WorkerController::class, 'update']);
+        Route::delete('/workers/{worker}', [WorkerController::class, 'destroy']);
 
         Route::patch('/appointments/{appointment}/reschedule', [AppointmentController::class, 'reschedule']);
 

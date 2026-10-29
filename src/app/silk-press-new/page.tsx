@@ -103,10 +103,13 @@ export default function SilkPressPage() {
             eyebrow: silkPressPage.styles.eyebrow,
             heading: `${silkPressPage.styles.heading} ${silkPressPage.styles.headingAccent}`,
             intro: silkPressPage.styles.intro,
+            // The same Silk Press category the /services/silk-press page loads.
+            category: "silk-press",
             items: styles.map((style) => ({
+              slug: style.slug,
               name: style.cardTitle,
               price: style.price,
-              nonMemberPrice: style.nonMemberPrice,
+              memberPrice: style.memberPrice,
               image: style.cardImage,
               href: hasPage(style) ? servicePath(style) : undefined,
             })),

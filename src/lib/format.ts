@@ -3,6 +3,15 @@ export function money(value: string | number): string {
   return n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 }
 
+/** A service price, or "By consultation" for services quoted by the stylist. */
+export function servicePrice(price: string | number, byConsultation?: boolean): string {
+  return byConsultation ? "By consultation" : money(price);
+}
+
+/** Shown under a total that includes consultation-priced services. */
+export const CONSULTATION_NOTE =
+  "Custom units are priced at your consultation — your stylist confirms the exact price before we begin.";
+
 export function durationLabel(minutes: number): string {
   const h = Math.floor(minutes / 60);
   const m = minutes % 60;

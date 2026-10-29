@@ -13,12 +13,16 @@ class Service extends Model
 {
     use Auditable;
 
-    protected $fillable = ['category_id', 'name', 'description', 'duration_minutes', 'is_active'];
+    protected $fillable = [
+        'category_id', 'name', 'slug', 'description', 'image', 'duration_minutes',
+        'price_by_consultation', 'is_active', 'sort_order',
+    ];
 
     protected function casts(): array
     {
         return [
             'duration_minutes' => 'integer',
+            'price_by_consultation' => 'boolean',
             'is_active' => 'boolean',
         ];
     }
@@ -45,6 +49,12 @@ class Service extends Model
     }
 
     /** Packages this service is bundled into. */
+    /** Booked line items — a service with any can't be deleted. */
+    public function appointmentLines(): HasMany
+    {
+        return $this->hasMany(AppointmentService::class);
+    }
+
     public function packages(): BelongsToMany
     {
         return $this->belongsToMany(Package::class, 'package_service')

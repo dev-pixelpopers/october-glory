@@ -1,31 +1,47 @@
 "use client";
 
 import React, { useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useProducts } from "@/lib/api/hooks/catalog";
+import type { Product } from "@/lib/api/types";
+import { getUnit, units } from "@/data/units";
 
 // SSR-safe plugin registration (no `window` access at module eval on the server).
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
-// 5 source images, reused to fill 10 cards (index % 5).
-const COLLECTION_IMAGES = [
-  "/images/collections/wigs-1.png",
-  "/images/collections/wigs-2.png",
-  "/images/collections/wigs-3.png",
-  "/images/collections/wigs-4.png",
-  "/images/collections/wigs-5.png",
-];
+type Card = { key: string; name: string; image: string; price: string | null; href?: string };
 
-const PRICES = ["$60.00", "$80.00", "$80.00", "$40.00", "$70.00"];
+/** "1800.00" -> "$1,800". */
+const priceLabel = (price: string) =>
+  parseFloat(price).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  });
 
-const CARDS = Array.from({ length: 10 }, (_, i) => ({
-  id: i,
-  image: COLLECTION_IMAGES[i % COLLECTION_IMAGES.length],
-  price: PRICES[i % PRICES.length],
-  label: "Wigs",
+const productCard = (product: Product): Card => ({
+  key: `product-${product.id}`,
+  name: product.name,
+  image: product.image ?? "",
+  price: priceLabel(product.price),
+  href: getUnit(product.slug) ? `/wigs/${product.slug}` : "/shop",
+});
+
+/**
+ * The same ten units the shop sells, shown while the API answers (or if it
+ * can't) so the conveyor always has its cards. Prices come only from the API.
+ */
+const FALLBACK_CARDS: Card[] = units.map((unit) => ({
+  key: `unit-${unit.slug}`,
+  name: unit.name,
+  image: unit.portrait,
+  price: null,
+  href: `/wigs/${unit.slug}`,
 }));
 
 // --- Conveyor geometry ------------------------------------------------------
@@ -96,24 +112,23 @@ const GUIDE_PATH = (() => {
 // bottom-left. Every other card trails by its index, so the flow is continuous.
 const OFF_MARGIN = 1.5; // units beyond an edge at which a card is fully off-screen
 const U_START = -OFF_MARGIN; // card 0 starts just off the bottom-right
-const U_END = CARDS.length - 1 + ARC_SPAN + OFF_MARGIN; // last card fully exited
+// The last card is fully exited at this u — depends on how many cards ride.
+const uEnd = (count: number) => count - 1 + ARC_SPAN + OFF_MARGIN;
 
 export default function CollectionsSection() {
+  const { data: products } = useProducts("Wigs");
+  const cardData: Card[] =
+    products && products.length > 0 ? products.map(productCard) : FALLBACK_CARDS;
+
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement[]>([]);
-
-  const addToRefs = (el: HTMLDivElement | null) => {
-    if (el && !cardsRef.current.includes(el)) {
-      cardsRef.current.push(el);
-    }
-  };
-
   useGSAP(
     () => {
-      const cards = cardsRef.current;
+      // Read from the DOM each run, so a changed card set is always current.
+      const cards = gsap.utils.toArray<HTMLElement>(".shop-item-card", sectionRef.current);
       if (!cards.length) return;
+      const U_END = uEnd(cards.length);
 
       // Anchor cards by their center; opacity stays 1 — the stage's
       // `overflow-hidden` clips whatever sits in the off-screen corners.
@@ -155,7 +170,8 @@ export default function CollectionsSection() {
         .to(imageRef.current, { clipPath: "inset(0% 0 0 0)", duration: 1 })
         .to(proxy, { p: 1, duration: 4, onUpdate: () => layout(proxy.p) });
     },
-    { scope: sectionRef },
+    // Rebuild when the API's cards replace the fallback set.
+    { scope: sectionRef, dependencies: [cardData.map((c) => c.key).join()], revertOnUpdate: true },
   );
 
   return (
@@ -201,30 +217,37 @@ export default function CollectionsSection() {
             />
           </svg>
 
-          {CARDS.map((card) => (
+          {cardData.map((card) => (
             <div
-              key={card.id}
-              ref={addToRefs}
+              key={card.key}
               className="shop-item-card absolute left-0 top-0 w-[15vw] bg-white rounded-xl p-[clamp(10px,8.54px_+_0.389vw,16px)] shadow-[0_18px_45px_rgba(0,0,0,0.55)] will-change-transform"
             >
               <div className="w-full aspect-[268/290] bg-gray-100 rounded-lg mb-[clamp(13px,11.3px_+_0.454vw,20px)] overflow-hidden">
-                <img
-                  src={card.image}
-                  alt={card.label}
-                  className="w-full h-full object-cover object-top"
-                />
+                {card.image && (
+                  <img
+                    src={card.image}
+                    alt={card.name}
+                    className="w-full h-full object-cover object-top"
+                  />
+                )}
               </div>
               <div className="flex justify-between items-center mb-[clamp(10px,8.54px_+_0.389vw,16px)] px-[clamp(3px,2.76px_+_0.065vw,4px)]">
-                <h3 className="text-gray-500 font-medium text-base">{card.label}</h3>
-                <span className="text-gray-400 text-base font-medium">{card.price}</span>
+                <h3 className="text-gray-500 font-medium text-base">{card.name}</h3>
+                {card.price && (
+                  <span className="text-gray-400 text-base font-medium">{card.price}</span>
+                )}
               </div>
               <div className="flex gap-[clamp(6px,5.03px_+_0.259vw,10px)]">
                 {/* <button className="flex-1 bg-[#C0A062] text-white text-xs uppercase tracking-wider font-semibold py-[clamp(8px,7.03px_+_0.259vw,12px)] rounded-sm hover:bg-[#a6884f] transition-colors">
                   Try On
                 </button> */}
-                <button className="flex-1 bg-white border border-gray-300 text-gray-500 text-xs uppercase tracking-wider font-semibold py-[clamp(8px,7.03px_+_0.259vw,12px)] rounded-sm hover:bg-gray-50 transition-colors">
-                  Add To Cart
-                </button>
+                {/* No cart yet — the card opens the unit's own page. */}
+                <Link
+                  href={card.href ?? "/shop"}
+                  className="flex-1 text-center bg-white border border-gray-300 text-gray-500 text-xs uppercase tracking-wider font-semibold py-[clamp(8px,7.03px_+_0.259vw,12px)] rounded-sm hover:bg-gray-50 transition-colors"
+                >
+                  See Options
+                </Link>
               </div>
             </div>
           ))}

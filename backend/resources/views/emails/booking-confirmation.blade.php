@@ -9,14 +9,21 @@ Your appointment at **October Glory** is confirmed.
 
 ## Services
 @foreach ($appointment->lineItems as $item)
-- {{ $item->service?->name }} — ${{ $item->price_at_booking }}
+- {{ $item->service?->name }} — {{ $item->service?->price_by_consultation ? 'Priced at consultation' : '$'.$item->price_at_booking }}
 @endforeach
 
+@if ((float) $appointment->member_discount_amount > 0)
+Member discount: −${{ $appointment->member_discount_amount }}
+@endif
 @if ((float) $appointment->discount_amount > 0)
 Loyalty discount: −${{ $appointment->discount_amount }} ({{ $appointment->loyalty_points_used }} points)
 @endif
 
 **Total: ${{ $appointment->total_amount }}** ({{ $appointment->payment_method === 'card' ? 'Card' : 'Pay upon arrival' }})
+
+@if ($appointment->lineItems->contains(fn ($item) => $item->service?->price_by_consultation))
+Your custom unit is priced at your consultation — your stylist will confirm the exact price before we begin.
+@endif
 
 A calendar invite is attached — see you soon!
 

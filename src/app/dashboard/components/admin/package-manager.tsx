@@ -12,8 +12,9 @@ import {
   type PackagePayload,
 } from "@/lib/api/hooks/catalog";
 import type { Package } from "@/lib/api/types";
-import { durationLabel, money, shortDate } from "@/lib/format";
+import { durationLabel, money, servicePrice, shortDate } from "@/lib/format";
 import { buttonGhost, buttonGold, Card, inputClass } from "../dashboard-shell";
+import ImageField from "./image-field";
 import { Modal } from "./service-manager";
 
 const COLLECTIONS = ["maintenance", "glorious", "bridal"] as const;
@@ -50,19 +51,32 @@ export default function PackageManager() {
               {(packages ?? []).map((p) => (
                 <tr key={p.id}>
                   <td className="gotham text-[var(--dash-text)] text-[15px] py-4 pr-4">
-                    {p.name}
-                    {p.is_featured && (
-                      <span className="ml-2 gotham text-[11px] uppercase tracking-wider text-[#cda873] bg-[#cba660]/15 border border-[#cba660]/40 px-2 py-0.5 rounded-full">
-                        Featured
+                    <div className="flex items-center gap-3">
+                      {/* Sized by the wrapper — the global img rule overrides size utilities on img. */}
+                      <div className="w-9 h-9 rounded-[8px] overflow-hidden bg-[var(--dash-border)] shrink-0">
+                        {p.image && (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={p.image} alt="" className="object-cover" />
+                        )}
+                      </div>
+                      <span>
+                        {p.name}
+                        {p.is_featured && (
+                          <span className="ml-2 gotham text-[11px] uppercase tracking-wider text-[#cda873] bg-[#cba660]/15 border border-[#cba660]/40 px-2 py-0.5 rounded-full">
+                            Featured
+                          </span>
+                        )}
                       </span>
-                    )}
+                    </div>
                   </td>
                   <td className="gotham text-[var(--dash-text-muted)] text-[14px] pr-4 capitalize">{p.collection ?? "—"}</td>
                   <td className="gotham text-[var(--dash-text-muted)] text-[14px] pr-4">{p.services.length}</td>
-                  <td className="gotham text-[var(--dash-text-muted)] text-[14px] pr-4">{durationLabel(p.duration_minutes)}</td>
+                  <td className="gotham text-[var(--dash-text-muted)] text-[14px] pr-4">
+                    {p.services.length > 0 ? durationLabel(p.duration_minutes) : "—"}
+                  </td>
                   <td className="gotham font-bold text-[#cda873] text-[15px] pr-4">
                     {money(p.price)}
-                    {p.price !== p.services_total && (
+                    {p.services.length > 0 && p.price !== p.services_total && (
                       <span className="gotham font-light text-[var(--dash-text-faint)] text-[12px] ml-2 line-through">
                         {money(p.services_total)}
                       </span>
@@ -106,7 +120,7 @@ export default function PackageManager() {
       {editing && (
         <PackageFormModal
           pkg={editing === "new" ? null : editing}
-          categories={categories ?? []}
+          categories={(categories ?? []).filter((c) => c.kind === "packages")}
           onClose={() => setEditing(null)}
         />
       )}
@@ -134,6 +148,7 @@ function PackageFormModal({
   const [name, setName] = useState(pkg?.name ?? "");
   const [tagline, setTagline] = useState(pkg?.tagline ?? "");
   const [description, setDescription] = useState(pkg?.description ?? "");
+  const [image, setImage] = useState(pkg?.image ?? "");
   const [collection, setCollection] = useState<string>(pkg?.collection ?? "");
   const [categoryId, setCategoryId] = useState<number | null>(pkg?.category_id ?? null);
   const [includes, setIncludes] = useState<string[]>(pkg?.includes?.length ? pkg.includes : [""]);
@@ -160,6 +175,8 @@ function PackageFormModal({
   );
 
   const pending = create.isPending || update.isPending || del.isPending;
+  // A package with no services has no sum to fall back on, so it needs a price.
+  const needsPrice = selectedIds.length === 0 && !priceOverride.trim();
   const error = create.error ?? update.error ?? del.error;
 
   const toggleService = (id: number) =>
@@ -171,6 +188,7 @@ function PackageFormModal({
       name,
       tagline: tagline || null,
       description: description || null,
+      image: image || null,
       collection: collection || null,
       category_id: categoryId,
       includes: includes.map((b) => b.trim()).filter(Boolean),
@@ -209,6 +227,12 @@ function PackageFormModal({
           rows={2}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+        />
+        <ImageField
+          folder="packages"
+          value={image}
+          onChange={setImage}
+          placeholder="Image URL (e.g. /images/GLORIOUS-PACKAGES-01.webp), or upload"
         />
         <div className="grid grid-cols-2 gap-4">
           <select
@@ -255,12 +279,16 @@ function PackageFormModal({
                 />
                 <span className="flex-1">{s.name}</span>
                 <span className="text-[var(--dash-text-faint)] text-[13px]">{durationLabel(s.duration_minutes)}</span>
-                <span className="text-[#cda873] text-[13px] w-16 text-right">{money(s.current_price)}</span>
+                <span className="text-[#cda873] text-[13px] min-w-16 text-right">
+                  {servicePrice(s.current_price, s.price_by_consultation)}
+                </span>
               </label>
             ))}
           </div>
           {selectedIds.length === 0 && (
-            <p className="gotham text-red-400 text-[13px] mt-2">Select at least one service.</p>
+            <p className={`gotham text-[13px] mt-2 ${needsPrice ? "text-red-400" : "text-[var(--dash-text-faint)]"}`}>
+              No services selected — this is a flat-priced package (e.g. bridal Full Day), so set its price below.
+            </p>
           )}
         </div>
 
@@ -353,7 +381,7 @@ function PackageFormModal({
           ) : <span />}
           <div className="flex gap-3">
             <button type="button" onClick={onClose} className={buttonGhost}>Cancel</button>
-            <button type="submit" disabled={pending || selectedIds.length === 0} className={buttonGold}>
+            <button type="submit" disabled={pending || needsPrice} className={buttonGold}>
               {pending ? "Saving…" : "Save Package"}
             </button>
           </div>

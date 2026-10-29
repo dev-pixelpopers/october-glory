@@ -3,7 +3,7 @@
 import React from "react";
 import { useCategories, useServices } from "@/lib/api/hooks/catalog";
 import type { Service } from "@/lib/api/types";
-import { durationLabel, money } from "@/lib/format";
+import { durationLabel, servicePrice } from "@/lib/format";
 
 interface Props {
   selected: Service[];
@@ -66,7 +66,14 @@ export default function StepServices({ selected, onToggle }: Props) {
                   }`}
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <div>
+                    {service.image && (
+                      // Sized by the wrapper — the global img rule overrides size utilities.
+                      <div className="w-14 h-14 rounded-[12px] overflow-hidden shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={service.image} alt="" className="object-cover" />
+                      </div>
+                    )}
+                    <div className="flex-1">
                       <h4 className="gotham font-bold text-white text-[19px]">{service.name}</h4>
                       {service.description && (
                         <p className="gotham font-light text-white/60 text-[15px] mt-1 leading-relaxed">
@@ -78,8 +85,12 @@ export default function StepServices({ selected, onToggle }: Props) {
                       </p>
                     </div>
                     <div className="flex flex-col items-end gap-3 shrink-0">
-                      <span className="gotham font-bold text-[#cda873] text-[20px]">
-                        {money(service.current_price)}
+                      <span
+                        className={`gotham font-bold text-[#cda873] ${
+                          service.price_by_consultation ? "text-[15px]" : "text-[20px]"
+                        }`}
+                      >
+                        {servicePrice(service.current_price, service.price_by_consultation)}
                       </span>
                       <span
                         className={`flex items-center justify-center w-8 h-8 rounded-full border text-[15px] transition-colors ${

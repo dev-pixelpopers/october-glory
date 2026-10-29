@@ -15,7 +15,7 @@ class Package extends Model
 
     protected $fillable = [
         'category_id', 'collection', 'name', 'slug', 'tagline',
-        'description', 'includes', 'not_included', 'best_for',
+        'description', 'image', 'includes', 'not_included', 'best_for',
         'is_featured', 'is_active',
     ];
 

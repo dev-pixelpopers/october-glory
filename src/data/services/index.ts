@@ -102,10 +102,12 @@ export const childrenMenu = (parent: ServiceParent): ServiceMenu | undefined => 
     eyebrow: parent.childrenSection?.eyebrow ?? "The Menu",
     heading: parent.childrenSection?.heading ?? `Explore ${parent.cardTitle}`,
     intro: parent.childrenSection?.intro,
+    category: parent.slug,
     items: children.map((child) => ({
+      slug: child.slug,
       name: child.cardTitle,
       price: child.price,
-      nonMemberPrice: child.nonMemberPrice,
+      memberPrice: child.memberPrice,
       image: child.cardImage,
       href: hasPage(child)
         ? `${parentRoot(child.parents[0])}/${child.slug}`
@@ -123,5 +125,5 @@ export const siblingCards = (parentSlug: string, slug: string) =>
       image: child.cardImage,
       href: servicePath(child),
       price: child.price,
-      nonMemberPrice: child.nonMemberPrice,
+      memberPrice: child.memberPrice,
     }));

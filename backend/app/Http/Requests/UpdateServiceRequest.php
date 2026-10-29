@@ -16,10 +16,12 @@ class UpdateServiceRequest extends FormRequest
         return [
             'name' => ['sometimes', 'required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'image' => ['nullable', 'string', 'max:2048'],
             'category_id' => ['nullable', 'integer', 'exists:service_categories,id'],
             'duration_minutes' => ['sometimes', 'required', 'integer', 'min:5', 'max:1440'],
             // A changed price never mutates history — it opens a new ledger row.
-            'price' => ['sometimes', 'required', 'numeric', 'min:0', 'max:99999999.99'],
+            'price_by_consultation' => ['sometimes', 'boolean'],
+            'price' => ['sometimes', 'nullable', 'numeric', 'min:0', 'max:99999999.99'],
             'is_active' => ['sometimes', 'boolean'],
         ];
     }

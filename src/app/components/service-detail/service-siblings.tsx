@@ -11,7 +11,7 @@ export type RelatedItem = {
   image: string;
   href: string;
   price?: string;
-  nonMemberPrice?: string;
+  memberPrice?: string;
 };
 
 /**
@@ -82,7 +82,7 @@ export default function ServiceSiblings({
             {/* Same stack as the menu cards: prices, title, then the CTA that
                 the parked 28px hides until hover. */}
             <div className="absolute inset-x-0 bottom-0 flex flex-col p-[var(--space-24)] translate-y-[28px] group-hover:translate-y-0 transition-transform duration-500 ease-out motion-reduce:transition-none motion-reduce:translate-y-0">
-              <PriceTag price={item.price} nonMemberPrice={item.nonMemberPrice} />
+              <PriceTag price={item.price} memberPrice={item.memberPrice} />
 
               <h3 className="valturin text-white text-[length:clamp(20px,18.06px_+_0.518vw,28px)] leading-[1.2] mb-2">
                 {item.title}

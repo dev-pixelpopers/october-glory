@@ -4,13 +4,21 @@ import React, { useMemo, useState } from "react";
 import CheckoutGate from "./checkout-gate";
 import { useCreateAppointment } from "@/lib/api/hooks/booking";
 import { useLoyaltyBalance } from "@/lib/api/hooks/loyalty";
+import { useMe } from "@/lib/api/hooks/auth";
 import type {
   Appointment,
   AvailabilitySlot,
   PaymentMethod,
   Service,
 } from "@/lib/api/types";
-import { dateLabel, durationLabel, money, timeLabel } from "@/lib/format";
+import {
+  CONSULTATION_NOTE,
+  dateLabel,
+  durationLabel,
+  money,
+  servicePrice,
+  timeLabel,
+} from "@/lib/format";
 
 interface Props {
   services: Service[];
@@ -46,18 +54,25 @@ function CheckoutInner({
   onConfirmed,
 }: Props) {
   const { data: loyalty } = useLoyaltyBalance();
+  const { data: me } = useMe();
   const createAppointment = useCreateAppointment();
   const [notes, setNotes] = useState("");
+
+  // Mirrors the API: the member discount comes off first, then points redeem
+  // against what's left.
+  const memberRate = me?.is_member ? me.member_discount_rate : 0;
+  const memberDiscount = Math.round(subtotal * memberRate * 100) / 100;
+  const afterMember = subtotal - memberDiscount;
 
   const rate = parseFloat(loyalty?.conversion_rate ?? "0");
   const maxRedeemable = useMemo(() => {
     if (!loyalty || rate <= 0) return 0;
     // Can't discount below zero.
-    return Math.min(loyalty.balance, Math.floor(subtotal / rate));
-  }, [loyalty, rate, subtotal]);
+    return Math.min(loyalty.balance, Math.floor(afterMember / rate));
+  }, [loyalty, rate, afterMember]);
 
   const discount = pointsUsed * rate;
-  const total = Math.max(0, subtotal - discount);
+  const total = Math.max(0, afterMember - discount);
 
   const confirm = () => {
     createAppointment.mutate(
@@ -96,13 +111,23 @@ function CheckoutInner({
           {services.map((s) => (
             <div key={s.id} className="flex justify-between">
               <span className="gotham text-white/80 text-[16px]">{s.name}</span>
-              <span className="gotham text-white text-[16px]">{money(s.current_price)}</span>
+              <span className="gotham text-white text-[16px]">
+                {servicePrice(s.current_price, s.price_by_consultation)}
+              </span>
             </div>
           ))}
           <div className="flex justify-between border-t border-white/10 pt-3">
             <span className="gotham text-white/60 text-[16px]">Subtotal</span>
             <span className="gotham text-white text-[16px]">{money(subtotal)}</span>
           </div>
+          {memberDiscount > 0 && (
+            <div className="flex justify-between">
+              <span className="gotham text-[#cda873] text-[16px]">
+                Member discount ({Math.round(memberRate * 100)}%)
+              </span>
+              <span className="gotham text-[#cda873] text-[16px]">−{money(memberDiscount)}</span>
+            </div>
+          )}
           {discount > 0 && (
             <div className="flex justify-between">
               <span className="gotham text-[#cda873] text-[16px]">
@@ -115,6 +140,9 @@ function CheckoutInner({
             <span className="gotham font-bold text-white text-[20px]">Total</span>
             <span className="gotham font-bold text-[#cda873] text-[20px]">{money(total)}</span>
           </div>
+          {services.some((s) => s.price_by_consultation) && (
+            <p className="gotham text-white/50 text-[14px] leading-relaxed">{CONSULTATION_NOTE}</p>
+          )}
         </div>
       </div>
 

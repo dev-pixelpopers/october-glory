@@ -22,7 +22,7 @@ class UpdateWorkerRequest extends FormRequest
             ],
             'password' => ['sometimes', 'string', 'min:8'],
             'phone' => ['nullable', 'string', 'max:50'],
-            'avatar_url' => ['nullable', 'url', 'max:2048'],
+            'avatar_url' => ['nullable', 'string', 'max:2048'], // full URL or site path (/images/...)
             'bio' => ['nullable', 'string'],
             'specialties' => ['nullable', 'array'],
             'specialties.*' => ['string', 'max:100'],

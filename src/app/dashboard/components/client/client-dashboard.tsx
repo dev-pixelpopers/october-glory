@@ -58,7 +58,7 @@ export default function ClientDashboard({ user }: { user: User }) {
       )}
       {tab === "appointments" && <AppointmentsPanel />}
       {tab === "rewards" && <RewardsHub />}
-      {tab === "membership" && <MembershipPlaceholder />}
+      {tab === "membership" && <MembershipPanel user={user} />}
       {tab === "profile" && <ProfilePanel user={user} />}
     </DashboardShell>
   );
@@ -318,14 +318,29 @@ function ProfilePanel({ user }: { user: User }) {
 
 /* ------------------------------ Membership ----------------------------------- */
 
-function MembershipPlaceholder() {
+function MembershipPanel({ user }: { user: User }) {
+  const percent = Math.round(user.member_discount_rate * 100);
+
+  if (user.is_member) {
+    return (
+      <Card className="text-center py-16">
+        <p className="andrea text-[var(--dash-text)] text-[56px] leading-none">Glory Member</p>
+        <p className="valturin text-[#cda873] text-[30px] mt-3">{percent}% Off Every Service</p>
+        <p className="gotham font-light text-[var(--dash-text-muted)] text-[16px] max-w-[440px] mx-auto mt-5 leading-relaxed">
+          Your member discount is applied automatically at checkout, before any loyalty points.
+          {user.membership_ends_at && <> Your membership runs until {shortDate(user.membership_ends_at)}.</>}
+        </p>
+      </Card>
+    );
+  }
+
   return (
     <Card className="text-center py-16">
       <p className="andrea text-[var(--dash-text)] text-[56px] leading-none">VIP Memberships</p>
-      <p className="valturin text-[#cda873] text-[30px] mt-3">Coming Soon</p>
+      <p className="valturin text-[#cda873] text-[30px] mt-3">Members Save {percent}%</p>
       <p className="gotham font-light text-[var(--dash-text-muted)] text-[16px] max-w-[440px] mx-auto mt-5 leading-relaxed">
-        Priority booking, member-only pricing, and exclusive treatments. Keep collecting loyalty
-        points — founding members will get a head start.
+        Members get {percent}% off every service, priority booking, and loyalty points on everything.
+        Ask at your next visit to become a Glory Member.
       </p>
     </Card>
   );

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import {
   useCreateWorker,
+  useDeleteWorker,
   useServices,
   useUpdateWorker,
   useWorkers,
@@ -10,6 +11,7 @@ import {
 } from "@/lib/api/hooks/catalog";
 import type { Worker } from "@/lib/api/types";
 import { buttonGhost, buttonGold, Card, inputClass } from "../dashboard-shell";
+import ImageField from "./image-field";
 import { Modal } from "./service-manager";
 
 const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -43,8 +45,10 @@ export default function WorkerManager() {
             <div key={w.id} className="border border-[var(--dash-border)] rounded-[18px] p-6">
               <div className="flex items-center gap-4">
                 {w.avatar_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={w.avatar_url} alt={w.name} className="w-14 h-14 rounded-full object-cover" />
+                  <div className="w-14 h-14 rounded-full overflow-hidden shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={w.avatar_url} alt={w.name} className="object-cover" />
+                  </div>
                 ) : (
                   <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-b from-[#9C6D51] to-[#5F3A21] text-[var(--dash-text)] andrea text-[22px]">
                     {w.name.charAt(0)}
@@ -91,6 +95,8 @@ function WorkerFormModal({ worker, onClose }: { worker: Worker | null; onClose: 
   const { data: services } = useServices();
   const create = useCreateWorker();
   const update = useUpdateWorker();
+  const del = useDeleteWorker();
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const [form, setForm] = useState<WorkerPayload>({
     name: worker?.name ?? "",
@@ -111,8 +117,8 @@ function WorkerFormModal({ worker, onClose }: { worker: Worker | null; onClose: 
   });
   const [specialtiesText, setSpecialtiesText] = useState((worker?.profile.specialties ?? []).join(", "));
 
-  const pending = create.isPending || update.isPending;
-  const error = create.error ?? update.error;
+  const pending = create.isPending || update.isPending || del.isPending;
+  const error = create.error ?? update.error ?? del.error;
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -156,8 +162,13 @@ function WorkerFormModal({ worker, onClose }: { worker: Worker | null; onClose: 
           <input className={inputClass} type="password" placeholder={worker ? "New password (optional)" : "Password"}
             value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required={!worker} />
         </div>
-        <input className={inputClass} placeholder="Avatar URL" value={form.avatar_url}
-          onChange={(e) => setForm({ ...form, avatar_url: e.target.value })} />
+        <ImageField
+          folder="workers"
+          round
+          value={form.avatar_url ?? ""}
+          onChange={(avatar_url) => setForm({ ...form, avatar_url })}
+          placeholder="Photo URL, or upload"
+        />
         <textarea className={inputClass} placeholder="Bio" rows={2} value={form.bio}
           onChange={(e) => setForm({ ...form, bio: e.target.value })} />
         <input className={inputClass} placeholder="Specialties (comma separated)" value={specialtiesText}
@@ -217,12 +228,46 @@ function WorkerFormModal({ worker, onClose }: { worker: Worker | null; onClose: 
         </div>
 
         {error && <p className="gotham text-red-400 text-[14px]">{error.message}</p>}
-        <div className="flex justify-end gap-3 mt-2">
-          <button type="button" onClick={onClose} className={buttonGhost}>Cancel</button>
-          <button type="submit" disabled={pending} className={buttonGold}>
-            {pending ? "Saving…" : "Save Worker"}
-          </button>
-        </div>
+        {worker && confirmDelete ? (
+          <div className="rounded-[14px] border border-red-500/30 bg-red-500/10 p-4 mt-2">
+            <p className="gotham text-[var(--dash-text-soft)] text-[14px] mb-3">
+              Permanently delete “{worker.name}”? Their login, schedule and services will be removed.
+            </p>
+            <div className="flex gap-3">
+              <button type="button" onClick={() => setConfirmDelete(false)} className={buttonGhost}>
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={pending}
+                onClick={() => del.mutate(worker.id, { onSuccess: onClose })}
+                className="gotham text-[14px] text-white bg-red-500/80 hover:bg-red-500 px-5 py-2.5 rounded-full cursor-pointer"
+              >
+                {del.isPending ? "Deleting…" : "Delete"}
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-between items-center gap-3 mt-2">
+            {worker ? (
+              <button
+                type="button"
+                onClick={() => setConfirmDelete(true)}
+                className="gotham text-[13px] text-red-400 hover:text-red-300 cursor-pointer"
+              >
+                Delete worker
+              </button>
+            ) : (
+              <span />
+            )}
+            <div className="flex gap-3">
+              <button type="button" onClick={onClose} className={buttonGhost}>Cancel</button>
+              <button type="submit" disabled={pending} className={buttonGold}>
+                {create.isPending || update.isPending ? "Saving…" : "Save Worker"}
+              </button>
+            </div>
+          </div>
+        )}
       </form>
     </Modal>
   );

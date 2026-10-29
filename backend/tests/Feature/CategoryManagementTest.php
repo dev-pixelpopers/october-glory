@@ -37,10 +37,12 @@ class CategoryManagementTest extends TestCase
 
         $id = $create->json('data.id');
 
-        // Rename — slug follows the name.
+        // Rename — the slug is kept: it is the site page's URL, which loads
+        // the category's services by it.
         $this->putJson("/api/admin/categories/{$id}", ['name' => 'Bridal & Events'])
             ->assertOk()
-            ->assertJsonPath('data.slug', 'bridal-events');
+            ->assertJsonPath('data.name', 'Bridal & Events')
+            ->assertJsonPath('data.slug', 'bridal');
 
         // Delete.
         $this->deleteJson("/api/admin/categories/{$id}")->assertNoContent();

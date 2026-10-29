@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useReveal } from "./use-reveal";
 import { tone as palette, type Tone } from "./tone";
 import { MEMBERSHIP_CTA, MEMBERSHIP_HREF } from "@/data/services/defaults";
-import { NON_MEMBER_MARKUP } from "@/data/services/pricing";
+import { MEMBER_DISCOUNT } from "@/data/services/pricing";
 
 /**
  * The second CTA on every service page: join, rather than book.
@@ -26,9 +26,7 @@ export default function MembershipCta({
 }) {
   const scope = useReveal<HTMLElement>();
   const c = palette[tone];
-  const savingPercent = Math.round(
-    (NON_MEMBER_MARKUP / (1 + NON_MEMBER_MARKUP)) * 100
-  );
+  const savingPercent = Math.round(MEMBER_DISCOUNT * 100);
 
   return (
     <section
@@ -78,7 +76,7 @@ export default function MembershipCta({
           data-reveal-delay="4"
           className={`gotham text-[length:var(--fs-small)] tracking-[2px] uppercase ${c.muted} mt-[var(--space-20)]`}
         >
-          Members pay around {savingPercent}% less than non-members
+          Members pay {savingPercent}% less than non-members
         </p>
 
         <Link

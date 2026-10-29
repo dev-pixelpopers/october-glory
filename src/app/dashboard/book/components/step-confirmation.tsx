@@ -4,7 +4,14 @@ import React from "react";
 import Link from "next/link";
 import SetPasswordBanner from "@/app/components/salon/set-password-banner";
 import type { Appointment } from "@/lib/api/types";
-import { dateLabel, durationLabel, money, timeLabel } from "@/lib/format";
+import {
+  CONSULTATION_NOTE,
+  dateLabel,
+  durationLabel,
+  money,
+  servicePrice,
+  timeLabel,
+} from "@/lib/format";
 
 export default function StepConfirmation({ appointment }: { appointment: Appointment }) {
   return (
@@ -66,9 +73,19 @@ export default function StepConfirmation({ appointment }: { appointment: Appoint
           {appointment.services.map((line) => (
             <div key={line.id} className="flex justify-between">
               <span className="gotham text-white/80 text-[16px]">{line.service_name}</span>
-              <span className="gotham text-white text-[16px]">{money(line.price_at_booking)}</span>
+              <span className="gotham text-white text-[16px]">
+                {servicePrice(line.price_at_booking, line.price_by_consultation)}
+              </span>
             </div>
           ))}
+          {parseFloat(appointment.member_discount_amount) > 0 && (
+            <div className="flex justify-between">
+              <span className="gotham text-[#cda873] text-[16px]">Member discount</span>
+              <span className="gotham text-[#cda873] text-[16px]">
+                −{money(appointment.member_discount_amount)}
+              </span>
+            </div>
+          )}
           {parseFloat(appointment.discount_amount) > 0 && (
             <div className="flex justify-between">
               <span className="gotham text-[#cda873] text-[16px]">
@@ -85,6 +102,9 @@ export default function StepConfirmation({ appointment }: { appointment: Appoint
               {money(appointment.total_amount)}
             </span>
           </div>
+          {appointment.services.some((line) => line.price_by_consultation) && (
+            <p className="gotham text-white/50 text-[14px] leading-relaxed">{CONSULTATION_NOTE}</p>
+          )}
         </div>
       </div>
 

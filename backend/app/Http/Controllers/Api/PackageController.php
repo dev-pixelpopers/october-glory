@@ -26,7 +26,8 @@ class PackageController extends Controller
             ->with(['category', 'currentPrice', 'services' => fn ($q) => $q->with('currentPrice')])
             ->when($request->query('collection'), fn ($q, $c) => $q->where('collection', $c))
             ->when(! $request->user()?->isAdmin(), fn ($q) => $q->where('is_active', true))
-            ->orderBy('name')
+            // Creation order — the site's order for the seeded catalog.
+            ->orderBy('id')
             ->get();
 
         return PackageResource::collection($packages);

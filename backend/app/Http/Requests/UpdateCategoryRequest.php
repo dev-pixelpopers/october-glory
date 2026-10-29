@@ -15,6 +15,9 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'image' => ['nullable', 'string', 'max:2048'],
+            'kind' => ['sometimes', 'string', 'in:services,packages'],
+            'sort_order' => ['sometimes', 'integer', 'min:0'],
         ];
     }
 }

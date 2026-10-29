@@ -13,6 +13,9 @@ class ServiceCategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
+            'image' => $this->image,
+            'kind' => $this->kind,
+            'sort_order' => $this->sort_order,
         ];
     }
 }

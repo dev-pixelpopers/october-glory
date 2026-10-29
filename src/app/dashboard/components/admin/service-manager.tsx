@@ -10,7 +10,8 @@ import {
   type ServicePayload,
 } from "@/lib/api/hooks/catalog";
 import type { Service } from "@/lib/api/types";
-import { durationLabel, money, shortDate } from "@/lib/format";
+import { durationLabel, money, servicePrice, shortDate } from "@/lib/format";
+import ImageField from "./image-field";
 import { buttonGhost, buttonGold, Card, inputClass } from "../dashboard-shell";
 
 /** Service catalog CRUD; price edits append to the history ledger. */
@@ -44,10 +45,24 @@ export default function ServiceManager() {
             <tbody className="divide-y divide-[var(--dash-border-soft)]">
               {(services ?? []).map((s) => (
                 <tr key={s.id}>
-                  <td className="gotham text-[var(--dash-text)] text-[15px] py-4 pr-4">{s.name}</td>
+                  <td className="gotham text-[var(--dash-text)] text-[15px] py-4 pr-4">
+                    <div className="flex items-center gap-3">
+                      {/* Sized by the wrapper: the global `img { width/height: 100% }`
+                          rule is unlayered, so it overrides size utilities on the img. */}
+                      <div className="w-9 h-9 rounded-[8px] overflow-hidden bg-[var(--dash-border)] shrink-0">
+                        {s.image && (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={s.image} alt="" className="object-cover" />
+                        )}
+                      </div>
+                      {s.name}
+                    </div>
+                  </td>
                   <td className="gotham text-[var(--dash-text-muted)] text-[14px] pr-4">{s.category?.name ?? "—"}</td>
                   <td className="gotham text-[var(--dash-text-muted)] text-[14px] pr-4">{durationLabel(s.duration_minutes)}</td>
-                  <td className="gotham font-bold text-[#cda873] text-[15px] pr-4">{money(s.current_price)}</td>
+                  <td className="gotham font-bold text-[#cda873] text-[15px] pr-4">
+                    {servicePrice(s.current_price, s.price_by_consultation)}
+                  </td>
                   <td className="pr-4">
                     <span className={`gotham text-[13px] ${s.is_active ? "text-green-500" : "text-[var(--dash-text-faint)]"}`}>
                       {s.is_active ? "Active" : "Inactive"}
@@ -79,7 +94,7 @@ export default function ServiceManager() {
       {editing && (
         <ServiceFormModal
           service={editing === "new" ? null : editing}
-          categories={categories ?? []}
+          categories={(categories ?? []).filter((c) => c.kind === "services")}
           onClose={() => setEditing(null)}
         />
       )}
@@ -104,9 +119,12 @@ function ServiceFormModal({
   const [form, setForm] = useState<ServicePayload>({
     name: service?.name ?? "",
     description: service?.description ?? "",
+    image: service?.image ?? "",
     category_id: service?.category_id ?? null,
     duration_minutes: service?.duration_minutes ?? 60,
-    price: service?.current_price ?? "",
+    // Blank rather than "0.00" when switching a consultation service to a fixed price.
+    price: service?.price_by_consultation ? "" : service?.current_price ?? "",
+    price_by_consultation: service?.price_by_consultation ?? false,
     is_active: service?.is_active ?? true,
   });
 
@@ -137,6 +155,12 @@ function ServiceFormModal({
           value={form.description}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
+        <ImageField
+          folder="services"
+          value={form.image ?? ""}
+          onChange={(image) => setForm({ ...form, image })}
+          placeholder="Image URL (e.g. /images/RodSet-01.webp), or upload"
+        />
         <div className="grid grid-cols-2 gap-4">
           <select
             className={inputClass}
@@ -165,10 +189,11 @@ function ServiceFormModal({
             type="number"
             min={0}
             step="0.01"
-            placeholder="Price ($)"
-            value={form.price}
+            placeholder={form.price_by_consultation ? "By consultation" : "Price ($)"}
+            value={form.price_by_consultation ? "" : form.price}
             onChange={(e) => setForm({ ...form, price: e.target.value })}
-            required
+            disabled={form.price_by_consultation}
+            required={!form.price_by_consultation}
           />
           <label className="flex items-center gap-3 gotham text-[var(--dash-text-soft)] text-[15px] cursor-pointer">
             <input
@@ -180,6 +205,16 @@ function ServiceFormModal({
             Active
           </label>
         </div>
+        <label className="flex items-center gap-3 gotham text-[var(--dash-text-soft)] text-[15px] cursor-pointer">
+          <input
+            type="checkbox"
+            checked={form.price_by_consultation}
+            onChange={(e) => setForm({ ...form, price_by_consultation: e.target.checked })}
+            className="accent-[#cba660] w-5 h-5"
+          />
+          Priced by consultation
+          <span className="text-[var(--dash-text-faint)] text-[13px]">— shown as “By consultation”, adds $0 at booking</span>
+        </label>
         {service && (
           <p className="gotham text-[var(--dash-text-faint)] text-[13px]">
             Changing the price closes the current history row and opens a new one — past pricing is never overwritten.

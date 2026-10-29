@@ -144,6 +144,7 @@ export default function BookingWizard() {
         <SummaryDrawer
           count={services.length}
           subtotal={subtotal}
+          hasConsultation={services.some((s) => s.price_by_consultation)}
           totalDuration={totalDuration}
           slot={slot}
           workerName={anySpecialist ? "Any Specialist" : worker?.name ?? null}

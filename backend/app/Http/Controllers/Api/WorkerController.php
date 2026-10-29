@@ -9,7 +9,9 @@ use App\Http\Resources\WorkerResource;
 use App\Models\User;
 use App\Models\WorkerProfile;
 use App\Services\AvailabilityService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 
@@ -85,6 +87,33 @@ class WorkerController extends Controller
         });
 
         return new WorkerResource($profile->load(['user', 'schedules', 'services']));
+    }
+
+    /**
+     * Permanently remove a worker. Workers with appointment or review history
+     * can't be deleted (it would orphan those records) — deactivate them instead.
+     */
+    public function destroy(User $worker): JsonResponse|Response
+    {
+        abort_unless($worker->isWorker(), 404);
+
+        $hasHistory = DB::table('appointments')->where('worker_id', $worker->id)->exists()
+            || DB::table('reviews')->where('worker_id', $worker->id)->exists();
+
+        if ($hasHistory) {
+            return response()->json([
+                'message' => "{$worker->name} has appointment history and can't be deleted. Mark them inactive instead.",
+                'code' => 'WORKER_HAS_HISTORY',
+            ], 409);
+        }
+
+        DB::transaction(function () use ($worker) {
+            $worker->tokens()->delete();
+            // Profile, schedules and service links cascade with the user.
+            $worker->delete();
+        });
+
+        return response()->noContent();
     }
 
     protected function syncSchedules(WorkerProfile $profile, array $schedules): void
