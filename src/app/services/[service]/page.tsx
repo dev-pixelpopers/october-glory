@@ -5,8 +5,9 @@ import { childrenMenu, getParent, parentParams } from "@/data/services";
 
 type Params = { service: string };
 
+/** Silk Press has its own page at /services/silk-press, which wins over this route. */
 export function generateStaticParams() {
-  return parentParams();
+  return parentParams().filter(({ service }) => service !== "silk-press");
 }
 
 export async function generateMetadata({

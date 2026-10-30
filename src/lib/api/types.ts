@@ -68,6 +68,8 @@ export interface AuthResponse {
 export interface ServiceCategory {
   id: number;
   name: string;
+  /** The blurb under its card in the full-screen menu. */
+  description: string | null;
   /** The site page's URL slug (/services/<slug>); kept fixed on rename. */
   slug: string;
   image: string | null;

@@ -32,6 +32,9 @@ const serviceRedirects = [
   // Silk Press moved twice; send the original URL to where it lives now.
   ["/natural-styles/silk-press", "/services/silk-press"],
 
+  // The Silk Press showcase was reviewed here before it replaced the service page.
+  ["/silk-press-new", "/services/silk-press"],
+
   // The old weaves category is covered by the Wigs & Extensions page.
   ["/weaves-and-extensions", "/services/wigs-and-extensions"],
 ];

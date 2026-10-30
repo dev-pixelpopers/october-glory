@@ -1,14 +1,13 @@
 /**
- * The Silk Press showcase page, served at /silk-press-new.
+ * The Silk Press showcase page, served at /services/silk-press.
  *
  * A second premier-service page alongside October Glory Units, built to the
  * client's own direction (her emailed section order and her page mockup) with
  * the sections the wig section established — plus the packages, which the
  * units side has no equivalent of.
  *
- * The existing service page at /services/silk-press is untouched. Nothing
- * here reads from it; when this page is approved, that one can be parked the
- * way /old-wig was.
+ * The service page it replaced is parked at /old-silk-press, the way /old-wig
+ * was. Nothing here reads from it.
  *
  * ─────────────────────────────────────────────────────────────────────────
  *  WHAT IS REAL AND WHAT IS PLACEHOLDER
@@ -25,8 +24,8 @@
  *    `steps[].image`   one still per stage
  *    `hero.image`, `why.image`  the professional shoot
  *
- *  Prices are intentionally unset: the client has not confirmed them, and a
- *  guessed price on a booking page is worse than no price.
+ *  The three presses are packages in the backend (SilkPressPackagesSeeder);
+ *  `packages.items` below is the fallback while those load.
  * ─────────────────────────────────────────────────────────────────────────
  */
 
@@ -180,21 +179,22 @@ export const silkPressPage = {
     items: [
       {
         name: "The Classic Silk Press",
+        price: "$155",
         includes: ["Signature silk press"],
       },
       {
         name: "The Classic Silk Press+",
+        price: "$200",
         includes: ["Signature silk press", "Spa treatment"],
       },
       {
         name: "The Glorious Silk Press",
         badge: "The Full Reset",
         featured: true,
+        price: "$275",
         includes: ["Signature silk press", "Spa treatment", "Trim"],
       },
     ] as PressPackage[],
-    /** Shown under the cards while prices are outstanding. */
-    note: "Pricing confirmed at booking.",
   },
 
   /**

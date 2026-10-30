@@ -106,13 +106,17 @@ function CategoryEditModal({ category, onClose }: { category: ServiceCategory; o
   const [name, setName] = useState(category.name);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [image, setImage] = useState(category.image ?? "");
+  const [description, setDescription] = useState(category.description ?? "");
 
   const pending = update.isPending || del.isPending;
   const error = update.error ?? del.error;
 
   const save = (e: React.FormEvent) => {
     e.preventDefault();
-    update.mutate({ id: category.id, name: name.trim(), image: image || null }, { onSuccess: onClose });
+    update.mutate(
+      { id: category.id, name: name.trim(), description: description.trim() || null, image: image || null },
+      { onSuccess: onClose }
+    );
   };
 
   return (
@@ -129,6 +133,13 @@ function CategoryEditModal({ category, onClose }: { category: ServiceCategory; o
         </div>
         <form onSubmit={save} className="flex flex-col gap-4">
           <input className={inputClass} value={name} onChange={(e) => setName(e.target.value)} required />
+          <textarea
+            className={inputClass}
+            rows={3}
+            placeholder="Short description — shown under this category in the site menu"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
           <ImageField folder="categories" value={image} onChange={setImage} />
           <p className="gotham text-[var(--dash-text-faint)] text-[12px]">
             Page address stays <span className="text-[var(--dash-text-soft)]">/{category.slug}</span> when renamed,

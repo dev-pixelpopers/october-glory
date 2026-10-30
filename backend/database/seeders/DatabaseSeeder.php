@@ -120,5 +120,10 @@ class DatabaseSeeder extends Seeder
         if (Setting::get(MenuPricesSeeder::SETTING_KEY) !== MenuPricesSeeder::MENU_VERSION) {
             $this->call(MenuPricesSeeder::class);
         }
+
+        // The three silk presses as packages, after the menu has priced their services.
+        if (Setting::get(SilkPressPackagesSeeder::SETTING_KEY) !== SilkPressPackagesSeeder::VERSION) {
+            $this->call(SilkPressPackagesSeeder::class);
+        }
     }
 }

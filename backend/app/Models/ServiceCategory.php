@@ -15,7 +15,7 @@ class ServiceCategory extends Model
 
     public const KIND_PACKAGES = 'packages';
 
-    protected $fillable = ['name', 'slug', 'image', 'kind', 'sort_order'];
+    protected $fillable = ['name', 'description', 'slug', 'image', 'kind', 'sort_order'];
 
     protected function casts(): array
     {

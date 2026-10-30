@@ -79,8 +79,8 @@ class MenuPricesSeeder extends Seeder
         ['relaxers-and-colors', 'virgin-color', 'Virgin Color', '220.00', 90, '/images/relaxers-card-img.jpg', 'Finish required — add a style from Natural Hair Styling.'],
 
         // Natural Hair Styling
-        ['silk-press', 'silk-press-plus', 'Silk Press Plus', '200.00', 60, '/images/SilkPress-01.webp', 'Silk press + spa treatment.'],
-        ['silk-press', 'the-glorious-silk-press', 'The Glorious Silk Press', '275.00', 60, '/images/GLORIOUS-PACKAGES-02.webp', 'Silk press + trim + treatment.'],
+        ['silk-press-options', 'silk-press-plus', 'Silk Press Plus', '200.00', 60, '/images/SilkPress-01.webp', 'Silk press + spa treatment.'],
+        ['silk-press-options', 'the-glorious-silk-press', 'The Glorious Silk Press', '275.00', 60, '/images/GLORIOUS-PACKAGES-02.webp', 'Silk press + trim + treatment.'],
         ['silk-press', 'roller-set', 'Roller Set', '155.00', 60, '/images/RodSet-01.webp', null],
         ['silk-press', 'trim-only', 'Trim Only', '100.00', 30, '/images/trim-after.webp', 'Includes wash.'],
 

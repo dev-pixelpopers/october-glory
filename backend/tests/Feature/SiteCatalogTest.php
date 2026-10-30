@@ -9,6 +9,7 @@ use App\Models\ServiceCategory;
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\MenuPricesSeeder;
+use Database\Seeders\SilkPressPackagesSeeder;
 use Database\Seeders\SiteCatalog;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
@@ -33,13 +34,20 @@ class SiteCatalogTest extends TestCase
     public function test_catalog_is_exactly_the_site_catalog_plus_menu_additions(): void
     {
         // Only the site's categories, services and packages remain, plus the
-        // menu items the site has no service for (MenuPricesSeeder).
-        $this->assertEqualsCanonicalizing(array_keys(SiteCatalog::CATEGORIES), ServiceCategory::query()->pluck('slug')->all());
+        // menu items the site has no service for (MenuPricesSeeder) and the
+        // silk press packages with their services' category (SilkPressPackagesSeeder).
+        $this->assertEqualsCanonicalizing(
+            [...array_keys(SiteCatalog::CATEGORIES), SilkPressPackagesSeeder::SERVICE_CATEGORY[0]],
+            ServiceCategory::query()->pluck('slug')->all(),
+        );
         $this->assertEqualsCanonicalizing(
             [...array_column(SiteCatalog::SERVICES, 1), ...array_column(MenuPricesSeeder::ADDITIONS, 1)],
             Service::query()->pluck('slug')->all(),
         );
-        $this->assertEqualsCanonicalizing(array_column(SiteCatalog::PACKAGES, 'slug'), Package::query()->pluck('slug')->all());
+        $this->assertEqualsCanonicalizing(
+            [...array_column(SiteCatalog::PACKAGES, 'slug'), ...array_column(SilkPressPackagesSeeder::PACKAGES, 'slug')],
+            Package::query()->pluck('slug')->all(),
+        );
     }
 
     public function test_categories_are_named_after_their_pages_with_images(): void
@@ -55,7 +63,8 @@ class SiteCatalogTest extends TestCase
 
         $this->getJson('/api/categories?kind=services')
             ->assertOk()
-            ->assertJsonCount(7, 'data')
+            // The site's seven service pages, plus Silk Press Options.
+            ->assertJsonCount(8, 'data')
             ->assertJsonPath('data.0.slug', 'silk-press')
             ->assertJsonPath('data.0.image', '/images/silk-press-card-img.jpg');
     }
@@ -68,7 +77,9 @@ class SiteCatalogTest extends TestCase
 
             $service = Service::query()->where('slug', $slug)->firstOrFail();
             $this->assertSame($menuName ?? $name, $service->name, $slug);
-            $this->assertSame($category, $service->category->slug, $slug);
+            // The silk presses moved to their own category when they became packages.
+            $moved = in_array($slug, array_column(SilkPressPackagesSeeder::PACKAGES, 'service'), true);
+            $this->assertSame($moved ? SilkPressPackagesSeeder::SERVICE_CATEGORY[0] : $category, $service->category->slug, $slug);
             $this->assertSame($image, $service->image, $slug);
             $this->assertSame($minutes, $service->duration_minutes, $slug);
             $this->assertSame($price ?? '0.00', (string) $service->currentPrice()->first()->price, $slug);

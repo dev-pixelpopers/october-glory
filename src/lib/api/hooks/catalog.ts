@@ -32,7 +32,15 @@ export function useCreateCategory() {
 export function useUpdateCategory() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, ...payload }: { id: number; name: string; image?: string | null }) =>
+    mutationFn: ({
+      id,
+      ...payload
+    }: {
+      id: number;
+      name: string;
+      description?: string | null;
+      image?: string | null;
+    }) =>
       api.put<{ data: ServiceCategory }>(`/admin/categories/${id}`, payload),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["categories"] });

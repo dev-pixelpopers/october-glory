@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useRef } from "react";
+import { useMenuPreviews } from "./use-menu-previews";
 import {
-  PREVIEWS,
   DEFAULT_PREVIEW_KEY,
   type MenuPreview as Preview,
   type PreviewVideo,
@@ -17,7 +17,8 @@ import {
  * The wrapper is re-keyed on every change so the CSS enter animation replays.
  */
 export default function MenuPreview({ activeKey }: { activeKey: string }) {
-  const preview: Preview = PREVIEWS[activeKey] ?? PREVIEWS[DEFAULT_PREVIEW_KEY];
+  const previews = useMenuPreviews();
+  const preview: Preview = previews[activeKey] ?? previews[DEFAULT_PREVIEW_KEY];
 
   return (
     <div className="w-full">

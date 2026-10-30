@@ -4,7 +4,27 @@ import React from "react";
 import Link from "next/link";
 import { useReveal } from "../service-detail/use-reveal";
 import { tone as palette, type Tone } from "../service-detail/tone";
-import { silkPressPage } from "@/data/silk-press-new";
+import { usePackages } from "@/lib/api/hooks/catalog";
+import type { Package } from "@/lib/api/types";
+import { silkPressPage, type PressPackage } from "@/data/silk-press-new";
+
+/** "200.00" -> "$200". Falls back to the raw string for non-numeric prices. */
+function priceLabel(price: string): string {
+  const n = parseFloat(price);
+  return Number.isFinite(n) ? `${n.toLocaleString("en-US")}` : price;
+}
+
+/** A backend package as a card. The badge stays the site copy, on the featured card. */
+function packageToCard(pkg: Package): PressPackage {
+  const site = silkPressPage.packages.items.find((item) => item.featured);
+  return {
+    name: pkg.name,
+    price: priceLabel(pkg.price),
+    includes: pkg.includes ?? [],
+    featured: pkg.is_featured,
+    badge: pkg.is_featured ? site?.badge : undefined,
+  };
+}
 
 /**
  * The three ways to book a silk press.
@@ -15,13 +35,15 @@ import { silkPressPage } from "@/data/silk-press-new";
  * button, because anyone choosing between three is scanning across rather
  * than reading each one through.
  *
- * Prices render only when the salon has set them. A placeholder price on a
- * page with a Book Now button is worse than an honest silence.
+ * The cards are the backend's `silk-press` package collection. While that
+ * request is in flight (or if it fails) the site copy stands in.
  */
 export default function PressPackages({ tone = "light" }: { tone?: Tone }) {
   const scope = useReveal<HTMLElement>();
   const c = palette[tone];
   const { packages } = silkPressPage;
+  const { data: live } = usePackages("silk-press");
+  const items = live && live.length > 0 ? live.map(packageToCard) : packages.items;
 
   return (
     <section
@@ -47,7 +69,7 @@ export default function PressPackages({ tone = "light" }: { tone?: Tone }) {
         </div>
 
         <div className="grid grid-cols-1 items-stretch gap-[var(--space-32)] md:grid-cols-3">
-          {packages.items.map((pack, i) => (
+          {items.map((pack, i) => (
             <div
               key={pack.name}
               data-reveal
@@ -117,15 +139,6 @@ export default function PressPackages({ tone = "light" }: { tone?: Tone }) {
             </div>
           ))}
         </div>
-
-        {packages.note && (
-          <p
-            data-reveal
-            className={`gotham text-[length:var(--fs-small)] ${c.muted} mt-[var(--space-32)] text-center`}
-          >
-            {packages.note}
-          </p>
-        )}
       </div>
     </section>
   );

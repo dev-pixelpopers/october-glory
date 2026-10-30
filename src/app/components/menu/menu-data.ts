@@ -83,7 +83,7 @@ export const CONTACT_MAP_HREF = "#";
 export const PRIMARY_LINKS: MenuLink[] = [
   { key: "about-us", label: "About Us", href: "/about-us" },
   { key: "wigs", label: "Wigs", href: "/wigs" },
-  { key: "silk-press-new", label: "Silk Press", href: "/silk-press-new" },
+  { key: "silk-press", label: "Silk Press", href: "/services/silk-press" },
   { key: "services", label: "Services", href: "/services" },
   { key: "packages", label: "Packages", href: "/services" },
   { key: "lookbook", label: "Lookbook", href: "/lookbook" },
@@ -303,17 +303,16 @@ export const PREVIEWS: Record<string, MenuPreview> = {
   },
 
   /**
-   * The Silk Press showcase. Keyed `silk-press-new` rather than `silk-press`
-   * so it does not collide with the preview SERVICE_PREVIEWS still generates
-   * for the live service page at /services/silk-press.
+   * The Silk Press showcase at /services/silk-press. Keyed `silk-press` so it
+   * replaces the generic panel SERVICE_PREVIEWS builds for that service.
    */
-  "silk-press-new": {
+  "silk-press": {
     variant: "default",
     eyebrow: "Premier Service",
     title: "The Glorious Silk Press",
     body: silkPressPage.hero.intro,
     image: silkPressPage.hero.image,
-    href: "/silk-press-new",
+    href: "/services/silk-press",
   },
 
   services: {
