@@ -40,7 +40,7 @@ const cards: OfferCard[] = [
     titleLeft: "55%",
     alt: "Wigs Model",
     title: "Wigs",
-    subtitle: "Extensions",
+    subtitle: "Services",
     description:"Looking for premium custom wigs in Brooklyn? We design, install, and maintain custom wigs tailored to your lifestyle and personal style.",
     link:"/wigs",
   },
