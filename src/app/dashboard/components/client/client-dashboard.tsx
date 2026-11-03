@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CalendarDays, CalendarPlus, Crown, Gift, ShoppingBag, UserRound } from "lucide-react";
+import { CalendarDays, CalendarPlus, Crown, Gift, Package as PackageIcon, ShoppingBag, UserRound } from "lucide-react";
 import SetPasswordBanner from "@/app/components/salon/set-password-banner";
 import { useAppointments, useCancelAppointment } from "@/lib/api/hooks/booking";
-import { useProducts } from "@/lib/api/hooks/catalog";
+import { usePackages, useProducts } from "@/lib/api/hooks/catalog";
 import {
   useLoyaltyBalance,
   useLoyaltyTransactions,
@@ -14,8 +14,8 @@ import {
 } from "@/lib/api/hooks/loyalty";
 import ShoutoutSubmissionForm from "./shoutout-form";
 import { useSubmitReview } from "@/lib/api/hooks/reviews";
-import type { Appointment, Product, User } from "@/lib/api/types";
-import { money, shortDate, timeLabel } from "@/lib/format";
+import type { Appointment, Package, Product, User } from "@/lib/api/types";
+import { durationLabel, money, shortDate, timeLabel } from "@/lib/format";
 import DashboardShell, { buttonGhost, buttonGold, Card, inputClass, StatusBadge, type NavItem } from "../dashboard-shell";
 import { Modal } from "../admin/service-manager";
 import { Pagination } from "../admin/audit-log-viewer";
@@ -30,6 +30,7 @@ export const CLIENT_NAV: NavItem[] = [
   { id: "appointments", label: "My Appointments", icon: CalendarDays },
   { id: "rewards", label: "Loyalty & Rewards", icon: Gift },
   { id: "membership", label: "Membership", icon: Crown },
+  { id: "packages", label: "Packages", icon: PackageIcon },
   { id: "shop", label: "Shop", icon: ShoppingBag },
   { id: "profile", label: "Profile", icon: UserRound },
 ];
@@ -61,6 +62,7 @@ export default function ClientDashboard({ user }: { user: User }) {
       {tab === "appointments" && <AppointmentsPanel />}
       {tab === "rewards" && <RewardsHub />}
       {tab === "membership" && <MembershipPanel user={user} />}
+      {tab === "packages" && <PackagesPanel />}
       {tab === "shop" && <ShopPanel />}
       {tab === "profile" && <ProfilePanel user={user} />}
     </DashboardShell>
@@ -288,6 +290,87 @@ function RewardsHub() {
           <Pagination page={ledger.meta.current_page} lastPage={ledger.meta.last_page} onChange={setPage} />
         )}
       </Card>
+    </div>
+  );
+}
+
+/* ------------------------------- Packages ------------------------------------ */
+
+/**
+ * The salon's packages, read-only, grouped by the site page that shows them
+ * (Silk Press, Maintenance, Glorious, Bridal) in the order the API lists them.
+ */
+function PackagesPanel() {
+  const { data: packages, isLoading, error } = usePackages();
+
+  const groups = new Map<string, Package[]>();
+  for (const pkg of packages ?? []) {
+    const key = pkg.category?.name ?? "More Packages";
+    groups.set(key, [...(groups.get(key) ?? []), pkg]);
+  }
+
+  return (
+    <Card title="Packages">
+      <p className="gotham font-light text-[var(--dash-text-soft)] text-[15px] leading-relaxed mb-5">
+        Our services bundled into one visit, at one price.
+      </p>
+
+      {isLoading && <p className="gotham text-[var(--dash-text-muted)] text-[15px]">Loading packages…</p>}
+      {error && <p className="gotham text-red-400 text-[14px]">{error.message}</p>}
+      {!isLoading && !error && groups.size === 0 && (
+        <p className="gotham text-[var(--dash-text-faint)] text-[15px]">No packages to show yet.</p>
+      )}
+
+      <div className="flex flex-col gap-8">
+        {[...groups].map(([name, items]) => (
+          <section key={name}>
+            <p className="gotham text-[var(--dash-text-faint)] text-[12px] uppercase tracking-widest mb-3">{name}</p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {items.map((pkg) => (
+                <PackageCard key={pkg.id} pkg={pkg} />
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+function PackageCard({ pkg }: { pkg: Package }) {
+  return (
+    <div
+      className={`flex flex-col border rounded-[16px] overflow-hidden ${
+        pkg.is_featured ? "border-[#cba660]/60" : "border-[var(--dash-border)]"
+      }`}
+    >
+      {/* Sized by the wrapper — the global img rule overrides size utilities on img. */}
+      <div className="aspect-square bg-[var(--dash-border)]">
+        {pkg.image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={pkg.image} alt={pkg.name} className="object-cover" />
+        )}
+      </div>
+      <div className="flex flex-col flex-1 p-3">
+        <p className="gotham text-[var(--dash-text)] text-[15px]">{pkg.name}</p>
+        {pkg.tagline && <p className="gotham text-[var(--dash-text-muted)] text-[13px] mt-1">{pkg.tagline}</p>}
+        {pkg.includes.length > 0 && (
+          <ul className="mt-2 flex flex-col gap-1">
+            {pkg.includes.slice(0, 4).map((item) => (
+              <li key={item} className="gotham font-light text-[var(--dash-text-soft)] text-[13px] leading-snug line-clamp-2">
+                <span className="text-[#cda873]">· </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="flex items-baseline justify-between gap-3 mt-auto pt-3">
+          <span className="gotham font-bold text-[#cda873] text-[16px]">{money(pkg.price)}</span>
+          {pkg.duration_minutes > 0 && (
+            <span className="gotham text-[var(--dash-text-faint)] text-[12px]">{durationLabel(pkg.duration_minutes)}</span>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
