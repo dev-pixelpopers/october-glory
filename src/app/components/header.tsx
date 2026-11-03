@@ -45,10 +45,16 @@ export default function Header({ theme = "light", bg = "transparent" }: { theme?
 
   return (
     <>
+    <section>
       {/* Elevated z-index when open so it sits on top of the popup. Goes fixed
           while the menu is open so the logo rides up to meet the pinned
-          controls, giving the popup a complete header. */}
-      <div className={`main-header ${isMenuOpen ? 'fixed' : 'absolute'} top-0 left-0 w-full transition-all duration-500 ${isMenuOpen ? 'z-[10000]' : 'z-2'} ${bg === 'white' ? 'bg-white' : ''}`}>
+          controls, giving the popup a complete header.
+
+          `transition-colors`, not `transition-all`: z-index is an animatable
+          property, so `all` interpolated it from 10000 down to 2 across the
+          500ms close — the header changed paint order on its way out. Only
+          the background is worth animating here. */}
+      <div className={`main-header ${isMenuOpen ? 'fixed' : 'absolute'} top-0 left-0 w-full transition-colors duration-500 ${isMenuOpen ? 'z-[10000]' : 'z-2'} ${bg === 'white' ? 'bg-white' : ''}`}>
       <section className="bg-[#000] py-0 md:py-[clamp(3px,2.76px_+_0.065vw,4px)]">
         <div className="container mx-auto">
           <p className="text-center gotham text-[length:clamp(16px,15.03px_+_0.259vw,20px)] text-white head-note">
@@ -93,9 +99,17 @@ export default function Header({ theme = "light", bg = "transparent" }: { theme?
         </div>
       </header>
 
-      {/* Render the FullScreenMenu directly */}
-      <FullScreenMenu isOpen={isMenuOpen} />
     </div>
+
+      {/* A sibling of the header, not a child. Nested, its z-[9999] was
+          resolved inside the header's stacking context, so the curtain was
+          only ever as high as the header — and the header drops to z-2 the
+          moment the menu closes, while the curtain still has a two-second
+          wipe to finish. The page painted straight through it. Out here the
+          9999 is measured against the root, so it holds for the whole wipe:
+          above every page element (the back-to-top is the tallest at 9998)
+          and below the header bar (10000) and its controls (10001). */}
+      <FullScreenMenu isOpen={isMenuOpen} />
 
       {/* The only copy of the menu toggle and the icons. Pinned at the position
           they occupy at rest, so they never move: not when the page scrolls,
@@ -165,6 +179,7 @@ export default function Header({ theme = "light", bg = "transparent" }: { theme?
             </a>
         </div>
       </div>
+      </section>
     </>
   );
 }

@@ -148,6 +148,13 @@ function LookbookPanel({
   );
 }
 
+/**
+ * The still ffmpeg cut for this clip, from the same set the Lookbook's video
+ * wall uses — see src/data/lookbook-videos.ts.
+ */
+const posterFor = (src: string) =>
+  src.replace("/images/", "/videos-posters/").replace(/\.(mp4|webm)$/, ".webp");
+
 function VideoTile({ video }: { video: PreviewVideo }) {
   const ref = useRef<HTMLVideoElement>(null);
 
@@ -179,10 +186,16 @@ function VideoTile({ video }: { video: PreviewVideo }) {
         <video
           ref={ref}
           src={video.src}
+          poster={posterFor(video.src)}
           muted
           loop
           playsInline
-          preload="metadata"
+          // `none`, not `metadata`: this panel is part of the pop-up menu,
+          // which is mounted on every page of the site, so `metadata` meant
+          // two video fetches on every single page load. The poster gives
+          // the tile something to show, and hovering it calls play(), which
+          // starts the real load then.
+          preload="none"
           className="w-full aspect-[4/5] max-h-[46vh] object-cover transition-transform duration-700 group-hover/reel:scale-105"
         />
 

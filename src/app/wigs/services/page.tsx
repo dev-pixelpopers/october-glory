@@ -35,6 +35,7 @@ export default function WigServicesPage() {
         image={wigServicesPage.hero.image}
         display={wigServicesPage.hero.display}
         script={wigServicesPage.hero.script}
+        trail={[{ label: "Wigs", href: "/wigs" }, { label: "Wig Services" }]}
       />
 
       <ClientJourney tone="light" />

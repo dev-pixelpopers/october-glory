@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import Link from "next/link";
+import Breadcrumbs from "@/app/components/breadcrumbs";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import type { ServiceDetail } from "@/data/services/types";
@@ -101,34 +101,18 @@ export default function ServiceHero({
       <div className="absolute bottom-[70px] right-[40px] md:right-[80px] w-[70px] h-[70px] border-b border-r border-[#ccb884]/30" />
 
       <div className="relative z-10 text-center flex flex-col items-center">
-        {/* Breadcrumb — a top-level service shows only "Services". */}
+        {/* Home / Services / <parent> / <this page>. `root` lets a page that
+            does not live under /services supply its own second crumb. */}
         {showCrumbs && (
-        <div
-          ref={crumbRef}
-          className="gotham text-[12px] md:text-[13px] tracking-[4px] uppercase text-white/50 mb-[var(--space-40)] flex items-center gap-3 flex-wrap justify-center"
-        >
-          <Link
-            href={(root ?? SERVICES_CRUMB).href}
-            className="hover:text-[#ccb884] transition-colors duration-300"
-          >
-            {(root ?? SERVICES_CRUMB).label}
-          </Link>
-          <span className="text-[#ccb884]/60">/</span>
-
-          {parent && (
-            <>
-              <Link
-                href={parent.href}
-                className="hover:text-[#ccb884] transition-colors duration-300"
-              >
-                {parent.label}
-              </Link>
-              <span className="text-[#ccb884]/60">/</span>
-            </>
-          )}
-
-          <span className="text-[#ccb884]">{service.cardTitle}</span>
-        </div>
+          <div ref={crumbRef} className="mb-[var(--space-40)]">
+            <Breadcrumbs
+              trail={[
+                root ?? SERVICES_CRUMB,
+                ...(parent ? [parent] : []),
+                { label: service.cardTitle },
+              ]}
+            />
+          </div>
         )}
 
         <div ref={headingRef}>

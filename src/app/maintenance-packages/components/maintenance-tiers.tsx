@@ -14,7 +14,7 @@ function priceLabel(price: string): string {
   return Number.isFinite(n) ? `$${n.toLocaleString("en-US")}` : price;
 }
 
-export function packageToTier(pkg: Package): NonNullable<ServiceDetail["tiers"]>["items"][number] {
+function packageToTier(pkg: Package): NonNullable<ServiceDetail["tiers"]>["items"][number] {
   return {
     name: pkg.name,
     tagline: pkg.tagline ?? undefined,

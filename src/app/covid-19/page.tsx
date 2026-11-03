@@ -1,55 +1,29 @@
-"use client";
-
 import Header from "../components/header";
 import Footer from "../components/footer";
-import { useEffect, useState } from "react";
+import InnerPageHero from "../components/inner-page-hero";
+
+export const metadata = {
+  title: "COVID-19 Safety | October Glory",
+  description:
+    "How October Glory keeps the salon safe — our CDC-guided requirements for every visit.",
+  alternates: { canonical: "/covid-19" },
+};
 
 export default function Covid19Page() {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <div className="main-app bg-[#111111] min-h-screen text-white overflow-hidden font-sans">
       <Header theme="dark" />
 
-      {/* --- Dynamic Hero Section --- */}
-      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
-        {/* Parallax Background */}
-        <div 
-          className="absolute inset-0 z-0 bg-cover bg-center opacity-40 transition-transform duration-300 ease-out"
-          style={{ 
-            backgroundImage: "url('/images/BRIDAL-PACKAGE-010.webp')",
-            transform: `translateY(${scrollY * 0.4}px) scale(1.1)` 
-          }}
-        />
-        {/* Dark Gradient Overlay */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#111111]/80 via-[#111111]/50 to-[#111111]" />
-
-        <div className="relative z-10 text-center px-[var(--space-24)] max-w-4xl mx-auto mt-[var(--space-80)]">
-          <div className="inline-block mb-[var(--space-24)] px-[var(--space-24)] py-2 rounded-full border border-[#d4af6e]/30 bg-[#1B1B1B]/40 backdrop-blur-md">
-            <span className="text-[#d4af6e] tracking-[0.2em] text-sm uppercase font-semibold">October Glory Salon</span>
-          </div>
-          <h1 className="andrea text-[length:var(--fs-h1)] text-white leading-none mb-[var(--space-16)] drop-shadow-2xl">
-            Keeping <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af6e] to-[#f9e596]">You Safe</span>
-          </h1>
-          <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-gray-300 font-light mt-[var(--space-32)]">
-            We are committed to your safety and diligently follow CDC guidelines as we welcome you back into our sanctuary.
-          </p>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce opacity-70">
-          <div className="w-[1px] h-[60px] bg-gradient-to-b from-transparent via-[#d4af6e] to-transparent" />
-        </div>
-      </section>
+      <InnerPageHero
+        title="Keeping"
+        subtitle="You Safe"
+        description="We are committed to your safety and diligently follow CDC guidelines as we welcome you back into our sanctuary."
+        image={null}
+        trail={[{ label: "COVID-19 Safety" }]}
+      />
 
       {/* --- At a Glance (Bento Grid) --- */}
-      <section className="py-[var(--space-section-y)] px-[var(--space-section-x)] relative z-10 bg-[#111111]">
+      <section className="py-[var(--space-section-y)] px-[var(--space-section-x)] relative bg-[#111111]">
         {/* Decorative ambient glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#d4af6e]/5 blur-[150px] rounded-full pointer-events-none" />
 
@@ -73,7 +47,7 @@ export default function Covid19Page() {
               </div>
               <h3 className="valturin text-[length:var(--fs-h3)] text-white uppercase tracking-wide mb-3 group-hover:text-[#d4af6e] transition-colors">Temp Check</h3>
               <p className="gotham text-[length:var(--fs-body)] leading-[1.7] text-gray-400 font-light max-w-xl">
-                We'll check your temp with our infrared touch-less thermometer to make sure you're good and healthy before seating you.
+                We&apos;ll check your temp with our infrared touch-less thermometer to make sure you&apos;re good and healthy before seating you.
               </p>
             </div>
 

@@ -194,6 +194,41 @@ export default function ProcessFlow({
   useEffect(() => {
     if (!interactive) return;
 
+    /** Which band the current scroll position falls in, or -1 if unknowable. */
+    const bandNow = () => {
+      const track = trackRef.current;
+      if (!track) return -1;
+
+      const distance = track.offsetHeight - window.innerHeight;
+      const travelled = window.scrollY - track.offsetTop;
+      // Above the section there is nothing to do. Clamping a negative offset
+      // to zero is what used to start the clip from the hero.
+      if (distance <= 0 || travelled <= 0) return -1;
+
+      return Math.min(BANDS - 1, Math.floor(Math.min(1, travelled / distance) * BANDS));
+    };
+
+    /** Put the clip where the given band says it should be. */
+    const applyBand = (video: HTMLVideoElement, band: number) => {
+      if (!video.duration) return;
+
+      if (band >= STEPS) {
+        // The closing band holds the last frame. Calling play() here would
+        // be worse than useless: the spec says play() with the playhead at
+        // the end rewinds to zero first, which is what made scrolling back
+        // into a finished section restart it from stage one.
+        video.pause();
+        video.currentTime = video.duration;
+        setPlayhead(video.duration);
+        return;
+      }
+
+      const cue = cueAt(band, video.duration);
+      video.currentTime = cue;
+      setPlayhead(cue);
+      void video.play().catch(() => {});
+    };
+
     const sync = () => {
       const host = stageRef.current;
       const video = videoRef.current;
@@ -208,23 +243,33 @@ export default function ProcessFlow({
 
       if (onScreen !== onScreenRef.current) {
         onScreenRef.current = onScreen;
-        if (onScreen) {
-          startedRef.current = true;
-          // Resumes where it left off; coming back does not start it over.
-          void video.play().catch(() => {});
-        } else {
+
+        if (!onScreen) {
           video.pause();
+          return;
         }
+
+        startedRef.current = true;
+
+        // Re-entering is not the same as resuming. Coming back up from the
+        // catalogue lands the reader at the *end* of the track, so the clip
+        // has to be put where that position says — otherwise it resumes from
+        // wherever it stopped, or rewinds to zero if it had finished, and the
+        // copy disagrees with the scrollbar.
+        const band = bandNow();
+        if (band >= 0 && video.duration) {
+          bandRef.current = band;
+          applyBand(video, band);
+        } else {
+          void video.play().catch(() => {});
+        }
+        return;
       }
 
       if (!onScreen || !startedRef.current || !video.duration) return;
 
-      const distance = track.offsetHeight - window.innerHeight;
-      const travelled = window.scrollY - track.offsetTop;
-      if (distance <= 0 || travelled <= 0) return;
-
-      const progress = Math.min(1, travelled / distance);
-      const band = Math.min(BANDS - 1, Math.floor(progress * BANDS));
+      const band = bandNow();
+      if (band < 0) return;
 
       // Only a change of band moves the clip. Seeking on every scroll event
       // would drag the playhead back to the band's cue each time the reader
@@ -235,11 +280,7 @@ export default function ProcessFlow({
       // Both directions. Scrolling up rewinds to that stage's cue and the
       // copy follows it back, because the playhead is the only thing the
       // left-hand column reads.
-      const cue =
-        band >= STEPS ? video.duration : cueAt(band, video.duration);
-      video.currentTime = cue;
-      setPlayhead(cue);
-      void video.play().catch(() => {});
+      applyBand(video, band);
     };
 
     sync();

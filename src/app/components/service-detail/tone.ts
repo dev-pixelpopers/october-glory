@@ -37,7 +37,7 @@ export const tone = {
 } as const;
 
 /** Alternates dark/light down the page from a block's position. */
-export const toneAt = (index: number): Tone => (index % 2 === 0 ? "dark" : "light");
+const toneAt = (index: number): Tone => (index % 2 === 0 ? "dark" : "light");
 
 /** A block awaiting a tone. `fixed` pins blocks that only work on one tone. */
 export type Block = { key: string; fixed?: Tone };

@@ -880,7 +880,7 @@ export const serviceChildren: ServiceChild[] = [
   },
   {
     parents: ["haircuts-and-styles"],
-    cardImage: "/images/salon-image.webp",
+    cardImage: "/images/salon-image.jpg",
     slug: "pro-consult",
     cardTitle: "Pro Consult",
     price: "$50",

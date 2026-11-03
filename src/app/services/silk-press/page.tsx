@@ -28,7 +28,7 @@ export const metadata = {
  * the three ways to book it. The packages are the part the units side has no
  * equivalent of, so they close the page before the CTAs.
  *
- * The service page this replaced is parked at /old-silk-press. This page
+ * This page
  * reads none of it except the natural-style children, which are listed rather
  * than absorbed — they are not silk press variants and the page says so.
  *
@@ -50,6 +50,10 @@ export default function SilkPressPage() {
         script={silkPressPage.hero.script}
         eyebrow={silkPressPage.hero.intro}
         scale="display"
+        trail={[
+          { label: "Services", href: "/services" },
+          { label: "Silk Press" },
+        ]}
       />
 
         {/* What a silk press is, and what makes ours ours. The four principles

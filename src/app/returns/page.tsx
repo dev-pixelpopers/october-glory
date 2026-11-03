@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import InnerPageHero from "../components/inner-page-hero";
 
 export const metadata = {
   title: "Returns & Refunds | October Glory",
@@ -13,28 +14,13 @@ export default function ReturnsPage() {
     <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">
       <Header bg="white" />
 
-      {/* ============================
-          HERO SECTION
-      ============================ */}
-      <section
-        className="relative pt-[clamp(140px,120.58px_+_5.178vw,220px)] pb-[var(--space-section-y)] px-[var(--space-section-x)] bg-cover bg-center flex flex-col items-center justify-center text-center overflow-hidden"
-        style={{ backgroundImage: "url('/images/hero-bg.png')" }}
-      >
-        <div className="absolute inset-0 bg-black/85 z-0"></div>
-
-        <div className="relative z-10 flex flex-col items-center max-w-[900px]">
-          <h1 className="andrea text-[length:var(--fs-h1)] text-white mb-[calc(var(--space-20)*-1)] tracking-wide">
-            Returns &
-          </h1>
-          <h2 className="valturin text-[length:var(--fs-h2)] text-gold uppercase tracking-[4px] leading-tight">
-            Refund Policy
-          </h2>
-          <p className="gotham text-[length:var(--fs-body)] leading-relaxed text-gray-300 font-light mt-[var(--space-32)] max-w-[750px]">
-            We want you to be completely satisfied with your October Glory
-            experience. Please review our return and refund guidelines below.
-          </p>
-        </div>
-      </section>
+      <InnerPageHero
+        title="Returns &"
+        subtitle="Refund Policy"
+        description="We want you to be completely satisfied with your October Glory experience. Please review our return and refund guidelines below."
+        image={null}
+        trail={[{ label: "Returns & Refund Policy" }]}
+      />
 
       {/* ============================
           RETURNS CONTENT

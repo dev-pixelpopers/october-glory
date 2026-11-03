@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import InnerPageHero from "../components/inner-page-hero";
 
 export const metadata = {
   title: "Terms of Service | October Glory",
@@ -13,28 +14,13 @@ export default function TermsPage() {
     <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">
       <Header bg="white" />
 
-      {/* ============================
-          HERO SECTION
-      ============================ */}
-      <section
-        className="relative pt-[clamp(140px,120.58px_+_5.178vw,220px)] pb-[var(--space-section-y)] px-[var(--space-section-x)] bg-cover bg-center flex flex-col items-center justify-center text-center overflow-hidden"
-        style={{ backgroundImage: "url('/images/hero-bg.png')" }}
-      >
-        <div className="absolute inset-0 bg-black/85 z-0"></div>
-
-        <div className="relative z-10 flex flex-col items-center max-w-[900px]">
-          <h1 className="andrea text-[length:var(--fs-h1)] text-white mb-[calc(var(--space-20)*-1)] tracking-wide">
-            Terms &
-          </h1>
-          <h2 className="valturin text-[length:var(--fs-h2)] text-gold uppercase tracking-[4px] leading-tight">
-            Conditions
-          </h2>
-          <p className="gotham text-[length:var(--fs-body)] leading-relaxed text-gray-300 font-light mt-[var(--space-32)] max-w-[750px]">
-            Please read these terms and conditions carefully before using our
-            services at October Glory Salon.
-          </p>
-        </div>
-      </section>
+      <InnerPageHero
+        title="Terms &"
+        subtitle="Conditions"
+        description="Please read these terms and conditions carefully before using our services at October Glory Salon."
+        image={null}
+        trail={[{ label: "Terms & Conditions" }]}
+      />
 
       {/* ============================
           TERMS & CONDITIONS CONTENT
@@ -116,7 +102,7 @@ export default function TermsPage() {
               <p className="gotham text-[length:var(--fs-body)] leading-[1.8] text-white font-light">
                 We understand that plans may change. If you need to cancel or
                 reschedule your appointment, we kindly request at least 24
-                hours' notice. Cancellations made within 24 hours of the
+                hours&apos; notice. Cancellations made within 24 hours of the
                 appointment may be subject to a cancellation fee of up to 50%
                 of the service cost. No-shows without prior notification will
                 be charged the full service amount. Deposits paid at the time

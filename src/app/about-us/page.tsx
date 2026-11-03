@@ -17,6 +17,7 @@ export default function AboutUsPage() {
 
       {/* --- About Us Page Hero --- */}
       <InnerPageHero
+                trail={[{ label: "About Us" }]}
         title="About"
         subtitle="October Glory"
         description="Owner / Master Hair Stylist"

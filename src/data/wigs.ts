@@ -7,12 +7,12 @@ import type { ServiceParent } from "./services/types";
  * as a `ServiceParent` so `childrenMenu()` and the service-detail section
  * components can render it unchanged. What makes it different is that it is a
  * destination rather than a service: it sits in the primary nav beneath About
- * Us, and the sub-services listed on it live at /wigs/<slug>.
+ * Us, and the sub-services listed on it live at /wigs/services/<slug>.
  *
  * `WIGS_SLUG` is the value those sub-services carry in their `parents` array.
- * `src/data/services/index.ts` maps that slug to /wigs so every derived link —
- * the menu grid, sibling cards, `generateStaticParams` — points off /services
- * without any caller needing to special-case it.
+ * `src/data/services/index.ts` maps that slug to /wigs/services so every
+ * derived link — the menu grid, sibling cards, `generateStaticParams` —
+ * points off /services without any caller needing to special-case it.
  */
 export const WIGS_SLUG = "wigs";
 
@@ -162,7 +162,7 @@ export const wigsPage: ServiceParent = {
   },
   childrenSection: {
     eyebrow: "The Menu",
-    heading: "Explore Our Wig Services",
+    heading: "Services For Your Unit",
     intro:
       "Designing a unit, and keeping it wearable once you have one — each booked individually. Prices are a starting point; your stylist confirms the final cost at consultation.",
   },

@@ -44,7 +44,7 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const authFieldClass =
+const authFieldClass =
   "w-full bg-transparent border border-white/25 rounded-full px-6 py-4 text-white gotham text-[17px] placeholder:text-white/40 focus:border-[#cba660] focus:outline-none transition-colors";
 
 const goldButton =

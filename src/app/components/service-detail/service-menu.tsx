@@ -31,7 +31,7 @@ const liveItems = (services: Service[], category: string, fallback: ServiceMenuI
         slug: service.slug ?? undefined,
         name: service.name,
         price: priceText(service),
-        image: service.image ?? site?.image ?? "/images/salon-image.webp",
+        image: service.image ?? site?.image ?? "/images/salon-image.jpg",
         href: site?.href,
       };
     });

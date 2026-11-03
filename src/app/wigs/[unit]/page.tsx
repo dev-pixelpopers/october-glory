@@ -59,7 +59,7 @@ export default async function UnitPage({
         display={unit.name}
         script="Unit"
         eyebrow={unitSpecLine(unit)}
-        back={{ href: "/wigs", label: "All Units" }}
+        trail={[{ label: "Wigs", href: "/wigs" }, { label: `${unit.name} Unit` }]}
       />
 
       <UnitStorySection unit={unit} tone="light" />

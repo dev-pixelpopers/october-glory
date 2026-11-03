@@ -40,6 +40,7 @@ export default function ServicesPage() {
             <Header theme="dark" />
 
             <InnerPageHero
+                trail={[{ label: "Services" }]}
                 title="Choose"
                 subtitle="Our Premium Service"
                 description="Each of our services are tailored to our client’s personality and style. We pride ourselves in providing an inspiring, relaxed experience offering the latest in hair trends."

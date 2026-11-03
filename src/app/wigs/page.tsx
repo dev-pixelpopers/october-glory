@@ -4,10 +4,13 @@ import UnitHero from "../components/units/unit-hero";
 import UnitPoster from "../components/units/unit-poster";
 import ProcessFlow from "../components/process/process-flow";
 import UnitCatalog from "../components/units/unit-catalog";
+import ServiceMenuGrid from "../components/service-detail/service-menu";
 import WigSideTab from "../components/wig-services/wig-side-tab";
 import MembershipCta from "../components/service-detail/membership-cta";
 import ServiceCta from "../components/service-detail/service-cta";
+import { childrenMenu } from "@/data/services";
 import { unitsPage } from "@/data/units";
+import { wigsPage } from "@/data/wigs";
 
 /** The page carries no prices, so the default membership line does not fit. */
 const MEMBER_BODY =
@@ -32,12 +35,17 @@ export const metadata = {
  * units on one page was duplication. The grid still runs on a unit's own
  * page, as the strip of the other nine.
  *
- * The service page this replaced is parked at /old-wig.
- *
  * Tones are pinned rather than walked — the section list here is fixed, so
  * there is nothing for `assignTones` to resolve.
  */
 export default function UnitsPage() {
+  // The three sub-services parented to Wigs. They were listed on the page
+  // this one replaced and had nowhere to surface after it went; the grid is
+  // the same one every main service page uses. Wig Design & Consult opens
+  // its own page, the other two have no page and so link to booking, which
+  // the grid labels "Book Now" rather than "View Service".
+  const menu = childrenMenu(wigsPage);
+
   return (
     <div className="main-app bg-[#1B1B1B]">
       <Header theme="dark" />
@@ -49,6 +57,7 @@ export default function UnitsPage() {
         display={unitsPage.hero.display}
         script={unitsPage.hero.script}
         scale="display"
+        trail={[{ label: "Wigs" }]}
       />
 
       <UnitPoster tone="light" />
@@ -56,6 +65,8 @@ export default function UnitsPage() {
       <ProcessFlow flow={unitsPage.install} tone="dark" />
 
       <UnitCatalog tone="light" />
+
+      {menu && <ServiceMenuGrid menu={menu} tone="dark" />}
 
       {/* Book first, while the catalogue is still in view. The hand-off to
           the services side sits between the two CTAs that were already here,

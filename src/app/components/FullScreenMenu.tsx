@@ -41,7 +41,13 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
 
   return (
     <div
-      className="fixed inset-0 w-full h-full bg-[#9b7762] text-white z-20 overflow-y-auto"
+      /* z-[9999] is deliberate and sits in a gap: above every page element —
+         the tallest is the back-to-top button at 9998 — and below the header
+         bar (10000) and its controls (10001), so the button that closes the
+         menu stays on top of it. At the old z-20 the curtain was painting
+         underneath section wrappers, the side tab and the back-to-top, which
+         is why page content showed through the brown. */
+      className="fixed inset-0 w-full h-full bg-[#9b7762] text-white z-[9999] overflow-y-auto"
       style={{
         clipPath: isOpen
           ? 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'  // fully visible
@@ -66,7 +72,13 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
                   style={{
                     opacity: isOpen ? 1 : 0,
                     transform: isOpen ? 'translateY(0px)' : 'translateY(30px)',
-                    transition: `opacity 0.5s ease ${0.3 + index * 0.07}s, transform 0.5s ease ${0.3 + index * 0.07}s`,
+                    // Staggered on the way in only. Fading them out took half
+                    // a second against the curtain's two, so the links hung
+                    // half-transparent over the page while it closed. On the
+                    // way out they simply go, and the curtain does the work.
+                    transition: isOpen
+                      ? `opacity 0.5s ease ${0.3 + index * 0.07}s, transform 0.5s ease ${0.3 + index * 0.07}s`
+                      : 'none',
                   }}
                 >
                   <a

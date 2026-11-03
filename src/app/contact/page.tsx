@@ -37,6 +37,7 @@ export default function ContactPage() {
 
       {/* --- About Us Page Hero --- */}
       <InnerPageHero
+                trail={[{ label: "Contact" }]}
         title="Get In"
         subtitle="Touch"
         description="Ready for a luxurious transformation? Reach out to schedule your private appointment with Jhavuanna Paterson at October Glory."

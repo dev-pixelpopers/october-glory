@@ -27,6 +27,7 @@ export default function GloryNewsPage() {
 
             {/* --- About Us Page Hero --- */}
             <InnerPageHero
+                trail={[{ label: "Glory News" }]}
               title="GLORY"
               subtitle="GIRL BLOG"
               description="Style Trends, Maintenance & How To's for the Modern Glory Girl"

@@ -12,12 +12,26 @@
  *    `portrait`  /images/<Name>.png
  *    `video`     /images/<Name>.mp4
  *
+ *  DRAFT COPY — written here, needs the salon's sign-off:
+ *    `brief`, `build`, `reaction`            → one story per client, written
+ *                                              from her real spec. Plausible,
+ *                                              not reported: the salon should
+ *                                              correct anything that did not
+ *                                              happen before this goes live.
+ *
  *  PLACEHOLDER — still needs replacing:
  *    `journey` images                        → no before / braided / after
  *                                              frames have been supplied.
- *    `brief`, `build`, `reaction`, `quote`   → written by me as dummy copy.
- *                                              The salon has to supply the
- *                                              real version per client.
+ *
+ *  DELIBERATELY EMPTY:
+ *    `quote`                                 → renders as a blockquote signed
+ *                                              with the client's real name. A
+ *                                              sentence written here would be
+ *                                              a testimonial she never gave,
+ *                                              so these stay unset until the
+ *                                              salon collects real ones. The
+ *                                              section hides the blockquote
+ *                                              when the field is absent.
  *
  *  Drop the real assets at the paths listed in ASSET MAP below and swap the
  *  placeholder constant for the real path — nothing else has to change.
@@ -60,13 +74,16 @@ export type UnitStory = {
   /** Before / braided down / finished. */
   journey?: { before: string; mid: string; after: string };
 
-  /** PLACEHOLDER COPY — what she came in wanting. */
+  /** DRAFT — what she came in wanting. */
   brief: string;
-  /** PLACEHOLDER COPY — what was built, and why. */
+  /** DRAFT — what was built, and why. */
   build: string;
-  /** PLACEHOLDER COPY — how she wears it now. */
+  /** DRAFT — how she wears it now. */
   reaction: string;
-  /** PLACEHOLDER COPY — her words. */
+  /**
+   * Her own words, signed with her real name in the story section. Left
+   * unset on every unit until the salon has a quote she actually gave.
+   */
   quote?: string;
 };
 
@@ -93,19 +110,122 @@ const PLACEHOLDER_JOURNEY = {
   after: "/images/SilkPress-01.webp",
 };
 
-/** PLACEHOLDER. One story, reused — the salon supplies ten real ones. */
-const placeholderStory = (name: string) => ({
-  brief: `PLACEHOLDER — what ${name} asked for. Two or three sentences: the length and colour she had in mind, what she had tried before that had not worked, and what the unit needed to survive day to day.`,
-  build: `PLACEHOLDER — what we built for ${name}. The hair selected and why, how the cap was measured and constructed, the colour process, and the cut that finished it.`,
-  reaction: `PLACEHOLDER — how ${name} wears it now. How long the install took, how she styles it week to week, and how often she is back in the chair for maintenance.`,
-  quote: `PLACEHOLDER — a line in ${name}'s own words.`,
-});
+/* ------------------------------------------------------------------ */
+/*  THE STORIES                                                        */
+/* ------------------------------------------------------------------ */
+
+type UnitCopy = { brief: string; build: string; reaction: string };
+
+/**
+ * One story per unit, written from that client's real length, texture and
+ * colour — the only facts we actually have. Everything else is a reasonable
+ * account of how a unit to that spec gets built, not a record of what was
+ * said in the chair. The salon reads these and corrects them.
+ *
+ * `quote` is absent on purpose; see the note at the top of the file.
+ *
+ * `SPECS` below is typed against these keys, so a slug without a story here
+ * will not compile.
+ */
+const STORIES = {
+  tiffany: {
+    brief:
+      "Tiffany wanted length she could actually live in. She had worn long units before and spent the day pushing them back off her face — by the afternoon the hairline had shifted and she knew it, which meant she never quite stopped thinking about her hair.",
+    build:
+      "Twenty-two inches of wavy hair in its own jet black, with no lift and no colour processing at all, so the cuticle stays intact and the length does not matt at the nape by week three. The cap was measured over her finished braid pattern rather than a bare head, because that is the shape it has to hold all day.",
+    reaction:
+      "She wears it down and parted off-centre most days, and wraps it at night to keep the wave from flattening on one side. We see her roughly every six weeks to lift it, clean underneath and reset the perimeter.",
+  },
+
+  samantha: {
+    brief:
+      "Samantha had worn her hair long for years and wanted to see herself with a bob before committing scissors to her own. A bob was the whole point, so it had to read as a real cut rather than as a short wig.",
+    build:
+      "Twelve inches is unforgiving — there is no length to hide a cap edge behind, so the fit had to be exact and the hairline became the most careful part of the build. The blonde ombré was kept soft and low at the root, with the lift concentrated through the last few inches where the cut moves most.",
+    reaction:
+      "She wears it blunt and tucked behind one ear, and it takes her a few minutes in the morning instead of the half hour her own length used to. She still has not cut her own hair.",
+  },
+
+  tricia: {
+    brief:
+      "Tricia came in with a photo and one condition: long, but warm — nothing flat or one-note. She had been let down before by colour that looked rich in the salon and turned brassy a few washes later.",
+    build:
+      "Twenty-four inches, the longest unit we have built, in chocolate chestnut balayage painted onto the unit before it ever went on her head. Doing it in that order lets us follow the finished cut instead of guessing at it, so the lightest pieces land where the hair actually falls.",
+    reaction:
+      "She wears it with a deep side part so the balayage catches on the heavier side. Length like that needs looking after: she keeps it braided at night, and she is back for a tone refresh before the warmth starts to drift.",
+  },
+
+  kelly: {
+    brief:
+      "Kelly did not want to look like she was wearing anything. She wanted her own hair on its best day — the version she gets once in a while when the weather is right and everything behaves.",
+    build:
+      "Sixteen inches of curly hair in natural black, chosen by matching the curl pattern to her own rather than by picking a number off a chart. That match is the entire job on a unit like this. The cut was done dry and on her head, so the shape sits the way her curls actually sit.",
+    reaction:
+      "She refreshes it with water and a light cream and otherwise leaves it alone, which is exactly what she asked for. Most people assume it is hers, and she has stopped correcting them.",
+  },
+
+  amanda: {
+    brief:
+      "Amanda wanted honey blonde and had been talked out of it twice before by stylists worried about what the lift would do to her own hair. The unit was the answer to that: the colour happens to the unit, not to her.",
+    build:
+      "Sixteen inches, wavy, taken to honey across two separate highlighting passes with a rest in between. One pass would have got there faster and left the ends brittle; two gets a cleaner blonde that still has something to hold onto when it is styled.",
+    reaction:
+      "She wears it with a slight bend rather than a full wave, and uses purple shampoo sparingly — on a unit, overdoing it dulls the honey instead of brightening it. Her own hair underneath has never been near bleach.",
+  },
+
+  amber: {
+    brief:
+      "Amber liked the same honey family as the blondes she had been shown, but not the upkeep that came with them. She wanted something that would grow out gracefully instead of announcing itself at the root every few weeks.",
+    build:
+      "Sixteen inches, wavy, hand-painted as a balayage rather than foiled — the lift starts low and deliberately uneven, so there is no line to chase later. It arrives at much the same honey as a highlighted unit, by a route that softens as it grows rather than resetting.",
+    reaction:
+      "She stretches her appointments further than most of our colour clients, because on this unit the grow-out works in her favour. A tone every couple of months keeps it from going warm, and that is about the whole of it.",
+  },
+
+  payton: {
+    brief:
+      "Payton asked for brown with warmth in it and used the phrase teddy bear, which turned out to be exactly right. Everything she had tried before came out either flat brown or unmistakably ginger.",
+    build:
+      "Twenty inches, wavy, built on a warm brown base with highlights ribboned through in fine sections rather than in blocks. The ribboning is what keeps it reading as depth instead of as stripes once the hair moves.",
+    reaction:
+      "She wears it with a loose wave that lets the ribboning show, and it photographs far better than the solid brown she had before. She is in every six to eight weeks to keep the warmth honest.",
+  },
+
+  sunday: {
+    brief:
+      "Sunday wanted the opposite of a project. Something she could put on, wear all week and not think about: middle length, no colour, nothing to maintain beyond the basics.",
+    build:
+      "Eighteen inches, wavy, natural black — and that is deliberately the entire specification. With no colour process in it the hair keeps its strength, takes heat well on the days she wants it straighter, and goes back to its wave after a wash.",
+    reaction:
+      "She wears it straight through the week and lets the wave come back at the weekend. It is the lowest-maintenance unit on this page, which is precisely what she booked.",
+  },
+
+  phoebe: {
+    brief:
+      "Phoebe wanted long and curly together, which is the combination most people get quietly talked out of. Curls shrink, long curls tangle, and most units built to that brief have been cut short within a month.",
+    build:
+      "Twenty-two inches of curly hair in jet black, with the length measured stretched rather than at rest so it still reads long once the curl pulls up. The cut was shaped in sections to take weight out of the middle, because a long curly unit gives out at the back long before it gives out at the front.",
+    reaction:
+      "She refreshes it in sections and sleeps in a bonnet without exception — at this length and this texture that is not optional. In return she has kept the full length, which is rarer than it sounds.",
+  },
+
+  becka: {
+    brief:
+      "Becka wanted cool, not golden. She had seen enough ombrés drop warm after a few weeks and wanted to know how we would stop that happening before she booked anything.",
+    build:
+      "Twenty inches, wavy, chestnut through the top falling into an ash blonde at the ends. Ash over a dark base is the hardest colour on this page to hold: it needs a cleaner lift before any toner goes near it, and that is the step that gets skipped when a result turns brassy.",
+    reaction:
+      "She tones it on a schedule instead of waiting for it to turn, which is the only thing that keeps ash looking like ash. Worn straight it shows the fall from chestnut to blonde most clearly, and straight is how she wears it.",
+  },
+} satisfies Record<string, UnitCopy>;
+
+type UnitSlug = keyof typeof STORIES;
 
 /* ------------------------------------------------------------------ */
 /*  THE TEN UNITS — names and specs are real.                          */
 /* ------------------------------------------------------------------ */
 
-const SPECS: { slug: string; name: string; spec: UnitSpec }[] = [
+const SPECS: { slug: UnitSlug; name: string; spec: UnitSpec }[] = [
   { slug: "tiffany", name: "Tiffany", spec: { length: "22 inch", texture: "Wavy", color: "Jet black" } },
   { slug: "samantha", name: "Samantha", spec: { length: "12 inch", texture: "Bob", color: "Blonde ombré" } },
   { slug: "tricia", name: "Tricia", spec: { length: "24 inch", texture: "Wavy", color: "Chocolate chestnut balayage" } },
@@ -123,7 +243,7 @@ export const units: UnitStory[] = SPECS.map((unit) => ({
   portrait: portraitFor(unit.name),
   video: videoFor(unit.name),
   journey: PLACEHOLDER_JOURNEY,
-  ...placeholderStory(unit.name),
+  ...STORIES[unit.slug],
 }));
 
 export const getUnit = (slug: string): UnitStory | undefined =>
@@ -175,7 +295,7 @@ export const unitsPage = {
       "What you are looking at is our work, not a catalogue of stock. Find a unit close to what you have in mind, and we will build yours from there.",
     ],
     /** PLACEHOLDER — replace with /images/units/poster-left.webp and -right.webp. */
-    images: ["/images/Weaves-And-Extensions-02.webp", "/images/Weaves-And-Extensions-03.webp"],
+    images: ["/images/wig-unit-01.webp", "/images/wig-unit-02.webp"],
   },
 
   /**

@@ -117,7 +117,7 @@ const PAGE_PREVIEWS = {
     eyebrow: "By Appointment Only",
     title: "October Glory",
     body: "A Brooklyn salon and wig spa where every look is built around your hair, your texture, and the way you live in it.",
-    image: "/images/salon-image.webp",
+    image: "/images/salon-image.jpg",
     href: "/",
   },
   "about-us": {
@@ -266,7 +266,7 @@ export const PREVIEWS: Record<string, MenuPreview> = {
     eyebrow: "Visit Us",
     title: "Get In Touch",
     body: "Ready for a luxurious transformation? Reach out to schedule your private appointment with Jhavuanna Paterson at October Glory.",
-    image: "/images/salon-image.webp",
+    image: "/images/salon-image.jpg",
     href: "/contact",
     phone: "+1 (718)-614-1118",
     phoneHref: "tel:+17186141118",

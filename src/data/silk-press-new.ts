@@ -6,9 +6,6 @@
  * the sections the wig section established — plus the packages, which the
  * units side has no equivalent of.
  *
- * The service page it replaced is parked at /old-silk-press, the way /old-wig
- * was. Nothing here reads from it.
- *
  * ─────────────────────────────────────────────────────────────────────────
  *  WHAT IS REAL AND WHAT IS PLACEHOLDER
  *
@@ -58,7 +55,7 @@ export const silkPressPage = {
     intro:
       "Our signature method for straight, silky hair without compromising your curls.",
     /** PLACEHOLDER — replace with the professional shoot. */
-    image: "/images/SilkPress-01.webp",
+    image: "/images/silk-press-hero.webp",
   },
 
   /**
@@ -125,7 +122,7 @@ export const silkPressPage = {
       "Straight, shiny and full of movement, without permanently altering your curl pattern.",
     ],
     /** PLACEHOLDER — replace with the ~22s finished-look clip. */
-    video: "/images/video-5.webm",
+    video: "/images/silk-press-finish.mp4",
     image: "/images/silk-press-after.png",
   },
 

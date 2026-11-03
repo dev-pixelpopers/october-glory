@@ -17,6 +17,7 @@ export default function ShopPage() {
       <Header theme="dark" />
       {/* Shop is the one hero with a button in place of the description. */}
       <InnerPageHero
+                trail={[{ label: "Shop" }]}
         title="Shop"
         subtitle="October Glory"
         image="/images/shop-bg.png"

@@ -23,7 +23,7 @@ import type {
  * — but a service that has had its own filmed should override `process` with
  * the steps and footage specific to it.
  */
-export const DEFAULT_PROCESS: ServiceProcess = {
+const DEFAULT_PROCESS: ServiceProcess = {
   eyebrow: "How It Works",
   heading: "The",
   headingAccent: "Process",
@@ -71,7 +71,7 @@ export const serviceProcess = (service: ServiceDetail): ServiceProcess => {
  * must be the same client, same distance, same angle and same lighting, or the
  * wipe reads as two unrelated photographs rather than one head of hair.
  */
-export const DEFAULT_BEFORE_AFTER: ServiceBeforeAfter = {
+const DEFAULT_BEFORE_AFTER: ServiceBeforeAfter = {
   eyebrow: "The Difference",
   heading: "Before",
   headingAccent: "& After",

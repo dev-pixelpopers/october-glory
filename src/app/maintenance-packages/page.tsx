@@ -22,6 +22,7 @@ export default function MaintenancePackagesPage() {
     <div className="main-app bg-[#1B1B1B]">
       <Header theme="dark" />
       <InnerPageHero
+                trail={[{ label: "Maintenance Packages" }]}
       title="MAINTENANCE"
       subtitle="Packages"
       description="Indulge in our luxury bundled packages — combining multiple premium services for a complete, head-to-toe hair transformation."

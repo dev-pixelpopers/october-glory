@@ -37,6 +37,13 @@ const serviceRedirects = [
 
   // The old weaves category is covered by the Wigs & Extensions page.
   ["/weaves-and-extensions", "/services/wigs-and-extensions"],
+
+  // The previous Wigs and Silk Press pages were parked at /old-* while their
+  // replacements were built. Both are gone now; the two wig sub-services that
+  // lived under /old-wig moved to /wigs/services.
+  ["/old-wig", "/wigs"],
+  ["/old-wig/:slug", "/wigs/services/:slug"],
+  ["/old-silk-press", "/services/silk-press"],
 ];
 
 const nextConfig: NextConfig = {

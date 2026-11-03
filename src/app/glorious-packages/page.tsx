@@ -16,6 +16,7 @@ export default function GloriousPackagesPage() {
     <div className="main-app bg-[#1B1B1B]">
       <Header theme="dark" />
       <InnerPageHero
+                trail={[{ label: "Glorious Packages" }]}
       title="Glorious"
       subtitle="Packages"
       description="Indulge in our luxury bundled packages — combining multiple premium services for a complete, head-to-toe hair transformation."
@@ -23,7 +24,7 @@ export default function GloriousPackagesPage() {
       <GloriousPackagesGallery />
       <section
         className="h-screen bg-fixed bg-bottom bg-cover bg-no-repeat w-full"
-        style={{ backgroundImage: "url('/images/salon-image.webp')" }}
+        style={{ backgroundImage: "url('/images/salon-image.jpg')" }}
       ></section>
       <GloriousPackagesServices />
       <Footer />

@@ -19,17 +19,21 @@ export { serviceChildren } from "./children";
  * still sit in `children.ts` (Glorious Boost belongs to a service *and* to
  * Wigs, so one list has to hold both), and this map is what keeps every
  * derived link pointing at the right root.
+ *
+ * Not /wigs/<slug>: the sibling `[unit]` route owns that segment and would
+ * answer first with a 404. The route that serves these is
+ * src/app/wigs/services/[slug]/page.tsx, and it has to agree with this.
  */
 const EXTERNAL_PARENT_ROOTS: Record<string, string> = {
-  wigs: "/old-wig",
+  wigs: "/wigs/services",
 };
 
-/** Where a parent's pages live: /old-wig for Wigs, /services/<slug> otherwise. */
-export const parentRoot = (parentSlug: string): string =>
+/** Where a parent's pages live: /wigs/services for Wigs, /services/<slug> otherwise. */
+const parentRoot = (parentSlug: string): string =>
   EXTERNAL_PARENT_ROOTS[parentSlug] ?? `/services/${parentSlug}`;
 
 /** True for a parent that has left /services, such as Wigs. */
-export const isExternalParent = (parentSlug: string): boolean =>
+const isExternalParent = (parentSlug: string): boolean =>
   parentSlug in EXTERNAL_PARENT_ROOTS;
 
 /** Every main service, in display order. */

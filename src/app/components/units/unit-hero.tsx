@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import Link from "next/link";
+import Breadcrumbs, { type Crumb } from "../breadcrumbs";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -17,7 +18,7 @@ export default function UnitHero({
   display,
   script,
   eyebrow,
-  back,
+  trail,
   scale = "page",
 }: {
   image: string;
@@ -26,8 +27,8 @@ export default function UnitHero({
   /** Valturin line underneath. */
   script: string;
   eyebrow?: string;
-  /** Shown above the heading on a unit page, back to the index. */
-  back?: { href: string; label: string };
+  /** The trail after Home, e.g. `[{ label: "Wigs", href: "/wigs" }, { label: "Tiffany" }]`. */
+  trail?: Crumb[];
   /**
    * "display" sets the title roughly half again as large as a normal page
    * heading. The Units index uses it — the handoff asks for a prominent
@@ -79,19 +80,15 @@ export default function UnitHero({
         backgroundPosition: "center",
       }}
     >
+
+     
+
       {/* Gold corner accents — the same framing the service heroes use. */}
       <div className="absolute top-[140px] left-[40px] md:left-[80px] w-[70px] h-[70px] border-t border-l border-[#ccb884]/30" />
       <div className="absolute bottom-[70px] right-[40px] md:right-[80px] w-[70px] h-[70px] border-b border-r border-[#ccb884]/30" />
 
       <div className="relative z-10 text-center flex flex-col items-center px-[var(--space-section-x)]">
-        {back && (
-          <Link
-            href={back.href}
-            className="gotham text-[12px] md:text-[13px] tracking-[4px] uppercase text-white/50 hover:text-[#ccb884] transition-colors duration-300 mb-[var(--space-32)]"
-          >
-            ← {back.label}
-          </Link>
-        )}
+        {trail && <Breadcrumbs trail={trail} className="mb-[var(--space-32)]" />}
 
         <div ref={headingRef}>
           <h1 className={`flex flex-col andrea ${titleSize} leading-[1.3] text-white tracking-wide`}>

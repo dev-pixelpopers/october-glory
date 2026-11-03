@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import Breadcrumbs, { type Crumb } from "./breadcrumbs";
 
 export type InnerPageHeroProps = {
   /** The first line, in the Andrea script face. */
@@ -11,8 +12,13 @@ export type InnerPageHeroProps = {
   subtitle?: string;
   /** Supporting line under the gold divider. */
   description?: string;
-  /** Background photo. */
-  image?: string;
+  /**
+   * Background photo. Pass `null` for the pages that have no photograph —
+   * the legal pages — and the hero draws the scrim on its own over ink.
+   */
+  image?: string | null;
+  /** The trail after Home, e.g. `[{ label: "Lookbook" }]`. */
+  trail?: Crumb[];
   /**
    * Anything to sit below the divider instead of, or alongside, the
    * description — Shop uses this for its booking button.
@@ -34,6 +40,7 @@ export default function InnerPageHero({
   subtitle,
   description,
   image = DEFAULT_IMAGE,
+  trail,
   children,
 }: InnerPageHeroProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -68,16 +75,28 @@ export default function InnerPageHero({
   return (
     <section
       className="relative w-full h-screen flex items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage: `linear-gradient(180deg, rgba(27,27,27,0.6) 0%, rgba(27,27,27,0.85) 100%), url('${image}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+      style={
+        image
+          ? {
+              backgroundImage: `linear-gradient(180deg, rgba(27,27,27,0.6) 0%, rgba(27,27,27,0.85) 100%), url('${image}')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }
+          : {
+              // No photograph, so the overlay is the whole background. It runs
+              // the same direction as the scrim above and lands on the page's
+              // own ink, so the hero meets the first section without a seam.
+              backgroundImage:
+                "linear-gradient(180deg, #000000 0%, #1B1B1B 100%)",
+            }
+      }
     >
       {/* Subtle grain overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]" />
 
       <div className="relative z-10 text-center flex flex-col items-center px-[var(--space-24)]">
+        {trail && <Breadcrumbs trail={trail} className="mb-[var(--space-32)]" />}
+
         <h1
           ref={headingRef}
           className="andrea text-[length:var(--fs-h1)] leading-[2] text-white mb-0 tracking-wide flex flex-col"

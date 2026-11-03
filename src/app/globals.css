@@ -298,6 +298,10 @@ form textarea::Placeholder {
 
 /* ---  RESPONSIVE CSS --- */
 
+.og-letter {
+    line-height: 0.7 !important; 
+    translate: 0 0.1em !important;
+}
 
 
 @media(max-width: 1681px) {
@@ -369,9 +373,9 @@ form textarea::Placeholder {
 
 
 
-  .og-letter {
+  /* .og-letter {
     line-height: 1.3;
-  }
+  } */
 
   .pum-an {
     font-size: 2.1vw;
@@ -403,9 +407,9 @@ form textarea::Placeholder {
 
 @media (max-width: 1367px) {
 
-  .og-letter {
+  /* .og-letter {
     line-height: 1.1;
-  }
+  } */
 
   .hero-wrapper {
     display: flex;
@@ -528,9 +532,9 @@ form textarea::Placeholder {
 
 @media (max-width: 1153px) {
 
-  .og-letter {
+  /* .og-letter {
     line-height: 1.3;
-  }
+  } */
 }
 
 
@@ -721,7 +725,7 @@ form textarea::Placeholder {
 
   .welcome-wrapper .og-letter {
     font-size: 90vw;
-    line-height: 1.5;
+    /* line-height: 1.5; */
   }
 
   .offer-card-con {

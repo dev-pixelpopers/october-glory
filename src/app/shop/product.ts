@@ -7,7 +7,7 @@ export type ProductTag =
   | "volume"
   | "extension";
 
-export const PRODUCT_TAGS: ProductTag[] = [
+const PRODUCT_TAGS: ProductTag[] = [
   "new",
   "hot",
   "styles",
