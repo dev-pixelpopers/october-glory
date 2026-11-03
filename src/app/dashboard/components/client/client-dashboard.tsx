@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CalendarDays, CalendarPlus, Crown, Gift, UserRound } from "lucide-react";
+import { CalendarDays, CalendarPlus, Crown, Gift, ShoppingBag, UserRound } from "lucide-react";
 import SetPasswordBanner from "@/app/components/salon/set-password-banner";
 import { useAppointments, useCancelAppointment } from "@/lib/api/hooks/booking";
+import { useProducts } from "@/lib/api/hooks/catalog";
 import {
   useLoyaltyBalance,
   useLoyaltyTransactions,
@@ -13,7 +14,7 @@ import {
 } from "@/lib/api/hooks/loyalty";
 import ShoutoutSubmissionForm from "./shoutout-form";
 import { useSubmitReview } from "@/lib/api/hooks/reviews";
-import type { Appointment, User } from "@/lib/api/types";
+import type { Appointment, Product, User } from "@/lib/api/types";
 import { money, shortDate, timeLabel } from "@/lib/format";
 import DashboardShell, { buttonGhost, buttonGold, Card, inputClass, StatusBadge, type NavItem } from "../dashboard-shell";
 import { Modal } from "../admin/service-manager";
@@ -29,6 +30,7 @@ export const CLIENT_NAV: NavItem[] = [
   { id: "appointments", label: "My Appointments", icon: CalendarDays },
   { id: "rewards", label: "Loyalty & Rewards", icon: Gift },
   { id: "membership", label: "Membership", icon: Crown },
+  { id: "shop", label: "Shop", icon: ShoppingBag },
   { id: "profile", label: "Profile", icon: UserRound },
 ];
 
@@ -59,6 +61,7 @@ export default function ClientDashboard({ user }: { user: User }) {
       {tab === "appointments" && <AppointmentsPanel />}
       {tab === "rewards" && <RewardsHub />}
       {tab === "membership" && <MembershipPanel user={user} />}
+      {tab === "shop" && <ShopPanel />}
       {tab === "profile" && <ProfilePanel user={user} />}
     </DashboardShell>
   );
@@ -285,6 +288,95 @@ function RewardsHub() {
           <Pagination page={ledger.meta.current_page} lastPage={ledger.meta.last_page} onChange={setPage} />
         )}
       </Card>
+    </div>
+  );
+}
+
+/* --------------------------------- Shop -------------------------------------- */
+
+/**
+ * The shop catalog, read-only: what the salon sells, at today's price. There
+ * is no checkout yet, so nothing here can be bought or changed — the panel is
+ * where the Buy button goes once checkout exists.
+ */
+function ShopPanel() {
+  const { data: products, isLoading, error } = useProducts();
+  const [category, setCategory] = useState<string | null>(null);
+
+  const categories = Array.from(
+    new Set((products ?? []).map((p) => p.category).filter((c): c is string => !!c)),
+  );
+  const shown = (products ?? []).filter((p) => !category || p.category === category);
+
+  return (
+    <Card title="Shop October Glory">
+      <p className="gotham font-light text-[var(--dash-text-soft)] text-[15px] leading-relaxed mb-5">
+        Custom units, closure pieces and the products we use in the salon.
+      </p>
+
+      {categories.length > 1 && (
+        <div className="flex flex-wrap gap-2 mb-6">
+          {[null, ...categories].map((c) => (
+            <button
+              key={c ?? "all"}
+              onClick={() => setCategory(c)}
+              className={`gotham text-[13px] px-4 py-1.5 rounded-full border transition-colors cursor-pointer ${
+                category === c
+                  ? "border-[#cba660] text-[#cda873]"
+                  : "border-[var(--dash-border)] text-[var(--dash-text-muted)] hover:text-[var(--dash-text)]"
+              }`}
+            >
+              {c ?? "All"}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {isLoading && <p className="gotham text-[var(--dash-text-muted)] text-[15px]">Loading products…</p>}
+      {error && <p className="gotham text-red-400 text-[14px]">{error.message}</p>}
+      {!isLoading && !error && shown.length === 0 && (
+        <p className="gotham text-[var(--dash-text-faint)] text-[15px]">No products to show yet.</p>
+      )}
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {shown.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+function ProductCard({ product }: { product: Product }) {
+  const image = product.image ?? product.gallery[0];
+  const spec = [product.length, product.texture, product.color].filter(Boolean).join(" · ");
+
+  return (
+    <div className="flex flex-col border border-[var(--dash-border)] rounded-[16px] overflow-hidden">
+      {/* Sized by the wrapper — the global img rule overrides size utilities on img. */}
+      <div className="aspect-square bg-[var(--dash-border)]">
+        {image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={image} alt={product.name} className="object-cover" />
+        )}
+      </div>
+      <div className="flex flex-col flex-1 p-3">
+        {product.category && (
+          <p className="gotham text-[var(--dash-text-faint)] text-[12px] uppercase tracking-widest mb-1">
+            {product.category}
+          </p>
+        )}
+        <p className="gotham text-[var(--dash-text)] text-[15px]">{product.name}</p>
+        {spec && <p className="gotham text-[var(--dash-text-muted)] text-[13px] mt-1">{spec}</p>}
+        {product.description && (
+          <p className="gotham font-light text-[var(--dash-text-soft)] text-[13px] leading-relaxed mt-2 line-clamp-3">
+            {product.description}
+          </p>
+        )}
+        <div className="mt-auto pt-3">
+          <span className="gotham font-bold text-[#cda873] text-[16px]">{money(product.price)}</span>
+        </div>
+      </div>
     </div>
   );
 }
