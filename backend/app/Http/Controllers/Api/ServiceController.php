@@ -9,6 +9,7 @@ use App\Http\Resources\PriceHistoryResource;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use App\Services\PricingService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
@@ -22,11 +23,13 @@ class ServiceController extends Controller
      * Public catalog: active services with their live price, in the order the
      * site lists them. ?category=<slug> returns one page's services — the slug
      * is the site's /services/<slug> URL — and ?category_id= still works.
+     * Archived (deleted but booked) services are never listed.
      */
     public function index(Request $request): AnonymousResourceCollection
     {
         $services = Service::query()
             ->with(['category', 'currentPrice'])
+            ->whereNull('archived_at')
             ->when($request->query('category_id'), fn ($q, $id) => $q->where('category_id', $id))
             ->when($request->query('category'), fn ($q, $slug) => $q->whereHas('category', fn ($c) => $c->where('slug', $slug)))
             ->when(! $request->user()?->isAdmin(), fn ($q) => $q->where('is_active', true))
@@ -67,6 +70,36 @@ class ServiceController extends Controller
         });
 
         return new ServiceResource($service->fresh(['category', 'currentPrice']));
+    }
+
+    /**
+     * Delete the service. One that is on any appointment is archived instead —
+     * booking history keeps pointing at it — and leaves its category, packages
+     * and workers, and gives up its slug so a new service can take it.
+     */
+    public function destroy(Service $service): JsonResponse
+    {
+        $archived = $service->appointmentLines()->exists();
+
+        DB::transaction(function () use ($service, $archived) {
+            if (! $archived) {
+                // Price ledger, worker and package links cascade.
+                $service->delete();
+
+                return;
+            }
+
+            $service->packages()->detach();
+            $service->workers()->detach();
+            $service->update([
+                'is_active' => false,
+                'archived_at' => now(),
+                'category_id' => null,
+                'slug' => null,
+            ]);
+        });
+
+        return response()->json(['data' => ['archived' => $archived]]);
     }
 
     /** Chronological pricing ledger for the "View Price History" modal. */

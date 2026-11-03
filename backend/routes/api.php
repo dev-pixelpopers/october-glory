@@ -65,6 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('role:admin')->prefix('admin')->group(function () {
         Route::post('/services', [ServiceController::class, 'store']);
         Route::put('/services/{service}', [ServiceController::class, 'update']);
+        Route::delete('/services/{service}', [ServiceController::class, 'destroy']);
         Route::get('/services/{service}/price-history', [ServiceController::class, 'priceHistory']);
 
         Route::post('/categories', [ServiceCategoryController::class, 'store']);

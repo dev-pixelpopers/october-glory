@@ -15,7 +15,7 @@ class Service extends Model
 
     protected $fillable = [
         'category_id', 'name', 'slug', 'description', 'image', 'duration_minutes',
-        'price_by_consultation', 'is_active', 'sort_order',
+        'price_by_consultation', 'is_active', 'archived_at', 'sort_order',
     ];
 
     protected function casts(): array
@@ -24,6 +24,7 @@ class Service extends Model
             'duration_minutes' => 'integer',
             'price_by_consultation' => 'boolean',
             'is_active' => 'boolean',
+            'archived_at' => 'datetime',
         ];
     }
 

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import {
   useCategories,
   useCreateService,
+  useDeleteService,
   usePriceHistory,
   useServices,
   useUpdateService,
@@ -116,6 +117,8 @@ function ServiceFormModal({
 }) {
   const create = useCreateService();
   const update = useUpdateService();
+  const del = useDeleteService();
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [form, setForm] = useState<ServicePayload>({
     name: service?.name ?? "",
     description: service?.description ?? "",
@@ -128,8 +131,8 @@ function ServiceFormModal({
     is_active: service?.is_active ?? true,
   });
 
-  const pending = create.isPending || update.isPending;
-  const error = create.error ?? update.error;
+  const pending = create.isPending || update.isPending || del.isPending;
+  const error = create.error ?? update.error ?? del.error;
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -221,12 +224,47 @@ function ServiceFormModal({
           </p>
         )}
         {error && <p className="gotham text-red-400 text-[14px]">{error.message}</p>}
-        <div className="flex justify-end gap-3 mt-2">
-          <button type="button" onClick={onClose} className={buttonGhost}>Cancel</button>
-          <button type="submit" disabled={pending} className={buttonGold}>
-            {pending ? "Saving…" : "Save Service"}
-          </button>
-        </div>
+        {service && confirmDelete ? (
+          <div className="rounded-[14px] border border-red-500/30 bg-red-500/10 p-4">
+            <p className="gotham text-[var(--dash-text-soft)] text-[14px] mb-3">
+              Delete “{service.name}”? It comes off the site, booking, its packages and its workers. If it is on
+              past appointments it is archived instead, so their history still shows it.
+            </p>
+            <div className="flex gap-3">
+              <button type="button" onClick={() => setConfirmDelete(false)} className={buttonGhost}>
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={pending}
+                onClick={() => del.mutate(service.id, { onSuccess: onClose })}
+                className="gotham text-[14px] text-white bg-red-500/80 hover:bg-red-500 px-5 py-2.5 rounded-full cursor-pointer"
+              >
+                {del.isPending ? "Deleting…" : "Delete"}
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-between items-center gap-3 mt-2">
+            {service ? (
+              <button
+                type="button"
+                onClick={() => setConfirmDelete(true)}
+                className="gotham text-[13px] text-red-400 hover:text-red-300 cursor-pointer"
+              >
+                Delete service
+              </button>
+            ) : (
+              <span />
+            )}
+            <div className="flex gap-3">
+              <button type="button" onClick={onClose} className={buttonGhost}>Cancel</button>
+              <button type="submit" disabled={pending} className={buttonGold}>
+                {create.isPending || update.isPending ? "Saving…" : "Save Service"}
+              </button>
+            </div>
+          </div>
+        )}
       </form>
     </Modal>
   );

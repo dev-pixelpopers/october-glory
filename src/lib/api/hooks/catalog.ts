@@ -142,6 +142,23 @@ export function useUpdateService() {
   });
 }
 
+/**
+ * Delete a service. One that is on past appointments comes back
+ * `archived: true`: hidden everywhere, kept for booking history.
+ */
+export function useDeleteService() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) =>
+      api.delete<{ data: { archived: boolean } }>(`/admin/services/${id}`),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["services"] });
+      qc.invalidateQueries({ queryKey: ["packages"] });
+      qc.invalidateQueries({ queryKey: ["workers"] });
+    },
+  });
+}
+
 /* ------------------------------- Packages ------------------------------------ */
 
 /** Public: active packages, optionally filtered to one marketing collection. */
