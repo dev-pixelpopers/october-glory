@@ -78,7 +78,7 @@ class SiteCatalog
         ['haircuts-and-styles', 'haircut-only', 'Haircut Only', '75.00', 45, '/images/Haircuts-And-Styles-05.webp', null],
         ['haircuts-and-styles', 'haircut-and-finish', 'Haircut & Finish', '125.00', 75, '/images/Haircuts-And-Styles-06.webp', null],
         ['haircuts-and-styles', 'new-look-haircut', 'New Look Haircut', '120.00', 75, '/images/Haircuts-And-Styles-07.webp', null],
-        ['haircuts-and-styles', 'pro-consult', 'Pro Consult', '50.00', 30, '/images/salon-image.webp', null],
+        ['haircuts-and-styles', 'pro-consult', 'Pro Consult', '50.00', 30, '/images/salon-image.jpg', null],
 
         // /services/treatments
         ['treatments', 'scalp-relief', 'Scalp Relief', '50.00', 45, '/images/TREATMENTS-01.webp', null],

@@ -78,8 +78,8 @@ class ImageUploadTest extends TestCase
         $this->actAsAdmin();
         $worker = User::query()->where('email', 'maya@octoberglory.com')->first();
 
-        $this->putJson("/api/admin/workers/{$worker->id}", ['avatar_url' => '/images/salon-image.webp'])
+        $this->putJson("/api/admin/workers/{$worker->id}", ['avatar_url' => '/images/salon-image.jpg'])
             ->assertOk()
-            ->assertJsonPath('data.avatar_url', '/images/salon-image.webp');
+            ->assertJsonPath('data.avatar_url', '/images/salon-image.jpg');
     }
 }

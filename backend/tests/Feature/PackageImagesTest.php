@@ -56,8 +56,8 @@ class PackageImagesTest extends TestCase
         Sanctum::actingAs(User::query()->where('role', 'admin')->first(), ['*']);
         $package = Package::query()->where('slug', 'wig-prep')->firstOrFail();
 
-        $this->putJson("/api/admin/packages/{$package->id}", ['image' => '/images/salon-image.webp'])
+        $this->putJson("/api/admin/packages/{$package->id}", ['image' => '/images/salon-image.jpg'])
             ->assertOk()
-            ->assertJsonPath('data.image', '/images/salon-image.webp');
+            ->assertJsonPath('data.image', '/images/salon-image.jpg');
     }
 }

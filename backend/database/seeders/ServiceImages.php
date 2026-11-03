@@ -33,7 +33,7 @@ class ServiceImages
 
         // Natural Styles
         'Classic Silk Press' => '/images/silk-press-card-img.jpg',
-        'Silk Press Plus' => '/images/SilkPress-01.webp',
+        'Silk Press Plus' => '/images/servicce.png',
         'The Glorious Silk Press' => '/images/GLORIOUS-PACKAGES-02.webp',
         'Rodset' => '/images/RodSet-01.webp',
         'Roller Set' => '/images/RodSet-01.webp',
@@ -52,7 +52,7 @@ class ServiceImages
         'Haircut Only' => '/images/Haircuts-And-Styles-05.webp',
         'Haircut & Finish' => '/images/Haircuts-And-Styles-06.webp',
         'New Look Haircut' => '/images/Haircuts-And-Styles-07.webp',
-        'Pro Consult' => '/images/salon-image.webp',
+        'Pro Consult' => '/images/salon-image.jpg',
         'Precision Trim' => '/images/trim-after.webp',
 
         // Treatments
