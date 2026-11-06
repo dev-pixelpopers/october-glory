@@ -84,6 +84,7 @@ export default function ServiceDetailTemplate({
           section={service.overview}
           tone={toneOf("overview")}
           hairline
+          slug={service.slug}
         />
       )}
 
@@ -104,6 +105,7 @@ export default function ServiceDetailTemplate({
           section={section}
           flip={i % 2 === 0}
           tone={toneOf(`section-${i}`)}
+          slug={service.slug}
         />
       ))}
 
@@ -134,7 +136,14 @@ export default function ServiceDetailTemplate({
 
       <MembershipCta tone={toneOf("membership")} />
 
-      <ServiceCta cta={service.cta} image={service.hero.image} />
+      <ServiceCta
+        cta={service.cta}
+        image={service.hero.image}
+        action={{
+          href: `/dashboard/book?service=${encodeURIComponent(service.slug)}`,
+          label: "Book Consultation",
+        }}
+      />
 
       <Footer />
     </div>

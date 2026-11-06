@@ -23,10 +23,10 @@ const FALLBACK_IMAGES = [
 ];
 
 const FALLBACK_SERVICES = [
-  { name: "GLORIOUS RODSET", price: "$230", image: FALLBACK_IMAGES[0] },
-  { name: "GLORIOUS SILK PRESS", price: "$245", image: FALLBACK_IMAGES[1] },
-  { name: "GLORIOUS BOOST", price: "$120", image: FALLBACK_IMAGES[2] },
-  { name: "WIG PREP", price: "$120", image: FALLBACK_IMAGES[3] },
+  { name: "GLORIOUS RODSET", slug: "glorious-rodset", price: "$230", image: FALLBACK_IMAGES[0] },
+  { name: "GLORIOUS SILK PRESS", slug: "glorious-silk-press", price: "$245", image: FALLBACK_IMAGES[1] },
+  { name: "GLORIOUS BOOST", slug: "glorious-boost", price: "$120", image: FALLBACK_IMAGES[2] },
+  { name: "WIG PREP", slug: "wig-prep", price: "$120", image: FALLBACK_IMAGES[3] },
 ];
 
 /** "230.00" -> "$230". */
@@ -42,6 +42,7 @@ export default function GloriousPackagesGallery() {
     packages && packages.length > 0
       ? packages.map((p, i) => ({
           name: p.name.toUpperCase(),
+          slug: p.slug,
           price: priceLabel(p.price),
           image: p.image || FALLBACK_IMAGES[i % FALLBACK_IMAGES.length],
         }))
@@ -122,7 +123,7 @@ export default function GloriousPackagesGallery() {
               </h3>
 
               <a
-                href={BOOKING_URL}
+                href={service.slug ? `/dashboard/book?package=${encodeURIComponent(service.slug)}` : BOOKING_URL}
                 className="inline-flex items-center gap-2 text-[#ccb884] gotham text-[14px] tracking-[2px] uppercase translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 hover:text-white"
               >
                 Book Now

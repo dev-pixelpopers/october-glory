@@ -5,26 +5,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { useReveal } from "../service-detail/use-reveal";
 import { tone as palette, type Tone } from "../service-detail/tone";
-import { unitInches, units, type UnitStory } from "@/data/units";
+import type { Product } from "@/lib/api/types";
 
 /**
- * One unit: the portrait, which is also the video.
+ * One unit: the portrait/cover image, which is also the video preview on hover.
  *
- * The portrait and the unit video are the same head of hair, so showing both
- * as separate thumbnails spent twice the space to say one thing and left each
- * too small to read. The portrait is the video's poster now — point at it and
- * it plays in place.
+ * The portrait and the unit video are the same head of hair, so the image is
+ * the video's poster. Hovering triggers in-place playback.
  *
- * `preload="none"` keeps ten clips off the wire until one is actually asked
- * for. Touch has no hover, so the card's link carries those visitors to the
- * unit's own page, where the video plays on its own.
+ * `preload="none"` keeps clips off the wire until requested.
  */
-function UnitFrame({ unit }: { unit: UnitStory }) {
+function UnitFrame({ unit }: { unit: Product }) {
   const ref = React.useRef<HTMLVideoElement>(null);
 
   const play = () => {
-    // A rejected play() is normal — the pointer can leave before the first
-    // frame decodes — so it must not surface as an unhandled rejection.
     void ref.current?.play().catch(() => {});
   };
 
@@ -35,6 +29,8 @@ function UnitFrame({ unit }: { unit: UnitStory }) {
     video.currentTime = 0;
   };
 
+  const imgSrc = unit.image || unit.background_image || "/images/unit-bg.png";
+
   return (
     <div
       className="relative aspect-[4/5] w-full overflow-hidden rounded-[18px] bg-[#2a2a2a]"
@@ -42,7 +38,7 @@ function UnitFrame({ unit }: { unit: UnitStory }) {
       onPointerLeave={stop}
     >
       <Image
-        src={unit.portrait}
+        src={imgSrc}
         alt={`The ${unit.name} unit`}
         fill
         sizes="(max-width: 640px) 100vw, (max-width: 1280px) 45vw, 30vw"
@@ -70,9 +66,6 @@ function UnitFrame({ unit }: { unit: UnitStory }) {
           <span className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full bg-[#1B1B1B]/70 text-[11px] text-[#ccb884] backdrop-blur-sm">
             ▶
           </span>
-          {/* The deck labels each clip "Unit video". It sat on a separate
-              thumbnail there; here the portrait is the poster, so the label
-              rides with the play badge instead of captioning a second image. */}
           <span className="gotham text-[11px] uppercase tracking-[3px] text-white/85 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
             Unit video
           </span>
@@ -82,25 +75,26 @@ function UnitFrame({ unit }: { unit: UnitStory }) {
   );
 }
 
-/**
- * The unit catalogue.
- *
- * Order and numbering follow the handoff deck exactly — 01 to 10, Tiffany
- * first — because those numbers are how the salon refers to its own units,
- * and renumbering them on the site would break that reference.
- *
- * Within each card the length leads, set large. It is the first thing anyone
- * asks about a unit and the one spec value that compares at a glance, and in
- * the deck's own layout it was the smallest type on the page.
- */
-export default function UnitCatalog({
-  tone = "light",
-  heading,
-}: {
+export interface UnitCatalogProps {
+  products?: Product[];
+  error?: string | null;
   tone?: Tone;
   heading?: { eyebrow?: string; heading: string; headingAccent?: string; intro?: string };
-}) {
-  const scope = useReveal<HTMLElement>();
+}
+
+/**
+ * The dynamic unit catalogue.
+ *
+ * Ordered and rendered from the Laravel Products API.
+ * Within each card, the length leads, followed by the unit name and spec details.
+ */
+export default function UnitCatalog({
+  products = [],
+  error = null,
+  tone = "light",
+  heading,
+}: UnitCatalogProps) {
+  const scope = useReveal<HTMLElement>([products.length]);
   const c = palette[tone];
   const copy = heading ?? {
     eyebrow: "The Units",
@@ -148,57 +142,112 @@ export default function UnitCatalog({
           )}
         </div>
 
-        <ul className="grid grid-cols-1 gap-x-[var(--space-40)] gap-y-[var(--space-80)] sm:grid-cols-2 xl:grid-cols-3">
-          {units.map((unit, i) => {
-            const inches = unitInches(unit);
+        {error ? (
+          <div className="mx-auto max-w-[640px] rounded-[20px] border border-[#ccb884]/30 bg-[#222222]/80 p-[var(--space-32)] text-center backdrop-blur-sm">
+            <p className={`valturin text-[length:clamp(20px,18.5px_+_0.6vw,26px)] text-white`}>
+              Catalog Temporarily Unavailable
+            </p>
+            <p className={`gotham text-[length:var(--fs-small)] text-[#999999] mt-[var(--space-12)]`}>
+              We are unable to load the custom units list right now. Please check back shortly or explore our bespoke wig services below.
+            </p>
+            <div className="mt-[var(--space-24)] flex justify-center">
+              <Link
+                href="/wigs/services"
+                className="gotham text-[length:var(--fs-small)] uppercase tracking-[3px] text-[#ccb884] hover:underline"
+              >
+                Explore Wig Services &rarr;
+              </Link>
+            </div>
+          </div>
+        ) : products.length === 0 ? (
+          <div className="mx-auto max-w-[640px] rounded-[20px] border border-white/10 bg-[#222222]/60 p-[var(--space-40)] text-center">
+            <p className={`valturin text-[length:clamp(20px,18.5px_+_0.6vw,26px)] text-white`}>
+              No Units Currently Available
+            </p>
+            <p className={`gotham text-[length:var(--fs-small)] text-[#999999] mt-[var(--space-12)]`}>
+              Every unit is bespoke and tailored to order. Book a private consultation with our stylists to design your custom unit.
+            </p>
+            <div className="mt-[var(--space-32)] flex justify-center">
+              <Link
+                href="/dashboard/book?service=the-glorious-custom-unit"
+                className="flex gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[16px] md:text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
+              >
+                <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
+                  →
+                </span>
+                Book A Consultation
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <ul className="grid grid-cols-1 gap-x-[var(--space-40)] gap-y-[var(--space-80)] sm:grid-cols-2 xl:grid-cols-3">
+            {products.map((unit, i) => {
+              const inches = unit.length ? parseInt(unit.length, 10) : null;
+              const specDetails = [unit.texture, unit.color].filter(Boolean).join(" · ");
 
-            return (
-              <li key={unit.slug} data-reveal data-reveal-delay={String(3 + (i % 3))}>
-                <Link href={`/wigs/${unit.slug}`} className="group block">
-                  {/* The deck's reference number, kept so the site and the
-                      salon's own list speak about the same unit. */}
-                  <div className="mb-[12px] flex items-center gap-[var(--space-16)]">
-                    <span
-                      className={`gotham text-[length:var(--fs-small)] tracking-[4px] ${c.eyebrow}`}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className={`h-[1px] flex-1 ${
-                        tone === "light" ? "bg-[#1B1B1B]/10" : "bg-white/10"
-                      }`}
-                    />
-                  </div>
+              return (
+                <li key={unit.slug} data-reveal data-reveal-delay={String(3 + (i % 3))}>
+                  <Link href={`/wigs/${unit.slug}`} className="group block">
+                    {/* Index number */}
+                    <div className="mb-[12px] flex items-center gap-[var(--space-16)]">
+                      <span
+                        className={`gotham text-[length:var(--fs-small)] tracking-[4px] ${c.eyebrow}`}
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className={`h-[1px] flex-1 ${
+                          tone === "light" ? "bg-[#1B1B1B]/10" : "bg-white/10"
+                        }`}
+                      />
+                    </div>
 
-                  <UnitFrame unit={unit} />
+                    <UnitFrame unit={unit} />
 
-                  {/* Length first, at size: the number is the comparison. */}
-                  <div className="mt-[var(--space-24)] flex items-baseline gap-[var(--space-16)]">
-                    <span
-                      className={`valturin leading-none ${c.bodyStrong} text-[length:clamp(40px,30.6px_+_3.95vw,72px)]`}
-                    >
-                      {inches}
-                      <span className="align-super text-[0.4em] text-[#ccb884]"> in</span>
-                    </span>
+                    {/* Length & Title */}
+                    <div className="mt-[var(--space-24)] flex items-baseline gap-[var(--space-16)]">
+                      {inches !== null && !isNaN(inches) ? (
+                        <span
+                          className={`valturin leading-none ${c.bodyStrong} text-[length:clamp(40px,30.6px_+_3.95vw,72px)]`}
+                        >
+                          {inches}
+                          <span className="align-super text-[0.4em] text-[#ccb884]"> in</span>
+                        </span>
+                      ) : unit.length ? (
+                        <span
+                          className={`gotham leading-none ${c.bodyStrong} text-[length:var(--fs-body)]`}
+                        >
+                          {unit.length}
+                        </span>
+                      ) : null}
 
-                    <h3
-                      className={`gotham text-[length:clamp(15px,14px_+_0.26vw,17px)] uppercase tracking-[4px] ${c.bodyStrong} transition-colors duration-300 group-hover:text-[#ccb884]`}
-                    >
-                      {unit.name}
-                    </h3>
-                  </div>
+                      <h3
+                        className={`gotham text-[length:clamp(15px,14px_+_0.26vw,17px)] uppercase tracking-[4px] ${c.bodyStrong} transition-colors duration-300 group-hover:text-[#ccb884]`}
+                      >
+                        {unit.name}
+                      </h3>
+                    </div>
 
-                  <p
-                    className={`gotham text-[length:var(--fs-small)] leading-[1.7] ${c.muted} mt-[12px]`}
-                  >
-                    {unit.spec.texture} · {unit.spec.color}
-                  </p>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                    {specDetails ? (
+                      <p
+                        className={`gotham text-[length:var(--fs-small)] leading-[1.7] ${c.muted} mt-[12px]`}
+                      >
+                        {specDetails}
+                      </p>
+                    ) : unit.description ? (
+                      <p
+                        className={`gotham text-[length:var(--fs-small)] leading-[1.7] ${c.muted} mt-[12px]`}
+                      >
+                        {unit.description}
+                      </p>
+                    ) : null}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
     </section>
   );

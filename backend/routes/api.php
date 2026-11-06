@@ -30,7 +30,9 @@ Route::post('/auth/reset-password', [AuthController::class, 'resetPassword'])->m
 Route::get('/categories', [ServiceCategoryController::class, 'index']);
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/packages', [PackageController::class, 'index']);
+Route::get('/categories/{category}/packages', [PackageController::class, 'byCategory']);
 Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{slug}', [ProductController::class, 'show']);
 Route::get('/workers', [WorkerController::class, 'index']);
 Route::get('/availability', [AvailabilityController::class, 'index']);
 
@@ -78,6 +80,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/packages/{package}/price-history', [PackageController::class, 'priceHistory']);
 
         Route::post('/uploads/image', [UploadController::class, 'image']);
+        Route::post('/uploads/video', [UploadController::class, 'video']);
 
         Route::get('/clients', [ClientController::class, 'index']);
         Route::put('/clients/{client}/membership', [ClientController::class, 'updateMembership']);

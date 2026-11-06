@@ -5,7 +5,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { useReveal } from "../service-detail/use-reveal";
 import { tone as palette, type Tone } from "../service-detail/tone";
-import { units, unitSpecLine, unitsPage } from "@/data/units";
+import { units, unitSpecLine, unitsPage, type UnitStory } from "@/data/units";
+import type { Product } from "@/lib/api/types";
+
+export type UnitGalleryItem = UnitStory | Product;
+
+function getItemImage(item: UnitGalleryItem): string {
+  if ("portrait" in item && item.portrait) return item.portrait;
+  if ("image" in item && item.image) return item.image;
+  if ("background_image" in item && item.background_image) return item.background_image;
+  return "/images/unit-bg.png";
+}
+
+function getItemSpecLine(item: UnitGalleryItem): string {
+  if ("spec" in item && item.spec) {
+    return unitSpecLine(item as UnitStory);
+  }
+  if ("length" in item) {
+    return [item.length, item.texture, item.color].filter(Boolean).join(" · ");
+  }
+  return "";
+}
 
 /**
  * The browsable unit gallery. Every card opens that client's page — the
@@ -23,7 +43,7 @@ export default function UnitGallery({
   heading,
 }: {
   tone?: Tone;
-  items?: typeof units;
+  items?: UnitGalleryItem[];
   heading?: { eyebrow?: string; heading: string; headingAccent?: string; intro?: string };
 }) {
   const scope = useReveal<HTMLElement>();
@@ -79,7 +99,7 @@ export default function UnitGallery({
             >
               <div className="relative aspect-[4/5] rounded-[20px] overflow-hidden bg-[#2a2a2a]">
                 <Image
-                  src={unit.portrait}
+                  src={getItemImage(unit)}
                   alt={`${unit.name} unit`}
                   fill
                   sizes="(max-width: 1024px) 50vw, 20vw"
@@ -96,7 +116,7 @@ export default function UnitGallery({
               <p
                 className={`gotham text-[length:var(--fs-small)] leading-[1.7] ${c.muted} mt-[8px]`}
               >
-                {unitSpecLine(unit)}
+                {getItemSpecLine(unit)}
               </p>
             </Link>
           ))}

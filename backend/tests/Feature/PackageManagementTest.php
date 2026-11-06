@@ -112,4 +112,20 @@ class PackageManagementTest extends TestCase
             'service_ids' => [Service::query()->first()->id],
         ])->assertForbidden();
     }
+
+    public function test_can_filter_packages_by_category_and_kind(): void
+    {
+        $res = $this->getJson('/api/packages?category=silk-press&kind=packages');
+        $res->assertOk();
+        $this->assertNotEmpty($res->json('data'));
+
+        foreach ($res->json('data') as $pkg) {
+            $catSlug = $pkg['category']['slug'] ?? $pkg['collection'];
+            $this->assertSame('silk-press', $catSlug);
+        }
+
+        $res2 = $this->getJson('/api/categories/silk-press/packages?kind=packages');
+        $res2->assertOk();
+        $this->assertNotEmpty($res2->json('data'));
+    }
 }

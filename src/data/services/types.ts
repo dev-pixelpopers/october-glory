@@ -20,6 +20,8 @@ export type ComparisonValue =
 export type ServiceTier = {
   /** e.g. "Classic Silk Press" */
   name: string;
+  slug?: string;
+  href?: string;
   /** One-line positioning shown under the tier name. */
   tagline?: string;
   /** The regular (non-member) price. The member price is derived from it — see pricing.ts. */

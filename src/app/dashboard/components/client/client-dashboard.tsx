@@ -3,7 +3,20 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CalendarDays, CalendarPlus, Crown, Gift, Package as PackageIcon, ShoppingBag, UserRound } from "lucide-react";
+import {
+  ArrowRight,
+  CalendarDays,
+  CalendarPlus,
+  Check,
+  Clock,
+  Crown,
+  Gift,
+  Info,
+  Package as PackageIcon,
+  ShoppingBag,
+  Sparkles,
+  UserRound,
+} from "lucide-react";
 import SetPasswordBanner from "@/app/components/salon/set-password-banner";
 import { useAppointments, useCancelAppointment } from "@/lib/api/hooks/booking";
 import { usePackages, useProducts } from "@/lib/api/hooks/catalog";
@@ -297,81 +310,443 @@ function RewardsHub() {
 /* ------------------------------- Packages ------------------------------------ */
 
 /**
- * The salon's packages, read-only, grouped by the site page that shows them
- * (Silk Press, Maintenance, Glorious, Bridal) in the order the API lists them.
+ * The salon's packages, grouped or filtered by category/collection
+ * (Silk Press, Maintenance, Glorious, Bridal).
  */
 function PackagesPanel() {
   const { data: packages, isLoading, error } = usePackages();
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [activePackage, setActivePackage] = useState<Package | null>(null);
 
-  const groups = new Map<string, Package[]>();
+  // Derive categories and their counts
+  const categoryCounts = new Map<string, number>();
   for (const pkg of packages ?? []) {
-    const key = pkg.category?.name ?? "More Packages";
+    const key = pkg.category?.name ?? (pkg.collection ? pkg.collection.charAt(0).toUpperCase() + pkg.collection.slice(1) : "More Packages");
+    categoryCounts.set(key, (categoryCounts.get(key) ?? 0) + 1);
+  }
+
+  const categoryList = Array.from(categoryCounts.keys());
+
+  // Filter packages
+  const filtered = (packages ?? []).filter((pkg) => {
+    if (selectedCategory === "all") return true;
+    const catName = pkg.category?.name ?? (pkg.collection ? pkg.collection.charAt(0).toUpperCase() + pkg.collection.slice(1) : "More Packages");
+    return catName.toLowerCase() === selectedCategory.toLowerCase();
+  });
+
+  // Group for section rendering when "all" is active
+  const groups = new Map<string, Package[]>();
+  for (const pkg of filtered) {
+    const key = pkg.category?.name ?? (pkg.collection ? pkg.collection.charAt(0).toUpperCase() + pkg.collection.slice(1) : "More Packages");
     groups.set(key, [...(groups.get(key) ?? []), pkg]);
   }
 
   return (
-    <Card title="Packages">
-      <p className="gotham font-light text-[var(--dash-text-soft)] text-[15px] leading-relaxed mb-5">
-        Our services bundled into one visit, at one price.
-      </p>
+    <>
+      <Card
+        title="Curated Packages"
+        action={
+          <Link
+            href="/dashboard/book"
+            className="flex items-center gap-2 gotham font-bold text-[13px] bg-[#cba660] hover:bg-[#b8934e] text-black px-5 py-2.5 rounded-full transition-all duration-300 shadow-sm"
+          >
+            <span>Book Consultation</span>
+            <ArrowRight size={14} />
+          </Link>
+        }
+      >
+        <p className="gotham font-light text-[var(--dash-text-soft)] text-[15px] leading-relaxed mb-6 max-w-[800px]">
+          Comprehensive service bundles combining cleansing, steam treatments, precision styling, and maintenance at exclusive package rates.
+        </p>
 
-      {isLoading && <p className="gotham text-[var(--dash-text-muted)] text-[15px]">Loading packages…</p>}
-      {error && <p className="gotham text-red-400 text-[14px]">{error.message}</p>}
-      {!isLoading && !error && groups.size === 0 && (
-        <p className="gotham text-[var(--dash-text-faint)] text-[15px]">No packages to show yet.</p>
+        {/* Category Filter Tabs */}
+        {categoryList.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 mb-8 pb-4 border-b border-[var(--dash-border-soft)]">
+            <button
+              type="button"
+              onClick={() => setSelectedCategory("all")}
+              className={`gotham text-[13px] px-4 py-2 rounded-full border transition-all cursor-pointer ${
+                selectedCategory === "all"
+                  ? "border-[#cba660] bg-[#cba660]/15 text-[#cda873] font-medium shadow-sm"
+                  : "border-[var(--dash-border)] text-[var(--dash-text-muted)] hover:text-[var(--dash-text)] hover:border-[var(--dash-border-strong)]"
+              }`}
+            >
+              All Packages ({packages?.length ?? 0})
+            </button>
+            {categoryList.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`gotham text-[13px] px-4 py-2 rounded-full border transition-all cursor-pointer ${
+                  selectedCategory.toLowerCase() === cat.toLowerCase()
+                    ? "border-[#cba660] bg-[#cba660]/15 text-[#cda873] font-medium shadow-sm"
+                    : "border-[var(--dash-border)] text-[var(--dash-text-muted)] hover:text-[var(--dash-text)] hover:border-[var(--dash-border-strong)]"
+                }`}
+              >
+                {cat} ({categoryCounts.get(cat)})
+              </button>
+            ))}
+          </div>
+        )}
+
+        {isLoading && (
+          <div className="py-12 text-center">
+            <p className="gotham text-[var(--dash-text-muted)] text-[15px]">Loading signature packages…</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="p-4 rounded-[14px] bg-red-500/10 border border-red-500/20 text-red-400 text-[14px]">
+            {error.message}
+          </div>
+        )}
+
+        {!isLoading && !error && filtered.length === 0 && (
+          <div className="py-12 text-center">
+            <p className="gotham text-[var(--dash-text-faint)] text-[15px]">No packages found in this category.</p>
+          </div>
+        )}
+
+        <div className="flex flex-col gap-10">
+          {[...groups].map(([name, items]) => (
+            <section key={name}>
+              {selectedCategory === "all" && groups.size > 1 && (
+                <div className="flex items-center gap-3 mb-5">
+                  <h3 className="gotham font-bold text-[#cba660] text-[13px] uppercase tracking-[0.25em]">
+                    {name}
+                  </h3>
+                  <div className="flex-1 h-[1px] bg-gradient-to-r from-[var(--dash-border-soft)] to-transparent" />
+                  <span className="gotham text-[12px] text-[var(--dash-text-faint)]">
+                    {items.length} {items.length === 1 ? "package" : "packages"}
+                  </span>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-7">
+                {items.map((pkg) => (
+                  <PackageCard
+                    key={pkg.id}
+                    pkg={pkg}
+                    onSelect={() => setActivePackage(pkg)}
+                  />
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </Card>
+
+      {/* Package Details Modal */}
+      {activePackage && (
+        <PackageDetailModal
+          pkg={activePackage}
+          onClose={() => setActivePackage(null)}
+        />
       )}
-
-      <div className="flex flex-col gap-8">
-        {[...groups].map(([name, items]) => (
-          <section key={name}>
-            <p className="gotham text-[var(--dash-text-faint)] text-[12px] uppercase tracking-widest mb-3">{name}</p>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {items.map((pkg) => (
-                <PackageCard key={pkg.id} pkg={pkg} />
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
-    </Card>
+    </>
   );
 }
 
-function PackageCard({ pkg }: { pkg: Package }) {
+function PackageCard({
+  pkg,
+  onSelect,
+}: {
+  pkg: Package;
+  onSelect: () => void;
+}) {
+  const servicesTotal = parseFloat(pkg.services_total || "0");
+  const packagePrice = parseFloat(pkg.price || "0");
+  const savings = servicesTotal > packagePrice ? Math.round(servicesTotal - packagePrice) : 0;
+
   return (
     <div
-      className={`flex flex-col border rounded-[16px] overflow-hidden ${
-        pkg.is_featured ? "border-[#cba660]/60" : "border-[var(--dash-border)]"
+      className={`group flex flex-col rounded-[22px] overflow-hidden bg-[var(--dash-card)] border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(0,0,0,0.22)] ${
+        pkg.is_featured
+          ? "border-[#cba660]/60 shadow-[0_4px_24px_rgba(203,166,96,0.12)] bg-gradient-to-b from-[#cba660]/[0.03] to-[var(--dash-card)]"
+          : "border-[var(--dash-border)] hover:border-[#cba660]/50"
       }`}
     >
-      {/* Sized by the wrapper — the global img rule overrides size utilities on img. */}
-      <div className="aspect-square bg-[var(--dash-border)]">
-        {pkg.image && (
+      {/* Cover Image & Badges */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#1f1f1f]">
+        {pkg.image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={pkg.image} alt={pkg.name} className="object-cover" />
+          <img
+            src={pkg.image}
+            alt={pkg.name}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a]">
+            <PackageIcon size={36} className="text-[#cba660]/30" />
+          </div>
         )}
-      </div>
-      <div className="flex flex-col flex-1 p-3">
-        <p className="gotham text-[var(--dash-text)] text-[15px]">{pkg.name}</p>
-        {pkg.tagline && <p className="gotham text-[var(--dash-text-muted)] text-[13px] mt-1">{pkg.tagline}</p>}
-        {pkg.includes.length > 0 && (
-          <ul className="mt-2 flex flex-col gap-1">
-            {pkg.includes.slice(0, 4).map((item) => (
-              <li key={item} className="gotham font-light text-[var(--dash-text-soft)] text-[13px] leading-snug line-clamp-2">
-                <span className="text-[#cda873]">· </span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        )}
-        <div className="flex items-baseline justify-between gap-3 mt-auto pt-3">
-          <span className="gotham font-bold text-[#cda873] text-[16px]">{money(pkg.price)}</span>
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+
+        {/* Top Badges */}
+        <div className="absolute top-3 inset-x-3 flex items-center justify-between gap-2 pointer-events-none">
+          {(pkg.category?.name || pkg.collection) && (
+            <span className="gotham text-[11px] font-medium tracking-wider uppercase backdrop-blur-md bg-black/60 text-white/90 px-3 py-1 rounded-full border border-white/10 shadow-sm">
+              {pkg.category?.name ?? pkg.collection}
+            </span>
+          )}
+
+          {pkg.is_featured && (
+            <span className="ml-auto flex items-center gap-1.5 gotham text-[11px] font-bold tracking-widest uppercase backdrop-blur-md bg-gradient-to-r from-[#cda873] to-[#e4cc9e] text-black px-3 py-1 rounded-full shadow-lg">
+              <Sparkles size={12} className="fill-black" />
+              Signature
+            </span>
+          )}
+        </div>
+
+        {/* Bottom Badges */}
+        <div className="absolute bottom-3 inset-x-3 flex items-center justify-between gap-2 pointer-events-none">
           {pkg.duration_minutes > 0 && (
-            <span className="gotham text-[var(--dash-text-faint)] text-[12px]">{durationLabel(pkg.duration_minutes)}</span>
+            <span className="flex items-center gap-1.5 gotham text-[12px] font-medium backdrop-blur-md bg-black/65 text-white/90 px-2.5 py-1 rounded-full border border-white/10">
+              <Clock size={13} className="text-[#cda873]" />
+              {durationLabel(pkg.duration_minutes)}
+            </span>
+          )}
+
+          {savings > 0 && (
+            <span className="ml-auto flex items-center gap-1 gotham text-[11px] font-bold backdrop-blur-md bg-emerald-950/80 text-emerald-300 px-2.5 py-1 rounded-full border border-emerald-500/30">
+              Save ${savings}
+            </span>
           )}
         </div>
       </div>
+
+      {/* Card Body */}
+      <div className="flex flex-col flex-1 p-5 md:p-6">
+        {/* Title and Tagline */}
+        <div className="mb-3">
+          <h4 className="valturin text-[22px] md:text-[24px] leading-[1.25] text-[var(--dash-text)] group-hover:text-[#cda873] transition-colors">
+            {pkg.name}
+          </h4>
+          {pkg.tagline && (
+            <p className="gotham font-light text-[var(--dash-text-muted)] text-[13px] leading-relaxed line-clamp-2 mt-1.5">
+              {pkg.tagline}
+            </p>
+          )}
+        </div>
+
+        {/* Price and Best For Strip */}
+        <div className="flex items-baseline justify-between gap-2 py-3 border-y border-[var(--dash-border-soft)] mb-4">
+          <div>
+            <span className="gotham text-[11px] uppercase tracking-wider text-[var(--dash-text-faint)] block mb-0.5">
+              Package Price
+            </span>
+            <div className="flex items-baseline gap-2">
+              <span className="valturin text-[26px] font-bold text-[#cda873]">
+                {money(pkg.price)}
+              </span>
+              {savings > 0 && (
+                <span className="gotham text-[13px] text-[var(--dash-text-faint)] line-through">
+                  {money(pkg.services_total)}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {pkg.best_for && (
+            <div className="text-right max-w-[50%]">
+              <span className="gotham text-[11px] uppercase tracking-wider text-[var(--dash-text-faint)] block mb-0.5">
+                Best For
+              </span>
+              <span className="gotham text-[12px] text-[var(--dash-text-soft)] line-clamp-1">
+                {pkg.best_for}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* What's Included */}
+        {pkg.includes.length > 0 && (
+          <div className="mb-5">
+            <p className="gotham text-[11px] uppercase tracking-[2px] text-[var(--dash-text-faint)] font-medium mb-2.5">
+              What&apos;s Included
+            </p>
+            <ul className="flex flex-col gap-2">
+              {pkg.includes.slice(0, 3).map((item, idx) => (
+                <li
+                  key={idx}
+                  className="flex items-start gap-2.5 text-[13px] text-[var(--dash-text-soft)] gotham font-light"
+                >
+                  <span className="flex items-center justify-center w-4 h-4 rounded-full bg-[#cba660]/15 text-[#cda873] shrink-0 mt-0.5">
+                    <Check size={10} strokeWidth={3} />
+                  </span>
+                  <span className="line-clamp-1 leading-tight">{item}</span>
+                </li>
+              ))}
+            </ul>
+            {pkg.includes.length > 3 && (
+              <button
+                type="button"
+                onClick={onSelect}
+                className="gotham text-[12px] text-[#cda873] hover:underline font-medium mt-2 inline-flex items-center gap-1 cursor-pointer"
+              >
+                <span>+{pkg.includes.length - 3} more included services</span>
+                <ArrowRight size={11} />
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Actions */}
+        <div className="mt-auto pt-2 flex items-center gap-3">
+          <Link
+            href={`/dashboard/book?package=${encodeURIComponent(pkg.slug)}`}
+            className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-full bg-[#cba660] hover:bg-[#b8934e] text-black gotham font-bold text-[13px] tracking-wider uppercase transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
+          >
+            <span>Book Package</span>
+            <ArrowRight size={14} />
+          </Link>
+
+          <button
+            type="button"
+            onClick={onSelect}
+            className="flex items-center justify-center w-11 h-11 rounded-full border border-[var(--dash-border)] hover:border-[#cba660] text-[var(--dash-text-muted)] hover:text-[#cba660] transition-colors cursor-pointer shrink-0"
+            title="View Package Details"
+            aria-label="View Package Details"
+          >
+            <Info size={17} />
+          </button>
+        </div>
+      </div>
     </div>
+  );
+}
+
+function PackageDetailModal({
+  pkg,
+  onClose,
+}: {
+  pkg: Package;
+  onClose: () => void;
+}) {
+  const servicesTotal = parseFloat(pkg.services_total || "0");
+  const packagePrice = parseFloat(pkg.price || "0");
+  const savings = servicesTotal > packagePrice ? Math.round(servicesTotal - packagePrice) : 0;
+
+  return (
+    <Modal title={pkg.name} onClose={onClose}>
+      <div className="flex flex-col gap-6">
+        {pkg.image && (
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[16px] bg-[#1a1a1a]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={pkg.image}
+              alt={pkg.name}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+              {(pkg.category?.name || pkg.collection) && (
+                <span className="gotham text-[11px] font-medium tracking-wider uppercase backdrop-blur-md bg-black/60 text-white/90 px-3 py-1 rounded-full border border-white/10">
+                  {pkg.category?.name ?? pkg.collection}
+                </span>
+              )}
+              {pkg.duration_minutes > 0 && (
+                <span className="flex items-center gap-1.5 gotham text-[12px] text-white/90 backdrop-blur-md bg-black/60 px-2.5 py-1 rounded-full border border-white/10">
+                  <Clock size={13} className="text-[#cda873]" />
+                  {durationLabel(pkg.duration_minutes)}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {(pkg.tagline || pkg.description) && (
+          <div>
+            {pkg.tagline && (
+              <p className="valturin text-[20px] text-[#cda873] leading-snug">
+                {pkg.tagline}
+              </p>
+            )}
+            {pkg.description && (
+              <p className="gotham font-light text-[var(--dash-text-soft)] text-[14px] leading-relaxed mt-2">
+                {pkg.description}
+              </p>
+            )}
+          </div>
+        )}
+
+        <div className="flex items-center justify-between p-4 rounded-[16px] bg-[var(--dash-elev)] border border-[var(--dash-border-soft)]">
+          <div>
+            <span className="gotham text-[11px] uppercase tracking-wider text-[var(--dash-text-faint)] block mb-0.5">
+              Package Investment
+            </span>
+            <div className="flex items-baseline gap-2">
+              <span className="valturin text-[28px] font-bold text-[#cda873]">
+                {money(pkg.price)}
+              </span>
+              {savings > 0 && (
+                <span className="gotham text-[14px] text-[var(--dash-text-faint)] line-through">
+                  {money(pkg.services_total)}
+                </span>
+              )}
+            </div>
+          </div>
+          {savings > 0 && (
+            <div className="text-right">
+              <span className="gotham text-[11px] font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-full inline-block">
+                Save ${savings} Bundled
+              </span>
+            </div>
+          )}
+        </div>
+
+        {pkg.best_for && (
+          <div className="p-3.5 rounded-[14px] bg-[#cba660]/10 border border-[#cba660]/20 text-[13px] gotham">
+            <span className="text-[#cda873] font-bold block mb-1 uppercase tracking-wider text-[11px]">
+              Ideal Candidate
+            </span>
+            <p className="text-[var(--dash-text-soft)] font-light leading-relaxed">
+              {pkg.best_for}
+            </p>
+          </div>
+        )}
+
+        {pkg.includes.length > 0 && (
+          <div>
+            <h5 className="gotham font-bold text-[var(--dash-text)] text-[13px] uppercase tracking-wider mb-3">
+              Included Treatments &amp; Services
+            </h5>
+            <ul className="flex flex-col gap-2.5">
+              {pkg.includes.map((item, idx) => (
+                <li
+                  key={idx}
+                  className="flex items-start gap-3 text-[14px] text-[var(--dash-text-soft)] gotham font-light"
+                >
+                  <span className="flex items-center justify-center w-5 h-5 rounded-full bg-[#cba660]/20 text-[#cda873] shrink-0 mt-0.5">
+                    <Check size={12} strokeWidth={3} />
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {pkg.not_included && (
+          <div className="text-[12px] gotham text-[var(--dash-text-muted)] border-t border-[var(--dash-border-soft)] pt-3">
+            <span className="font-medium text-[var(--dash-text-soft)]">Please note: </span>
+            {pkg.not_included}
+          </div>
+        )}
+
+        <div className="pt-2">
+          <Link
+            href={`/dashboard/book?package=${encodeURIComponent(pkg.slug)}`}
+            className="flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-full bg-[#cba660] hover:bg-[#b8934e] text-black gotham font-bold text-[14px] tracking-wider uppercase transition-colors shadow-md"
+          >
+            <span>Proceed to Booking</span>
+            <ArrowRight size={16} />
+          </Link>
+        </div>
+      </div>
+    </Modal>
   );
 }
 

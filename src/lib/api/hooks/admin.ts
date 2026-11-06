@@ -80,6 +80,20 @@ export function useUploadImage(folder: UploadFolder) {
   });
 }
 
+/** Upload a video; resolves to its public URL, saved on a record like a pasted URL. */
+export function useUploadVideo(folder: UploadFolder = "products") {
+  return useMutation({
+    mutationFn: (file: File) => {
+      const form = new FormData();
+      form.append("video", file);
+      form.append("folder", folder);
+      return api
+        .postForm<{ url: string; path: string }>("/admin/uploads/video", form)
+        .then((r) => r.url);
+    },
+  });
+}
+
 /* ------------------------------- Clients & membership ------------------------- */
 
 export function useClients(filters: { q?: string; members?: boolean; page?: number } = {}) {

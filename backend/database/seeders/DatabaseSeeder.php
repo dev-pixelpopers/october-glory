@@ -125,5 +125,8 @@ class DatabaseSeeder extends Seeder
         if (Setting::get(SilkPressPackagesSeeder::SETTING_KEY) !== SilkPressPackagesSeeder::VERSION) {
             $this->call(SilkPressPackagesSeeder::class);
         }
+
+        // Custom wig units and showcase fields
+        $this->call(ProductSeeder::class);
     }
 }

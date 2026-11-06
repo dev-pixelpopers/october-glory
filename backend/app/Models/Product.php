@@ -12,7 +12,8 @@ class Product extends Model
 
     protected $fillable = [
         'name', 'slug', 'category', 'description', 'image', 'gallery',
-        'price', 'tags', 'length', 'texture', 'color',
+        'background_image', 'price', 'tags', 'length', 'texture', 'color',
+        'what_she_wanted', 'what_we_built', 'how_she_wears_it', 'video', 'the_install',
         'is_featured', 'is_active', 'sort_order',
     ];
 
@@ -21,6 +22,7 @@ class Product extends Model
         return [
             'gallery' => 'array',
             'tags' => 'array',
+            'the_install' => 'array',
             'price' => 'decimal:2',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',

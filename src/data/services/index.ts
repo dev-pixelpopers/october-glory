@@ -87,7 +87,7 @@ export const servicePath = (service: ServiceParent | ServiceChild): string => {
   if (!("parents" in service)) return parentRoot(service.slug);
   return hasPage(service)
     ? `${parentRoot(service.parents[0])}/${service.slug}`
-    : "/dashboard/book";
+    : `/dashboard/book?service=${encodeURIComponent(service.slug)}`;
 };
 
 /**

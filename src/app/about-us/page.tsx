@@ -146,7 +146,7 @@ export default function AboutUsPage() {
             Let us tailor an unforgettable styling experience for you. Schedule your private appointment with Jhavuanna Paterson today.
           </p>
           <a
-            href="/dashboard/book"
+            href="/dashboard/book?service=pro-consult"
             className="flex mt-[var(--space-16)] gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
           >
             <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import UnitHero from "../components/units/unit-hero";
@@ -11,39 +12,72 @@ import ServiceCta from "../components/service-detail/service-cta";
 import { childrenMenu } from "@/data/services";
 import { unitsPage } from "@/data/units";
 import { wigsPage } from "@/data/wigs";
+import type { Product } from "@/lib/api/types";
+
+export type { Product };
 
 /** The page carries no prices, so the default membership line does not fit. */
 const MEMBER_BODY =
   "Members book every October Glory service at the member price, with priority booking, member-only treatments, and loyalty points on everything — including the consultation that starts a custom unit.";
 
-export const metadata = {
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+
+export const metadata: Metadata = {
   title: unitsPage.meta.title,
   description: unitsPage.meta.description,
   alternates: { canonical: "/wigs" },
 };
 
 /**
- * October Glory Units.
- *
- * The wig section of the site, built from the handoff deck: the poster the
- * client asked for, the installation flow with its start-to-finish video, and
- * the ten units as a catalogue ordered by length, where each portrait is also
- * that unit's video and opens the client's own page.
- *
- * The catalog replaced a plain photo grid here: it carries everything the
- * grid did plus the spec and the video, and two listings of the same ten
- * units on one page was duplication. The grid still runs on a unit's own
- * page, as the strip of the other nine.
- *
- * Tones are pinned rather than walked — the section list here is fixed, so
- * there is nothing for `assignTones` to resolve.
+ * Fetch active wig products dynamically from the Laravel Products API.
  */
-export default function UnitsPage() {
-  // The three sub-services parented to Wigs. They were listed on the page
-  // this one replaced and had nowhere to surface after it went; the grid is
-  // the same one every main service page uses. Wig Design & Consult opens
-  // its own page, the other two have no page and so link to booking, which
-  // the grid labels "Book Now" rather than "View Service".
+async function fetchWigProducts(): Promise<{ products: Product[]; error: string | null }> {
+  // try {
+    const res = await fetch(`${API_BASE}/products`, {
+      headers: {
+        Accept: "application/json",
+      },
+      next: { revalidate: 60 },
+    });
+
+    console.log(res);
+
+    if (!res.ok) {
+      return {
+        products: [],
+        error: `Failed to load units (status ${res.status})`,
+      };
+    }
+
+    const json = await res.json();
+
+    // Safely extract products array from direct array, single wrapping (json.data), or paginated wrapping (json.data.data)
+    const rawData = Array.isArray(json)
+      ? json
+      : Array.isArray(json?.data)
+      ? json.data
+      : Array.isArray(json?.data?.data)
+      ? json.data.data
+      : [];
+
+    return { products: rawData, error: null };
+  // } catch {
+  //   return {
+  //     products: [],
+  //     error: "Unable to reach the products service",
+  //   };
+  // }
+}
+
+/**
+ * October Glory Units listing page.
+ *
+ * Dynamically fetches custom units from the backend API, rendering the
+ * interactive video catalog, poster, process flow, sub-services, and CTAs.
+ */
+export default async function UnitsPage() {
+  const { products, error } = await fetchWigProducts();
+  console.log(error);
   const menu = childrenMenu(wigsPage);
 
   return (
@@ -64,17 +98,11 @@ export default function UnitsPage() {
 
       <ProcessFlow flow={unitsPage.install} tone="dark" />
 
-      <UnitCatalog tone="light" />
+      <UnitCatalog products={products} error={error} tone="light" />
 
       {menu && <ServiceMenuGrid menu={menu} tone="dark" />}
 
-      {/* Book first, while the catalogue is still in view. The hand-off to
-          the services side sits between the two CTAs that were already here,
-          in the light tone so three closing panels don't read as one slab,
-          and membership closes the page.
-
-          Everything from the hand-off down is raised above the fixed side
-          tab, so reaching it retires the tab for the rest of the page. */}
+      {/* Book first, while the catalogue is still in view. */}
       <ServiceCta cta={unitsPage.cta} image={unitsPage.hero.image} />
 
       <div className="relative z-50">

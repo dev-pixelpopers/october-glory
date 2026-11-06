@@ -17,6 +17,8 @@ function priceLabel(price: string): string {
 function packageToTier(pkg: Package): NonNullable<ServiceDetail["tiers"]>["items"][number] {
   return {
     name: pkg.name,
+    slug: pkg.slug,
+    href: `/dashboard/book?package=${encodeURIComponent(pkg.slug)}`,
     tagline: pkg.tagline ?? undefined,
     price: priceLabel(pkg.price),
     duration: durationLabel(pkg.duration_minutes),

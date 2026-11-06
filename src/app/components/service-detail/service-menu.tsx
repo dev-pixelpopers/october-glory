@@ -106,7 +106,11 @@ export default function ServiceMenuGrid({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[var(--space-32)] max-w-[1500px] mx-auto">
         {items.map((item, index) => {
-          const href = item.href ?? "/dashboard/book";
+          const href =
+            item.href ??
+            (item.slug
+              ? `/dashboard/book?service=${encodeURIComponent(item.slug)}`
+              : "/dashboard/book");
 
           return (
             <Link

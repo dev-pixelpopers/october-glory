@@ -6,6 +6,7 @@ import type {
   Package,
   PackagePriceHistoryEntry,
   Product,
+  ProductInstallStep,
   Service,
   ServiceCategory,
   ServicePriceHistoryEntry,
@@ -256,11 +257,17 @@ export interface ProductPayload {
   description?: string | null;
   image?: string | null;
   gallery?: string[];
+  background_image?: string | null;
   price: string;
   tags?: string[];
   length?: string | null;
   texture?: string | null;
   color?: string | null;
+  what_she_wanted?: string | null;
+  what_we_built?: string | null;
+  how_she_wears_it?: string | null;
+  video?: string | null;
+  the_install?: ProductInstallStep[];
   is_featured?: boolean;
   is_active?: boolean;
   sort_order?: number;

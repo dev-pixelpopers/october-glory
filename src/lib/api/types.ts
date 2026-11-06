@@ -138,6 +138,11 @@ export interface Package {
   services: Service[];
 }
 
+export interface ProductInstallStep {
+  image: string;
+  tag: string;
+}
+
 /** A shop product. Wig units also carry their length / texture / colour spec. */
 export interface Product {
   id: number;
@@ -148,12 +153,18 @@ export interface Product {
   description: string | null;
   image: string | null;
   gallery: string[];
+  background_image?: string | null;
   price: string;
   /** Shop filter tags, e.g. ["wavy", "new"]. */
   tags: string[];
   length: string | null;
   texture: string | null;
   color: string | null;
+  what_she_wanted?: string | null;
+  what_we_built?: string | null;
+  how_she_wears_it?: string | null;
+  video?: string | null;
+  the_install?: ProductInstallStep[];
   /** Shown in the full-screen menu's Shop panel. */
   is_featured: boolean;
   is_active: boolean;

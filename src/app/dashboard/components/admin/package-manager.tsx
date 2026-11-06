@@ -17,7 +17,7 @@ import { buttonGhost, buttonGold, Card, inputClass } from "../dashboard-shell";
 import ImageField from "./image-field";
 import { Modal } from "./service-manager";
 
-const COLLECTIONS = ["maintenance", "glorious", "bridal"] as const;
+const COLLECTIONS = ["silk-press", "maintenance", "glorious", "bridal"] as const;
 
 /** Package CRUD: bundle services, watch the running total, set one package price. */
 export default function PackageManager() {
@@ -137,7 +137,7 @@ function PackageFormModal({
   onClose,
 }: {
   pkg: Package | null;
-  categories: { id: number; name: string }[];
+  categories: { id: number; name: string; slug?: string }[];
   onClose: () => void;
 }) {
   const { data: services } = useServices();
@@ -235,26 +235,60 @@ function PackageFormModal({
           placeholder="Image URL (e.g. /images/GLORIOUS-PACKAGES-01.webp), or upload"
         />
         <div className="grid grid-cols-2 gap-4">
-          <select
-            className={inputClass}
-            value={collection}
-            onChange={(e) => setCollection(e.target.value)}
-          >
-            <option value="">No public page</option>
-            {COLLECTIONS.map((c) => (
-              <option key={c} value={c} className="capitalize">{c}</option>
-            ))}
-          </select>
-          <select
-            className={inputClass}
-            value={categoryId ?? ""}
-            onChange={(e) => setCategoryId(e.target.value ? Number(e.target.value) : null)}
-          >
-            <option value="">No category</option>
-            {categories.map((c) => (
-              <option key={c.id} value={c.id}>{c.name}</option>
-            ))}
-          </select>
+          <div>
+            <label className="gotham text-[11px] uppercase tracking-wider text-[var(--dash-text-faint)] block mb-1">
+              Category
+            </label>
+            <select
+              className={inputClass}
+              value={categoryId ?? ""}
+              onChange={(e) => {
+                const selectedId = e.target.value ? Number(e.target.value) : null;
+                setCategoryId(selectedId);
+
+                if (selectedId) {
+                  const selectedCategory = categories.find((c) => c.id === selectedId);
+                  if (selectedCategory) {
+                    const slugOrName = (selectedCategory.slug || selectedCategory.name).toLowerCase();
+                    if (slugOrName.includes("silk")) {
+                      setCollection("silk-press");
+                    } else if (slugOrName.includes("maintenance")) {
+                      setCollection("maintenance");
+                    } else if (slugOrName.includes("glorious")) {
+                      setCollection("glorious");
+                    } else if (slugOrName.includes("bridal")) {
+                      setCollection("bridal");
+                    }
+                  }
+                }
+              }}
+            >
+              <option value="">No category</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="gotham text-[11px] uppercase tracking-wider text-[var(--dash-text-faint)] block mb-1">
+              Collection
+            </label>
+            <select
+              className={inputClass}
+              value={collection}
+              onChange={(e) => setCollection(e.target.value)}
+            >
+              <option value="">No collection</option>
+              {COLLECTIONS.map((c) => (
+                <option key={c} value={c}>
+                  {c === "silk-press" ? "Silk Press" : c.charAt(0).toUpperCase() + c.slice(1)} collection
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Service picker with a live total */}

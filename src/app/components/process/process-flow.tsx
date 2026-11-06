@@ -491,7 +491,7 @@ export default function ProcessFlow({
               {/* The ending. The moment the whole process has just been
                   explained is the moment to ask for the appointment. */}
               <Link
-                href="/dashboard/book"
+                href="/dashboard/book?service=pro-consult"
                 className="group inline-flex items-center gap-3 gotham text-[length:var(--fs-body)] text-[#ccb884] transition-opacity duration-500"
                 style={{
                   opacity: done ? 1 : 0,

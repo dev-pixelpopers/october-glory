@@ -18,7 +18,7 @@ class ServiceCategoryController extends Controller
     {
         return ServiceCategoryResource::collection(
             ServiceCategory::query()
-                ->when($request->query('kind'), fn ($q, $kind) => $q->where('kind', $kind))
+                ->when($request->query('kind'), fn($q, $kind) => $q->where('kind', $kind))
                 ->orderBy('sort_order')
                 ->orderBy('name')
                 ->get(),
@@ -27,10 +27,14 @@ class ServiceCategoryController extends Controller
 
     public function store(StoreCategoryRequest $request): ServiceCategoryResource
     {
+        $name = $request->validated('name');
+        $kind = $request->validated('kind') ?? 'services';
+
         $category = ServiceCategory::query()->create([
-            ...$request->safe()->except('name'),
-            'name' => $request->validated('name'),
-            'slug' => $this->uniqueSlug($request->validated('name')),
+            ...$request->safe()->except(['name', 'slug']),
+            'name' => $name,
+            'kind' => $kind,
+            'slug' => $this->uniqueSlug($name, $kind),
         ]);
 
         return new ServiceCategoryResource($category);
@@ -58,16 +62,19 @@ class ServiceCategoryController extends Controller
         return response()->noContent();
     }
 
-    private function uniqueSlug(string $name, ?int $ignoreId = null): string
+    private function uniqueSlug(string $name, ?string $kind = 'services', ?int $ignoreId = null): string
     {
+        $kind = $kind ?? 'services';
         $base = Str::slug($name) ?: 'category';
         $slug = $base;
         $i = 2;
+
         while (
             ServiceCategory::query()
-                ->where('slug', $slug)
-                ->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))
-                ->exists()
+            ->where('kind', $kind)
+            ->where('slug', $slug)
+            ->when($ignoreId, fn($q) => $q->where('id', '!=', $ignoreId))
+            ->exists()
         ) {
             $slug = "{$base}-{$i}";
             $i++;

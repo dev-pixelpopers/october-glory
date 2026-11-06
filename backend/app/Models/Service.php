@@ -18,6 +18,19 @@ class Service extends Model
         'price_by_consultation', 'is_active', 'archived_at', 'sort_order',
     ];
 
+    protected static function booted(): void
+    {
+        static::creating(function (Service $service) {
+            try {
+                if (\Illuminate\Support\Facades\Schema::hasColumn('services', 'sort_order') && is_null($service->sort_order)) {
+                    $service->sort_order = (static::max('sort_order') ?? 0) + 1;
+                }
+            } catch (\Throwable) {
+                // Column does not exist yet (during early migrations)
+            }
+        });
+    }
+
     protected function casts(): array
     {
         return [
@@ -25,6 +38,7 @@ class Service extends Model
             'price_by_consultation' => 'boolean',
             'is_active' => 'boolean',
             'archived_at' => 'datetime',
+            'sort_order' => 'integer',
         ];
     }
 
@@ -49,13 +63,13 @@ class Service extends Model
         return $this->belongsToMany(WorkerProfile::class, 'worker_services');
     }
 
-    /** Packages this service is bundled into. */
     /** Booked line items — a service with any can't be deleted. */
     public function appointmentLines(): HasMany
     {
         return $this->hasMany(AppointmentService::class);
     }
 
+    /** Packages this service is bundled into. */
     public function packages(): BelongsToMany
     {
         return $this->belongsToMany(Package::class, 'package_service')

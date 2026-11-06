@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import AuthGate from "@/app/components/salon/auth-gate";
 import { useMe } from "@/lib/api/hooks/auth";
 import DashboardShell from "../components/dashboard-shell";
@@ -14,16 +14,29 @@ import BookingWizard from "./components/booking-wizard";
  * from AuthGate first; staff are sent to their own dashboard views.
  */
 export default function BookScreen() {
+  const searchParams = useSearchParams();
+  const serviceSlug = searchParams.get("service") ?? searchParams.get("slug");
+  const packageSlug = searchParams.get("package");
+
   return (
     <div className="min-h-screen bg-[#151515]">
       <AuthGate>
-        <BookShell />
+        <BookShell
+          initialServiceSlug={serviceSlug}
+          initialPackageSlug={packageSlug}
+        />
       </AuthGate>
     </div>
   );
 }
 
-function BookShell() {
+function BookShell({
+  initialServiceSlug,
+  initialPackageSlug,
+}: {
+  initialServiceSlug?: string | null;
+  initialPackageSlug?: string | null;
+}) {
   const { data: me } = useMe();
   const router = useRouter();
 
@@ -42,7 +55,10 @@ function BookShell() {
       {/* The wizard is styled for the brand's dark canvas; keep that canvas
           as a card so it reads correctly in the light dashboard theme too. */}
       <div className="bg-[#151515] rounded-[22px] pt-12 pb-6 overflow-hidden">
-        <BookingWizard />
+        <BookingWizard
+          initialServiceSlug={initialServiceSlug}
+          initialPackageSlug={initialPackageSlug}
+        />
       </div>
     </DashboardShell>
   );

@@ -11,6 +11,23 @@ import ServiceCta from "@/app/components/service-detail/service-cta";
 import MembershipCta from "@/app/components/service-detail/membership-cta";
 import { getChildren, hasPage, servicePath } from "@/data/services";
 import { silkPressPage } from "@/data/silk-press-new";
+import type { Package } from "@/lib/api/types";
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
+
+async function fetchSilkPressPackages(): Promise<Package[]> {
+  try {
+    const res = await fetch(`${API_BASE}/packages?category=silk-press&kind=packages`, {
+      headers: { Accept: "application/json" },
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return Array.isArray(json?.data) ? (json.data as Package[]) : [];
+  } catch {
+    return [];
+  }
+}
 
 export const metadata = {
   title: silkPressPage.meta.title,
@@ -35,10 +52,11 @@ export const metadata = {
  * Tones are pinned rather than walked: the section list here is fixed, so
  * there is nothing for `assignTones` to resolve.
  */
-export default function SilkPressPage() {
+export default async function SilkPressPage() {
   // The styles parented to Silk Press in the service data. Their own pages
   // still live at /services/silk-press/<slug>.
   const styles = getChildren("silk-press");
+  const initialPackages = await fetchSilkPressPackages();
 
   return (
     <div className="main-app bg-[#1B1B1B]">
@@ -95,7 +113,7 @@ export default function SilkPressPage() {
         }}
       />
 
-    <PressPackages tone="light" />
+    <PressPackages tone="light" initialPackages={initialPackages} />
 
     
 

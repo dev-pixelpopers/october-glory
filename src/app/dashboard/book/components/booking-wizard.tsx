@@ -1,9 +1,12 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { usePackages, useServices } from "@/lib/api/hooks/catalog";
 import type {
   Appointment,
   AvailabilitySlot,
+  Package,
   PaymentMethod,
   Service,
   Worker,
@@ -17,7 +20,24 @@ import SummaryDrawer from "./summary-drawer";
 
 const STEPS = ["Services", "Specialist", "Date & Time", "Checkout", "Confirmed"] as const;
 
-export default function BookingWizard() {
+export interface BookingWizardProps {
+  initialServiceSlug?: string | null;
+  initialPackageSlug?: string | null;
+}
+
+export default function BookingWizard({
+  initialServiceSlug,
+  initialPackageSlug,
+}: BookingWizardProps = {}) {
+  const searchParams = useSearchParams();
+  const effectiveServiceSlug =
+    initialServiceSlug ?? searchParams.get("service") ?? searchParams.get("slug");
+  const effectivePackageSlug =
+    initialPackageSlug ?? searchParams.get("package");
+
+  const { data: allServices } = useServices();
+  const { data: allPackages } = usePackages();
+
   const [step, setStep] = useState(0);
   const [services, setServices] = useState<Service[]>([]);
   const [worker, setWorker] = useState<Worker | null>(null);
@@ -27,6 +47,78 @@ export default function BookingWizard() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
   const [pointsUsed, setPointsUsed] = useState(0);
   const [confirmed, setConfirmed] = useState<Appointment | null>(null);
+
+  // Auto-selection from query parameters on load
+  const processedParamRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!allServices && !allPackages) return;
+
+    const targetParam = (effectiveServiceSlug || effectivePackageSlug)?.trim();
+    if (!targetParam) return;
+
+    // Avoid repeatedly re-selecting if already handled
+    if (processedParamRef.current === targetParam) return;
+
+    const findMatchingServices = (query: string): Service[] => {
+      const q = query.toLowerCase().trim();
+
+      // 1. Direct match on service slug, ID, or name
+      const direct = allServices?.find(
+        (s) =>
+          s.slug?.toLowerCase() === q ||
+          String(s.id) === q ||
+          s.name.toLowerCase() === q ||
+          s.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === q,
+      );
+      if (direct) return [direct];
+
+      // 2. Direct match on package slug, ID, or name
+      const pkg = allPackages?.find(
+        (p) =>
+          p.slug?.toLowerCase() === q ||
+          String(p.id) === q ||
+          p.name.toLowerCase() === q ||
+          p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === q,
+      );
+      if (pkg && pkg.services && pkg.services.length > 0) {
+        return pkg.services;
+      }
+
+      // 3. Fallback: fuzzy/partial match on service slug or package slug
+      const fuzzyService = allServices?.find(
+        (s) => s.slug?.toLowerCase().includes(q) || q.includes(s.slug?.toLowerCase() ?? ""),
+      );
+      if (fuzzyService) return [fuzzyService];
+
+      const fuzzyPkg = allPackages?.find(
+        (p) => p.slug?.toLowerCase().includes(q) || q.includes(p.slug?.toLowerCase() ?? ""),
+      );
+      if (fuzzyPkg && fuzzyPkg.services && fuzzyPkg.services.length > 0) {
+        return fuzzyPkg.services;
+      }
+
+      return [];
+    };
+
+    let matched: Service[] = [];
+    if (effectiveServiceSlug) {
+      matched = findMatchingServices(effectiveServiceSlug);
+    }
+    if (matched.length === 0 && effectivePackageSlug) {
+      matched = findMatchingServices(effectivePackageSlug);
+    }
+
+    if (matched.length > 0) {
+      processedParamRef.current = targetParam;
+      setServices(matched);
+      setWorker(null);
+      setAnySpecialist(false);
+      setSlot(null);
+      // Advance step indicator to step 2 (worker / specialist selection)
+      setStep(1);
+    }
+  }, [allServices, allPackages, effectiveServiceSlug, effectivePackageSlug]);
 
   const subtotal = useMemo(
     () => services.reduce((sum, s) => sum + parseFloat(s.current_price), 0),
@@ -65,7 +157,16 @@ export default function BookingWizard() {
                 className={`w-[clamp(24px,20.12px_+_1.036vw,40px)] md:w-[clamp(48px,40.23px_+_2.071vw,80px)] h-[1px] ${i <= step ? "bg-[#cba660]" : "bg-white/20"}`}
               />
             )}
-            <div className="flex flex-col items-center gap-2">
+            <button
+              type="button"
+              disabled={i > step || (i === 1 && services.length === 0)}
+              onClick={() => {
+                if (i <= step) setStep(i);
+              }}
+              className={`flex flex-col items-center gap-2 transition-opacity ${
+                i <= step ? "cursor-pointer hover:opacity-80" : "cursor-default opacity-60"
+              }`}
+            >
               <span
                 className={`flex items-center justify-center w-11 h-11 rounded-full border gotham text-[16px] transition-colors ${
                   i < step
@@ -84,7 +185,7 @@ export default function BookingWizard() {
               >
                 {label}
               </span>
-            </div>
+            </button>
           </React.Fragment>
         ))}
       </div>

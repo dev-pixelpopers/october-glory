@@ -7,14 +7,13 @@ import PriceTag from "./price-tag";
 
 /**
  * Tier counts vary by service (Silk Press has 3, Rod Set has 4, Wash & Go
- * has 2), so the grid adapts rather than forcing every service into the
- * same three-up layout.
+ * has 2). Each row displays at most 3 packages on desktop, with any
+ * additional packages wrapping to the next row.
  */
 function gridColumns(count: number) {
   if (count <= 1) return "grid-cols-1 max-w-[720px] mx-auto";
   if (count === 2) return "grid-cols-1 md:grid-cols-2 max-w-[1100px] mx-auto";
-  if (count === 3) return "grid-cols-1 md:grid-cols-2 xl:grid-cols-3";
-  return "grid-cols-1 md:grid-cols-2 xl:grid-cols-4";
+  return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-[1400px] mx-auto";
 }
 
 function CheckIcon() {
@@ -36,11 +35,18 @@ function CheckIcon() {
 
 export default function ServiceTiers({
   tiers,
+  serviceSlug,
 }: {
   tiers: NonNullable<ServiceDetail["tiers"]>;
+  serviceSlug?: string;
 }) {
-  const scope = useReveal<HTMLElement>();
   const { items } = tiers;
+  // Re-run the reveal when the packages/tiers update (e.g. loaded from API),
+  // so new packages aren't left hidden by the reveal's starting state.
+  const scope = useReveal<HTMLElement>([
+    items.map((tier) => `${tier.name}-${tier.price}`).join("|"),
+    items.length,
+  ]);
 
   return (
     <section
@@ -94,9 +100,9 @@ export default function ServiceTiers({
       >
         {items.map((tier, idx) => (
           <article
-            key={tier.name}
+            key={`${tier.name}-${idx}`}
             data-reveal
-            data-reveal-delay={String(idx)}
+            data-reveal-delay={String(idx % 3)}
             className={`group relative flex flex-col rounded-[24px] p-[var(--space-32)] md:p-[var(--space-36)] transition-all duration-500 ease-out will-change-transform
               group-hover/tiers:blur-[3px] group-hover/tiers:opacity-[0.55] group-hover/tiers:scale-[0.98]
               hover:blur-none! hover:opacity-100! hover:scale-[1.03]! hover:-translate-y-3 hover:z-10
@@ -165,30 +171,34 @@ export default function ServiceTiers({
             )}
 
             {/* What you get */}
-            <p
-              className={`gotham text-[11px] tracking-[3px] uppercase mb-[var(--space-16)] ${
-                tier.featured ? "text-white/45" : "text-[#9C6D51]"
-              }`}
-            >
-              What You Get
-            </p>
+            {tier.includes && tier.includes.length > 0 && (
+              <>
+                <p
+                  className={`gotham text-[11px] tracking-[3px] uppercase mb-[var(--space-16)] ${
+                    tier.featured ? "text-white/45" : "text-[#9C6D51]"
+                  }`}
+                >
+                  What You Get
+                </p>
 
-            <ul className="space-y-[14px] mb-[var(--space-32)]">
-              {tier.includes.map((line, i) => (
-                <li key={i} className="flex gap-3">
-                  <span className="text-[#ccb884] mt-[7px]">
-                    <CheckIcon />
-                  </span>
-                  <span
-                    className={`gotham text-[15px] leading-[27px] font-light ${
-                      tier.featured ? "text-white/75" : "text-[#555]"
-                    }`}
-                  >
-                    {line}
-                  </span>
-                </li>
-              ))}
-            </ul>
+                <ul className="space-y-[14px] mb-[var(--space-32)]">
+                  {tier.includes.map((line, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="text-[#ccb884] mt-[7px]">
+                        <CheckIcon />
+                      </span>
+                      <span
+                        className={`gotham text-[15px] leading-[27px] font-light ${
+                          tier.featured ? "text-white/75" : "text-[#555]"
+                        }`}
+                      >
+                        {line}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
 
             {/* Pushes the footer block to the bottom so cards align */}
             <div className="mt-auto space-y-[var(--space-20)]">
@@ -234,19 +244,30 @@ export default function ServiceTiers({
                 </div>
               )}
 
-              <a
-                href="/dashboard/book"
-                className={`flex gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] text-[16px] gotham border transition-all duration-300 w-fit ${
-                  tier.featured
-                    ? "border-[#d4af6e] text-[#d4af6e] hover:bg-[#d4af6e] hover:text-black"
-                    : "border-[#1B1B1B] text-[#1B1B1B] hover:bg-[#d4af6e] hover:border-[#d4af6e] hover:text-black"
-                }`}
-              >
-                <span className="bg-[#d4af6e] text-black rounded-full w-[38px] h-[38px] flex items-center justify-center font-bold">
-                  →
-                </span>
-                Book This Tier
-              </a>
+              {(() => {
+                const tierHref =
+                  tier.href ??
+                  (tier.slug
+                    ? `/dashboard/book?service=${encodeURIComponent(tier.slug)}`
+                    : serviceSlug
+                      ? `/dashboard/book?service=${encodeURIComponent(serviceSlug)}`
+                      : `/dashboard/book?service=${encodeURIComponent(tier.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"))}`);
+                return (
+                  <a
+                    href={tierHref}
+                    className={`flex gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] text-[16px] gotham border transition-all duration-300 w-fit ${
+                      tier.featured
+                        ? "border-[#d4af6e] text-[#d4af6e] hover:bg-[#d4af6e] hover:text-black"
+                        : "border-[#1B1B1B] text-[#1B1B1B] hover:bg-[#d4af6e] hover:border-[#d4af6e] hover:text-black"
+                    }`}
+                  >
+                    <span className="bg-[#d4af6e] text-black rounded-full w-[38px] h-[38px] flex items-center justify-center font-bold">
+                      →
+                    </span>
+                    Book This Tier
+                  </a>
+                );
+              })()}
             </div>
           </article>
         ))}

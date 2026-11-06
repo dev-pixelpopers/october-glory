@@ -25,6 +25,12 @@ class PackageController extends Controller
         $packages = Package::query()
             ->with(['category', 'currentPrice', 'services' => fn ($q) => $q->with('currentPrice')])
             ->when($request->query('collection'), fn ($q, $c) => $q->where('collection', $c))
+            ->when($request->query('category'), function ($q, $cat) {
+                $q->where(function ($sub) use ($cat) {
+                    $sub->where('collection', $cat)
+                        ->orWhereHas('category', fn ($cq) => $cq->where('slug', $cat)->orWhere('name', $cat));
+                });
+            })
             ->when(! $request->user()?->isAdmin(), fn ($q) => $q->where('is_active', true))
             // Creation order — the site's order for the seeded catalog.
             ->orderBy('id')
@@ -33,11 +39,25 @@ class PackageController extends Controller
         return PackageResource::collection($packages);
     }
 
+    /** Public catalog: active packages for a specific category. */
+    public function byCategory(Request $request, string $category): AnonymousResourceCollection
+    {
+        $request->merge(['category' => $category]);
+
+        return $this->index($request);
+    }
+
     public function store(StorePackageRequest $request): PackageResource
     {
         $package = DB::transaction(function () use ($request) {
+            $data = $request->safe()->except(['price', 'service_ids']);
+
+            if (empty($data['collection']) && ! empty($data['category_id'])) {
+                $data['collection'] = $this->inferCollection($data['category_id']);
+            }
+
             $package = Package::query()->create([
-                ...$request->safe()->except(['price', 'service_ids']),
+                ...$data,
                 'slug' => $this->uniqueSlug($request->validated('name')),
             ]);
 
@@ -56,7 +76,13 @@ class PackageController extends Controller
     public function update(UpdatePackageRequest $request, Package $package): PackageResource
     {
         DB::transaction(function () use ($request, $package) {
-            $package->update($request->safe()->except(['price', 'service_ids']));
+            $data = $request->safe()->except(['price', 'service_ids']);
+
+            if (empty($data['collection']) && ! empty($data['category_id'])) {
+                $data['collection'] = $this->inferCollection($data['category_id']);
+            }
+
+            $package->update($data);
 
             if ($request->has('service_ids')) {
                 $this->syncServices($package, $request->validated('service_ids'));
@@ -119,6 +145,22 @@ class PackageController extends Controller
         }
 
         return $slug;
+    }
+
+    private function inferCollection(int $categoryId): ?string
+    {
+        $slug = \App\Models\ServiceCategory::query()->where('id', $categoryId)->value('slug');
+        if (! $slug) {
+            return null;
+        }
+
+        return match ($slug) {
+            'silk-press' => 'silk-press',
+            'maintenance-packages' => 'maintenance',
+            'glorious-packages' => 'glorious',
+            'bridal-packages' => 'bridal',
+            default => str_replace('-packages', '', $slug),
+        };
     }
 
     private function loaded(Package $package): Package
