@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import InnerPageHero from "../components/inner-page-hero";
+import { Link } from "lucide-react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -122,11 +123,15 @@ export default function ContactPage() {
               <p className="gotham text-[length:var(--fs-body)] leading-[1.6] text-gray-400 font-light">
                 Brooklyn, New York
               </p>
-              <p className="gotham text-[length:var(--fs-body)] text-[#cda873]">
+              <a
+                href="https://maps.app.goo.gl/8VKQg67rFqdjs9V19"
+                target="_blank"
+                className="gotham text-[length:var(--fs-body)] text-[#cda873] hover:text-white transition-colors"
+              >
                 1381 Bedford Avenue
                 <br />
                 Brooklyn, NY 11216
-              </p>
+              </a>
             </div>
 
             {/* Card 3: Hours */}

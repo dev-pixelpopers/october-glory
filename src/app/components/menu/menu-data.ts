@@ -73,7 +73,7 @@ export type MenuPreview =
  * Placeholder — drop the salon's Google Maps link in here and the address in
  * the Contact panel becomes clickable.
  */
-export const CONTACT_MAP_HREF = "#";
+export const CONTACT_MAP_HREF = "https://maps.app.goo.gl/8VKQg67rFqdjs9V19";
 
 /**
  * The single nav list. Services and Packages sit alongside the other links —
@@ -85,7 +85,7 @@ export const PRIMARY_LINKS: MenuLink[] = [
   { key: "wigs", label: "Wigs", href: "/wigs" },
   { key: "silk-press", label: "Silk Press", href: "/services/silk-press" },
   { key: "services", label: "Services", href: "/services" },
-  { key: "packages", label: "Packages", href: "/services" },
+  { key: "packages", label: "Packages", href: "/packages" },
   { key: "lookbook", label: "Lookbook", href: "/lookbook" },
   { key: "glory-news", label: "Glory News", href: "/glory-news" },
   { key: "shop", label: "Shop", href: "/shop" },

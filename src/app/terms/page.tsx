@@ -12,7 +12,7 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <div className="main-app bg-[#1B1B1B] min-h-screen text-white flex flex-col relative">
-      <Header bg="white" />
+      <Header theme="dark" />
 
       <InnerPageHero
         title="Terms &"

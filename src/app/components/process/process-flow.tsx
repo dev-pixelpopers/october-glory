@@ -436,7 +436,6 @@ export default function ProcessFlow({
           </div>
 
           <div className="relative">
-            <div className="pointer-events-none absolute -inset-4 translate-x-3 translate-y-3 rounded-[28px] border border-[#ccb884]/25 md:-inset-6 md:translate-x-5 md:translate-y-5" />
 
             <div className="relative aspect-[4/5] overflow-hidden rounded-[24px] bg-[#2a2a2a]">
               {/* `preload="none"`: nothing is fetched until the reader is

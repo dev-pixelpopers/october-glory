@@ -660,7 +660,7 @@ export const serviceChildren: ServiceChild[] = [
           "Every client is different, which is why we thoughtfully match the hair's texture and density to your individual needs. This personalized approach allows us to create a seamless, natural-looking finish.",
           "When custom color is requested, we use a luxury professional color line enriched with nourishing oils and lipids. Unlike many traditional color systems that can leave hair dry and brittle, our coloring process helps maintain softness, moisture, and shine while delivering rich, vibrant results.",
         ],
-        image: "/images/Weaves-And-Extensions-03.webp",
+        image: "/images/Weaves-And-Extensions-04.webp",
       },
       {
         heading: "Built to Last",
@@ -726,7 +726,7 @@ export const serviceChildren: ServiceChild[] = [
           "We also proudly work with clients experiencing hair loss due to alopecia, chemotherapy, or other medical conditions, providing thoughtfully designed units that restore confidence while protecting the scalp.",
           "Every custom wig we create is built with expert craftsmanship, premium materials, and personalized care, so you can enjoy a unit that looks natural, feels comfortable, and lasts for years to come.",
         ],
-        image: "/images/Weaves-And-Extensions-02.webp",
+        image: "/images/wig-unit-02.webp",
       },
     ],
     cta: {

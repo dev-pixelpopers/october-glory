@@ -161,7 +161,7 @@ export default function GloryExperience() {
                 <p className="text-black text-[length:clamp(16px,15.03px_+_0.259vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] gotham text-center capitalize">
                   We craft each wig specifically to your individual specifications, so every piece you receive remains one of a kind.
                 </p>
-                <button className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group cursor-pointer">
+                <a href="/about-us" className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group cursor-pointer">
                   <div className="w-[clamp(44px,43.03px_+_0.259vw,48px)] h-[clamp(44px,43.03px_+_0.259vw,48px)] flex items-center justify-center rounded-full border border-black group-hover:bg-black group-hover:border-black transition-all duration-300">
                     <svg
                       className="w-[clamp(18px,17.51px_+_0.13vw,20px)] h-[clamp(18px,17.51px_+_0.13vw,20px)] text-gray-600 group-hover:text-white transition-colors"
@@ -173,7 +173,7 @@ export default function GloryExperience() {
                   <span className="gotham text-black text-[length:clamp(17px,16.27px_+_0.194vw,20px)] font-semibold">
                     Learn More
                   </span>
-                </button>
+                </a>
               </div>
 
               {/* SECOND-SET paragraph — search "Precision Hair Cutting" to edit. */}
@@ -181,7 +181,7 @@ export default function GloryExperience() {
                 <p className="text-black text-[length:clamp(16px,15.03px_+_0.259vw,20px)] leading-[clamp(34px,32.54px_+_0.388vw,40px)] gotham text-center capitalize">
                   We Offer Premium Silk Presses, Protective Twists, Custom Extensions, And Dedicated Care Services Designed To Keep Your Natural Hair Looking Healthy.
                 </p>
-                <button className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group cursor-pointer">
+                <a href="/about-us" className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group cursor-pointer">
                   <div className="w-[clamp(44px,43.03px_+_0.259vw,48px)] h-[clamp(44px,43.03px_+_0.259vw,48px)] flex items-center justify-center rounded-full border border-black group-hover:bg-black group-hover:border-black transition-all duration-300">
                     <svg
                       className="w-[clamp(18px,17.51px_+_0.13vw,20px)] h-[clamp(18px,17.51px_+_0.13vw,20px)] text-gray-600 group-hover:text-white transition-colors"
@@ -193,7 +193,7 @@ export default function GloryExperience() {
                   <span className="gotham text-black text-[length:clamp(17px,16.27px_+_0.194vw,20px)] font-semibold">
                     Learn More
                   </span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
