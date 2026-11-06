@@ -911,6 +911,11 @@ form textarea::Placeholder {
 
 @media (max-width:500px) {
 
+  .hero-image-box {
+    height: 90dvh;
+    bottom: 0%;
+}
+
   .fix-head {
     top: 4.4% !important;
     padding: 0 3%;

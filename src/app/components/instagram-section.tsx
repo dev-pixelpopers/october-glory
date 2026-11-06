@@ -40,7 +40,7 @@ export default function InstagramSection({
 
   return (
     <section ref={containerRef} className="w-full bg-[#1b1b1b] py-[clamp(26px,16.77px_+_2.46vw,64px)] px-[clamp(38px,18.09px_+_5.308vw,120px)] relative min-h-[200dvh]">
-      <div className="flex flex-col gap-0 2xl:gap-[clamp(20px,15.14px_+_1.295vw,40px)] sticky top-0 overflow-hidden h-dvh justify-center items-center">
+      <div className="flex flex-col gap-0 2xl:gap-[1vw] sticky top-0 overflow-hidden h-dvh justify-center items-center">
         <div className="follow-col-main flex flex-col md:flex-row justify-between items-center w-full gap-[clamp(16px,14.06px_+_0.518vw,24px)]">
           <div className="follow-left-col flex flex-col">
             <h2 className="text-white text-[length:clamp(32px,18.41px_+_3.625vw,88px)] andrea z-10">{content?.heading ?? "Follow"}</h2>

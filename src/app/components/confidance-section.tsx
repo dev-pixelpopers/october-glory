@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,7 +14,7 @@ export default function ConfidenceJourneySection() {
   const heading1Ref = useRef<HTMLHeadingElement>(null);
   const heading2Ref = useRef<HTMLHeadingElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLAnchorElement>(null);
   useGSAP(() => {
     const tl = gsap.timeline(
       {
@@ -105,7 +106,7 @@ export default function ConfidenceJourneySection() {
               </div>
 
               {/* CTA Button */}
-              <button ref={buttonRef} className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group w-max"
+              <Link href="/contact" ref={buttonRef} className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group w-max"
                 style={{
                   clipPath: "inset(0% 100% 0% 0%)"
                 }}>
@@ -129,7 +130,7 @@ export default function ConfidenceJourneySection() {
                 <span className="text-white gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)] group-hover:text-white transition-colors duration-300">
                   Get A Free Consultation
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>

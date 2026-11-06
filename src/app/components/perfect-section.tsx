@@ -3,6 +3,9 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import Link from "next/link";
+
+
 gsap.registerPlugin(ScrollTrigger);
 export default function PerfectSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -12,7 +15,7 @@ export default function PerfectSection() {
   const heading3Ref = useRef<HTMLHeadingElement>(null);
   const heading4Ref = useRef<HTMLParagraphElement>(null);
   const heading5Ref = useRef<HTMLParagraphElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLAnchorElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
   useGSAP(() => {
@@ -108,7 +111,7 @@ export default function PerfectSection() {
               </h2>
             </div>
 
-            <button ref={buttonRef} className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group w-max"
+            <Link href="/shop" ref={buttonRef} className="flex items-center gap-[clamp(10px,8.54px_+_0.389vw,16px)] group w-max"
               style={{
                 clipPath: "inset(0% 100% 0% 0%)"
               }}>
@@ -132,7 +135,7 @@ export default function PerfectSection() {
               <span className="text-white gotham text-[length:clamp(17px,16.27px_+_0.194vw,20px)] group-hover:text-white transition-colors duration-300">
                 Shop Now
               </span>
-            </button>
+            </Link>
           </div>
 
           {/* right column  */}

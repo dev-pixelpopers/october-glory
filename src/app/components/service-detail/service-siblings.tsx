@@ -62,7 +62,7 @@ export default function ServiceSiblings({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[var(--space-32)] max-w-[1500px] mx-auto">
         {items.map((item, index) => (
           <Link
-            key={item.href}
+            key={`${item.href}-${index}`}
             href={item.href}
             data-reveal
             data-reveal-delay={String(index)}
