@@ -64,8 +64,8 @@ class ServiceImages
 
         // Wigs & Extensions
         'Single Track' => '/images/Weaves-And-Extensions-01.webp',
-        'Classic Sew-In with Leave-Out' => '/images/Weaves-And-Extensions-02.webp',
-        'The Glorious Sew-In' => '/images/Weaves-And-Extensions-02.webp',
+        'Classic Sew-In with Leave-Out' => '/images/Weaves-And-Extensions-04.webp',
+        'The Glorious Sew-In' => '/images/Weaves-And-Extensions-04.webp',
         'Classic Closure Sew-In or Full Weave' => '/images/Weaves-And-Extensions-03.webp',
         'The Glorious Closure or Full Weave' => '/images/Weaves-And-Extensions-03.webp',
         'Weave Wash' => '/images/Weaves-And-Extensions-05-06-07.webp',

@@ -84,7 +84,7 @@ export default function InstagramSection({
         <div className="flex justify-center w-full mt-[clamp(16px,14.06px_+_0.518vw,24px)] z-10">
           <div className="rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] p-[clamp(3px,2.76px_+_0.065vw,4px)] w-max shadow-lg hover:shadow-[0_0_20px_rgba(193,53,132,0.5)] transition-shadow duration-300 cursor-pointer">
             <a
-              href="#"
+              href="https://www.instagram.com/october_glory/"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center bg-white rounded-full w-max h-[clamp(40px,29.33px_+_1.701vw,62px)]"

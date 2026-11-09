@@ -56,9 +56,9 @@ export default function ServiceSectionBlock({
       ref={scope}
       className={`reveal-scope relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)] overflow-hidden`}
     >
-      {hairline && (
+      {/* {hairline && (
         <div className={`absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent ${c.hairline} to-transparent`} />
-      )}
+      )} */}
 
       {/* Without an image the copy centres in a readable column rather than
           sitting in half a two-column grid with nothing beside it. */}
@@ -161,7 +161,7 @@ export default function ServiceSectionBlock({
                 }`}
             />
 
-            <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
+            <div className="relative aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
               {section.video ? (
                 <video
                   src={section.video}

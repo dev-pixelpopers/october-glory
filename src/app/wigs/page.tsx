@@ -20,7 +20,7 @@ export type { Product };
 const MEMBER_BODY =
   "Members book every October Glory service at the member price, with priority booking, member-only treatments, and loyalty points on everything — including the consultation that starts a custom unit.";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
 
 export const metadata: Metadata = {
   title: unitsPage.meta.title,

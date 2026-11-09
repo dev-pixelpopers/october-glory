@@ -115,7 +115,7 @@ export default function ServiceProcessSection({
             }`}
           />
 
-          <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
+          <div className="relative aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
             {process.video ? (
               <video
                 src={process.video}

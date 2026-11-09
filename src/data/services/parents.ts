@@ -266,7 +266,7 @@ export const serviceParents: ServiceParent[] = [
     },
   },
   {
-    cardImage: "/images/Weaves-And-Extensions-02.webp",
+    cardImage: "/images/Weaves-And-Extensions-04.webp",
     cardBlurb:
       "Sew-in installs built on a custom braid foundation — leave-out or closure, finished with a cut made for your face.",
     slug: "weaves",
@@ -276,7 +276,7 @@ export const serviceParents: ServiceParent[] = [
       script: "Woven",
       intro:
         "Sew-in installs built on the health of your natural hair — and finished with a cut made for your face.",
-      image: "/images/Weaves-And-Extensions-02.webp",
+      image: "/images/Weaves-And-Extensions-04.webp",
     },
     overview: {
       eyebrow: "The Service",
@@ -285,7 +285,7 @@ export const serviceParents: ServiceParent[] = [
       body: [
         "Whether it’s a full weave, a leave-out install, or simple track extensions, every install starts with your natural hair as the foundation, not an afterthought. Extensions are placed and blended to follow your hair’s own growth pattern and movement, so the result feels like an extension of you — not something added on top. The goal is hair that moves, parts, and falls the way yours naturally would, just longer and fuller.",
       ],
-      image: "/images/Weaves-And-Extensions-02.webp",
+      image: "/images/Weaves-And-Extensions-04.webp",
     },
     tiers: {
       eyebrow: "Choose Your Experience",
@@ -416,7 +416,7 @@ export const serviceParents: ServiceParent[] = [
       script: "& Volume",
       intro:
         "Added length and volume, placed to follow your own growth pattern so the extensions move the way your hair does.",
-      image: "/images/Weaves-And-Extensions-01.webp",
+      image: "/images/wig-unit-01.webp",
     },
     overview: {
       eyebrow: "The Service",

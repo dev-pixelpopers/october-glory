@@ -437,7 +437,7 @@ export default function ProcessFlow({
 
           <div className="relative">
 
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[24px] bg-[#2a2a2a]">
+            <div className="relative aspect-[1] overflow-hidden rounded-[24px] bg-[#2a2a2a]">
               {/* `preload="none"`: nothing is fetched until the reader is
                   actually here. The metadata arrives with the first play
                   rather than with the page. */}

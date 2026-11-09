@@ -308,8 +308,8 @@ export const unitsPage = {
    */
   install: {
     eyebrow: "The Process",
-    heading: "From Your Hair",
-    headingAccent: "To The Finish",
+    heading: "From Start",
+    headingAccent: "To Finish",
     intro:
       "Every unit goes on the same way, and it starts with the hair underneath rather than the hair going over it.",
     /** PLACEHOLDER — replace with /images/units/install.webm if this is not already it. */

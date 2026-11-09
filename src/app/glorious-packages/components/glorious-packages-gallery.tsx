@@ -124,7 +124,7 @@ export default function GloriousPackagesGallery() {
 
               <a
                 href={service.slug ? `/dashboard/book?package=${encodeURIComponent(service.slug)}` : BOOKING_URL}
-                className="inline-flex items-center gap-2 text-[#ccb884] gotham text-[14px] tracking-[2px] uppercase translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 hover:text-white"
+                className="inline-flex items-center gap-2 text-[#ccb884] gotham text-[14px] tracking-[2px] uppercase translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 hover:text-white z-10"
               >
                 Book Now
                 <svg

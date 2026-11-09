@@ -191,7 +191,7 @@ export default function UnitStorySection({
           {unit.video && (
             <div data-reveal data-reveal-delay="2" className="relative lg:sticky lg:top-[var(--space-40)]">
               <div className="absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5" />
-              <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
+              <div className="relative aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
                 <video
                   src={unit.video || undefined}
                   poster={posterImg}

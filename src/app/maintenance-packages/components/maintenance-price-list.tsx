@@ -29,7 +29,7 @@ export default function MaintenancePriceList() {
       : FALLBACK;
 
   return (
-    <div className="grid grid-cols-2 gap-y-[var(--space-8)]">
+    <div className="flex flex-col gap-y-[var(--space-8)]">
       {items.map((item) => (
         <p
           key={item.name}

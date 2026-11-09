@@ -19,7 +19,7 @@ export default function AlaCarteSection() {
       className="reveal-scope relative w-full bg-[#1B1B1B] text-white py-[var(--space-section-y)] px-[var(--space-section-x)] overflow-hidden"
     >
       {/* Decorative top hairline */}
-      <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884]/30 to-transparent" />
+      {/* <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-[#ccb884]/30 to-transparent" /> */}
 
       <div className="text-center mb-[var(--space-64)] max-w-[820px] mx-auto">
         <p

@@ -54,7 +54,7 @@ export default function Transformation({ tone = "light" }: { tone?: Tone }) {
         <div className="grid grid-cols-1 gap-[var(--space-32)] sm:grid-cols-2">
           {frames.map((frame, i) => (
             <figure key={frame.label} data-reveal data-reveal-delay={String(2 + i)}>
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[20px] bg-[#2a2a2a]">
+              <div className="relative aspect-[1] w-full overflow-hidden rounded-[20px] bg-[#2a2a2a]">
                 <Image
                   src={frame.image}
                   alt={`${frame.label}: ${frame.caption}`}

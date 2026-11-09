@@ -57,7 +57,7 @@ export const wigsPage: ServiceParent = {
     body: [
       "Whether it’s a full weave, a leave-out install, or simple track extensions, every install starts with your natural hair as the foundation, not an afterthought. Extensions are placed and blended to follow your hair’s own growth pattern and movement, so the result feels like an extension of you — not something added on top. The goal is hair that moves, parts, and falls the way yours naturally would, just longer and fuller.",
     ],
-    image: "/images/Weaves-And-Extensions-02.webp",
+    image: "/images/Weaves-And-Extensions-04.webp",
   },
   tiers: {
     eyebrow: "Choose Your Experience",
