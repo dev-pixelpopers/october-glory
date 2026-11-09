@@ -409,8 +409,8 @@ export const serviceParents: ServiceParent[] = [
     cardImage: "/images/Weaves-And-Extensions-01.webp",
     cardBlurb:
       "Added length and volume, placed where your hair needs it and blended into your own so the join never shows.",
-    slug: "extensions",
-    cardTitle: "Extensions",
+    slug: "wigs-services",
+    cardTitle: "Wigs Services",
     hero: {
       display: "Length",
       script: "& Volume",
