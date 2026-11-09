@@ -31,7 +31,7 @@ export default function ServiceProcessSection({
       ref={scope}
       className={`reveal-scope relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)] overflow-hidden`}
     >
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-center max-w-[1400px] mx-auto">
+      <div className="relative z-10 grid grid-cols-1 xl:grid-cols-2 gap-[var(--space-64)] items-center max-w-[1400px] mx-auto">
         <div className={flip ? "lg:order-last" : undefined}>
           {process.eyebrow && (
             <p
@@ -108,14 +108,14 @@ export default function ServiceProcessSection({
         >
           {/* Offset gold frame — the same treatment the section blocks use. */}
           <div
-            className={`absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none ${
+            className={`hidden lg:flex absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none ${
               flip
                 ? "-translate-x-3 translate-y-3 md:-translate-x-5 md:translate-y-5"
                 : "translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5"
             }`}
           />
 
-          <div className="relative aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
+          <div className="relative aspect-[3/1.6] xl:aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a] order-1 xl:order-2">
             {process.video ? (
               <video
                 src={process.video}

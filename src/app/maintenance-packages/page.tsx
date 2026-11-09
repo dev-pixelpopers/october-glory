@@ -33,7 +33,7 @@ export default function MaintenancePackagesPage() {
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-center">
           {/* Left Column: Vision Text */}
-          <div className="flex flex-col gap-[var(--space-32)]">
+          <div className="flex flex-col gap-[var(--space-32)] order-2 lg:order-1">
             <span className="andrea text-[length:var(--fs-accent)] text-gold">Your Glorious </span>
             <h2 className="valturin text-[length:var(--fs-h2)] leading-tight text-white uppercase tracking-wider">
               Day Needs A Glorious Hairstyle
@@ -65,7 +65,7 @@ export default function MaintenancePackagesPage() {
 
 
           {/* Right Column: Maintenance Image Slider */}
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center order-1 lg:order-2">
             <MaintenanceSlider />
           </div>
         </div>

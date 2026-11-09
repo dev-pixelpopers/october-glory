@@ -23,7 +23,7 @@ export default function PriceTag({
   // Nothing to compare — e.g. "By consultation" — so one plain label.
   if (pricing.member === pricing.nonMember) {
     return variant === "badge" ? (
-      <div className="flex flex-row items-end gap-2 z-10 pb-3">
+      <div className="flex flex-row flex-wrap items-end gap-2 z-10 pb-3">
         <span className="bg-[#ccb884] text-[#1B1B1B] gotham font-bold text-[13px] px-3 py-[5px] rounded-full whitespace-nowrap">
           {pricing.member}
         </span>
@@ -38,7 +38,7 @@ export default function PriceTag({
   if (variant === "badge") {
     return (
       // <div className="absolute top-5 right-5 flex flex-col items-end gap-[3px] z-10">
-      <div className="flex flex-row items-end gap-2 z-10 pb-3">
+      <div className="flex flex-row flex-wrap items-end gap-2 z-10 pb-3">
         <span className="bg-[#ccb884] text-[#1B1B1B] gotham font-bold text-[13px] px-3 py-[5px] rounded-full whitespace-nowrap">
           Members {pricing.member}
         </span>

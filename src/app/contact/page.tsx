@@ -155,7 +155,7 @@ export default function ContactPage() {
                 Opening Hours
               </h3>
               <div className="flex flex-col gap-2">
-                <div className="flex justify-between items-center gap-[var(--space-32)]">
+                <div className="flex flex-col items-center gap-1 xl:flex-row xl:justify-between xl:gap-[var(--space-32)]">
                   <span className="gotham text-[16px] text-gray-400">
                     Sun - Tue
                   </span>
@@ -163,7 +163,7 @@ export default function ContactPage() {
                     Closed
                   </span>
                 </div>
-                <div className="flex justify-between items-center gap-[var(--space-32)]">
+                <div className="flex flex-col items-center gap-1 xl:flex-row xl:justify-between xl:gap-[var(--space-32)]">
                   <span className="gotham text-[16px] text-gray-400">
                     Wed - Fri
                   </span>
@@ -171,7 +171,7 @@ export default function ContactPage() {
                     10:00 am - 4:00 pm
                   </span>
                 </div>
-                <div className="flex justify-between items-center gap-[var(--space-32)]">
+                <div className="flex flex-col items-center gap-1 xl:flex-row xl:justify-between  xl:gap-[var(--space-32)]">
                   <span className="gotham text-[16px] text-gray-400">
                     Saturday
                   </span>
@@ -189,7 +189,7 @@ export default function ContactPage() {
           CONTACT FORM + MAP SECTION
       ============================ */}
       <section className="py-[var(--space-section-y)] px-[var(--space-section-x)] bg-[#1B1B1B] relative">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-stretch">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 xl:grid-cols-2 gap-[var(--space-64)] items-stretch">
           {/* Left Column: Contact Form */}
           <div
             className="px-[var(--space-40)] py-[var(--space-64)] flex flex-col justify-center rounded-[2rem] relative overflow-hidden bg-gradient-to-b from-[#9C6D51] to-[#5F3A21]">
@@ -394,7 +394,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right Column: Map + Visit Info */}
-          <div className="flex flex-col gap-[var(--space-32)]">
+          <div className="flex flex-col md:flex-row xl:flex-col gap-[var(--space-32)]">
             {/* Map Embed */}
             <div className="rounded-[2rem] overflow-hidden border border-[#cda873]/20 flex-1 min-h-[400px]">
               <iframe
@@ -411,7 +411,7 @@ export default function ContactPage() {
             </div>
 
             {/* Visit Info Card */}
-            <div className="border border-[#cda873]/20 bg-[#151515] p-[var(--space-40)] rounded-[2rem] flex flex-col gap-[var(--space-24)]">
+            <div className="border border-[#cda873]/20 bg-[#151515] p-[var(--space-40)] rounded-[2rem] flex flex-col gap-[var(--space-24)] md:flex-1 xl:flex-none">
               <h3 className="valturin text-[length:var(--fs-h3)] text-gold">
                 Plan Your Visit
               </h3>

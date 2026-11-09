@@ -65,7 +65,7 @@ export default function ServiceSectionBlock({
       <div
         className={
           hasMedia
-            ? "grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-center max-w-[1400px] mx-auto"
+            ? "grid grid-cols-1 xl:grid-cols-2 gap-[var(--space-64)] items-center max-w-[1400px] mx-auto"
             : "max-w-[820px] mx-auto"
         }
       >
@@ -155,13 +155,13 @@ export default function ServiceSectionBlock({
           >
             {/* Offset gold frame */}
             <div
-              className={`absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none ${flip
+              className={`hidden lg:flex absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none ${flip
                   ? "-translate-x-3 translate-y-3 md:-translate-x-5 md:translate-y-5"
                   : "translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5"
                 }`}
             />
 
-            <div className="relative aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
+            <div className="relative aspect-[3/2] xl:aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
               {section.video ? (
                 <video
                   src={section.video}

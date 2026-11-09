@@ -47,7 +47,7 @@ export default function GloryNewsPage() {
                                     <img
                                         src={blog.image}
                                         alt={blog.title}
-                                        className="w-full max-h-[400px] object-cover transition duration-500 hover:scale-105"
+                                        className="w-full  h-[40vh] object-cover transition duration-500 hover:scale-105"
                                     />
                                 </div>
 
