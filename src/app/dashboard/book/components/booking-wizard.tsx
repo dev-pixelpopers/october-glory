@@ -39,6 +39,7 @@ export default function BookingWizard({
   const { data: allPackages } = usePackages();
 
   const [step, setStep] = useState(0);
+  const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [services, setServices] = useState<Service[]>([]);
   const [worker, setWorker] = useState<Worker | null>(null);
   const [anySpecialist, setAnySpecialist] = useState(false);
@@ -52,18 +53,35 @@ export default function BookingWizard({
   const processedParamRef = useRef<string | null>(null);
 
   useEffect(() => {
+    if (effectivePackageSlug && !allPackages) return;
+    if (effectiveServiceSlug && !allServices && !allPackages) return;
     if (!allServices && !allPackages) return;
 
-    const targetParam = (effectiveServiceSlug || effectivePackageSlug)?.trim();
+    const targetParam = (effectivePackageSlug || effectiveServiceSlug)?.trim();
     if (!targetParam) return;
 
     // Avoid repeatedly re-selecting if already handled
     if (processedParamRef.current === targetParam) return;
 
+    const findMatchingPackage = (query: string): Package | null => {
+      const q = query.toLowerCase().trim();
+      const direct = allPackages?.find(
+        (p) =>
+          p.slug?.toLowerCase() === q ||
+          String(p.id) === q ||
+          p.name.toLowerCase() === q ||
+          p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === q,
+      );
+      if (direct) return direct;
+
+      const fuzzy = allPackages?.find(
+        (p) => p.slug?.toLowerCase().includes(q) || q.includes(p.slug?.toLowerCase() ?? ""),
+      );
+      return fuzzy ?? null;
+    };
+
     const findMatchingServices = (query: string): Service[] => {
       const q = query.toLowerCase().trim();
-
-      // 1. Direct match on service slug, ID, or name
       const direct = allServices?.find(
         (s) =>
           s.slug?.toLowerCase() === q ||
@@ -73,63 +91,74 @@ export default function BookingWizard({
       );
       if (direct) return [direct];
 
-      // 2. Direct match on package slug, ID, or name
-      const pkg = allPackages?.find(
-        (p) =>
-          p.slug?.toLowerCase() === q ||
-          String(p.id) === q ||
-          p.name.toLowerCase() === q ||
-          p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === q,
-      );
-      if (pkg && pkg.services && pkg.services.length > 0) {
-        return pkg.services;
-      }
-
-      // 3. Fallback: fuzzy/partial match on service slug or package slug
-      const fuzzyService = allServices?.find(
+      const fuzzy = allServices?.find(
         (s) => s.slug?.toLowerCase().includes(q) || q.includes(s.slug?.toLowerCase() ?? ""),
       );
-      if (fuzzyService) return [fuzzyService];
-
-      const fuzzyPkg = allPackages?.find(
-        (p) => p.slug?.toLowerCase().includes(q) || q.includes(p.slug?.toLowerCase() ?? ""),
-      );
-      if (fuzzyPkg && fuzzyPkg.services && fuzzyPkg.services.length > 0) {
-        return fuzzyPkg.services;
-      }
-
-      return [];
+      return fuzzy ? [fuzzy] : [];
     };
 
-    let matched: Service[] = [];
-    if (effectiveServiceSlug) {
-      matched = findMatchingServices(effectiveServiceSlug);
-    }
-    if (matched.length === 0 && effectivePackageSlug) {
-      matched = findMatchingServices(effectivePackageSlug);
+    // Priority 1: If ?package= is specified, find and select that package
+    if (effectivePackageSlug) {
+      const matchedPkg = findMatchingPackage(effectivePackageSlug);
+      if (matchedPkg) {
+        processedParamRef.current = targetParam;
+        setSelectedPackage(matchedPkg);
+        setServices(matchedPkg.services ?? []);
+        setWorker(null);
+        setAnySpecialist(false);
+        setSlot(null);
+        setStep(1);
+        return;
+      }
     }
 
-    if (matched.length > 0) {
-      processedParamRef.current = targetParam;
-      setServices(matched);
-      setWorker(null);
-      setAnySpecialist(false);
-      setSlot(null);
-      // Advance step indicator to step 2 (worker / specialist selection)
-      setStep(1);
+    // Priority 2: If ?service= is specified, try service match
+    if (effectiveServiceSlug) {
+      const matchedSvc = findMatchingServices(effectiveServiceSlug);
+      if (matchedSvc.length > 0) {
+        processedParamRef.current = targetParam;
+        setSelectedPackage(null);
+        setServices(matchedSvc);
+        setWorker(null);
+        setAnySpecialist(false);
+        setSlot(null);
+        setStep(1);
+        return;
+      }
+
+      // Fallback: check if the param actually was a package slug passed as service
+      const fallbackPkg = findMatchingPackage(effectiveServiceSlug);
+      if (fallbackPkg) {
+        processedParamRef.current = targetParam;
+        setSelectedPackage(fallbackPkg);
+        setServices(fallbackPkg.services ?? []);
+        setWorker(null);
+        setAnySpecialist(false);
+        setSlot(null);
+        setStep(1);
+        return;
+      }
     }
   }, [allServices, allPackages, effectiveServiceSlug, effectivePackageSlug]);
 
   const subtotal = useMemo(
-    () => services.reduce((sum, s) => sum + parseFloat(s.current_price), 0),
-    [services],
+    () =>
+      selectedPackage
+        ? parseFloat(selectedPackage.price || selectedPackage.current_price || "0")
+        : services.reduce((sum, s) => sum + parseFloat(s.current_price), 0),
+    [selectedPackage, services],
   );
+
   const totalDuration = useMemo(
-    () => services.reduce((sum, s) => sum + s.duration_minutes, 0),
-    [services],
+    () =>
+      selectedPackage?.duration_minutes
+        ? selectedPackage.duration_minutes
+        : services.reduce((sum, s) => sum + s.duration_minutes, 0),
+    [selectedPackage, services],
   );
 
   const toggleService = (service: Service) => {
+    setSelectedPackage(null);
     setServices((prev) =>
       prev.some((s) => s.id === service.id)
         ? prev.filter((s) => s.id !== service.id)
@@ -141,8 +170,16 @@ export default function BookingWizard({
     setSlot(null);
   };
 
+  const selectPackage = (pkg: Package | null) => {
+    setSelectedPackage(pkg);
+    setServices(pkg ? (pkg.services ?? []) : []);
+    setWorker(null);
+    setAnySpecialist(false);
+    setSlot(null);
+  };
+
   const canContinue =
-    (step === 0 && services.length > 0) ||
+    (step === 0 && (services.length > 0 || selectedPackage !== null)) ||
     (step === 1 && (worker !== null || anySpecialist)) ||
     (step === 2 && slot !== null);
 
@@ -159,7 +196,7 @@ export default function BookingWizard({
             )}
             <button
               type="button"
-              disabled={i > step || (i === 1 && services.length === 0)}
+              disabled={i > step || (i === 1 && services.length === 0 && !selectedPackage)}
               onClick={() => {
                 if (i <= step) setStep(i);
               }}
@@ -190,7 +227,15 @@ export default function BookingWizard({
         ))}
       </div>
 
-      {step === 0 && <StepServices selected={services} onToggle={toggleService} />}
+      {step === 0 && (
+        <StepServices
+          selected={services}
+          onToggle={toggleService}
+          selectedPackage={selectedPackage}
+          onSelectPackage={selectPackage}
+          defaultTab={selectedPackage || effectivePackageSlug ? "packages" : "services"}
+        />
+      )}
 
       {step === 1 && (
         <StepSpecialist
@@ -208,6 +253,7 @@ export default function BookingWizard({
       {step === 2 && (
         <StepDateTime
           serviceIds={services.map((s) => s.id)}
+          packageId={selectedPackage?.id ?? null}
           workerId={worker?.id ?? null}
           totalDuration={totalDuration}
           date={date}
@@ -222,6 +268,7 @@ export default function BookingWizard({
 
       {step === 3 && slot && (
         <StepCheckout
+          selectedPackage={selectedPackage}
           services={services}
           slot={slot}
           subtotal={subtotal}
@@ -244,8 +291,9 @@ export default function BookingWizard({
       {step < 3 && (
         <SummaryDrawer
           count={services.length}
+          packageName={selectedPackage?.name ?? null}
           subtotal={subtotal}
-          hasConsultation={services.some((s) => s.price_by_consultation)}
+          hasConsultation={!selectedPackage && services.some((s) => s.price_by_consultation)}
           totalDuration={totalDuration}
           slot={slot}
           workerName={anySpecialist ? "Any Specialist" : worker?.name ?? null}

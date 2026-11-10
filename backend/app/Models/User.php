@@ -103,6 +103,11 @@ class User extends Authenticatable
         return $this->hasMany(Review::class, 'worker_id');
     }
 
+    public function appNotifications(): HasMany
+    {
+        return $this->hasMany(AppNotification::class);
+    }
+
     public function loyaltyBalance(): int
     {
         return (int) $this->loyaltyTransactions()->sum('amount');

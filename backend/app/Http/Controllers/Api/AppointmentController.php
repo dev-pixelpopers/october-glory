@@ -25,7 +25,7 @@ class AppointmentController extends Controller
         $user = $request->user();
 
         $appointments = Appointment::query()
-            ->with(['client', 'worker', 'lineItems.service', 'review'])
+            ->with(['client', 'worker', 'lineItems.service', 'review', 'package'])
             ->when($user->role === User::ROLE_CLIENT, fn ($q) => $q->where('client_id', $user->id))
             // Scoped guest-session on a full account: no historical data —
             // only bookings made during this session are visible.
@@ -56,15 +56,16 @@ class AppointmentController extends Controller
 
         $appointment = $this->booking->book(
             client: $request->user(),
-            serviceIds: array_map('intval', $request->validated('service_ids')),
+            serviceIds: array_map('intval', $request->validated('service_ids', [])),
             workerUserId: $request->validated('worker_id') !== null ? (int) $request->validated('worker_id') : null,
             start: CarbonImmutable::parse($request->validated('start_time'))->setTimezone(config('app.timezone')),
             paymentMethod: $request->validated('payment_method'),
             loyaltyPointsUsed: (int) $request->validated('loyalty_points_used', 0),
             notes: $request->validated('notes'),
+            packageId: $request->validated('package_id') !== null ? (int) $request->validated('package_id') : null,
         );
 
-        return new AppointmentResource($appointment->load('review'));
+        return new AppointmentResource($appointment->load(['review', 'package']));
     }
 
     /** Live status controls for workers (and admins). */
@@ -81,13 +82,18 @@ class AppointmentController extends Controller
             throw ValidationException::withMessages(['status' => "A {$appointment->status} appointment can no longer change status."]);
         }
 
-        $appointment->update(['status' => $request->validated('status')]);
+        $oldStatus = $appointment->status;
+        $newStatus = $request->validated('status');
+        $appointment->update(['status' => $newStatus]);
 
-        if ($request->validated('status') === Appointment::STATUS_COMPLETED && $appointment->payment_method === 'pay_upon_arrival') {
+        if ($newStatus === Appointment::STATUS_COMPLETED && $appointment->payment_method === 'pay_upon_arrival') {
             $appointment->update(['payment_status' => 'paid']);
         }
 
-        return new AppointmentResource($appointment->fresh(['client', 'worker', 'lineItems.service', 'review']));
+        $fresh = $appointment->fresh(['client', 'worker', 'lineItems.service', 'review']);
+        event(new \App\Events\AppointmentStatusUpdated($fresh, $oldStatus, $newStatus));
+
+        return new AppointmentResource($fresh);
     }
 
     /** Policy window: clients may cancel until 24h before start; admins any time. */
@@ -107,7 +113,10 @@ class AppointmentController extends Controller
 
         $appointment->update(['status' => Appointment::STATUS_CANCELLED]);
 
-        return new AppointmentResource($appointment->fresh(['client', 'worker', 'lineItems.service', 'review']));
+        $fresh = $appointment->fresh(['client', 'worker', 'lineItems.service', 'review']);
+        event(new \App\Events\AppointmentCancelled($fresh, $user));
+
+        return new AppointmentResource($fresh);
     }
 
     /** Admin override: move an appointment to a new time (and optionally worker). */
@@ -127,12 +136,18 @@ class AppointmentController extends Controller
             throw ValidationException::withMessages(['start_time' => 'The worker already has an appointment in that window.']);
         }
 
+        $oldStart = $appointment->start_time;
+        $oldWorkerId = $appointment->worker_id;
+
         $appointment->update([
             'worker_id' => $workerId,
             'start_time' => $start,
             'end_time' => $end,
         ]);
 
-        return new AppointmentResource($appointment->fresh(['client', 'worker', 'lineItems.service', 'review']));
+        $fresh = $appointment->fresh(['client', 'worker', 'lineItems.service', 'review']);
+        event(new \App\Events\AppointmentRescheduled($fresh, $oldStart, $oldWorkerId));
+
+        return new AppointmentResource($fresh);
     }
 }

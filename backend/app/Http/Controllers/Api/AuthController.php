@@ -172,6 +172,8 @@ class AuthController extends Controller
                 'is_active' => true,
             ])->save();
 
+            event(new \App\Events\UserRegistered($user));
+
             return $this->tokenResponse($user);
         }
 

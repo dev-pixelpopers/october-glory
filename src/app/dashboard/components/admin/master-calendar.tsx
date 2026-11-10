@@ -78,7 +78,12 @@ export default function MasterCalendar() {
                   <td className="gotham text-[var(--dash-text-soft)] text-[14px] pr-4">{a.client?.name}</td>
                   <td className="gotham text-[var(--dash-text-soft)] text-[14px] pr-4">{a.worker?.name}</td>
                   <td className="gotham text-[var(--dash-text-muted)] text-[13px] pr-4 max-w-[220px]">
-                    {a.services.map((s) => s.service_name).join(", ")}
+                    {a.package && (
+                      <span className="inline-block px-1.5 py-0.5 mb-1 rounded bg-[#cba660]/20 text-[#cda873] text-[10px] font-bold uppercase tracking-wider">
+                        {a.package.name}
+                      </span>
+                    )}
+                    <div>{a.services.map((s) => s.service_name).join(", ")}</div>
                   </td>
                   <td className="gotham font-bold text-[var(--dash-text)] text-[14px] pr-4">{money(a.total_amount)}</td>
                   <td className="pr-4"><StatusBadge status={a.status} /></td>

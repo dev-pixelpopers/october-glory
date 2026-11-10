@@ -7,6 +7,7 @@ import { durationLabel, timeLabel, toDateKey } from "@/lib/format";
 
 interface Props {
   serviceIds: number[];
+  packageId?: number | null;
   workerId: number | null;
   totalDuration: number;
   date: string | null;
@@ -21,6 +22,7 @@ const GRID_END_HOUR = 19;
 
 export default function StepDateTime({
   serviceIds,
+  packageId,
   workerId,
   totalDuration,
   date,
@@ -39,7 +41,7 @@ export default function StepDateTime({
     return out;
   }, []);
 
-  const { data: openSlots, isLoading } = useAvailability(date, serviceIds, workerId);
+  const { data: openSlots, isLoading } = useAvailability(date, serviceIds, workerId, packageId);
 
   // Map open slots by "HH:MM" so the full grid can grey out taken times.
   const openByTime = useMemo(() => {

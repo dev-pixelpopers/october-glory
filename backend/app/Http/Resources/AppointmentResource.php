@@ -44,6 +44,14 @@ class AppointmentResource extends JsonResource
                 'duration_at_booking' => $item->duration_at_booking,
             ])),
             'review' => new ReviewResource($this->whenLoaded('review')),
+            'package_id' => $this->package_id,
+            'package' => $this->whenLoaded('package', fn () => [
+                'id' => $this->package->id,
+                'name' => $this->package->name,
+                'slug' => $this->package->slug,
+                'image' => $this->package->image,
+                'collection' => $this->package->collection,
+            ]),
             'created_at' => $this->created_at?->toIso8601String(),
         ];
     }

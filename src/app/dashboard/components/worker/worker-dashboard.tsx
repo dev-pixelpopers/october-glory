@@ -103,6 +103,11 @@ function ScheduleView() {
             </div>
             <div className="flex-1 min-w-[200px]">
               <p className="gotham font-bold text-[var(--dash-text)] text-[16px]">{a.client?.name}</p>
+              {a.package && (
+                <span className="inline-block px-2 py-0.5 my-1 rounded bg-[#cba660]/20 text-[#cda873] text-[11px] font-bold uppercase tracking-wider">
+                  Package · {a.package.name}
+                </span>
+              )}
               <p className="gotham text-[var(--dash-text-muted)] text-[14px]">
                 {a.services.map((s) => s.service_name).join(", ")}
               </p>

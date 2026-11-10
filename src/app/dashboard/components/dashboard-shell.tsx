@@ -7,6 +7,7 @@ import { LogOut, Menu, PanelLeftClose, PanelLeftOpen, X, type LucideIcon } from 
 import { useLogout } from "@/lib/api/hooks/auth";
 import type { User } from "@/lib/api/types";
 import { DashThemeProvider, ThemeToggle } from "./theme";
+import NotificationBell from "./notification-bell";
 
 export interface NavItem {
   id: string;
@@ -156,7 +157,8 @@ function ShellInner({ user, tabs, activeTab, onTabChange, children }: Props) {
             {tabs.find((t) => t.id === activeTab)?.label}
           </p>
 
-          <div className="ml-auto flex items-center gap-4">
+          <div className="ml-auto flex items-center gap-3 md:gap-4">
+            <NotificationBell />
             <ThemeToggle />
             <div className="text-right hidden md:block">
               <p className="gotham font-bold text-[var(--dash-text)] text-[15px] leading-tight">{user.name}</p>

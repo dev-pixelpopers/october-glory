@@ -94,6 +94,8 @@ class ProductController extends Controller
             'slug' => $this->uniqueSlug($request->validated('name')),
         ]);
 
+        event(new \App\Events\ProductCreated($product, $request->user()));
+
         return new ProductResource($product);
     }
 

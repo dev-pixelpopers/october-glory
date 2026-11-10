@@ -127,6 +127,11 @@ function AppointmentsPanel() {
                 <p className="gotham text-[var(--dash-text-muted)] text-[13px]">{timeLabel(a.start_time)}</p>
               </div>
               <div className="flex-1 min-w-[220px]">
+                {a.package && (
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#cba660]/20 text-[#cda873] text-[11px] font-bold uppercase tracking-wider mb-1">
+                    Package · {a.package.name}
+                  </div>
+                )}
                 <p className="gotham text-[var(--dash-text-soft)] text-[15px]">
                   {a.services.map((s) => s.service_name).join(", ")}
                 </p>

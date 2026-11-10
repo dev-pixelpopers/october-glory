@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AvailabilityController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\LoyaltyController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ReviewController;
@@ -54,6 +55,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/shoutout-claims', [ShoutoutController::class, 'store']);
 
     Route::post('/reviews', [ReviewController::class, 'store']);
+
+    /* -------------------------- Notifications ----------------------------- */
+
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::get('/notifications/unread-count', [NotificationController::class, 'unreadCount']);
+    Route::patch('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+    Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markAsRead']);
+    Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy']);
 
     /* ---------------------------- Worker ---------------------------------- */
 

@@ -29,7 +29,7 @@ class Appointment extends Model
     ];
 
     protected $fillable = [
-        'booking_reference', 'client_id', 'worker_id', 'start_time', 'end_time',
+        'booking_reference', 'client_id', 'package_id', 'worker_id', 'start_time', 'end_time',
         'total_duration_minutes', 'subtotal_amount', 'member_discount_amount', 'loyalty_points_used',
         'discount_amount', 'total_amount', 'payment_method', 'payment_status',
         'status', 'notes',
@@ -52,6 +52,11 @@ class Appointment extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(User::class, 'client_id');
+    }
+
+    public function package(): BelongsTo
+    {
+        return $this->belongsTo(Package::class, 'package_id');
     }
 
     public function worker(): BelongsTo

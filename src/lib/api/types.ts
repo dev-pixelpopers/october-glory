@@ -135,6 +135,7 @@ export interface Package {
   services_total: string;
   /** The salon's set package price — the active package_price_history row. */
   price: string;
+  current_price?: string;
   services: Service[];
 }
 
@@ -223,9 +224,19 @@ export interface AppointmentLineItem {
   duration_at_booking: number;
 }
 
+export interface AppointmentPackageInfo {
+  id: number;
+  name: string;
+  slug: string;
+  image?: string | null;
+  collection?: string | null;
+}
+
 export interface Appointment {
   id: number;
   booking_reference: string;
+  package_id?: number | null;
+  package?: AppointmentPackageInfo | null;
   client: Pick<User, "id" | "name" | "email" | "phone">;
   worker: Pick<User, "id" | "name" | "avatar_url">;
   start_time: string;
@@ -248,7 +259,8 @@ export interface Appointment {
 }
 
 export interface BookingPayload {
-  service_ids: number[];
+  service_ids?: number[];
+  package_id?: number | null;
   /** null = "Any Specialist" — backend auto-routes to the first free qualified worker. */
   worker_id: number | null;
   start_time: string;
@@ -396,4 +408,61 @@ export interface AppointmentFilters {
   client_id?: number;
   status?: AppointmentStatus;
   page?: number;
+}
+
+
+/* -------------------------------- Notifications ------------------------------- */
+
+export type NotificationType =
+  | "appointment.booked"
+  | "appointment.assigned"
+  | "admin.appointment.booked"
+  | "appointment.checked_in"
+  | "appointment.in_progress"
+  | "appointment.completed"
+  | "admin.appointment.completed"
+  | "appointment.cancelled"
+  | "admin.appointment.cancelled"
+  | "appointment.rescheduled"
+  | "admin.appointment.rescheduled"
+  | "admin.shoutout.submitted"
+  | "shoutout.approved"
+  | "shoutout.rejected"
+  | "worker.review.received"
+  | "admin.review.received"
+  | "admin.user.registered"
+  | "admin.service.created"
+  | "service.created"
+  | "admin.package.created"
+  | "package.created"
+  | "admin.product.created"
+  | "product.created"
+  | "system_alert"
+  | string;
+
+export interface AppNotification {
+  id: number;
+  user_id: number | null;
+  type: NotificationType;
+  title: string;
+  message: string;
+  notifiable_type: string | null;
+  notifiable_id: number | string | null;
+  data: Record<string, any>;
+  read_at: string | null;
+  is_read: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface NotificationFilters {
+  unread?: boolean;
+  status?: "read" | "unread";
+  type?: string;
+  page?: number;
+  per_page?: number;
+}
+
+export interface UnreadNotificationCountResponse {
+  unread_count: number;
 }

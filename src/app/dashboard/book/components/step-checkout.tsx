@@ -8,6 +8,7 @@ import { useMe } from "@/lib/api/hooks/auth";
 import type {
   Appointment,
   AvailabilitySlot,
+  Package,
   PaymentMethod,
   Service,
 } from "@/lib/api/types";
@@ -21,6 +22,7 @@ import {
 } from "@/lib/format";
 
 interface Props {
+  selectedPackage?: Package | null;
   services: Service[];
   slot: AvailabilitySlot;
   subtotal: number;
@@ -42,6 +44,7 @@ export default function StepCheckout(props: Props) {
 }
 
 function CheckoutInner({
+  selectedPackage,
   services,
   slot,
   subtotal,
@@ -77,6 +80,7 @@ function CheckoutInner({
   const confirm = () => {
     createAppointment.mutate(
       {
+        package_id: selectedPackage?.id ?? null,
         service_ids: services.map((s) => s.id),
         worker_id: workerId ?? slot.worker_id,
         start_time: slot.start,
@@ -107,43 +111,109 @@ function CheckoutInner({
           with {slot.worker_name} · {durationLabel(totalDuration)}
         </p>
 
-        <div className="border-t border-white/10 mt-6 pt-5 flex flex-col gap-3">
-          {services.map((s) => (
-            <div key={s.id} className="flex justify-between">
-              <span className="gotham text-white/80 text-[16px]">{s.name}</span>
-              <span className="gotham text-white text-[16px]">
-                {servicePrice(s.current_price, s.price_by_consultation)}
-              </span>
+        {selectedPackage ? (
+          <div className="border-t border-white/10 mt-6 pt-5 flex flex-col gap-3">
+            <div>
+              <div className="inline-block px-2.5 py-0.5 rounded-full bg-[#cba660]/20 text-[#cda873] text-[11px] font-bold uppercase tracking-wider mb-2">
+                Curated Package · {selectedPackage.collection ?? "Exclusive"}
+              </div>
+              <div className="flex justify-between items-baseline">
+                <span className="gotham font-bold text-white text-[19px]">
+                  {selectedPackage.name}
+                </span>
+                <span className="gotham font-bold text-[#cda873] text-[18px]">
+                  {money(subtotal)}
+                </span>
+              </div>
+              {selectedPackage.tagline && (
+                <p className="gotham text-white/60 text-[14px] mt-1">
+                  {selectedPackage.tagline}
+                </p>
+              )}
             </div>
-          ))}
-          <div className="flex justify-between border-t border-white/10 pt-3">
-            <span className="gotham text-white/60 text-[16px]">Subtotal</span>
-            <span className="gotham text-white text-[16px]">{money(subtotal)}</span>
+
+            {services.length > 0 && (
+              <div className="mt-2 pt-3 border-t border-white/5">
+                <span className="gotham text-white/50 text-[12px] uppercase tracking-wider block mb-2">
+                  Included Services ({services.length}):
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {services.map((s) => (
+                    <span
+                      key={s.id}
+                      className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-white/80 text-[13px] gotham"
+                    >
+                      {s.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-between border-t border-white/10 pt-3 mt-1">
+              <span className="gotham text-white/60 text-[16px]">Package Subtotal</span>
+              <span className="gotham text-white text-[16px]">{money(subtotal)}</span>
+            </div>
+            {memberDiscount > 0 && (
+              <div className="flex justify-between">
+                <span className="gotham text-[#cda873] text-[16px]">
+                  Member discount ({Math.round(memberRate * 100)}%)
+                </span>
+                <span className="gotham text-[#cda873] text-[16px]">−{money(memberDiscount)}</span>
+              </div>
+            )}
+            {discount > 0 && (
+              <div className="flex justify-between">
+                <span className="gotham text-[#cda873] text-[16px]">
+                  Loyalty discount ({pointsUsed} pts)
+                </span>
+                <span className="gotham text-[#cda873] text-[16px]">−{money(discount)}</span>
+              </div>
+            )}
+            <div className="flex justify-between border-t border-white/10 pt-3">
+              <span className="gotham font-bold text-white text-[20px]">Total</span>
+              <span className="gotham font-bold text-[#cda873] text-[20px]">{money(total)}</span>
+            </div>
           </div>
-          {memberDiscount > 0 && (
-            <div className="flex justify-between">
-              <span className="gotham text-[#cda873] text-[16px]">
-                Member discount ({Math.round(memberRate * 100)}%)
-              </span>
-              <span className="gotham text-[#cda873] text-[16px]">−{money(memberDiscount)}</span>
+        ) : (
+          <div className="border-t border-white/10 mt-6 pt-5 flex flex-col gap-3">
+            {services.map((s) => (
+              <div key={s.id} className="flex justify-between">
+                <span className="gotham text-white/80 text-[16px]">{s.name}</span>
+                <span className="gotham text-white text-[16px]">
+                  {servicePrice(s.current_price, s.price_by_consultation)}
+                </span>
+              </div>
+            ))}
+            <div className="flex justify-between border-t border-white/10 pt-3">
+              <span className="gotham text-white/60 text-[16px]">Subtotal</span>
+              <span className="gotham text-white text-[16px]">{money(subtotal)}</span>
             </div>
-          )}
-          {discount > 0 && (
+            {memberDiscount > 0 && (
+              <div className="flex justify-between">
+                <span className="gotham text-[#cda873] text-[16px]">
+                  Member discount ({Math.round(memberRate * 100)}%)
+                </span>
+                <span className="gotham text-[#cda873] text-[16px]">−{money(memberDiscount)}</span>
+              </div>
+            )}
+            {discount > 0 && (
+              <div className="flex justify-between">
+                <span className="gotham text-[#cda873] text-[16px]">
+                  Loyalty discount ({pointsUsed} pts)
+                </span>
+                <span className="gotham text-[#cda873] text-[16px]">−{money(discount)}</span>
+              </div>
+            )}
             <div className="flex justify-between">
-              <span className="gotham text-[#cda873] text-[16px]">
-                Loyalty discount ({pointsUsed} pts)
-              </span>
-              <span className="gotham text-[#cda873] text-[16px]">−{money(discount)}</span>
+              <span className="gotham font-bold text-white text-[20px]">Total</span>
+              <span className="gotham font-bold text-[#cda873] text-[20px]">{money(total)}</span>
             </div>
-          )}
-          <div className="flex justify-between">
-            <span className="gotham font-bold text-white text-[20px]">Total</span>
-            <span className="gotham font-bold text-[#cda873] text-[20px]">{money(total)}</span>
+            {services.some((s) => s.price_by_consultation) && (
+              <p className="gotham text-white/50 text-[14px] leading-relaxed">{CONSULTATION_NOTE}</p>
+            )}
           </div>
-          {services.some((s) => s.price_by_consultation) && (
-            <p className="gotham text-white/50 text-[14px] leading-relaxed">{CONSULTATION_NOTE}</p>
-          )}
-        </div>
+        )}
       </div>
 
       {/* Loyalty redemption */}

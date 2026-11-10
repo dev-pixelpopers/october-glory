@@ -10,7 +10,7 @@ import WigSideTab from "../components/wig-services/wig-side-tab";
 import MembershipCta from "../components/service-detail/membership-cta";
 import ServiceCta from "../components/service-detail/service-cta";
 import { childrenMenu } from "@/data/services";
-import { unitsPage } from "@/data/units";
+import { units, unitsPage, type UnitStory } from "@/data/units";
 import { wigsPage } from "@/data/wigs";
 import type { Product } from "@/lib/api/types";
 
@@ -20,7 +20,10 @@ export type { Product };
 const MEMBER_BODY =
   "Members book every October Glory service at the member price, with priority booking, member-only treatments, and loyalty points on everything — including the consultation that starts a custom unit.";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000/api").replace(
+  "//localhost:",
+  "//127.0.0.1:",
+);
 
 export const metadata: Metadata = {
   title: unitsPage.meta.title,
@@ -28,11 +31,37 @@ export const metadata: Metadata = {
   alternates: { canonical: "/wigs" },
 };
 
+function mapStaticUnitToProduct(u: UnitStory): Product {
+  return {
+    id: 0,
+    name: u.name,
+    slug: u.slug,
+    description: [u.spec?.length, u.spec?.texture, u.spec?.color].filter(Boolean).join(" · ") || null,
+    price: "0.00",
+    image: u.portrait,
+    gallery: [],
+    background_image: u.portrait,
+    video: u.video,
+    category: "Wigs",
+    tags: [],
+    is_featured: false,
+    is_active: true,
+    sort_order: 0,
+    length: u.spec?.length ?? null,
+    texture: u.spec?.texture ?? null,
+    color: u.spec?.color ?? null,
+    what_she_wanted: u.brief ?? null,
+    what_we_built: u.build ?? null,
+    how_she_wears_it: u.reaction ?? null,
+    the_install: [],
+  };
+}
+
 /**
  * Fetch active wig products dynamically from the Laravel Products API.
  */
 async function fetchWigProducts(): Promise<{ products: Product[]; error: string | null }> {
-  // try {
+  try {
     const res = await fetch(`${API_BASE}/products`, {
       headers: {
         Accept: "application/json",
@@ -40,12 +69,10 @@ async function fetchWigProducts(): Promise<{ products: Product[]; error: string 
       next: { revalidate: 60 },
     });
 
-    console.log(res);
-
     if (!res.ok) {
       return {
-        products: [],
-        error: `Failed to load units (status ${res.status})`,
+        products: units.map(mapStaticUnitToProduct),
+        error: null,
       };
     }
 
@@ -60,13 +87,17 @@ async function fetchWigProducts(): Promise<{ products: Product[]; error: string 
       ? json.data.data
       : [];
 
+    if (rawData.length === 0) {
+      return { products: units.map(mapStaticUnitToProduct), error: null };
+    }
+
     return { products: rawData, error: null };
-  // } catch {
-  //   return {
-  //     products: [],
-  //     error: "Unable to reach the products service",
-  //   };
-  // }
+  } catch {
+    return {
+      products: units.map(mapStaticUnitToProduct),
+      error: null,
+    };
+  }
 }
 
 /**
@@ -77,7 +108,6 @@ async function fetchWigProducts(): Promise<{ products: Product[]; error: string 
  */
 export default async function UnitsPage() {
   const { products, error } = await fetchWigProducts();
-  console.log(error);
   const menu = childrenMenu(wigsPage);
 
   return (

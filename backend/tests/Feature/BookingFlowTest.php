@@ -118,17 +118,18 @@ class BookingFlowTest extends TestCase
     {
         $admin = User::query()->where('role', 'admin')->first();
         $service = Service::query()->first();
+        $initialCount = $service->priceHistory()->count();
 
         $this->actingAs($admin)->putJson("/api/admin/services/{$service->id}", [
             'price' => '199.99',
         ])->assertOk();
 
         $history = $service->priceHistory()->get();
-        $this->assertCount(2, $history);
+        $this->assertCount($initialCount + 1, $history);
         $this->assertSame('199.99', (string) $service->currentPrice()->first()->price);
         // Exactly one active row; the previous one was closed, never overwritten.
         $this->assertCount(1, $history->whereNull('effective_until'));
-        $this->assertCount(1, $history->whereNotNull('effective_until'));
+        $this->assertCount($initialCount, $history->whereNotNull('effective_until'));
     }
 
     public function test_role_middleware_blocks_clients_from_admin_endpoints(): void

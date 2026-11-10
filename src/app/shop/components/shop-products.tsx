@@ -77,26 +77,74 @@ export default function ShopProducts() {
   const visibleProducts = sortedProducts.slice(0, visibleRows * ITEMS_PER_ROW);
   const hasMore = visibleProducts.length < sortedProducts.length;
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const scrollToSectionStart = (delay = 60) => {
+    if (typeof window === "undefined") return;
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
+    scrollTimeoutRef.current = setTimeout(() => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const sectionTop = window.scrollY + rect.top;
+
+      // Only scroll up if we are scrolled past the section start
+      if (window.scrollY > sectionTop + 10) {
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({
+          top: Math.max(0, sectionTop),
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+        });
+      }
+    }, delay);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const hasActiveFilters =
+    selectedTags.length > 0 || sortOrder !== "none" || chosenRange !== null;
+
+  const clearAllFilters = () => {
+    setSelectedTags([]);
+    setSortOrder("none");
+    setPriceRange(null);
+    setVisibleRows(INITIAL_ROWS);
+    scrollToSectionStart();
+  };
+
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
     setVisibleRows(INITIAL_ROWS);
+    scrollToSectionStart();
   };
 
   const handleSortChange = (value: SortOrder) => {
     setSortOrder(value);
     setVisibleRows(INITIAL_ROWS);
+    scrollToSectionStart();
   };
 
   const handleMinPriceChange = (value: number) => {
     setPriceRange([Math.min(value, priceRange[1]), priceRange[1]]);
     setVisibleRows(INITIAL_ROWS);
+    scrollToSectionStart(400);
   };
 
   const handleMaxPriceChange = (value: number) => {
     setPriceRange([priceRange[0], Math.max(value, priceRange[0])]);
     setVisibleRows(INITIAL_ROWS);
+    scrollToSectionStart(400);
   };
 
   const prodTabRef = useRef<HTMLDivElement>(null);
@@ -166,7 +214,10 @@ export default function ShopProducts() {
   const fillRightPct = 100 - ((priceRange[1] - PRICE_MIN) / priceSpan) * 100;
 
   return (
-    <section className="shop-products-grid relative w-full bg-[#1B1B1B] py-[var(--space-section-y)] px-[var(--space-section-x)]">
+    <section
+      ref={sectionRef}
+      className="shop-products-grid relative w-full bg-[#1B1B1B] py-[var(--space-section-y)] px-[var(--space-section-x)]"
+    >
       {/* Header Titles */}
       <div className="text-center mb-[var(--space-64)]">
         <h2 className="text-white andrea text-[length:var(--fs-h2)]">All Products</h2>
@@ -185,9 +236,20 @@ export default function ShopProducts() {
         <div className="w-full lg:w-[20%] flex flex-col gap-[var(--space-48)] lg:sticky lg:top-[15%] overflow-y-auto">
           {/* Categories */}
           <div>
-            <h4 className="gotham text-white text-sm uppercase tracking-wider mb-[var(--space-20)]">
-              Categories
-            </h4>
+            <div className="flex items-center justify-between mb-[var(--space-20)]">
+              <h4 className="gotham text-white text-sm uppercase tracking-wider">
+                Categories
+              </h4>
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  onClick={clearAllFilters}
+                  className="gotham text-[#C0A062] hover:text-[#cda873] text-xs uppercase tracking-wider underline underline-offset-4 transition-colors cursor-pointer"
+                >
+                  Reset All
+                </button>
+              )}
+            </div>
             <div className="flex flex-col gap-[var(--space-16)]">
               {productTags.map((tag) => (
                 <label
@@ -263,6 +325,9 @@ export default function ShopProducts() {
                 max={PRICE_MAX}
                 value={priceRange[0]}
                 onChange={(e) => handleMinPriceChange(Number(e.target.value))}
+                onPointerUp={() => scrollToSectionStart()}
+                onTouchEnd={() => scrollToSectionStart()}
+                onKeyUp={() => scrollToSectionStart()}
               />
               <input
                 type="range"
@@ -270,6 +335,9 @@ export default function ShopProducts() {
                 max={PRICE_MAX}
                 value={priceRange[1]}
                 onChange={(e) => handleMaxPriceChange(Number(e.target.value))}
+                onPointerUp={() => scrollToSectionStart()}
+                onTouchEnd={() => scrollToSectionStart()}
+                onKeyUp={() => scrollToSectionStart()}
               />
             </div>
             <div className="flex justify-between mt-[var(--space-20)] gotham text-gray-300 text-xs">
@@ -325,13 +393,24 @@ export default function ShopProducts() {
           })}
 
           {visibleProducts.length === 0 && (
-            <p className="col-span-full text-center gotham text-gray-400 text-base py-[var(--space-80)]">
-              {isLoading
-                ? "Loading products…"
-                : error
-                  ? "The shop couldn't be loaded right now. Please try again shortly."
-                  : "No products match your filters."}
-            </p>
+            <div className="col-span-full text-center py-[var(--space-80)] flex flex-col items-center justify-center gap-4">
+              <p className="gotham text-gray-400 text-base">
+                {isLoading
+                  ? "Loading products…"
+                  : error
+                    ? "The shop couldn't be loaded right now. Please try again shortly."
+                    : "No products match your filters."}
+              </p>
+              {!isLoading && !error && hasActiveFilters && (
+                <button
+                  type="button"
+                  onClick={clearAllFilters}
+                  className="gotham text-xs uppercase tracking-widest text-[#1B1B1B] bg-[#C0A062] hover:bg-[#a6884f] font-semibold py-2.5 px-6 rounded-sm transition-colors cursor-pointer"
+                >
+                  Reset Filters
+                </button>
+              )}
+            </div>
           )}
          
         </div>

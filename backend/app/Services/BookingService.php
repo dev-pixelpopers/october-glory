@@ -7,6 +7,7 @@ use App\Jobs\SendBookingConfirmationEmail;
 use App\Jobs\SendReviewSolicitationEmail;
 use App\Models\Appointment;
 use App\Models\LoyaltyTransaction;
+use App\Models\Package;
 use App\Models\Service;
 use App\Models\User;
 use Carbon\CarbonImmutable;
@@ -40,7 +41,32 @@ class BookingService
         string $paymentMethod,
         int $loyaltyPointsUsed = 0,
         ?string $notes = null,
+        ?int $packageId = null,
     ): Appointment {
+        $package = null;
+        if ($packageId !== null) {
+            $package = Package::query()
+                ->with(['currentPrice', 'services.currentPrice'])
+                ->where('is_active', true)
+                ->find($packageId);
+
+            if (! $package) {
+                throw ValidationException::withMessages(['package_id' => 'The selected package is unavailable.']);
+            }
+
+            if (! $package->currentPrice) {
+                throw ValidationException::withMessages(['package_id' => "\"{$package->name}\" has no active price."]);
+            }
+
+            if (empty($serviceIds)) {
+                $serviceIds = $package->services->pluck('id')->all();
+            }
+
+            if (empty($serviceIds)) {
+                throw ValidationException::withMessages(['package_id' => "\"{$package->name}\" has no bundled services."]);
+            }
+        }
+
         $services = Service::query()
             ->with('currentPrice')
             ->whereIn('id', $serviceIds)
@@ -70,7 +96,7 @@ class BookingService
         }
 
         return DB::transaction(function () use (
-            $client, $services, $candidates, $start, $end, $duration,
+            $client, $services, $package, $candidates, $start, $end, $duration,
             $paymentMethod, $loyaltyPointsUsed, $notes,
         ) {
             $worker = $this->lockFreeWorker($candidates, $start, $end);
@@ -84,7 +110,10 @@ class BookingService
                 throw new SlotUnavailableException('The salon is fully booked for that window.');
             }
 
-            $subtotal = $services->sum(fn (Service $s) => (float) $s->currentPrice->price);
+            // If booked under a package, use the package price; otherwise sum individual services
+            $subtotal = $package !== null
+                ? (float) $package->currentPrice->price
+                : $services->sum(fn (Service $s) => (float) $s->currentPrice->price);
 
             // Members' discount comes off first; loyalty points then redeem
             // against what is left, so points never pay for the member saving.
@@ -97,6 +126,7 @@ class BookingService
             $appointment = Appointment::query()->create([
                 'booking_reference' => $this->generateReference(),
                 'client_id' => $client->id,
+                'package_id' => $package?->id,
                 'worker_id' => $worker->id,
                 'start_time' => $start,
                 'end_time' => $end,
@@ -147,7 +177,10 @@ class BookingService
             SendReviewSolicitationEmail::dispatch($appointment)
                 ->delay($appointment->end_time->addMinutes(15));
 
-            return $appointment->load(['client', 'worker', 'lineItems.service']);
+            $loaded = $appointment->load(['client', 'worker', 'lineItems.service', 'package']);
+            event(new \App\Events\AppointmentBooked($loaded));
+
+            return $loaded;
         });
     }
 

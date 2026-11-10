@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -156,7 +157,7 @@ export default function GloriousPackagesServices() {
 
         {/* CTA Button */}
         <div className="flex justify-center">
-          <a
+          <Link
             href="/dashboard/book?package=glorious-silk-press"
             className="flex mt-[var(--space-16)] gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#000] border text-[#000] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
           >
@@ -164,8 +165,7 @@ export default function GloriousPackagesServices() {
               →
             </span>
             Book Consultation
-          </a>
-
+          </Link>
         </div>
       </section>
 

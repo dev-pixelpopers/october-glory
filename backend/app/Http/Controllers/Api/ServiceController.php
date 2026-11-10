@@ -53,7 +53,10 @@ class ServiceController extends Controller
             return $service;
         });
 
-        return new ServiceResource($service->load(['category', 'currentPrice']));
+        $loaded = $service->load(['category', 'currentPrice']);
+        event(new \App\Events\ServiceCreated($loaded, $request->user()));
+
+        return new ServiceResource($loaded);
     }
 
     public function update(UpdateServiceRequest $request, Service $service): ServiceResource

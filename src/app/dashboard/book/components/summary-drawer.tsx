@@ -12,6 +12,7 @@ interface Props {
   totalDuration: number;
   slot: AvailabilitySlot | null;
   workerName: string | null;
+  packageName?: string | null;
   canContinue: boolean;
   onBack?: () => void;
   onContinue: () => void;
@@ -24,6 +25,7 @@ export default function SummaryDrawer({
   totalDuration,
   slot,
   workerName,
+  packageName,
   canContinue,
   onBack,
   onContinue,
@@ -32,12 +34,26 @@ export default function SummaryDrawer({
     <div className="fixed bottom-0 left-0 w-full z-50">
       <div className="max-w-[1100px] mx-auto px-6 pb-6">
         <div className="bg-[#1d1d1d] border border-[#cba660]/30 rounded-[30px] shadow-[0_-1vh_4vh_rgba(0,0,0,0.5)] px-8 py-5 flex flex-wrap items-center gap-x-8 gap-y-3">
-          <div className="flex items-baseline gap-3">
-            <span className="andrea text-[#cda873] text-[34px] leading-none">{count}</span>
-            <span className="gotham text-white/70 text-[15px]">
-              service{count === 1 ? "" : "s"}
-            </span>
-          </div>
+          {packageName ? (
+            <div className="flex flex-col">
+              <span className="gotham text-[#cda873] text-[11px] uppercase tracking-wider font-bold">
+                Package
+              </span>
+              <span className="gotham font-bold text-white text-[17px] max-w-[200px] truncate">
+                {packageName}
+              </span>
+              <span className="gotham text-white/50 text-[12px]">
+                {count} bundled service{count === 1 ? "" : "s"}
+              </span>
+            </div>
+          ) : (
+            <div className="flex items-baseline gap-3">
+              <span className="andrea text-[#cda873] text-[34px] leading-none">{count}</span>
+              <span className="gotham text-white/70 text-[15px]">
+                service{count === 1 ? "" : "s"}
+              </span>
+            </div>
+          )}
 
           <div className="h-8 w-[1px] bg-white/15 hidden md:block" />
 

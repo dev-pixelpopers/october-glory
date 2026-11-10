@@ -15,9 +15,38 @@ import type { Product } from "@/lib/api/types";
 const MEMBER_BODY =
   "Members book every October Glory service at the member price, with priority booking, member-only treatments, and loyalty points on everything — including the consultation that starts a custom unit.";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000/api").replace(
+  "//localhost:",
+  "//127.0.0.1:",
+);
 
 type Params = { unit: string };
+
+function mapStaticUnitToProduct(u: UnitStory): Product {
+  return {
+    id: 0,
+    name: u.name,
+    slug: u.slug,
+    description: [u.spec?.length, u.spec?.texture, u.spec?.color].filter(Boolean).join(" · ") || null,
+    price: "0.00",
+    image: u.portrait,
+    gallery: [],
+    background_image: u.portrait,
+    video: u.video,
+    category: "Wigs",
+    tags: [],
+    is_featured: false,
+    is_active: true,
+    sort_order: 0,
+    length: u.spec?.length ?? null,
+    texture: u.spec?.texture ?? null,
+    color: u.spec?.color ?? null,
+    what_she_wanted: u.brief ?? null,
+    what_we_built: u.build ?? null,
+    how_she_wears_it: u.reaction ?? null,
+    the_install: [],
+  };
+}
 
 function formatProductSpec(product: Product): string {
   return [product.length, product.texture, product.color].filter(Boolean).join(" · ");
@@ -33,13 +62,16 @@ async function fetchProductBySlug(slug: string): Promise<Product | null> {
     });
 
     if (res.status === 404) return null;
-    if (!res.ok) return null;
-
-    const json = await res.json();
-    return (json?.data as Product) ?? null;
+    if (res.ok) {
+      const json = await res.json();
+      if (json?.data) return json.data as Product;
+    }
   } catch {
-    return null;
+    // Fallback below
   }
+
+  const staticUnit = getUnit(slug);
+  return staticUnit ? mapStaticUnitToProduct(staticUnit) : null;
 }
 
 async function fetchSiblings(currentSlug: string): Promise<Array<Product | UnitStory>> {

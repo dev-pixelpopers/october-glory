@@ -33,7 +33,10 @@ class ReviewController extends Controller
             'comment' => $request->validated('comment'),
         ]);
 
-        return new ReviewResource($review->load('client'));
+        $loaded = $review->load(['client', 'worker', 'appointment']);
+        event(new \App\Events\ReviewSubmitted($loaded));
+
+        return new ReviewResource($loaded);
     }
 
     /** Signed-in worker's aggregate rating and client feedback list. */

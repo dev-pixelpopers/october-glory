@@ -70,7 +70,10 @@ class PackageController extends Controller
             return $package;
         });
 
-        return new PackageResource($this->loaded($package));
+        $loaded = $this->loaded($package);
+        event(new \App\Events\PackageCreated($loaded, $request->user()));
+
+        return new PackageResource($loaded);
     }
 
     public function update(UpdatePackageRequest $request, Package $package): PackageResource

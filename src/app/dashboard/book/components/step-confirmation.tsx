@@ -35,6 +35,22 @@ export default function StepConfirmation({ appointment }: { appointment: Appoint
           </span>
         </div>
 
+        {appointment.package && (
+          <div className="mb-6 pb-5 border-b border-white/10">
+            <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#cba660]/20 text-[#cda873] text-[11px] font-bold uppercase tracking-wider mb-2">
+              Curated Package
+            </span>
+            <div className="flex justify-between items-baseline">
+              <span className="gotham font-bold text-white text-[20px]">
+                {appointment.package.name}
+              </span>
+              <span className="gotham font-bold text-[#cda873] text-[18px]">
+                {money(appointment.subtotal_amount)}
+              </span>
+            </div>
+          </div>
+        )}
+
         <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
           <div>
             <dt className="gotham text-white/50 text-[13px] uppercase tracking-widest">When</dt>
@@ -70,14 +86,27 @@ export default function StepConfirmation({ appointment }: { appointment: Appoint
         </dl>
 
         <div className="border-t border-white/10 mt-6 pt-5 flex flex-col gap-2">
+          {appointment.package && (
+            <span className="gotham text-white/50 text-[12px] uppercase tracking-wider mb-1">
+              Bundled Services Included ({appointment.services.length}):
+            </span>
+          )}
           {appointment.services.map((line) => (
             <div key={line.id} className="flex justify-between">
               <span className="gotham text-white/80 text-[16px]">{line.service_name}</span>
-              <span className="gotham text-white text-[16px]">
-                {servicePrice(line.price_at_booking, line.price_by_consultation)}
-              </span>
+              {!appointment.package && (
+                <span className="gotham text-white text-[16px]">
+                  {servicePrice(line.price_at_booking, line.price_by_consultation)}
+                </span>
+              )}
             </div>
           ))}
+          {appointment.package && (
+            <div className="flex justify-between border-t border-white/10 pt-2 mt-1">
+              <span className="gotham text-white/60 text-[16px]">Package Subtotal</span>
+              <span className="gotham text-white text-[16px]">{money(appointment.subtotal_amount)}</span>
+            </div>
+          )}
           {parseFloat(appointment.member_discount_amount) > 0 && (
             <div className="flex justify-between">
               <span className="gotham text-[#cda873] text-[16px]">Member discount</span>
@@ -96,7 +125,7 @@ export default function StepConfirmation({ appointment }: { appointment: Appoint
               </span>
             </div>
           )}
-          <div className="flex justify-between pt-2">
+          <div className="flex justify-between pt-2 border-t border-white/10">
             <span className="gotham font-bold text-white text-[19px]">Total</span>
             <span className="gotham font-bold text-[#cda873] text-[19px]">
               {money(appointment.total_amount)}

@@ -12,7 +12,7 @@ import type {
 } from "../types";
 
 /**
- * Open slots for the given date + service set.
+ * Open slots for the given date + service set (or package).
  * workerId === null means "Any Specialist" — the backend slides the window
  * across every qualified worker and unions the results.
  */
@@ -20,20 +20,22 @@ export function useAvailability(
   date: string | null,
   serviceIds: number[],
   workerId: number | null,
+  packageId?: number | null,
 ) {
   return useQuery({
-    queryKey: ["availability", date, [...serviceIds].sort(), workerId],
+    queryKey: ["availability", date, [...serviceIds].sort(), workerId, packageId ?? null],
     queryFn: () =>
       api
         .get<{ data: AvailabilitySlot[] }>("/availability", {
           params: {
             date: date!,
-            service_ids: serviceIds,
+            service_ids: serviceIds.length > 0 ? serviceIds : undefined,
+            package_id: packageId ?? undefined,
             worker_id: workerId ?? undefined,
           },
         })
         .then((r) => r.data),
-    enabled: !!date && serviceIds.length > 0,
+    enabled: !!date && (serviceIds.length > 0 || !!packageId),
     staleTime: 10_000,
   });
 }
@@ -47,6 +49,7 @@ export function useCreateAppointment() {
       qc.invalidateQueries({ queryKey: ["appointments"] });
       qc.invalidateQueries({ queryKey: ["availability"] });
       qc.invalidateQueries({ queryKey: ["loyalty"] });
+      qc.invalidateQueries({ queryKey: ["notifications"] });
     },
   });
 }

@@ -85,15 +85,20 @@ export function useCategoryServices(categorySlug: string | undefined) {
   });
 }
 
-/** Workers qualified to perform ALL of the given services. */
-export function useQualifiedWorkers(serviceIds: number[]) {
+/** Workers qualified to perform ALL of the given services (or package). */
+export function useQualifiedWorkers(serviceIds: number[], packageId?: number | null) {
   return useQuery({
-    queryKey: ["workers", "qualified", [...serviceIds].sort()],
+    queryKey: ["workers", "qualified", [...serviceIds].sort(), packageId ?? null],
     queryFn: () =>
       api
-        .get<{ data: Worker[] }>("/workers", { params: { service_ids: serviceIds } })
+        .get<{ data: Worker[] }>("/workers", {
+          params: {
+            service_ids: serviceIds.length > 0 ? serviceIds : undefined,
+            package_id: packageId ?? undefined,
+          },
+        })
         .then((r) => r.data),
-    enabled: serviceIds.length > 0,
+    enabled: serviceIds.length > 0 || !!packageId,
   });
 }
 
@@ -127,7 +132,10 @@ export function useCreateService() {
   return useMutation({
     mutationFn: (payload: ServicePayload) =>
       api.post<{ data: Service }>("/admin/services", payload),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["services"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["services"] });
+      qc.invalidateQueries({ queryKey: ["notifications"] });
+    },
   });
 }
 
@@ -206,7 +214,10 @@ export function useCreatePackage() {
   return useMutation({
     mutationFn: (payload: PackagePayload) =>
       api.post<{ data: Package }>("/admin/packages", payload),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["packages"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["packages"] });
+      qc.invalidateQueries({ queryKey: ["notifications"] });
+    },
   });
 }
 
@@ -278,7 +289,10 @@ export function useCreateProduct() {
   return useMutation({
     mutationFn: (payload: ProductPayload) =>
       api.post<{ data: Product }>("/admin/products", payload),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["products"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["products"] });
+      qc.invalidateQueries({ queryKey: ["notifications"] });
+    },
   });
 }
 

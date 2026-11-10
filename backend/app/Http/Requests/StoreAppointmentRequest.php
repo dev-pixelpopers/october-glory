@@ -14,8 +14,9 @@ class StoreAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'service_ids' => ['required', 'array', 'min:1'],
+            'service_ids' => ['required_without:package_id', 'array'],
             'service_ids.*' => ['integer', 'exists:services,id'],
+            'package_id' => ['nullable', 'integer', 'exists:packages,id'],
             'worker_id' => ['nullable', 'integer', 'exists:users,id'],
             'start_time' => ['required', 'date'],
             'payment_method' => ['required', 'in:card,pay_upon_arrival'],

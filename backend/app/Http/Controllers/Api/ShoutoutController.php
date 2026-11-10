@@ -52,6 +52,8 @@ class ShoutoutController extends Controller
             'proof_url' => $path,
         ]);
 
+        event(new \App\Events\ShoutoutClaimSubmitted($claim));
+
         return new ShoutoutClaimResource($claim);
     }
 
@@ -90,7 +92,10 @@ class ShoutoutController extends Controller
             );
         });
 
-        return new ShoutoutClaimResource($shoutout->fresh('user'));
+        $fresh = $shoutout->fresh('user');
+        event(new \App\Events\ShoutoutClaimReviewed($fresh, ShoutoutClaim::STATUS_APPROVED));
+
+        return new ShoutoutClaimResource($fresh);
     }
 
     public function reject(Request $request, ShoutoutClaim $shoutout): ShoutoutClaimResource
@@ -103,7 +108,10 @@ class ShoutoutController extends Controller
             'reviewed_by' => $request->user()->id,
         ]);
 
-        return new ShoutoutClaimResource($shoutout->fresh('user'));
+        $fresh = $shoutout->fresh('user');
+        event(new \App\Events\ShoutoutClaimReviewed($fresh, ShoutoutClaim::STATUS_REJECTED));
+
+        return new ShoutoutClaimResource($fresh);
     }
 
     protected function assertPending(ShoutoutClaim $claim): void

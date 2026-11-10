@@ -15,8 +15,9 @@ class AvailabilityRequest extends FormRequest
     {
         return [
             'date' => ['required', 'date_format:Y-m-d', 'after_or_equal:today'],
-            'service_ids' => ['required', 'array', 'min:1'],
+            'service_ids' => ['required_without:package_id', 'array'],
             'service_ids.*' => ['integer', 'exists:services,id'],
+            'package_id' => ['nullable', 'integer', 'exists:packages,id'],
             'worker_id' => ['nullable', 'integer', 'exists:users,id'],
         ];
     }

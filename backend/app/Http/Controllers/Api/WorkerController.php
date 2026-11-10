@@ -27,6 +27,13 @@ class WorkerController extends Controller
     {
         $serviceIds = array_map('intval', (array) $request->query('service_ids', []));
 
+        if (empty($serviceIds) && $request->filled('package_id')) {
+            $package = \App\Models\Package::with('services')->find((int) $request->query('package_id'));
+            if ($package) {
+                $serviceIds = $package->services->pluck('id')->all();
+            }
+        }
+
         $profiles = $serviceIds !== []
             ? $this->availability->qualifiedWorkers($serviceIds)
             : WorkerProfile::query()

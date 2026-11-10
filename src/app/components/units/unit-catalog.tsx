@@ -42,6 +42,7 @@ function UnitFrame({ unit }: { unit: Product }) {
         alt={`The ${unit.name} unit`}
         fill
         sizes="(max-width: 640px) 100vw, (max-width: 1280px) 45vw, 30vw"
+        unoptimized={/^https?:\/\//.test(imgSrc)}
         className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
       />
 
