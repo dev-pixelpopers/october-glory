@@ -30,7 +30,7 @@ export default function MaintenanceSlider() {
     <div className="relative w-full max-w-[500px]">
       {/* Slides */}
       <div className="relative border border-[#d4af6e]/30 rounded-[2rem] p-[var(--space-16)] bg-[#1B1B1B]/40 shadow-2xl overflow-hidden">
-        <div className="relative w-full aspect-[3/4] rounded-[1.5rem] overflow-hidden">
+        <div className="relative w-full aspect-[1] xl:aspect-[3/4] rounded-[1.5rem] overflow-hidden">
           {slides.map((slide, index) => (
             <img
               key={index}

@@ -84,7 +84,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
                   <a
                     href={link.href}
                     {...activate(link.key)}
-                    className={`pum-an flex items-center gap-[clamp(8px,7.03px_+_0.259vw,12px)] py-[clamp(12px,11.03px_+_0.259vw,16px)] text-white no-underline font-serif text-[length:clamp(30px,27.57px_+_0.647vw,40px)] leading-[1.2] transition-all duration-300 hover:translate-x-2 ${
+                    className={`pum-an flex items-center gap-[clamp(6px,5.03px_+_0.259vw,10px)] py-[max(6px,min(clamp(12px,11.03px_+_0.259vw,16px),1.3vh))] text-white no-underline font-serif text-[length:max(18px,min(clamp(30px,27.57px_+_0.647vw,40px),4vh))] leading-[1.2] transition-all duration-300 hover:translate-x-2 ${
                       activeKey === link.key ? 'opacity-100' : 'opacity-55'
                     }`}
                   >

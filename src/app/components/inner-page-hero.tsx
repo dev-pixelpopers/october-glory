@@ -74,7 +74,7 @@ export default function InnerPageHero({
 
   return (
     <section
-      className="relative w-full min-h-screen flex items-start max-md:items-center pt-[20%] pb-[5%] justify-center overflow-hidden"
+      className="relative w-full min-h-screen flex items-start max-lg:items-center pt-[20%] pb-[5%] justify-center overflow-hidden"
       
       style={
         image

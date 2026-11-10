@@ -48,7 +48,7 @@ function PanelHeader({
   body?: string;
 }) {
   return (
-    <div className="mb-[clamp(18px,11.14px_+_0.670vw,24px)]">
+    <div className="mb-[max(8px,min(clamp(18px,11.14px_+_0.670vw,24px),2vh))]">
       <p className="gotham text-[length:clamp(10px,8.86px_+_0.112vw,11px)] tracking-[clamp(3px,0.71px_+_0.223vw,5px)] uppercase text-white/55 mb-[clamp(9px,5.57px_+_0.335vw,12px)]">
         {eyebrow}
       </p>
@@ -246,7 +246,7 @@ function BlogPanel({
             />
 
             <div className="min-w-0">
-              <p className="gotham text-[length:clamp(10px,8.86px_+_0.112vw,11px)] tracking-[clamp(1.5px,0.93px_+_0.056vw,2px)] uppercase text-white/50 mb-[clamp(6px,3.71px_+_0.223vw,8px)]">
+              <p className="gotham text-[length:clamp(10px,8.86px_+_0.112vw,11px)] tracking-[clamp(1.5px,0.93px_+_0.056vw,2px)] uppercase text-white/50 mb-[max(3px,min(clamp(6px,3.71px_+_0.223vw,8px),0.8vh))]">
                 {post.date} · {post.readTime}
               </p>
 
@@ -408,17 +408,17 @@ function CardsPanel({
     <div>
       <PanelHeader eyebrow={preview.eyebrow} title={preview.title} />
 
-      <div className="grid grid-cols-2 gap-[clamp(12px,7.43px_+_0.446vw,16px)] pum-cards">
+      <div className="grid grid-cols-2 gap-[clamp(6px,5.03px_+_0.259vw,10px)] pum-cards">
         {preview.cards.map((card) => (
           <a
             key={card.href}
             href={card.href}
-            className="group/card flex gap-[clamp(12px,7.43px_+_0.446vw,16px)] rounded-[18px] border border-white/15 hover:border-[#f3e3c6]/60 bg-black/10 p-[clamp(10px,5.43px_+_0.446vw,14px)] transition-all duration-500 hover:-translate-y-1"
+            className="group/card flex gap-[clamp(12px,7.43px_+_0.446vw,16px)] rounded-[18px] border border-white/15 hover:border-[#f3e3c6]/60 bg-black/10 p-[max(8px,min(clamp(10px,5.43px_+_0.446vw,14px),1.6vh))] transition-all duration-500 hover:-translate-y-1"
           >
             <Frame
               src={card.image}
               alt={card.title}
-              className="img-w-c  w-[clamp(60px,52.86px_+_2.455vw,100px)] shrink-0 aspect-[3/4] rounded-[13px]"
+              className="img-w-c  w-[clamp(52px,48px_+_2.455vw,100px)] shrink-0 aspect-square rounded-[13px]"
             />
 
             <div className="min-w-0 flex flex-col">
@@ -426,11 +426,11 @@ function CardsPanel({
                 {card.title}
               </h4>
 
-              <p className="pum-card-desc gotham text-[length:clamp(11px,9.86px_+_0.112vw,12px)] leading-[clamp(17px,14.71px_+_0.223vw,19px)] text-white/60 font-light line-clamp-3">
+              <p className="pum-card-desc gotham text-[length:clamp(11px,9.86px_+_0.112vw,12px)] leading-[clamp(17px,14.71px_+_0.223vw,19px)] text-white/60 font-light line-clamp-3 [@media(max-height:700px)]:line-clamp-2">
                 {card.body}
               </p>
 
-              <span className="inline-flex items-center gap-[clamp(5px,3.86px_+_0.112vw,6px)] mt-auto pt-[clamp(8px,5.71px_+_0.223vw,10px)] gotham text-[length:clamp(9px,7.86px_+_0.112vw,10px)] tracking-[clamp(1.5px,0.93px_+_0.056vw,2px)] uppercase text-white/75 group-hover/card:text-[#f3e3c6] transition-colors duration-300">
+              <span className="inline-flex items-center gap-[clamp(5px,3.86px_+_0.112vw,6px)] mt-auto pt-[max(4px,min(clamp(8px,5.71px_+_0.223vw,10px),1vh))] gotham text-[length:clamp(9px,7.86px_+_0.112vw,10px)] tracking-[clamp(1.5px,0.93px_+_0.056vw,2px)] uppercase text-white/75 group-hover/card:text-[#f3e3c6] transition-colors duration-300">
                 {preview.cardCta}
                 <span className="inline-block transition-transform duration-300 group-hover/card:translate-x-1">
                   →
