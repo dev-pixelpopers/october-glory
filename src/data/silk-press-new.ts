@@ -68,8 +68,8 @@ export const silkPressPage = {
    */
   install: {
     eyebrow: "The Process",
-    heading: "The October Glory",
-    headingAccent: "Silk Press Process",
+    heading: "From Start",
+    headingAccent: "To Finish",
     intro:
       "Four stages, start to finish. Every one of them is about doing less to the hair by the time the iron comes out.",
     /** PLACEHOLDER — replace with the Canva start-to-finish clip (1:40). */

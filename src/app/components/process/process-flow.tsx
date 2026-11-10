@@ -353,7 +353,7 @@ export default function ProcessFlow({
                 </span>
                 <div>
                   <h3
-                    className={`valturin text-[length:clamp(20px,17.65px_+_0.988vw,28px)] leading-[1.3] ${c.bodyStrong} mb-[12px]`}
+                    className={`valturin text-[length:clamp(20px,17.65px_+_0.988vw,28px)] leading-[1.3] ${c.bodyStrong}`}
                   >
                     {step.title}
                   </h3>
@@ -390,7 +390,7 @@ export default function ProcessFlow({
           <div>
             <Heading c={c} flow={flow} />
 
-            <ol className="mt-[var(--space-40)] flex flex-col gap-[var(--space-28)]">
+            <ol className="mt-[var(--space-40)] flex flex-col gap-[var(--space-28)] [@media(max-height:820px)]:mt-[var(--space-24)] [@media(max-height:820px)]:gap-[var(--space-16)]">
               {flow.steps.map((step, i) => {
                 const reached = i <= stage;
                 const active = i === stage;
@@ -412,7 +412,7 @@ export default function ProcessFlow({
 
                     <div>
                       <h3
-                        className={`valturin text-[length:clamp(20px,17.65px_+_0.988vw,28px)] leading-[1.3] ${c.bodyStrong} mb-[12px]`}
+                        className={`valturin text-[length:clamp(20px,17.65px_+_0.988vw,28px)] leading-[1.3] ${c.bodyStrong} mb-[12px] [@media(max-height:820px)]:mb-[6px]`}
                       >
                         {step.title}
                       </h3>
@@ -435,7 +435,12 @@ export default function ProcessFlow({
             </ol>
           </div>
 
-          <div className="relative">
+          {/* The frame is square, so its height is set by the column's width —
+              on a wide-but-short laptop screen that made the panel taller than
+              the screen it is pinned inside, and `overflow-hidden` took the
+              heading off the top. Capping the frame's width by what is left of
+              the viewport height keeps the whole panel on screen. */}
+          <div className="relative mx-auto w-full max-w-[calc(100vh-14rem)]">
 
             <div className="relative aspect-[1] overflow-hidden rounded-[24px] bg-[#2a2a2a]">
               {/* `preload="none"`: nothing is fetched until the reader is

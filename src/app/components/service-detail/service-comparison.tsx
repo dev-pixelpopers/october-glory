@@ -19,14 +19,14 @@ function Cell({ value }: { value: ComparisonValue }) {
   // Text-only cell: neither a check nor a dash, e.g. "Available separately".
   if (typeof value === "object") {
     return (
-      <span className="gotham text-[13px] leading-[22px] text-[#777] font-light">
+      <span className="gotham text-[13px] leading-[22px] text-[#777] font-light comp-data-value">
         {value.text}
       </span>
     );
   }
 
   return (
-    <span className="inline-flex items-center gap-2 text-[#9C6D51]">
+    <span className="inline-flex items-center gap-2 text-[#9C6D51] comp-data">
       <svg
         viewBox="0 0 24 24"
         fill="none"
@@ -40,7 +40,7 @@ function Cell({ value }: { value: ComparisonValue }) {
         <path d="M20 6L9 17l-5-5" />
       </svg>
       {typeof value === "string" && (
-        <span className="gotham text-[12px] text-[#888] font-light whitespace-nowrap">
+        <span className="gotham text-[12px] text-[#888] font-light whitespace-nowrap comp-data-value">
           ({value})
         </span>
       )}
@@ -58,7 +58,7 @@ export default function ServiceComparisonTable({
   return (
     <section
       ref={scope}
-      className="reveal-scope relative w-full bg-white text-[#1B1B1B] py-[var(--space-section-y)] px-[var(--space-section-x)]"
+      className="reveal-scope relative w-full bg-white text-[#1B1B1B] py-[var(--space-section-y)] px-0 lg:px-[var(--space-section-x)] comp-sec-serv"
     >
       <div className="text-center mb-[var(--space-64)]">
         {comparison.eyebrow && (
@@ -94,13 +94,13 @@ export default function ServiceComparisonTable({
         <table className="w-full table-fixed md:table-auto md:min-w-[640px] border-collapse">
           <thead>
             <tr className="bg-[#FAF8F4]">
-              <th className="w-[30%] md:w-auto text-left gotham text-[10px] md:text-[12px] tracking-[1px] md:tracking-[3px] uppercase text-[#999] font-normal px-3 md:px-[var(--space-24)] py-4 md:py-[var(--space-24)] border-b border-[#1B1B1B]/10">
+              <th className="w-[30%] md:w-auto text-left gotham text-[10px] md:text-[12px] tracking-[1px] md:tracking-[3px] uppercase text-[#999] font-normal px-3 md:px-[var(--space-24)] py-4 md:py-[var(--space-24)] border-b border-[#1B1B1B]/10 comp-tab-head">
                 Included
               </th>
               {comparison.columns.map((column) => (
                 <th
                   key={column}
-                  className="text-center valturin text-[11px] sm:text-[14px] md:text-[19px] leading-tight text-[#9C6D51] px-1 md:px-[var(--space-20)] py-4 md:py-[var(--space-24)] border-b border-[#1B1B1B]/10 border-l border-l-[#1B1B1B]/[0.06]"
+                  className="text-center valturin text-[11px] sm:text-[14px] md:text-[19px] leading-tight text-[#9C6D51] px-1 md:px-[var(--space-20)] py-4 md:py-[var(--space-24)] border-b border-[#1B1B1B]/10 border-l border-l-[#1B1B1B]/[0.06] comp-tab-head"
                 >
                   {column}
                 </th>
@@ -118,7 +118,7 @@ export default function ServiceComparisonTable({
               >
                 <th
                   scope="row"
-                  className="text-left gotham text-[13px] md:text-[15px] leading-[18px] md:leading-[26px] font-light text-[#444] px-3 md:px-[var(--space-24)] py-3 md:py-[var(--space-20)] border-b border-[#1B1B1B]/[0.07]"
+                  className="text-left gotham text-[13px] md:text-[15px] leading-[18px] md:leading-[26px] font-light text-[#444] px-3 md:px-[var(--space-24)] py-3 md:py-[var(--space-20)] border-b border-[#1B1B1B]/[0.07] comp-tab-head"
                 >
                   {row.label}
                 </th>
@@ -141,7 +141,7 @@ export default function ServiceComparisonTable({
         <p
           data-reveal
           data-reveal-delay="4"
-          className="gotham text-[length:var(--fs-body)] leading-[1.8] text-[#555] font-light max-w-[840px] mx-auto text-center mt-[var(--space-48)]"
+          className="gotham text-[length:var(--fs-body)] leading-[1.8] text-[#555] font-light max-w-[840px] mx-auto text-center mt-[var(--space-48)] w-[96%] md:w-[100%] comp-foot"
         >
           {comparison.footnote}
         </p>

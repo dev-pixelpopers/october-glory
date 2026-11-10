@@ -58,7 +58,7 @@ export default function ConfidenceJourneySection() {
       
       {/* <div className="sticky top-0 h-dvh pt-[clamp(20px,17.57px_+_0.648vw,30px)] pr-[clamp(20px,17.57px_+_0.648vw,30px)] "> */}
       <div className="sticky top-0 h-dvh flex items-end] ">
-        <div className="wom-des-main flex flex-col xl:flex-row items-stretch w-full overflow-hidden">
+        <div className="wom-des-main flex flex-col md:flex-row items-stretch w-full overflow-hidden">
           <div className="w-[45%] flex-shrink-0 relative z-2 wom-des-rig">
             <div className="wom-des-img w-[100%] min-w-[57vw] h-full absolute bottom-0 -left-20">
               <img ref={imageRef}

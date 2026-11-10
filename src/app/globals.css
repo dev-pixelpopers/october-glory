@@ -613,11 +613,19 @@ form textarea::Placeholder {
     width: 80%;
   }
 
+  .prod-card {
+    height: fit-content;
+  }
+
+  .prod-img {
+    height: 40vh;
+  }
+
 
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
 
   img.site-logo {
     max-width: 100%;
@@ -742,6 +750,8 @@ form textarea::Placeholder {
   .wom-des-main {
     display: flex;
     flex-direction: column;
+    justify-content: end;
+    border-radius: 20px 20px 0px 0px;
   }
 
   .wom-des-rig {
@@ -759,7 +769,6 @@ form textarea::Placeholder {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: end;
     height: 60vh;
     margin: 0;
     z-index: 10;
@@ -842,6 +851,7 @@ form textarea::Placeholder {
   .guide-lef-col {
     width: 100%;
     height: 50vh;
+    border-radius: 20px 20px 0 0;
   }
 
   .guide-rig-col {
@@ -907,6 +917,20 @@ form textarea::Placeholder {
     gap: 20px !important;
   }
 
+  .comp-tab-head {
+  font-family: "Gotham", sans-serif;
+  line-height: 2;
+}
+
+.comp-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.comp-data-value {
+  font-size: 12px;
+}
+
 
 }
 
@@ -963,6 +987,7 @@ form textarea::Placeholder {
   }
 
   .wom-des-lef {
+    align-items: center;
     height: 75vh;
   }
 
@@ -1044,6 +1069,20 @@ form textarea::Placeholder {
 
 h1.andrea {
     font-size: 20px;
+}
+
+.comp-tab-head {
+  font-family: "Gotham", sans-serif;
+  line-height: 2;
+}
+
+.comp-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.comp-data-value {
+  font-size: 10px;
 }
 
 

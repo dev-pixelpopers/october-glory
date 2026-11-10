@@ -44,7 +44,7 @@ export default function ServiceEbookSection({
       <div className="w-full max-w-[1400px] mx-auto flex flex-col xl:flex-row items-center justify-center">
         <div
           data-reveal
-          className="w-full md:w-[55%] bg-white rounded-3xl p-[var(--space-16)] md:p-0 shadow-lg overflow-hidden"
+          className="w-full xl:w-[55%] bg-white rounded-3xl p-[var(--space-16)] xl:p-0 shadow-lg overflow-hidden"
         >
           <img
             src={ebook.image}
@@ -55,7 +55,7 @@ export default function ServiceEbookSection({
 
         {/* Overlaps the card's right edge, so it has to paint above it. */}
         <div
-          className="relative z-10 w-full md:w-[50%] px-[var(--space-32)] md:px-[var(--space-40)] py-[clamp(28px,15.15px_+_1.294vw,48px)] flex flex-col justify-center rounded-[20px] -mt-[var(--space-32)] md:mt-0 md:-ml-[clamp(32px,15.5px_+_4.401vw,100px)]"
+          className="relative z-10 w-full xl:w-[50%] px-[var(--space-32)] xl:px-[var(--space-40)] py-[clamp(28px,15.15px_+_1.294vw,48px)] flex flex-col justify-center rounded-[20px] -mt-[var(--space-32)] xl:mt-0 xl:-ml-[clamp(32px,15.5px_+_4.401vw,100px)]"
           style={{
             backgroundImage: "linear-gradient(270deg, #93674D 0%, #2D2018 100%)",
           }}

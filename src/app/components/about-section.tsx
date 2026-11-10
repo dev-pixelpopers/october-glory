@@ -64,7 +64,7 @@ export default function WelcomeSection({ video, section }: Props) {
        O + G sit stacked in the centre, tilted vertically. On scroll they
        straighten, then split left / right. After that the column content
        (heading -> image -> text) slides up one after the other. */
-    mm.add("(max-width: 768px)", () => {
+    mm.add("(max-width: 850px)", () => {
       // Start state — matchMedia reverts all of this when we leave the breakpoint.
       gsap.set(ogRef.current, { rotate: 90 });
       gsap.set(

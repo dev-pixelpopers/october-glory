@@ -374,7 +374,7 @@ export default function ShopProducts() {
                 className="prod-card bg-white rounded-xl p-[var(--space-16)] shadow-[0_18px_45px_rgba(0,0,0,0.25)] flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg mb-[var(--space-20)] overflow-hidden relative group">
+                  <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg mb-[var(--space-20)] overflow-hidden relative group prod-img">
                     {product.image && (
                       <img
                         src={product.image}
@@ -409,7 +409,7 @@ export default function ShopProducts() {
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-col min-[1441px]:flex-row gap-[clamp(6px,5.03px_+_0.259vw,10px)]">
                   <button
                     type="button"
                     onClick={() => addItem(product, 1)}

@@ -41,7 +41,7 @@ export default function GuidebookSection() {
   })
   return (
     <section ref={containerRef} className="bg-[#1a1a1a] relative min-h-[200dvh]">
-      <div className="guide-main-con w-full flex flex-col xl:flex-row items-center sticky top-0 h-dvh justify-center items-center">
+      <div className="guide-main-con w-full flex flex-col md:flex-row items-center sticky top-0 h-dvh justify-center items-center">
         <div className="guide-lef-col w-[55%] flex justify-center items-center bg-white rounded-3xl p-[clamp(10px,8.54px_+_0.389vw,16px)] md:p-0 shadow-lg">
           <img
             src="/images/guide-image.png"

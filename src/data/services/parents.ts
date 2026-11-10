@@ -524,8 +524,8 @@ export const serviceParents: ServiceParent[] = [
     slug: "treatments",
     cardTitle: "Treatments",
     hero: {
-      display: "Treat",
-      script: "ments",
+      display: "Treatments",
+      script: "For You",
       intro:
         "Restore, repair, and rejuvenate your hair with our premium treatment services — designed to nourish from root to tip.",
       image: "/images/TREATMENTS-01.webp",

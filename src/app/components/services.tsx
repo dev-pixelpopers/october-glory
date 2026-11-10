@@ -149,13 +149,13 @@ export default function OfferSection() {
               {/* Model Image — stays left-aligned always */}
               {/* FIX applied here: moved dynamic width and height to inline styles */}
             <div
-              className="offer-img absolute bottom-0 left-0"
+              className="offer-img absolute bottom-0 left-0 content-end"
               style={{ width: imageWidth, height: imageHeight, aspectRatio: imageAspect }}
             >
                 <img
                   src={card.image}
                   alt={card.alt}
-                  className="w-full h-auto"
+                  className="w-full object-contain object-bottom-left height-[63.5vh]"
                 />
               </div>
 

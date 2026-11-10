@@ -91,7 +91,7 @@ export default function ServiceProcessSection({
 
                 <div>
                   <h3
-                    className={`valturin text-[length:clamp(20px,17.65px_+_0.988vw,28px)] leading-[1.3] ${c.bodyStrong} mb-[12px]`}
+                    className={`valturin text-[length:clamp(20px,17.65px_+_0.988vw,28px)] leading-[1.3] ${c.bodyStrong}`}
                   >
                     {step.title}
                   </h3>

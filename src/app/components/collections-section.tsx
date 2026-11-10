@@ -266,14 +266,14 @@ export default function CollectionsSection() {
                     )}
                   </div>
                 </div>
-                <div className="flex gap-[clamp(6px,5.03px_+_0.259vw,10px)]">
+                <div className="flex flex-col min-[1441px]:flex-row gap-[clamp(6px,5.03px_+_0.259vw,10px)]">
                   {card.product && (
                     <button
                       type="button"
                       onClick={() => {
                         if (card.product) addItem(card.product, 1);
                       }}
-                      className="flex-1 bg-[#C0A062] text-white text-[11px] uppercase tracking-wider font-semibold py-[clamp(8px,7.03px_+_0.259vw,12px)] rounded-sm hover:bg-[#a6884f] transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                      className="flex-1 bg-[#C0A062] text-white text-[11px] leading-none uppercase tracking-wider font-semibold py-[clamp(8px,7.03px_+_0.259vw,12px)] rounded-sm hover:bg-[#a6884f] transition-colors flex items-center justify-center gap-1 cursor-pointer"
                     >
                       <ShoppingBag size={12} />
                       Add to Bag

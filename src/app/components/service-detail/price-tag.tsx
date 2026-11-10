@@ -50,7 +50,7 @@ export default function PriceTag({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center justify-center gap-3">
       <span className="inline-flex items-baseline gap-2 bg-[#ccb884] text-[#1B1B1B] rounded-full px-5 py-2">
         <span className="gotham text-[11px] tracking-[2px] uppercase">Members</span>
         <span className="gotham font-bold text-[18px]">{pricing.member}</span>
