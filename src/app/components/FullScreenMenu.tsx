@@ -68,7 +68,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen }) => {
               {PRIMARY_LINKS.map((link, index) => (
                 <li
                   key={link.key}
-                  className="pum-li border-b border-white/50 hover:border-white"
+                  className="pum-li border-b border-white/50 hover:border-white last:border-b-0"
                   style={{
                     opacity: isOpen ? 1 : 0,
                     transform: isOpen ? 'translateY(0px)' : 'translateY(30px)',
