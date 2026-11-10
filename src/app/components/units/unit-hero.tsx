@@ -5,6 +5,10 @@ import Link from "next/link";
 import Breadcrumbs, { type Crumb } from "../breadcrumbs";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { Heart, ShoppingBag } from "lucide-react";
+import { useCart } from "@/context/cart-context";
+import { useWishlist } from "@/context/wishlist-context";
+import type { Product } from "@/lib/api/types";
 
 /**
  * Hero for the Units pages — the wordmark over the photograph, no breadcrumb
@@ -21,6 +25,7 @@ export default function UnitHero({
   trail,
   scale = "page",
   bookHref = "/dashboard/book?service=pro-consult",
+  product,
 }: {
   image: string;
   /** Large Andrea-Bellarosa line. */
@@ -38,10 +43,15 @@ export default function UnitHero({
    */
   scale?: "page" | "display";
   bookHref?: string;
+  product?: Product;
 }) {
   const headingRef = useRef<HTMLDivElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
   const metaRef = useRef<HTMLDivElement>(null);
+
+  const { addItem, openCart } = useCart();
+  const { isInWishlist, toggleWishlist } = useWishlist();
+  const inWishlist = product ? isInWishlist(product.id) : false;
 
   useGSAP(() => {
     gsap
@@ -113,15 +123,47 @@ export default function UnitHero({
             </p>
           )}
 
-          <Link
-            href={bookHref}
-            className="flex gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[16px] md:text-[18px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
-          >
-            <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
-              →
-            </span>
-            Book A Consultation
-          </Link>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href={bookHref}
+              className="flex gap-[clamp(6px,5.03px_+_0.259vw,10px)] items-center border-[#d4af6e] border text-[#d4af6e] rounded-4xl py-[clamp(3px,2.76px_+_0.065vw,4px)] pl-[clamp(3px,2.51px_+_0.13vw,5px)] pr-[clamp(16px,13.81px_+_0.583vw,25px)] justify-center text-[15px] md:text-[17px] gotham hover:bg-[#d4af6e] hover:text-black transition-all duration-300"
+            >
+              <span className="bg-[#d4af6e] text-black rounded-full w-[43px] h-[43px] flex items-center justify-center font-bold">
+                →
+              </span>
+              Book A Consultation
+            </Link>
+
+            {product && parseFloat(product.price) > 0 && (
+              <button
+                type="button"
+                onClick={() => {
+                  addItem(product, 1);
+                  openCart();
+                }}
+                className="flex items-center gap-2 bg-[#c0a062] hover:bg-[#a6884f] text-black font-semibold rounded-4xl py-3 px-6 text-[14px] md:text-[15px] gotham transition-all duration-300 cursor-pointer shadow-lg"
+              >
+                <ShoppingBag size={17} />
+                <span>Purchase Unit ({parseFloat(product.price).toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })})</span>
+              </button>
+            )}
+
+            {product && (
+              <button
+                type="button"
+                onClick={() => toggleWishlist(product)}
+                aria-label={inWishlist ? "Saved in wishlist" : "Save to wishlist"}
+                title={inWishlist ? "Saved in wishlist" : "Save to wishlist"}
+                className={`w-[45px] h-[45px] rounded-full border flex items-center justify-center transition-all duration-300 cursor-pointer ${
+                  inWishlist
+                    ? "bg-[#c0a062] text-black border-[#c0a062]"
+                    : "border-white/30 text-white/80 hover:border-white hover:text-white bg-black/30"
+                }`}
+              >
+                <Heart size={18} className={inWishlist ? "fill-current" : ""} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </section>

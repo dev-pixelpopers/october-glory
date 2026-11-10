@@ -16,6 +16,7 @@ import {
   Scissors,
   Boxes,
   ShoppingBag,
+  PackageCheck,
 } from "lucide-react";
 import {
   useDeleteNotification,
@@ -54,6 +55,9 @@ function getNotificationIcon(type: string) {
   }
   if (type.includes("package")) {
     return <Boxes size={16} className="text-blue-400" />;
+  }
+  if (type.includes("order")) {
+    return <PackageCheck size={16} className="text-[#cba660]" />;
   }
   if (type.includes("product")) {
     return <ShoppingBag size={16} className="text-emerald-400" />;
@@ -127,6 +131,8 @@ export default function NotificationBell() {
     setIsOpen(false);
     if (item.data?.url) {
       router.push(item.data.url);
+    } else if (item.type.includes("order")) {
+      router.push("/dashboard?tab=orders");
     }
   };
 

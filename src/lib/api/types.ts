@@ -156,6 +156,7 @@ export interface Product {
   gallery: string[];
   background_image?: string | null;
   price: string;
+  stock?: number;
   /** Shop filter tags, e.g. ["wavy", "new"]. */
   tags: string[];
   length: string | null;
@@ -466,3 +467,145 @@ export interface NotificationFilters {
 export interface UnreadNotificationCountResponse {
   unread_count: number;
 }
+
+/* ------------------------------- E-Commerce ---------------------------------- */
+
+export interface CartItem {
+  id: string;
+  product: Product;
+  quantity: number;
+  variant_id?: string | number | null;
+}
+
+export interface CartValidationPayloadItem {
+  product_id: number;
+  quantity: number;
+  variant_id?: string | number | null;
+}
+
+export interface CartValidationItem {
+  product_id: number;
+  name: string;
+  slug: string;
+  image: string | null;
+  unit_price: number;
+  quantity: number;
+  line_total: number;
+  in_stock: boolean;
+  available_stock: number;
+  variant_id?: string | number | null;
+  error?: string | null;
+}
+
+export interface CartValidationResponse {
+  valid: boolean;
+  items: CartValidationItem[];
+  subtotal: number;
+  tax: number;
+  shipping: number;
+  total: number;
+  total_items: number;
+  has_out_of_stock: boolean;
+  messages: string[];
+}
+
+export interface WishlistToggleResponse {
+  message: string;
+  product_id: number;
+  in_wishlist: boolean;
+  count: number;
+}
+
+export type OrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
+export type OrderPaymentStatus = "pending" | "paid" | "failed" | "refunded";
+
+export interface OrderItem {
+  id: number;
+  product_id: number;
+  name: string;
+  slug: string | null;
+  image: string | null;
+  variant_id?: string | null;
+  unit_price: number;
+  quantity: number;
+  line_total: number;
+}
+
+export interface OrderShipping {
+  address_line1: string;
+  address_line2: string | null;
+  city: string;
+  state: string;
+  postal_code: string;
+  country: string;
+  method: string;
+  cost: number;
+  tracking_number: string | null;
+  shipped_at: string | null;
+  delivered_at: string | null;
+}
+
+export interface OrderPricing {
+  subtotal: number;
+  tax: number;
+  shipping: number;
+  total: number;
+}
+
+export interface Order {
+  id: number;
+  order_number: string;
+  user_id: number | null;
+  status: OrderStatus;
+  payment_status: OrderPaymentStatus;
+  payment_method: string;
+  customer_name: string;
+  customer_email: string;
+  customer_phone: string;
+  shipping: OrderShipping;
+  items: OrderItem[];
+  pricing: OrderPricing;
+  total_items: number;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateOrderPayload {
+  items: Array<{
+    product_id: number;
+    quantity: number;
+    variant_id?: string | number | null;
+  }>;
+  customer_name: string;
+  customer_email: string;
+  customer_phone: string;
+  shipping_address_line1: string;
+  shipping_address_line2?: string | null;
+  shipping_city: string;
+  shipping_state: string;
+  shipping_postal_code: string;
+  shipping_country?: string;
+  shipping_method?: string;
+  payment_method?: string;
+  notes?: string | null;
+}
+
+export interface OrderAdminIndexResponse {
+  data: Order[];
+  meta: {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+  };
+  counts: {
+    all: number;
+    pending: number;
+    processing: number;
+    shipped: number;
+    delivered: number;
+    cancelled: number;
+  };
+}
+

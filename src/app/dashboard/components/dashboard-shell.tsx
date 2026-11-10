@@ -220,9 +220,14 @@ export function StatusBadge({ status }: { status: string }) {
     cancelled: "bg-[var(--dash-border-soft)] text-[var(--dash-text-faint)] border-[var(--dash-border)]",
     no_show: "bg-red-400/10 text-red-400 border-red-400/30",
     pending: "bg-[#cba660]/15 text-[#cda873] border-[#cba660]/40",
+    processing: "bg-blue-400/15 text-blue-400 border-blue-400/30",
+    shipped: "bg-indigo-400/15 text-indigo-400 border-indigo-400/30",
+    delivered: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
     approved: "bg-green-500/10 text-green-500 border-green-500/30",
     rejected: "bg-red-400/10 text-red-400 border-red-400/30",
     paid: "bg-green-500/10 text-green-500 border-green-500/30",
+    refunded: "bg-amber-400/15 text-amber-400 border-amber-400/30",
+    failed: "bg-red-500/15 text-red-400 border-red-500/30",
   };
   return (
     <span

@@ -4,22 +4,28 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
+  AlertCircle,
   ArrowRight,
   CalendarDays,
   CalendarPlus,
   Check,
   Clock,
+  Copy,
   Crown,
   Gift,
   Info,
+  Loader2,
   Package as PackageIcon,
+  PackageCheck,
   ShoppingBag,
   Sparkles,
+  Truck,
   UserRound,
 } from "lucide-react";
 import SetPasswordBanner from "@/app/components/salon/set-password-banner";
 import { useAppointments, useCancelAppointment } from "@/lib/api/hooks/booking";
 import { usePackages, useProducts } from "@/lib/api/hooks/catalog";
+import { useOrdersQuery } from "@/lib/api/hooks/ecommerce";
 import {
   useLoyaltyBalance,
   useLoyaltyTransactions,
@@ -41,6 +47,7 @@ import { Pagination } from "../admin/audit-log-viewer";
 export const CLIENT_NAV: NavItem[] = [
   { id: "book", label: "Book Appointment", icon: CalendarPlus },
   { id: "appointments", label: "My Appointments", icon: CalendarDays },
+  { id: "orders", label: "My Orders", icon: PackageCheck },
   { id: "rewards", label: "Loyalty & Rewards", icon: Gift },
   { id: "membership", label: "Membership", icon: Crown },
   { id: "packages", label: "Packages", icon: PackageIcon },
@@ -73,6 +80,7 @@ export default function ClientDashboard({ user }: { user: User }) {
         </div>
       )}
       {tab === "appointments" && <AppointmentsPanel />}
+      {tab === "orders" && <ClientOrdersPanel user={user} />}
       {tab === "rewards" && <RewardsHub />}
       {tab === "membership" && <MembershipPanel user={user} />}
       {tab === "packages" && <PackagesPanel />}
@@ -752,6 +760,357 @@ function PackageDetailModal({
         </div>
       </div>
     </Modal>
+  );
+}
+
+/* ----------------------------- Client Orders --------------------------------- */
+
+const ORDER_TIMELINE_STEPS = [
+  { key: "pending", label: "Order Placed" },
+  { key: "processing", label: "Processing" },
+  { key: "shipped", label: "Shipped" },
+  { key: "delivered", label: "Delivered" },
+];
+
+function getTimelineIndex(status: string): number {
+  switch (status) {
+    case "pending":
+      return 0;
+    case "processing":
+      return 1;
+    case "shipped":
+      return 2;
+    case "delivered":
+      return 3;
+    default:
+      return -1;
+  }
+}
+
+function ClientOrdersPanel({ user }: { user: User }) {
+  const [page, setPage] = useState(1);
+  const { data, isLoading, error } = useOrdersQuery(page);
+  const [copiedTracking, setCopiedTracking] = useState<string | null>(null);
+
+  const orders = data?.data ?? [];
+  const meta = data?.meta;
+
+  const copyTracking = (code: string) => {
+    navigator.clipboard.writeText(code);
+    setCopiedTracking(code);
+    setTimeout(() => setCopiedTracking(null), 2500);
+  };
+
+  return (
+    <div className="space-y-6">
+      <Card
+        title="My Orders & Shipments"
+        action={
+          <Link href="/shop" className={buttonGold}>
+            + Shop Collection
+          </Link>
+        }
+      >
+        <p className="gotham font-light text-[var(--dash-text-soft)] text-[15px] leading-relaxed mb-6">
+          Track fulfillment progress, view courier tracking details, and review order receipts.
+        </p>
+
+        {isLoading && (
+          <div className="py-16 text-center text-[var(--dash-text-muted)]">
+            <Loader2 size={24} className="mx-auto mb-2 animate-spin text-[#cda873]" />
+            <p className="gotham text-[14px]">Loading your orders…</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="bg-red-950/40 border border-red-500/40 rounded-xl p-4 text-red-200 text-xs gotham mb-4">
+            {error.message || "Unable to load orders at this time."}
+          </div>
+        )}
+
+        {!isLoading && !error && orders.length === 0 && (
+          <div className="py-16 text-center text-[var(--dash-text-faint)]">
+            <PackageCheck size={40} className="mx-auto mb-3 opacity-30 text-[var(--dash-text)]" />
+            <h4 className="valturin text-xl text-white mb-2">No Orders Placed Yet</h4>
+            <p className="gotham text-sm text-[var(--dash-text-muted)] max-w-sm mx-auto mb-6 leading-relaxed">
+              Discover our bespoke units, hair bundles, and salon-grade care products.
+            </p>
+            <Link href="/shop" className={buttonGold}>
+              Explore Studio Shop
+            </Link>
+          </div>
+        )}
+
+        {!isLoading && orders.length > 0 && (
+          <div className="space-y-6">
+            {orders.map((order) => {
+              const currentStepIndex = getTimelineIndex(order.status);
+              const isCancelled = order.status === "cancelled";
+
+              return (
+                <div
+                  key={order.id}
+                  className="bg-[var(--dash-bg)] border border-[var(--dash-border)] rounded-[20px] overflow-hidden transition-all hover:border-[#cba660]/40 shadow-sm"
+                >
+                  {/* Order Top Bar */}
+                  <div className="flex flex-wrap items-center justify-between gap-4 p-5 border-b border-[var(--dash-border-soft)] bg-[var(--dash-card)]/50">
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <span className="font-bold text-[var(--dash-text)] gotham text-[15px]">
+                          #{order.order_number}
+                        </span>
+                        <StatusBadge status={order.status} />
+                        <StatusBadge status={order.payment_status} />
+                      </div>
+                      <p className="gotham text-xs text-[var(--dash-text-muted)] mt-1">
+                        Placed on {shortDate(order.created_at)} · {order.total_items}{" "}
+                        {order.total_items === 1 ? "item" : "items"}
+                      </p>
+                    </div>
+
+                    <div className="text-right">
+                      <span className="gotham text-[12px] text-[var(--dash-text-muted)] block">
+                        Order Total
+                      </span>
+                      <span className="gotham font-bold text-[#cda873] text-[18px]">
+                        {money(order.pricing?.total ?? 0)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Body Content */}
+                  <div className="p-6 space-y-6">
+                    {/* Status Progress Timeline */}
+                    {!isCancelled ? (
+                      <div>
+                        <div className="relative flex items-center justify-between max-w-xl mx-auto my-3">
+                          {/* Background Track Line */}
+                          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-[var(--dash-border)] z-0 rounded-full" />
+                          {/* Active Gold Track Line */}
+                          <div
+                            className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-[#9C6D51] to-[#cba660] z-0 rounded-full transition-all duration-500"
+                            style={{
+                              width: `${(Math.max(0, currentStepIndex) / (ORDER_TIMELINE_STEPS.length - 1)) * 100}%`,
+                            }}
+                          />
+
+                          {ORDER_TIMELINE_STEPS.map((step, idx) => {
+                            const isDone = currentStepIndex > idx;
+                            const isCurrent = currentStepIndex === idx;
+
+                            return (
+                              <div
+                                key={step.key}
+                                className="relative z-10 flex flex-col items-center"
+                              >
+                                <div
+                                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs transition-all ${
+                                    isDone
+                                      ? "bg-[#cba660] text-black font-bold"
+                                      : isCurrent
+                                      ? "bg-[#1B1B1B] border-2 border-[#cba660] text-[#cda873] shadow-[0_0_12px_rgba(203,166,96,0.5)]"
+                                      : "bg-[var(--dash-card)] border border-[var(--dash-border)] text-[var(--dash-text-faint)]"
+                                  }`}
+                                >
+                                  {isDone ? (
+                                    <Check size={14} strokeWidth={3} />
+                                  ) : (
+                                    <span className="text-[11px] font-bold">{idx + 1}</span>
+                                  )}
+                                </div>
+                                <span
+                                  className={`gotham text-[11px] mt-2 whitespace-nowrap ${
+                                    isCurrent
+                                      ? "text-[#cda873] font-bold"
+                                      : isDone
+                                      ? "text-[var(--dash-text)] font-medium"
+                                      : "text-[var(--dash-text-faint)]"
+                                  }`}
+                                >
+                                  {step.label}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="bg-red-950/30 border border-red-500/30 rounded-xl p-3.5 flex items-center gap-3 text-red-300 text-xs gotham">
+                        <AlertCircle size={16} className="text-red-400 shrink-0" />
+                        <div>
+                          <p className="font-semibold text-red-200">Order Cancelled</p>
+                          <p className="mt-0.5 text-red-300/80">
+                            This order was cancelled. Please contact concierge if you have any questions.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Tracking Box if available */}
+                    {order.shipping?.tracking_number && (
+                      <div className="bg-[#cba660]/10 border border-[#cba660]/30 rounded-xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs gotham">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-[#cba660]/20 flex items-center justify-center text-[#cda873]">
+                            <Truck size={16} />
+                          </div>
+                          <div>
+                            <span className="text-[var(--dash-text-faint)] uppercase tracking-wider block text-[10px]">
+                              Carrier Tracking
+                            </span>
+                            <span className="font-mono text-white text-[13px] font-semibold">
+                              {order.shipping.tracking_number}
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => copyTracking(order.shipping.tracking_number!)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#cba660]/40 text-[#cda873] hover:bg-[#cba660]/20 transition-colors cursor-pointer"
+                        >
+                          <Copy size={13} />
+                          <span>
+                            {copiedTracking === order.shipping.tracking_number
+                              ? "Copied!"
+                              : "Copy Number"}
+                          </span>
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Items Grid & Shipping Info */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
+                      {/* Items Column (2/3) */}
+                      <div className="lg:col-span-2 space-y-3">
+                        <span className="text-[var(--dash-text-faint)] text-[11px] uppercase tracking-wider font-semibold block gotham">
+                          Ordered Items
+                        </span>
+                        <div className="space-y-2">
+                          {(order.items ?? []).map((item) => (
+                            <div
+                              key={item.id}
+                              className="flex items-center justify-between gap-3 p-3 rounded-xl bg-[var(--dash-card)] border border-[var(--dash-border-soft)] text-xs gotham"
+                            >
+                              <div className="flex items-center gap-3 min-w-0">
+                                <div className="w-12 h-12 rounded-lg bg-black/40 overflow-hidden shrink-0 border border-white/5">
+                                  {item.image ? (
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img
+                                      src={item.image}
+                                      alt={item.name}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-gray-500">
+                                      <PackageCheck size={18} />
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="min-w-0">
+                                  <p className="text-[var(--dash-text)] font-medium truncate">
+                                    {item.name}
+                                  </p>
+                                  <p className="text-[var(--dash-text-muted)] text-[11px] mt-0.5">
+                                    Quantity: {item.quantity} · {money(item.unit_price)} each
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="text-right shrink-0">
+                                <span className="font-bold text-[#cda873] text-[13px]">
+                                  {money(item.line_total)}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Shipping & Payment Destination (1/3) */}
+                      <div className="bg-[var(--dash-card)] border border-[var(--dash-border-soft)] rounded-xl p-4 text-xs gotham space-y-3 h-fit">
+                        <div>
+                          <span className="text-[var(--dash-text-faint)] uppercase tracking-wider block font-semibold text-[10px] mb-1">
+                            Delivery Destination
+                          </span>
+                          <p className="text-[var(--dash-text)] font-medium">
+                            {order.customer_name}
+                          </p>
+                          <p className="text-[var(--dash-text-muted)] mt-0.5">
+                            {order.shipping?.address_line1}
+                            {order.shipping?.address_line2
+                              ? `, ${order.shipping.address_line2}`
+                              : ""}
+                          </p>
+                          <p className="text-[var(--dash-text-muted)]">
+                            {order.shipping?.city}, {order.shipping?.state}{" "}
+                            {order.shipping?.postal_code}
+                          </p>
+                          <p className="text-[#cda873] font-medium mt-1 uppercase tracking-wider text-[11px]">
+                            {order.shipping?.method?.replace(/_/g, " ") ?? "Standard"} Delivery
+                          </p>
+                        </div>
+
+                        <div className="pt-3 border-t border-[var(--dash-border-soft)] space-y-1 text-[var(--dash-text-muted)]">
+                          <div className="flex justify-between">
+                            <span>Subtotal</span>
+                            <span className="text-[var(--dash-text)]">
+                              {money(order.pricing?.subtotal ?? 0)}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Shipping</span>
+                            <span className="text-[#cda873]">
+                              {order.pricing?.shipping === 0
+                                ? "Complimentary"
+                                : money(order.pricing?.shipping ?? 0)}
+                            </span>
+                          </div>
+                          <div className="flex justify-between text-sm font-bold text-white pt-2 border-t border-[var(--dash-border-soft)]">
+                            <span>Total</span>
+                            <span className="text-[#cda873]">
+                              {money(order.pricing?.total ?? 0)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {meta && meta.last_page > 1 && (
+          <div className="flex items-center justify-between pt-6 mt-4 border-t border-[var(--dash-border-soft)] text-[13px] gotham text-[var(--dash-text-muted)]">
+            <p>
+              Showing {(meta.current_page - 1) * meta.per_page + 1} to{" "}
+              {Math.min(meta.current_page * meta.per_page, meta.total)} of {meta.total} orders
+            </p>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page <= 1}
+                className="px-3.5 py-1.5 rounded-full border border-[var(--dash-border)] hover:border-[#cba660] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+              >
+                Previous
+              </button>
+              <span className="px-2 font-medium text-[var(--dash-text)]">
+                {page} / {meta.last_page}
+              </span>
+              <button
+                type="button"
+                onClick={() => setPage((p) => Math.min(meta.last_page, p + 1))}
+                disabled={page >= meta.last_page}
+                className="px-3.5 py-1.5 rounded-full border border-[var(--dash-border)] hover:border-[#cba660] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
+      </Card>
+    </div>
   );
 }
 

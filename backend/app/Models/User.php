@@ -112,4 +112,19 @@ class User extends Authenticatable
     {
         return (int) $this->loyaltyTransactions()->sum('amount');
     }
+
+    public function wishlistItems(): HasMany
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function wishlistProducts()
+    {
+        return $this->belongsToMany(Product::class, 'wishlists')->withTimestamps();
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }

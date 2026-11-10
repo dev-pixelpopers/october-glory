@@ -131,15 +131,17 @@ export default function GloriousPackagesGallery() {
 
       {/* Gallery Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[var(--space-32)]">
-        {services.map((service, index) => (
-          <div
-            key={service.name}
-            ref={(el) => {
-              cardsRef.current[index] = el;
-            }}
-            className="group relative rounded-[20px] overflow-hidden cursor-pointer"
-            style={{ opacity: 0 }}
-          >
+        {services.map((service, index) => {
+          const bookingHref = `/dashboard/book?package=${encodeURIComponent(
+            service.slug ?? service.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+          )}`;
+          return (
+            <Link
+              key={service.name}
+              href={bookingHref}
+              className="glorious-card group relative rounded-[20px] overflow-hidden cursor-pointer block"
+              style={{ opacity: 0 }}
+            >
             {/* Image */}
             <div className="aspect-square overflow-hidden bg-[#2a2a2a]">
               <img

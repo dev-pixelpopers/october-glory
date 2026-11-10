@@ -28,6 +28,7 @@ import {
   BarChart3,
   CalendarDays,
   CalendarPlus,
+  PackageCheck,
   Package as PackageIcon,
   UserRound,
 } from "lucide-react";
@@ -49,6 +50,7 @@ const ADMIN_NAV: NavItem[] = [
   { id: "services", label: "Services & Pricing", icon: Scissors },
   { id: "packages", label: "Packages", icon: Boxes },
   { id: "products", label: "Products", icon: ShoppingBag },
+  { id: "orders", label: "Orders", icon: PackageCheck },
   { id: "workers", label: "Workers", icon: Users },
   { id: "clients", label: "Clients & Members", icon: Crown },
   { id: "loyalty", label: "Loyalty Settings", icon: Gift },
@@ -64,6 +66,7 @@ const WORKER_NAV: NavItem[] = [
 const CLIENT_NAV: NavItem[] = [
   { id: "book", label: "Book Appointment", icon: CalendarPlus },
   { id: "appointments", label: "My Appointments", icon: CalendarDays },
+  { id: "orders", label: "My Orders", icon: PackageCheck },
   { id: "rewards", label: "Loyalty & Rewards", icon: Gift },
   { id: "membership", label: "Membership", icon: Crown },
   { id: "packages", label: "Packages", icon: PackageIcon },
@@ -125,6 +128,13 @@ function getNotificationBadge(type: string) {
       label: "Package",
       icon: <Boxes size={15} className="text-blue-400" />,
       bg: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    };
+  }
+  if (type.includes("order")) {
+    return {
+      label: "Order",
+      icon: <PackageCheck size={15} className="text-[#cba660]" />,
+      bg: "bg-[#cba660]/10 text-[#cda873] border-[#cba660]/20",
     };
   }
   if (type.includes("product")) {
@@ -288,6 +298,8 @@ function NotificationsContent({
     }
     if (n.data?.url) {
       router.push(n.data.url);
+    } else if (n.type.includes("order")) {
+      router.push("/dashboard?tab=orders");
     }
   };
 
@@ -385,6 +397,7 @@ function NotificationsContent({
             className="bg-[var(--dash-bg)] border border-[var(--dash-border)] rounded-xl px-3 py-1.5 text-[13px] text-[var(--dash-text)] focus:outline-none focus:border-[#cba660] transition-colors cursor-pointer"
           >
             <option value="all">All Notification Types</option>
+            <option value="order">Orders & Deliveries</option>
             <option value="appointment">Appointments</option>
             <option value="service">Services</option>
             <option value="package">Packages</option>

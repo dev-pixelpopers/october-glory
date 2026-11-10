@@ -194,6 +194,7 @@ export default async function UnitPage({
         eyebrow={specLine}
         trail={[{ label: "Wigs", href: "/wigs" }, { label: `${product.name} Unit` }]}
         bookHref={`/dashboard/book?service=the-glorious-custom-unit&unit=${encodeURIComponent(product.slug)}`}
+        product={product}
       />
 
       <UnitStorySection unit={product} tone="light" />

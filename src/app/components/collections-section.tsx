@@ -8,13 +8,16 @@ import { useGSAP } from "@gsap/react";
 import { useProducts } from "@/lib/api/hooks/catalog";
 import type { Product } from "@/lib/api/types";
 import { getUnit, units } from "@/data/units";
+import { Heart, ShoppingBag } from "lucide-react";
+import { useCart } from "@/context/cart-context";
+import { useWishlist } from "@/context/wishlist-context";
 
 // SSR-safe plugin registration (no `window` access at module eval on the server).
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
-type Card = { key: string; name: string; image: string; price: string | null; href?: string };
+type Card = { key: string; name: string; image: string; price: string | null; href?: string; product?: Product };
 
 /** "1800.00" -> "$1,800". */
 const priceLabel = (price: string) =>
@@ -30,6 +33,7 @@ const productCard = (product: Product): Card => ({
   image: product.image ?? "",
   price: priceLabel(product.price),
   href: getUnit(product.slug) ? `/wigs/${product.slug}` : "/shop",
+  product,
 });
 
 /**
@@ -117,6 +121,8 @@ const uEnd = (count: number) => count - 1 + ARC_SPAN + OFF_MARGIN;
 
 export default function CollectionsSection() {
   const { data: products } = useProducts("Wigs");
+  const { addItem } = useCart();
+  const { isInWishlist, toggleWishlist } = useWishlist();
   const cardData: Card[] =
     products && products.length > 0 ? products.map(productCard) : FALLBACK_CARDS;
 
@@ -217,40 +223,72 @@ export default function CollectionsSection() {
             />
           </svg>
 
-          {cardData.map((card) => (
-            <div
-              key={card.key}
-              className="shop-item-card absolute left-0 top-0 w-[15vw] bg-white rounded-xl p-[clamp(10px,8.54px_+_0.389vw,16px)] shadow-[0_18px_45px_rgba(0,0,0,0.55)] will-change-transform"
-            >
-              <div className="w-full aspect-[268/290] bg-gray-100 rounded-lg mb-[clamp(13px,11.3px_+_0.454vw,20px)] overflow-hidden">
-                {card.image && (
-                  <img
-                    src={card.image}
-                    alt={card.name}
-                    className="w-full h-full object-cover object-top"
-                  />
-                )}
+          {cardData.map((card) => {
+            const inWishlist = card.product ? isInWishlist(card.product.id) : false;
+            return (
+              <div
+                key={card.key}
+                className="shop-item-card absolute left-0 top-0 w-[15vw] bg-white rounded-xl p-[clamp(10px,8.54px_+_0.389vw,16px)] shadow-[0_18px_45px_rgba(0,0,0,0.55)] will-change-transform flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-full aspect-[268/290] bg-gray-100 rounded-lg mb-[clamp(13px,11.3px_+_0.454vw,20px)] overflow-hidden relative group">
+                    {card.image && (
+                      <img
+                        src={card.image}
+                        alt={card.name}
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      />
+                    )}
+                    {card.product && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (card.product) toggleWishlist(card.product);
+                        }}
+                        aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
+                        title={inWishlist ? "Saved in wishlist" : "Save to wishlist"}
+                        className={`absolute top-2.5 right-2.5 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-md z-10 cursor-pointer ${
+                          inWishlist
+                            ? "bg-[#c0a062] text-white"
+                            : "bg-black/40 text-white/80 hover:bg-black/60 hover:text-white"
+                        }`}
+                      >
+                        <Heart size={14} className={inWishlist ? "fill-white" : ""} />
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex justify-between items-center mb-[clamp(10px,8.54px_+_0.389vw,16px)] px-[clamp(3px,2.76px_+_0.065vw,4px)]">
+                    <h3 className="text-gray-500 font-medium text-base">{card.name}</h3>
+                    {card.price && (
+                      <span className="text-gray-400 text-base font-medium">{card.price}</span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-[clamp(6px,5.03px_+_0.259vw,10px)]">
+                  {card.product && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (card.product) addItem(card.product, 1);
+                      }}
+                      className="flex-1 bg-[#C0A062] text-white text-[11px] uppercase tracking-wider font-semibold py-[clamp(8px,7.03px_+_0.259vw,12px)] rounded-sm hover:bg-[#a6884f] transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                    >
+                      <ShoppingBag size={12} />
+                      Add to Bag
+                    </button>
+                  )}
+                  <Link
+                    href={card.href ?? "/shop"}
+                    className="flex-1 text-center bg-white border border-gray-300 text-gray-500 text-[11px] uppercase tracking-wider font-semibold py-[clamp(8px,7.03px_+_0.259vw,12px)] rounded-sm hover:bg-gray-50 transition-colors flex items-center justify-center"
+                  >
+                    See Options
+                  </Link>
+                </div>
               </div>
-              <div className="flex justify-between items-center mb-[clamp(10px,8.54px_+_0.389vw,16px)] px-[clamp(3px,2.76px_+_0.065vw,4px)]">
-                <h3 className="text-gray-500 font-medium text-base">{card.name}</h3>
-                {card.price && (
-                  <span className="text-gray-400 text-base font-medium">{card.price}</span>
-                )}
-              </div>
-              <div className="flex gap-[clamp(6px,5.03px_+_0.259vw,10px)]">
-                {/* <button className="flex-1 bg-[#C0A062] text-white text-xs uppercase tracking-wider font-semibold py-[clamp(8px,7.03px_+_0.259vw,12px)] rounded-sm hover:bg-[#a6884f] transition-colors">
-                  Try On
-                </button> */}
-                {/* No cart yet — the card opens the unit's own page. */}
-                <Link
-                  href={card.href ?? "/shop"}
-                  className="flex-1 text-center bg-white border border-gray-300 text-gray-500 text-xs uppercase tracking-wider font-semibold py-[clamp(8px,7.03px_+_0.259vw,12px)] rounded-sm hover:bg-gray-50 transition-colors"
-                >
-                  See Options
-                </Link>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Description + CTA */}

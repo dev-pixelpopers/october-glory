@@ -8,6 +8,9 @@ import { useGSAP } from "@gsap/react";
 import { useProducts } from "@/lib/api/hooks/catalog";
 import type { Product } from "@/lib/api/types";
 import { getUnit } from "@/data/units";
+import { Heart, ShoppingBag } from "lucide-react";
+import { useCart } from "@/context/cart-context";
+import { useWishlist } from "@/context/wishlist-context";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -41,6 +44,8 @@ const productHref = (product: Product) =>
 
 export default function ShopProducts() {
   const { data, isLoading, error } = useProducts();
+  const { addItem } = useCart();
+  const { isInWishlist, toggleWishlist } = useWishlist();
   const products = useMemo(() => data ?? [], [data]);
 
   // Filter options follow whatever the admin has tagged products with.
@@ -360,33 +365,58 @@ export default function ShopProducts() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-[var(--space-32)] gap-y-[var(--space-64)]">
           {visibleProducts.map((product) => {
             const href = productHref(product);
+            const inWishlist = isInWishlist(product.id);
             const ctaClass =
               "flex-1 text-center bg-white border border-gray-300 text-gray-500 text-xs uppercase tracking-wider font-semibold py-3 rounded-sm hover:bg-gray-50 transition-colors";
             return (
               <div
                 key={product.id}
-                className="prod-card bg-white rounded-xl p-[var(--space-16)] shadow-[0_18px_45px_rgba(0,0,0,0.25)]"
+                className="prod-card bg-white rounded-xl p-[var(--space-16)] shadow-[0_18px_45px_rgba(0,0,0,0.25)] flex flex-col justify-between"
               >
-                <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg mb-[var(--space-20)] overflow-hidden">
-                  {product.image && (
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover object-top"
-                    />
-                  )}
+                <div>
+                  <div className="w-full aspect-[3/4] bg-gray-100 rounded-lg mb-[var(--space-20)] overflow-hidden relative group">
+                    {product.image && (
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      />
+                    )}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleWishlist(product);
+                      }}
+                      aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
+                      title={inWishlist ? "Saved in wishlist" : "Save to wishlist"}
+                      className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-md z-10 cursor-pointer ${
+                        inWishlist
+                          ? "bg-[#c0a062] text-white"
+                          : "bg-black/40 text-white/80 hover:bg-black/60 hover:text-white"
+                      }`}
+                    >
+                      <Heart size={15} className={inWishlist ? "fill-white" : ""} />
+                    </button>
+                  </div>
+                  <div className="flex justify-between items-center mb-[var(--space-16)] px-1">
+                    <h3 className="text-gray-500 font-medium text-base">
+                      {product.name}
+                    </h3>
+                    <span className="text-gray-400 text-base font-medium">
+                      {priceLabel(product)}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center mb-[var(--space-16)] px-1">
-                  <h3 className="text-gray-500 font-medium text-base">
-                    {product.name}
-                  </h3>
-                  <span className="text-gray-400 text-base font-medium">
-                    {priceLabel(product)}
-                  </span>
-                </div>
-                <div className="flex gap-2.5">
-                  <button className="flex-1 bg-[#C0A062] text-white text-xs uppercase tracking-wider font-semibold py-3 rounded-sm hover:bg-[#a6884f] transition-colors">
-                    Try On
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => addItem(product, 1)}
+                    className="flex-1 bg-[#C0A062] text-white text-xs uppercase tracking-wider font-semibold py-3 rounded-sm hover:bg-[#a6884f] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <ShoppingBag size={13} />
+                    Add to Bag
                   </button>
                   {href ? (
                     <Link href={href} className={ctaClass}>

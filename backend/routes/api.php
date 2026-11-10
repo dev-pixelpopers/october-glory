@@ -5,9 +5,11 @@ use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\AuditLogController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AvailabilityController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\LoyaltyController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ReviewController;
@@ -15,6 +17,7 @@ use App\Http\Controllers\Api\ServiceCategoryController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\ShoutoutController;
 use App\Http\Controllers\Api\UploadController;
+use App\Http\Controllers\Api\WishlistController;
 use App\Http\Controllers\Api\WorkerController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +39,12 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{slug}', [ProductController::class, 'show']);
 Route::get('/workers', [WorkerController::class, 'index']);
 Route::get('/availability', [AvailabilityController::class, 'index']);
+Route::post('/cart/validate', [CartController::class, 'validateCart']);
+Route::post('/v1/cart/validate', [CartController::class, 'validateCart']);
+Route::post('/orders', [OrderController::class, 'store']);
+Route::post('/v1/orders', [OrderController::class, 'store']);
+Route::get('/orders/lookup', [OrderController::class, 'lookup']);
+Route::get('/v1/orders/lookup', [OrderController::class, 'lookup']);
 
 /* --------------------------- Authenticated ------------------------------- */
 
@@ -43,6 +52,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::post('/auth/set-password', [AuthController::class, 'setPassword']);
     Route::get('/me', [AuthController::class, 'me']);
+
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/v1/orders', [OrderController::class, 'index']);
+    Route::get('/orders/{order}', [OrderController::class, 'show']);
+    Route::get('/v1/orders/{order}', [OrderController::class, 'show']);
+
+    Route::get('/wishlist', [WishlistController::class, 'index']);
+    Route::post('/wishlist/toggle', [WishlistController::class, 'toggle']);
+    Route::get('/v1/wishlist', [WishlistController::class, 'index']);
+    Route::post('/v1/wishlist/toggle', [WishlistController::class, 'toggle']);
 
     Route::get('/appointments', [AppointmentController::class, 'index']);
     Route::post('/appointments', [AppointmentController::class, 'store']);
@@ -98,6 +117,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/products', [ProductController::class, 'store']);
         Route::put('/products/{product}', [ProductController::class, 'update']);
         Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+
+        Route::get('/orders', [OrderController::class, 'adminIndex']);
+        Route::get('/orders/{order}', [OrderController::class, 'show']);
+        Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus']);
 
         Route::get('/workers', [WorkerController::class, 'adminIndex']);
         Route::post('/workers', [WorkerController::class, 'store']);

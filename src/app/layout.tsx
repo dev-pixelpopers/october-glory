@@ -5,6 +5,10 @@ import Preloader from "./components/preloader";
 import QueryProvider from "@/lib/api/query-provider";
 import { ToastHost } from "./components/salon/toast";
 import BackToTop from "./components/back-to-top";
+import { CartProvider } from "@/context/cart-context";
+import { WishlistProvider } from "@/context/wishlist-context";
+import CartDrawer from "./components/ecommerce/CartDrawer";
+import WishlistDrawer from "./components/ecommerce/WishlistDrawer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,10 +45,16 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <QueryProvider>
-          <Preloader />
-          {children}
-          <BackToTop />
-          <ToastHost />
+          <CartProvider>
+            <WishlistProvider>
+              <Preloader />
+              {children}
+              <CartDrawer />
+              <WishlistDrawer />
+              <BackToTop />
+              <ToastHost />
+            </WishlistProvider>
+          </CartProvider>
         </QueryProvider>
       </body>
     </html>
