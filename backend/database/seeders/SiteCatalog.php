@@ -26,7 +26,7 @@ class SiteCatalog
         // Main service pages, in the site's order.
         'silk-press' => ['Silk Press', 'services', '/images/silk-press-card-img.jpg', 1],
         'relaxers-and-colors' => ['Relaxers & Colors', 'services', '/images/relaxers-card-img.jpg', 2],
-        'weaves' => ['Weaves', 'services', '/images/Weaves-And-Extensions-02.webp', 3],
+        'weaves' => ['Weaves', 'services', '/images/Weaves-And-Extensions-04.webp', 3],
         'extensions' => ['Extensions', 'services', '/images/Weaves-And-Extensions-01.webp', 4],
         'haircuts-and-styles' => ['Haircuts & Styles', 'services', '/images/haircuts1.webp', 5],
         'treatments' => ['Treatments', 'services', '/images/hairsclapimg.webp', 6],
@@ -64,7 +64,7 @@ class SiteCatalog
         ['relaxers-and-colors', 'glorious-boost', 'Glorious Boost', '120.00', 60, '/images/GLORIOUS-PACKAGES-03.webp', null],
 
         // /services/weaves — no prices shown on the page.
-        ['weaves', 'full-weave-with-leave-out', 'Full Weave w/ Leave Out', null, 210, '/images/Weaves-And-Extensions-02.webp', null],
+        ['weaves', 'full-weave-with-leave-out', 'Full Weave w/ Leave Out', null, 210, '/images/Weaves-And-Extensions-04.webp', null],
         ['weaves', 'full-head-weave', 'Full-Head Weave', null, 240, '/images/Weaves-And-Extensions-03.webp', null],
 
         // /services/extensions

@@ -30,9 +30,9 @@ export default function AboutUsPage() {
           <div className="valturin text-[50vw] leading-none text-[#3C3C3C] absolute bottom-[-10%] right-[-5vw]">G</div>
         </div>
 
-        <div className="relative z-10 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-center">
+        <div className="relative z-10 max-w-[1400px] mx-auto grid grid-cols-1 xl:grid-cols-2 gap-[var(--space-64)] items-center">
           {/* Left Column: Vision Text */}
-          <div className="flex flex-col gap-[var(--space-32)]">
+          <div className="flex flex-col gap-[var(--space-32)] order-2 xl:order-1">
             <span className="andrea text-[length:var(--fs-accent)] text-gold">The Vision</span>
             <h2 className="valturin text-[length:var(--fs-h2)] leading-tight text-white uppercase tracking-wider">
               Jhavuanna Paterson
@@ -46,12 +46,12 @@ export default function AboutUsPage() {
           </div>
 
           {/* Right Column: Beautifully framed image */}
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center order-1 xl:order-2">
             <div className="relative border border-[#d4af6e]/30 rounded-[2rem] p-[var(--space-16)] bg-[#1B1B1B]/40 max-w-[500px] shadow-2xl">
               <img
                 src="/images/about-img.png"
                 alt="Jhavuanna Paterson styling hair"
-                className="rounded-[1.5rem] object-cover w-full h-auto"
+                className="rounded-[1.5rem] object-cover w-full h-[80vh] xl:h-auto"
               />
             </div>
           </div>

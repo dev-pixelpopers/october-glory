@@ -35,9 +35,9 @@ export default function MembershipCta({
     >
       {/* Hairline above, so the band separates from the section before it
           without needing a second background colour. */}
-      <div
+      {/* <div
         className={`absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent ${c.hairline} to-transparent`}
-      />
+      /> */}
 
       <div className="relative z-10 max-w-[900px] mx-auto text-center flex flex-col items-center">
         <p

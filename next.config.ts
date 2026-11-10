@@ -9,12 +9,12 @@ const serviceRedirects = [
   // The five main services, formerly at the root.
   ["/silk-press", "/services/silk-press"],
   ["/relaxers-and-colors", "/services/relaxers-and-colors"],
-  ["/wigs-and-extensions", "/services/wigs-and-extensions"],
+  ["/wigs-and-extensions", "/wigs"],
   ["/haircuts-and-styles", "/services/haircuts-and-styles"],
   ["/treatments", "/services/treatments"],
 
   // Children that used to sit at the root.
-  ["/custom-wig-design", "/services/wigs-and-extensions/custom-wig-design"],
+  ["/custom-wig-design", "/wigs/services/wig-design-and-consult"],
   ["/ponytail-and-updo", "/services/haircuts-and-styles/ponytail-and-updo"],
 
   // Natural Styles was retired; its services are now under Haircuts & Styles.
@@ -35,8 +35,13 @@ const serviceRedirects = [
   // The Silk Press showcase was reviewed here before it replaced the service page.
   ["/silk-press-new", "/services/silk-press"],
 
-  // The old weaves category is covered by the Wigs & Extensions page.
-  ["/weaves-and-extensions", "/services/wigs-and-extensions"],
+  // The old combined weaves-and-extensions category split in two. Weaves
+  // kept its own parent; the Extensions side (Single Track, Wig Prep) now
+  // sits under the Wigs destination rather than under /services.
+  ["/weaves-and-extensions", "/services/weaves"],
+  ["/services/extensions", "/wigs"],
+  ["/services/wigs-services", "/wigs"],
+  ["/services/wigs-services/:slug", "/wigs"],
 
   // The previous Wigs and Silk Press pages were parked at /old-* while their
   // replacements were built. Both are gone now; the two wig sub-services that

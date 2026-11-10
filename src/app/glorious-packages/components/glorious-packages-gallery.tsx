@@ -130,26 +130,24 @@ export default function GloriousPackagesGallery() {
       </div>
 
       {/* Gallery Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[var(--space-32)]">
-        {services.map((service) => {
-          const bookingHref = service.slug
-            ? `/dashboard/book?package=${encodeURIComponent(service.slug)}`
-            : BOOKING_URL;
-
-          return (
-            <Link
-              key={service.slug || service.name}
-              href={bookingHref}
-              className="glorious-card group relative rounded-[20px] overflow-hidden block cursor-pointer transition-all duration-300 hover:shadow-[0_12px_36px_rgba(203,166,96,0.25)] focus:outline-none focus:ring-2 focus:ring-[#ccb884]"
-            >
-              {/* Image */}
-              <div className="aspect-square overflow-hidden bg-[#2a2a2a]">
-                <img
-                  src={service.image}
-                  alt={service.name}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                />
-              </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[var(--space-32)]">
+        {services.map((service, index) => (
+          <div
+            key={service.name}
+            ref={(el) => {
+              cardsRef.current[index] = el;
+            }}
+            className="group relative rounded-[20px] overflow-hidden cursor-pointer"
+            style={{ opacity: 0 }}
+          >
+            {/* Image */}
+            <div className="aspect-square overflow-hidden bg-[#2a2a2a]">
+              <img
+                src={service.image}
+                alt={service.name}
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+            </div>
 
               {/* Price Badge */}
               <span className="absolute top-5 right-5 bg-[#ccb884] text-[#1B1B1B] gotham font-bold text-[14px] px-[var(--space-16)] py-2 rounded-full shadow-lg z-20">
@@ -162,7 +160,7 @@ export default function GloriousPackagesGallery() {
                   {service.name}
                 </h3>
 
-                <div className="inline-flex items-center gap-2 text-[#ccb884] gotham font-bold text-[14px] tracking-[2px] uppercase translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 group-hover:text-white">
+                <div className="inline-flex items-center gap-2 text-[#ccb884] gotham font-bold text-[14px] tracking-[2px] uppercase translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75 group-hover:text-white z-10">
                   <span>Book Package Now</span>
                   <svg
                     width="16"

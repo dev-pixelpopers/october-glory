@@ -67,7 +67,7 @@ export default function UnitHero({
 
   return (
     <section
-      className="relative w-full min-h-screen flex items-end justify-center overflow-hidden pb-[clamp(20px,17.57px_+_0.648vw,30px)]"
+      className="relative w-full min-h-screen flex items-end justify-center overflow-hidden pb-[clamp(20px,17.57px_+_0.648vw,30px)] px-[1vw]"
       style={{
         // The scrim has to carry the title, not just the bottom edge. These
         // photographs are bright and warm, and a gradient that only darkens
@@ -86,8 +86,8 @@ export default function UnitHero({
      
 
       {/* Gold corner accents — the same framing the service heroes use. */}
-      <div className="absolute top-[140px] left-[40px] md:left-[80px] w-[70px] h-[70px] border-t border-l border-[#ccb884]/30" />
-      <div className="absolute bottom-[70px] right-[40px] md:right-[80px] w-[70px] h-[70px] border-b border-r border-[#ccb884]/30" />
+      <div className="hidden lg:flex absolute top-[140px] left-[40px] md:left-[80px] w-[70px] h-[70px] border-t border-l border-[#ccb884]/30" />
+      <div className="hidden lg:flex absolute bottom-[70px] right-[40px] md:right-[80px] w-[70px] h-[70px] border-b border-r border-[#ccb884]/30" />
 
       <div className="relative z-10 text-center flex flex-col items-center px-[var(--space-section-x)]">
         {trail && <Breadcrumbs trail={trail} className="mb-[var(--space-32)]" />}

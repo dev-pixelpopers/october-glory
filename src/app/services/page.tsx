@@ -85,7 +85,7 @@ export default function ServicesPage() {
                         >
 
                             {/* IMAGE */}
-                            <div className="relative h-120 overflow-hidden">
+                            <div className="relative h-[50vh] overflow-hidden">
                                 <Image
                                     src={service.cardImage}
                                     alt={service.cardTitle}

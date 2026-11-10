@@ -24,9 +24,9 @@ export default function UnitPoster({ tone = "light" }: { tone?: Tone }) {
       ref={scope}
       className={`reveal-scope relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)] overflow-hidden`}
     >
-      <div className="relative z-10 max-w-[98%] flex flex-row items-center gap-[20px]">
+      <div className="relative z-10 max-w-[98%] flex flex-col xl:flex-row items-center gap-[20px]">
 
-        <div className="space-y-[var(--space-24)] w-1/2">
+        <div className="space-y-[var(--space-24)] w-full xl:w-1/2 order-2 xl:order-1">
           <p
           data-reveal
           className={`andrea ${c.eyebrow} text-[length:var(--fs-accent)] leading-none mb-[12px]`}
@@ -60,7 +60,7 @@ export default function UnitPoster({ tone = "light" }: { tone?: Tone }) {
           ))}
         </div>
 
-        <div className="mt-[var(--space-56)] grid grid-cols-2 gap-[var(--space-24)] w-1/2">
+        <div className="mt-[var(--space-56)] grid grid-cols-2 gap-[var(--space-24)] w-full xl:w-1/2 order-1 xl:order-2">
           {poster.images.map((src, i) => (
             <div
               key={src}

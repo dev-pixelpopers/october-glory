@@ -40,7 +40,7 @@ export default function BeforeAfter({
       <div className="relative group select-none">
         {/* Offset gold frame — the same treatment the section blocks use, so
             the comparison reads as part of the page rather than a widget. */}
-        <div className="absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5" />
+        {/* <div className="absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5" /> */}
 
         <div className="relative aspect-[4/3] md:aspect-[16/10] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
           {/* The "after" sits underneath and is never clipped, so the frame is

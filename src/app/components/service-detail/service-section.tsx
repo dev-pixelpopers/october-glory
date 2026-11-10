@@ -56,20 +56,26 @@ export default function ServiceSectionBlock({
       ref={scope}
       className={`reveal-scope relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)] overflow-hidden`}
     >
-      {hairline && (
+      {/* {hairline && (
         <div className={`absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent ${c.hairline} to-transparent`} />
-      )}
+      )} */}
 
       {/* Without an image the copy centres in a readable column rather than
           sitting in half a two-column grid with nothing beside it. */}
       <div
         className={
           hasMedia
-            ? "grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-center max-w-[1400px] mx-auto"
+            ? "grid grid-cols-1 xl:grid-cols-2 gap-[var(--space-64)] items-center max-w-[1400px] mx-auto"
             : "max-w-[820px] mx-auto"
         }
       >
-        <div className={hasMedia && flip ? "lg:order-last" : undefined}>
+        <div
+          className={
+            hasMedia
+              ? `order-2 ${flip ? "xl:order-last" : "xl:order-first"}`
+              : undefined
+          }
+        >
           {section.eyebrow && (
             <p
               data-reveal
@@ -150,18 +156,22 @@ export default function ServiceSectionBlock({
           <div
             data-reveal
             data-reveal-delay="2"
-            className={`relative group ${flip ? "lg:order-first" : "order-first lg:order-last"
-              }`}
+            className={`relative group ${
+              [
+                "order-1",
+                flip ? "xl:order-first" : "xl:order-last",
+              ].join(" ")
+            }`}
           >
             {/* Offset gold frame */}
             <div
-              className={`absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none ${flip
+              className={`hidden lg:flex absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none ${flip
                   ? "-translate-x-3 translate-y-3 md:-translate-x-5 md:translate-y-5"
                   : "translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5"
                 }`}
             />
 
-            <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
+            <div className="relative aspect-[3/2] xl:aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
               {section.video ? (
                 <video
                   src={section.video}

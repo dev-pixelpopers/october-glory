@@ -25,9 +25,9 @@ export default function GloriousPackagesPage() {
       <section className="py-[var(--space-section-y)] px-[var(--space-section-x)] bg-[#151515] relative overflow-hidden">
 
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-center">
+        <div className="relative z-10 grid grid-cols-1 xl:grid-cols-2 gap-[var(--space-64)] items-center">
           {/* Left Column: Vision Text */}
-          <div className="flex flex-col gap-[var(--space-32)]">
+          <div className="flex flex-col gap-[var(--space-32)] order-2 xl:order-1">
             <span className="andrea text-[length:var(--fs-accent)] text-gold">Your Glorious </span>
             <h2 className="valturin text-[length:var(--fs-h2)] leading-tight text-white uppercase tracking-wider">
               Day Needs A Glorious Hairstyle
@@ -59,7 +59,7 @@ export default function GloriousPackagesPage() {
 
 
           {/* Right Column: Bridal Image Slider */}
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center order-1 xl:order-2">
             <BridalSlider />
           </div>
         </div>

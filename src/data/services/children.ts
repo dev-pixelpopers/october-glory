@@ -279,7 +279,7 @@ export const serviceChildren: ServiceChild[] = [
       script: "Down",
       intro:
         "A neat, close braided foundation — worn on its own, or set as the base for a install.",
-      image: "/images/braiddown.jpg",
+      image: "/images/wig-unit-02.webp",
     },
     overview: {
       eyebrow: "The Service",
@@ -807,14 +807,14 @@ export const serviceChildren: ServiceChild[] = [
     price: "$250",
   },
   {
-    parents: ["extensions"],
+    parents: ["wigs"],
     cardImage: "/images/Weaves-And-Extensions-01.webp",
     slug: "single-track",
     cardTitle: "Single Track",
   },
   {
     parents: ["weaves"],
-    cardImage: "/images/Weaves-And-Extensions-02.webp",
+    cardImage: "/images/Weaves-And-Extensions-04.webp",
     slug: "full-weave-with-leave-out",
     cardTitle: "Full Weave w/ Leave Out",
   },
@@ -825,7 +825,7 @@ export const serviceChildren: ServiceChild[] = [
     cardTitle: "Full-Head Weave",
   },
   {
-    parents: ["extensions"],
+    parents: ["wigs"],
     cardImage: "/images/GLORIOUS-PACKAGES-04.webp",
     slug: "wig-prep",
     cardTitle: "Wig Prep",

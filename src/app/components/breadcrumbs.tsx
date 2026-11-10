@@ -79,12 +79,12 @@ export default function Breadcrumbs({
               {item.href && !last ? (
                 <Link
                   href={item.href}
-                  className="transition-colors duration-300 hover:text-[#ccb884] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ccb884]"
+                  className="transition-colors duration-300 hover:text-[#d3cbcb] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ccb884]"
                 >
                   {item.label}
                 </Link>
               ) : (
-                <span aria-current={last ? "page" : undefined} className="text-[#ccb884]">
+                <span aria-current={last ? "page" : undefined} className="text-[#ffffff]">
                   {item.label}
                 </span>
               )}

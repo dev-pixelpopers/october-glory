@@ -86,7 +86,7 @@ export default function ServiceHero({
 
   return (
     <section
-      className="relative w-full min-h-screen flex items-end justify-center overflow-hidden pb-[clamp(20px,17.57px_+_0.648vw,30px)]"
+      className="relative w-full min-h-screen flex items-end justify-center overflow-hidden pb-[clamp(20px,17.57px_+_0.648vw,30px)] px-[1vw]"
       style={{
         backgroundImage: `linear-gradient(180deg, rgba(27,27,27,0.0) 0%, rgba(27,27,27,0.88) 100%), url('${service.hero.image}')`,
         backgroundSize: "cover",
@@ -97,8 +97,8 @@ export default function ServiceHero({
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')]" />
 
       {/* Gold corner accents */}
-      <div className="absolute top-[140px] left-[40px] md:left-[80px] w-[70px] h-[70px] border-t border-l border-[#ccb884]/30" />
-      <div className="absolute bottom-[70px] right-[40px] md:right-[80px] w-[70px] h-[70px] border-b border-r border-[#ccb884]/30" />
+      <div className="hidden md:flex absolute top-[140px] left-[40px] md:left-[80px] w-[70px] h-[70px] border-t border-l border-[#ccb884]/30" />
+      <div className="hidden md:flex absolute bottom-[70px] right-[40px] md:right-[80px] w-[70px] h-[70px] border-b border-r border-[#ccb884]/30" />
 
       <div className="relative z-10 text-center flex flex-col items-center">
         {/* Home / Services / <parent> / <this page>. `root` lets a page that
@@ -119,7 +119,7 @@ export default function ServiceHero({
           <h1 className="flex flex-col andrea text-[length:var(--fs-h1)] leading-[1.4] text-white tracking-wide">
             {service.hero.display}
 
-          <span className="valturin text-[length:var(--fs-h1)] text-[#ccb884] mt-[-14px] tracking-widest">
+          <span className="valturin text-[length:var(--fs-h1)] text-[#ccb884] mt-0 lg:mt-[-14px] tracking-widest">
             {service.hero.script}
           </span>
           </h1>

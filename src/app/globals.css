@@ -175,9 +175,11 @@ body {
   }
 }
 
-img {
-  width: 100%;
-  height: 100%;
+@layer base {
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /* marquee slider */
@@ -398,9 +400,9 @@ form textarea::Placeholder {
     padding-left: 2%;
 }
 
-.shop-item-card {
+/* .shop-item-card {
     width: 12vw;
-}
+} */
 
 }
 
@@ -1038,6 +1040,10 @@ form textarea::Placeholder {
 
 .foot-logo {
     width: 60%;
+}
+
+h1.andrea {
+    font-size: 20px;
 }
 
 

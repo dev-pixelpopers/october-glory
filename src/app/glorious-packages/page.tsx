@@ -17,7 +17,7 @@ export default function GloriousPackagesPage() {
       <Header theme="dark" />
       <InnerPageHero
                 trail={[{ label: "Glorious Packages" }]}
-      title="Glorious"
+      title="Glorious"  
       subtitle="Packages"
       description="Indulge in our luxury bundled packages — combining multiple premium services for a complete, head-to-toe hair transformation."
     />

@@ -150,6 +150,14 @@ export default function ShopProducts() {
   const prodTabRef = useRef<HTMLDivElement>(null);
 
   /**
+   * Identity of the rendered card set, in order. The clip animation below and
+   * the ScrollTrigger refresh both key off this rather than off the card
+   * count: a filter or a sort can leave the count identical while replacing
+   * or reordering every card, and a count-only dependency misses that.
+   */
+  const visibleKey = visibleProducts.map((product) => product.id).join(",");
+
+  /**
    * Each card closes itself into a line that never moves.
    *
    * The trick is the 1:1 mapping. A card's clip inset runs from 0 to its own
@@ -198,15 +206,15 @@ export default function ShopProducts() {
         );
       });
     },
-    // Load More and the filters both swap the card set out.
-    { scope: prodTabRef, dependencies: [visibleProducts.length], revertOnUpdate: true }
+    // Load More, the filters and the sort all swap the card set out.
+    { scope: prodTabRef, dependencies: [visibleKey], revertOnUpdate: true }
   );
 
-  // Card count changes the column's height, which moves every trigger position
-  // below it on the page.
+  // A changed card set moves every trigger position below it on the page —
+  // whether that came from more cards, fewer, or the same number reordered.
   useEffect(() => {
     ScrollTrigger.refresh();
-  }, [visibleProducts.length]);
+  }, [visibleKey]);
 
   // Guard the single-price (or empty) catalog, where the span is zero.
   const priceSpan = PRICE_MAX - PRICE_MIN || 1;
@@ -347,9 +355,9 @@ export default function ShopProducts() {
           </div>
         </div>
 
-        {/* Product Grid: 4 per row, wrapping into further rows */}
+        {/* Product Grid: three per row, four only on very wide screens. */}
         <div ref={prodTabRef} className="prod-tab flex flex-col gap-[var(--space-40)] w-full lg:w-[80%]">
-        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[var(--space-32)] gap-y-[var(--space-64)]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-[var(--space-32)] gap-y-[var(--space-64)]">
           {visibleProducts.map((product) => {
             const href = productHref(product);
             const ctaClass =

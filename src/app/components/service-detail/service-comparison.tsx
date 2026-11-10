@@ -91,16 +91,16 @@ export default function ServiceComparisonTable({
         data-reveal-delay="3"
         className="max-w-[1200px] mx-auto overflow-x-auto rounded-[24px] border border-[#1B1B1B]/10"
       >
-        <table className="w-full min-w-[640px] border-collapse">
+        <table className="w-full table-fixed md:table-auto md:min-w-[640px] border-collapse">
           <thead>
             <tr className="bg-[#FAF8F4]">
-              <th className="text-left gotham text-[12px] tracking-[3px] uppercase text-[#999] font-normal px-[var(--space-24)] py-[var(--space-24)] border-b border-[#1B1B1B]/10">
+              <th className="w-[30%] md:w-auto text-left gotham text-[10px] md:text-[12px] tracking-[1px] md:tracking-[3px] uppercase text-[#999] font-normal px-3 md:px-[var(--space-24)] py-4 md:py-[var(--space-24)] border-b border-[#1B1B1B]/10">
                 Included
               </th>
               {comparison.columns.map((column) => (
                 <th
                   key={column}
-                  className="text-center valturin text-[17px] md:text-[19px] text-[#9C6D51] px-[var(--space-20)] py-[var(--space-24)] border-b border-[#1B1B1B]/10 border-l border-l-[#1B1B1B]/[0.06]"
+                  className="text-center valturin text-[11px] sm:text-[14px] md:text-[19px] leading-tight text-[#9C6D51] px-1 md:px-[var(--space-20)] py-4 md:py-[var(--space-24)] border-b border-[#1B1B1B]/10 border-l border-l-[#1B1B1B]/[0.06]"
                 >
                   {column}
                 </th>
@@ -118,7 +118,7 @@ export default function ServiceComparisonTable({
               >
                 <th
                   scope="row"
-                  className="text-left gotham text-[15px] leading-[26px] font-light text-[#444] px-[var(--space-24)] py-[var(--space-20)] border-b border-[#1B1B1B]/[0.07]"
+                  className="text-left gotham text-[13px] md:text-[15px] leading-[18px] md:leading-[26px] font-light text-[#444] px-3 md:px-[var(--space-24)] py-3 md:py-[var(--space-20)] border-b border-[#1B1B1B]/[0.07]"
                 >
                   {row.label}
                 </th>
@@ -126,7 +126,7 @@ export default function ServiceComparisonTable({
                 {row.values.map((value, i) => (
                   <td
                     key={`${row.label}-${comparison.columns[i] ?? i}`}
-                    className="text-center px-[var(--space-20)] py-[var(--space-20)] border-b border-[#1B1B1B]/[0.07] border-l border-l-[#1B1B1B]/[0.06]"
+                    className="text-center px-1 md:px-[var(--space-20)] py-3 md:py-[var(--space-20)] border-b border-[#1B1B1B]/[0.07] border-l border-l-[#1B1B1B]/[0.06]"
                   >
                     <Cell value={value} />
                   </td>

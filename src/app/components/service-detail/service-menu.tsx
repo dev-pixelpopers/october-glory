@@ -104,7 +104,7 @@ export default function ServiceMenuGrid({
         )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[var(--space-32)] max-w-[1500px] mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-[var(--space-32)] max-w-[1500px] mx-auto">
         {items.map((item, index) => {
           const href =
             item.href ??

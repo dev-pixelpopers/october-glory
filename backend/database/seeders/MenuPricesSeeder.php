@@ -85,7 +85,7 @@ class MenuPricesSeeder extends Seeder
         ['silk-press', 'trim-only', 'Trim Only', '100.00', 30, '/images/trim-after.webp', 'Includes wash.'],
 
         // Weaves
-        ['weaves', 'the-glorious-sew-in', 'The Glorious Sew-In', '785.00', 135, '/images/Weaves-And-Extensions-02.webp', 'Sew-in + trim + treatment.'],
+        ['weaves', 'the-glorious-sew-in', 'The Glorious Sew-In', '785.00', 135, '/images/Weaves-And-Extensions-04.webp', 'Sew-in + trim + treatment.'],
         ['weaves', 'the-glorious-closure-or-full-weave', 'The Glorious Closure or Full Weave', '885.00', 165, '/images/Weaves-And-Extensions-03.webp', 'Closure or full weave + trim + treatment.'],
         ['weaves', 'weave-wash', 'Weave Wash', '160.00', 45, '/images/Weaves-And-Extensions-05-06-07.webp', null],
 

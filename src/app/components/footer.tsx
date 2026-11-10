@@ -47,10 +47,10 @@ export default function Footer() {
               By Appointment Only
             </p>
 
-            <div className="flex flex-col gap-[clamp(10px,8.54px_+_0.389vw,16px)]">
+            <div className="@container flex flex-col gap-[clamp(10px,8.54px_+_0.389vw,16px)]">
               {/* Phone */}
-              <a target="_blank" href="tel:+17186141118" className="flex items-center gap-[clamp(8px,7.03px_+_0.259vw,12px)]">
-                <div className="w-8 h-8 rounded-full border border-[#d4af6e] flex items-center justify-center text-[#d4af6e]">
+              <a target="_blank" href="tel:+17186141118" className="flex items-start gap-[clamp(8px,7.03px_+_0.259vw,12px)]">
+                <div className="w-8 h-8 rounded-full border border-[#d4af6e] flex items-center justify-center text-[#d4af6e] flex-shrink-0">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                 </div>
                 <span className="text-gray-800 text-[length:clamp(19px,18.27px_+_0.194vw,22px)] gotham w-16 foot-inner-label">Phone</span>
