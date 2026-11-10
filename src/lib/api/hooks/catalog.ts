@@ -270,6 +270,7 @@ export interface ProductPayload {
   gallery?: string[];
   background_image?: string | null;
   price: string;
+  stock?: number | null;
   tags?: string[];
   length?: string | null;
   texture?: string | null;

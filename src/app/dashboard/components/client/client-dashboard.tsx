@@ -26,6 +26,7 @@ import SetPasswordBanner from "@/app/components/salon/set-password-banner";
 import { useAppointments, useCancelAppointment } from "@/lib/api/hooks/booking";
 import { usePackages, useProducts } from "@/lib/api/hooks/catalog";
 import { useOrdersQuery } from "@/lib/api/hooks/ecommerce";
+import { useCart } from "@/context/cart-context";
 import {
   useLoyaltyBalance,
   useLoyaltyTransactions,
@@ -1117,13 +1118,13 @@ function ClientOrdersPanel({ user }: { user: User }) {
 /* --------------------------------- Shop -------------------------------------- */
 
 /**
- * The shop catalog, read-only: what the salon sells, at today's price. There
- * is no checkout yet, so nothing here can be bought or changed — the panel is
- * where the Buy button goes once checkout exists.
+ * The shop catalog: client product dashboard where users can explore,
+ * view details, add to cart, and purchase immediately.
  */
 function ShopPanel() {
   const { data: products, isLoading, error } = useProducts();
   const [category, setCategory] = useState<string | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const categories = Array.from(
     new Set((products ?? []).map((p) => p.category).filter((c): c is string => !!c)),
@@ -1131,75 +1132,432 @@ function ShopPanel() {
   const shown = (products ?? []).filter((p) => !category || p.category === category);
 
   return (
-    <Card title="Shop October Glory">
-      <p className="gotham font-light text-[var(--dash-text-soft)] text-[15px] leading-relaxed mb-5">
-        Custom units, closure pieces and the products we use in the salon.
-      </p>
+    <>
+      <Card
+        title="Shop October Glory"
+        action={
+          <Link
+            href="/shop"
+            className="gotham text-[13px] text-[#cda873] hover:underline flex items-center gap-1 font-medium"
+          >
+            <span>Visit Full Boutique</span>
+            <ArrowRight size={13} />
+          </Link>
+        }
+      >
+        <p className="gotham font-light text-[var(--dash-text-soft)] text-[15px] leading-relaxed mb-6">
+          Hand-crafted custom units, virgin bundles, closures, and the professional styling products used in our studio.
+        </p>
 
-      {categories.length > 1 && (
-        <div className="flex flex-wrap gap-2 mb-6">
-          {[null, ...categories].map((c) => (
-            <button
-              key={c ?? "all"}
-              onClick={() => setCategory(c)}
-              className={`gotham text-[13px] px-4 py-1.5 rounded-full border transition-colors cursor-pointer ${
-                category === c
-                  ? "border-[#cba660] text-[#cda873]"
-                  : "border-[var(--dash-border)] text-[var(--dash-text-muted)] hover:text-[var(--dash-text)]"
-              }`}
-            >
-              {c ?? "All"}
-            </button>
+        {categories.length > 1 && (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {[null, ...categories].map((c) => (
+              <button
+                key={c ?? "all"}
+                onClick={() => setCategory(c)}
+                className={`gotham text-[13px] px-4 py-1.5 rounded-full border transition-all cursor-pointer ${
+                  category === c
+                    ? "border-[#cba660] bg-[#cba660]/15 text-[#cda873] font-semibold"
+                    : "border-[var(--dash-border)] text-[var(--dash-text-muted)] hover:text-[var(--dash-text)]"
+                }`}
+              >
+                {c ?? "All Collections"}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {isLoading && (
+          <div className="py-16 text-center text-[var(--dash-text-muted)]">
+            <Loader2 size={24} className="mx-auto mb-2 animate-spin text-[#cda873]" />
+            <p className="gotham text-[14px]">Loading shop products…</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="bg-red-950/40 border border-red-500/40 rounded-xl p-4 text-red-200 text-xs gotham mb-4">
+            {error.message || "Failed to load products."}
+          </div>
+        )}
+
+        {!isLoading && !error && shown.length === 0 && (
+          <p className="gotham text-[var(--dash-text-faint)] text-[15px] py-12 text-center">
+            No products to show in this category.
+          </p>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {shown.map((p) => (
+            <ProductCard
+              key={p.id}
+              product={p}
+              onSelect={() => setSelectedProduct(p)}
+            />
           ))}
         </div>
-      )}
+      </Card>
 
-      {isLoading && <p className="gotham text-[var(--dash-text-muted)] text-[15px]">Loading products…</p>}
-      {error && <p className="gotham text-red-400 text-[14px]">{error.message}</p>}
-      {!isLoading && !error && shown.length === 0 && (
-        <p className="gotham text-[var(--dash-text-faint)] text-[15px]">No products to show yet.</p>
+      {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
       )}
-
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {shown.map((p) => (
-          <ProductCard key={p.id} product={p} />
-        ))}
-      </div>
-    </Card>
+    </>
   );
 }
 
-function ProductCard({ product }: { product: Product }) {
-  const image = product.image ?? product.gallery[0];
+function ProductCard({
+  product,
+  onSelect,
+}: {
+  product: Product;
+  onSelect: () => void;
+}) {
+  const router = useRouter();
+  const { addItem, openCart } = useCart();
+  const [added, setAdded] = useState(false);
+
+  const image = product.image ?? product.gallery?.[0] ?? product.background_image;
   const spec = [product.length, product.texture, product.color].filter(Boolean).join(" · ");
+  const inStock = (product.stock ?? 1) > 0;
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!inStock) return;
+    addItem(product, 1);
+    setAdded(true);
+    openCart();
+    setTimeout(() => setAdded(false), 2000);
+  };
+
+  const handleBuyNow = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!inStock) return;
+    addItem(product, 1);
+    router.push("/checkout");
+  };
 
   return (
-    <div className="flex flex-col border border-[var(--dash-border)] rounded-[16px] overflow-hidden">
-      {/* Sized by the wrapper — the global img rule overrides size utilities on img. */}
-      <div className="aspect-square bg-[var(--dash-border)]">
-        {image && (
+    <div
+      className={`group flex flex-col rounded-[22px] overflow-hidden bg-[var(--dash-card)] border transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(0,0,0,0.22)] ${
+        product.is_featured
+          ? "border-[#cba660]/60 shadow-[0_4px_24px_rgba(203,166,96,0.12)] bg-gradient-to-b from-[#cba660]/[0.03] to-[var(--dash-card)]"
+          : "border-[var(--dash-border)] hover:border-[#cba660]/50"
+      }`}
+    >
+      {/* Cover Image & Badges */}
+      <div
+        onClick={onSelect}
+        className="relative aspect-[16/11] w-full overflow-hidden bg-[#1f1f1f] cursor-pointer"
+      >
+        {image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={image} alt={product.name} className="object-cover" />
+          <img
+            src={image}
+            alt={product.name}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a]">
+            <ShoppingBag size={36} className="text-[#cba660]/30" />
+          </div>
         )}
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+
+        {/* Top Badges */}
+        <div className="absolute top-3 inset-x-3 flex items-center justify-between gap-2 pointer-events-none">
+          {product.category && (
+            <span className="gotham text-[11px] font-medium tracking-wider uppercase backdrop-blur-md bg-black/60 text-white/90 px-3 py-1 rounded-full border border-white/10 shadow-sm">
+              {product.category}
+            </span>
+          )}
+
+          {product.is_featured && (
+            <span className="ml-auto flex items-center gap-1.5 gotham text-[11px] font-bold tracking-widest uppercase backdrop-blur-md bg-gradient-to-r from-[#cda873] to-[#e4cc9e] text-black px-3 py-1 rounded-full shadow-lg">
+              <Sparkles size={11} className="fill-black" />
+              Featured
+            </span>
+          )}
+        </div>
+
+        {/* Bottom Badges */}
+        <div className="absolute bottom-3 inset-x-3 flex items-center justify-between gap-2 pointer-events-none">
+          <span
+            className={`gotham text-[11px] font-medium backdrop-blur-md px-2.5 py-0.5 rounded-full border ${
+              inStock
+                ? "bg-black/65 text-emerald-300 border-emerald-500/30"
+                : "bg-red-950/80 text-red-300 border-red-500/40"
+            }`}
+          >
+            {inStock ? "In Stock" : "Out of Stock"}
+          </span>
+
+          {spec && (
+            <span className="gotham text-[11px] text-white/80 backdrop-blur-md bg-black/60 px-2 py-0.5 rounded-full border border-white/10 truncate max-w-[130px]">
+              {spec}
+            </span>
+          )}
+        </div>
       </div>
-      <div className="flex flex-col flex-1 p-3">
-        {product.category && (
-          <p className="gotham text-[var(--dash-text-faint)] text-[12px] uppercase tracking-widest mb-1">
-            {product.category}
-          </p>
-        )}
-        <p className="gotham text-[var(--dash-text)] text-[15px]">{product.name}</p>
-        {spec && <p className="gotham text-[var(--dash-text-muted)] text-[13px] mt-1">{spec}</p>}
+
+      {/* Card Body */}
+      <div className="flex flex-col flex-1 p-5">
+        {/* Title and Specs */}
+        <div className="mb-2">
+          <h4
+            onClick={onSelect}
+            className="valturin text-[20px] text-[var(--dash-text)] group-hover:text-[#cda873] transition-colors cursor-pointer line-clamp-1"
+          >
+            {product.name}
+          </h4>
+          {spec && (
+            <p className="gotham text-[12px] text-[var(--dash-text-muted)] mt-1 line-clamp-1">
+              {spec}
+            </p>
+          )}
+        </div>
+
+        {/* Description snippet */}
         {product.description && (
-          <p className="gotham font-light text-[var(--dash-text-soft)] text-[13px] leading-relaxed mt-2 line-clamp-3">
+          <p className="gotham font-light text-[var(--dash-text-soft)] text-[13px] leading-relaxed line-clamp-2 mb-4">
             {product.description}
           </p>
         )}
-        <div className="mt-auto pt-3">
-          <span className="gotham font-bold text-[#cda873] text-[16px]">{money(product.price)}</span>
+
+        {/* Price Strip */}
+        <div className="flex items-baseline justify-between gap-2 py-3 border-y border-[var(--dash-border-soft)] mt-auto mb-4">
+          <div>
+            <span className="gotham text-[10px] uppercase tracking-wider text-[var(--dash-text-faint)] block mb-0.5">
+              Investment
+            </span>
+            <span className="valturin text-[24px] font-bold text-[#cda873]">
+              {money(product.price)}
+            </span>
+          </div>
+          {product.stock !== null && product.stock !== undefined && inStock && (
+            <span className="gotham text-[11px] text-[var(--dash-text-muted)]">
+              {product.stock <= 3 ? `Only ${product.stock} left` : "Ready to ship"}
+            </span>
+          )}
+        </div>
+
+        {/* Actions */}
+        <div className="flex items-center gap-2">
+          {inStock ? (
+            <>
+              <button
+                type="button"
+                onClick={handleBuyNow}
+                className="flex-1 py-2.5 px-3 rounded-full bg-[#cba660] hover:bg-[#b8934e] text-black gotham font-bold text-[12px] tracking-wider uppercase transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer text-center"
+              >
+                Buy Now
+              </button>
+
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                title="Add to Shopping Bag"
+                aria-label="Add to Shopping Bag"
+                className="w-10 h-10 rounded-full border border-[var(--dash-border)] hover:border-[#cba660] bg-[var(--dash-bg)] text-[#cda873] hover:text-white hover:bg-[#cba660]/20 transition-all flex items-center justify-center shrink-0 cursor-pointer"
+              >
+                {added ? <Check size={16} className="text-emerald-400" /> : <ShoppingBag size={16} />}
+              </button>
+
+              <button
+                type="button"
+                onClick={onSelect}
+                title="View Product Details"
+                aria-label="View Product Details"
+                className="w-10 h-10 rounded-full border border-[var(--dash-border)] hover:border-[var(--dash-border-strong)] text-[var(--dash-text-muted)] hover:text-white transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+              >
+                <Info size={16} />
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="w-full py-2.5 px-3 rounded-full bg-white/5 border border-white/10 text-[var(--dash-text-faint)] gotham text-[12px] uppercase tracking-wider cursor-not-allowed"
+            >
+              Sold Out
+            </button>
+          )}
         </div>
       </div>
     </div>
+  );
+}
+
+function ProductDetailModal({
+  product,
+  onClose,
+}: {
+  product: Product;
+  onClose: () => void;
+}) {
+  const router = useRouter();
+  const { addItem, openCart } = useCart();
+  const [added, setAdded] = useState(false);
+
+  const image = product.image ?? product.gallery?.[0] ?? product.background_image;
+  const spec = [product.length, product.texture, product.color].filter(Boolean).join(" · ");
+  const inStock = (product.stock ?? 1) > 0;
+
+  const handleAddToCart = () => {
+    if (!inStock) return;
+    addItem(product, 1);
+    setAdded(true);
+    openCart();
+    setTimeout(() => setAdded(false), 2000);
+  };
+
+  const handleBuyNow = () => {
+    if (!inStock) return;
+    addItem(product, 1);
+    onClose();
+    router.push("/checkout");
+  };
+
+  return (
+    <Modal title={product.name} onClose={onClose}>
+      <div className="flex flex-col gap-6">
+        {/* Cover Preview */}
+        {image && (
+          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[16px] bg-[#1a1a1a]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={image} alt={product.name} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+              {product.category && (
+                <span className="gotham text-[11px] font-medium tracking-wider uppercase backdrop-blur-md bg-black/60 text-white/90 px-3 py-1 rounded-full border border-white/10">
+                  {product.category}
+                </span>
+              )}
+              <span
+                className={`gotham text-[11px] font-medium backdrop-blur-md px-3 py-1 rounded-full border ${
+                  inStock
+                    ? "bg-black/65 text-emerald-300 border-emerald-500/30"
+                    : "bg-red-950/80 text-red-300 border-red-500/40"
+                }`}
+              >
+                {inStock ? "In Stock · Ready to Ship" : "Sold Out"}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Price & Specs Banner */}
+        <div className="flex items-center justify-between p-4 rounded-[16px] bg-[var(--dash-bg)] border border-[var(--dash-border-soft)]">
+          <div>
+            <span className="gotham text-[11px] uppercase tracking-wider text-[var(--dash-text-faint)] block mb-0.5">
+              Price
+            </span>
+            <span className="valturin text-[28px] font-bold text-[#cda873]">
+              {money(product.price)}
+            </span>
+          </div>
+          {spec && (
+            <div className="text-right">
+              <span className="gotham text-[11px] uppercase tracking-wider text-[var(--dash-text-faint)] block mb-0.5">
+                Specifications
+              </span>
+              <span className="gotham text-[13px] text-[var(--dash-text)] font-medium">
+                {spec}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Description */}
+        {product.description && (
+          <div>
+            <h5 className="gotham font-bold text-[var(--dash-text)] text-[12px] uppercase tracking-wider mb-2">
+              Product Overview
+            </h5>
+            <p className="gotham font-light text-[var(--dash-text-soft)] text-[14px] leading-relaxed">
+              {product.description}
+            </p>
+          </div>
+        )}
+
+        {/* Showcase Narrative if provided */}
+        {(product.what_she_wanted || product.what_we_built || product.how_she_wears_it) && (
+          <div className="space-y-3 pt-3 border-t border-[var(--dash-border-soft)]">
+            <h5 className="gotham font-bold text-[#cda873] text-[12px] uppercase tracking-wider">
+              Studio Craftsmanship &amp; Build
+            </h5>
+
+            {product.what_she_wanted && (
+              <div className="p-3 rounded-xl bg-[var(--dash-bg)] border border-[var(--dash-border-soft)] text-xs gotham">
+                <span className="font-semibold text-[var(--dash-text)] block mb-1">
+                  What She Wanted:
+                </span>
+                <p className="text-[var(--dash-text-muted)] font-light leading-relaxed">
+                  {product.what_she_wanted}
+                </p>
+              </div>
+            )}
+
+            {product.what_we_built && (
+              <div className="p-3 rounded-xl bg-[var(--dash-bg)] border border-[var(--dash-border-soft)] text-xs gotham">
+                <span className="font-semibold text-[var(--dash-text)] block mb-1">
+                  What We Built:
+                </span>
+                <p className="text-[var(--dash-text-muted)] font-light leading-relaxed">
+                  {product.what_we_built}
+                </p>
+              </div>
+            )}
+
+            {product.how_she_wears_it && (
+              <div className="p-3 rounded-xl bg-[var(--dash-bg)] border border-[var(--dash-border-soft)] text-xs gotham">
+                <span className="font-semibold text-[var(--dash-text)] block mb-1">
+                  How She Wears It:
+                </span>
+                <p className="text-[var(--dash-text-muted)] font-light leading-relaxed">
+                  {product.how_she_wears_it}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Actions */}
+        <div className="flex items-center gap-3 pt-2">
+          {inStock ? (
+            <>
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className="flex-1 py-3.5 px-5 rounded-full border border-[var(--dash-border)] hover:border-[#cba660] text-[#cda873] hover:text-white hover:bg-[#cba660]/10 gotham font-bold text-[13px] tracking-wider uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {added ? <Check size={16} className="text-emerald-400" /> : <ShoppingBag size={16} />}
+                <span>{added ? "Added to Bag" : "Add to Shopping Bag"}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleBuyNow}
+                className="flex-1 py-3.5 px-5 rounded-full bg-[#cba660] hover:bg-[#b8934e] text-black gotham font-bold text-[13px] tracking-wider uppercase transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Proceed to Checkout</span>
+                <ArrowRight size={16} />
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="w-full py-3.5 px-5 rounded-full bg-white/5 border border-white/10 text-gray-500 gotham font-bold text-[13px] uppercase tracking-wider cursor-not-allowed text-center"
+            >
+              Currently Out of Stock
+            </button>
+          )}
+        </div>
+      </div>
+    </Modal>
   );
 }
 

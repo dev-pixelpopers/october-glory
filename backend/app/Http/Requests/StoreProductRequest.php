@@ -22,6 +22,7 @@ class StoreProductRequest extends FormRequest
             'gallery.*' => ['string', 'max:2048'],
             'background_image' => ['nullable'],
             'price' => ['required', 'numeric', 'min:0', 'max:99999999.99'],
+            'stock' => ['nullable', 'integer', 'min:0'],
             'tags' => ['nullable', 'array'],
             'tags.*' => ['string', 'max:50'],
             'length' => ['nullable', 'string', 'max:255'],

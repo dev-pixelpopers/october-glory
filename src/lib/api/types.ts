@@ -156,7 +156,7 @@ export interface Product {
   gallery: string[];
   background_image?: string | null;
   price: string;
-  stock?: number;
+  stock?: number | null;
   /** Shop filter tags, e.g. ["wavy", "new"]. */
   tags: string[];
   length: string | null;
