@@ -134,7 +134,7 @@ export default function ProcessFlow({
   // Gate on viewport and motion preference, re-checking on change so a
   // rotated phone or a dragged window lands in the right mode.
   useEffect(() => {
-    const wide = window.matchMedia("(min-width: 1024px)");
+    const wide = window.matchMedia("(min-width: 1025px)");
     const still = window.matchMedia("(prefers-reduced-motion: reduce)");
     const sync = () => setInteractive(wide.matches && !still.matches);
 

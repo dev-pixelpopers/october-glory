@@ -97,7 +97,7 @@ export default function MaintenancePackagesServices() {
         </div>
 
         {/* Service detail cards — 3 columns, 2 rows */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-[var(--space-48)] gap-y-[var(--space-64)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-x-[var(--space-48)] gap-y-[var(--space-64)]">
           {serviceDetails.map((svc, idx) => (
             <div
               key={svc.title}

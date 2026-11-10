@@ -69,7 +69,13 @@ export default function ServiceSectionBlock({
             : "max-w-[820px] mx-auto"
         }
       >
-        <div className={hasMedia && flip ? "lg:order-last" : undefined}>
+        <div
+          className={
+            hasMedia
+              ? `order-2 ${flip ? "xl:order-last" : "xl:order-first"}`
+              : undefined
+          }
+        >
           {section.eyebrow && (
             <p
               data-reveal
@@ -150,8 +156,12 @@ export default function ServiceSectionBlock({
           <div
             data-reveal
             data-reveal-delay="2"
-            className={`relative group ${flip ? "lg:order-first" : "order-first lg:order-last"
-              }`}
+            className={`relative group ${
+              [
+                "order-1",
+                flip ? "xl:order-first" : "xl:order-last",
+              ].join(" ")
+            }`}
           >
             {/* Offset gold frame */}
             <div

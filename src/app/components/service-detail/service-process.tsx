@@ -32,7 +32,12 @@ export default function ServiceProcessSection({
       className={`reveal-scope relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)] overflow-hidden`}
     >
       <div className="relative z-10 grid grid-cols-1 xl:grid-cols-2 gap-[var(--space-64)] items-center max-w-[1400px] mx-auto">
-        <div className={flip ? "lg:order-last" : undefined}>
+        <div
+          className={[
+            "order-2",
+            flip ? "xl:order-last" : "xl:order-first",
+          ].join(" ")}
+        >
           {process.eyebrow && (
             <p
               data-reveal
@@ -104,7 +109,12 @@ export default function ServiceProcessSection({
         <div
           data-reveal
           data-reveal-delay="2"
-          className={`relative group ${flip ? "lg:order-first" : "order-first lg:order-last"}`}
+          className={`relative group ${
+            [
+              "order-1",
+              flip ? "xl:order-first" : "xl:order-last",
+            ].join(" ")
+          }`}
         >
           {/* Offset gold frame — the same treatment the section blocks use. */}
           <div
@@ -115,7 +125,7 @@ export default function ServiceProcessSection({
             }`}
           />
 
-          <div className="relative aspect-[3/1.6] xl:aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a] order-1 xl:order-2">
+          <div className="relative aspect-[3/1.6] xl:aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
             {process.video ? (
               <video
                 src={process.video}

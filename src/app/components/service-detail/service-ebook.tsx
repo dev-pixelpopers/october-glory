@@ -41,7 +41,7 @@ export default function ServiceEbookSection({
       // Cleared by the fixed header when arriving via the anchor.
       className={`reveal-scope scroll-mt-[100px] relative w-full ${c.section} py-[var(--space-section-y)] px-[var(--space-section-x)] overflow-hidden`}
     >
-      <div className="w-full max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-center">
+      <div className="w-full max-w-[1400px] mx-auto flex flex-col xl:flex-row items-center justify-center">
         <div
           data-reveal
           className="w-full md:w-[55%] bg-white rounded-3xl p-[var(--space-16)] md:p-0 shadow-lg overflow-hidden"

@@ -151,8 +151,8 @@ export default function UnitStorySection({
           </dl>
         )}
 
-        <div className="mt-[var(--space-80)] grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-64)] items-start ">
-          <div className="flex flex-col gap-[var(--space-40)] order-2 lg:order-1">
+        <div className="mt-[var(--space-80)] grid grid-cols-1 xl:grid-cols-2 gap-[var(--space-64)] items-start ">
+          <div className="flex flex-col gap-[var(--space-40)] order-2 xl:order-1">
             {chapters.map((chapter, i) => (
               <div key={chapter.label} data-reveal data-reveal-delay={String(i + 1)}>
                 <h3
@@ -189,7 +189,7 @@ export default function UnitStorySection({
           </div>
 
           {unit.video && (
-            <div data-reveal data-reveal-delay="2" className="relative lg:sticky lg:top-[var(--space-40)] order-1 lg:order-2">
+            <div data-reveal data-reveal-delay="2" className="relative xl:sticky xl:top-[var(--space-40)] order-1 xl:order-2">
               {/* <div className="absolute -inset-4 md:-inset-6 border border-[#ccb884]/25 rounded-[28px] pointer-events-none translate-x-3 translate-y-3 md:translate-x-5 md:translate-y-5" /> */}
               <div className="relative aspect-[1] rounded-[24px] overflow-hidden bg-[#2a2a2a]">
                 <video

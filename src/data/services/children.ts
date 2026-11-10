@@ -807,7 +807,7 @@ export const serviceChildren: ServiceChild[] = [
     price: "$250",
   },
   {
-    parents: ["extensions"],
+    parents: ["wigs"],
     cardImage: "/images/Weaves-And-Extensions-01.webp",
     slug: "single-track",
     cardTitle: "Single Track",
@@ -825,7 +825,7 @@ export const serviceChildren: ServiceChild[] = [
     cardTitle: "Full-Head Weave",
   },
   {
-    parents: ["extensions"],
+    parents: ["wigs"],
     cardImage: "/images/GLORIOUS-PACKAGES-04.webp",
     slug: "wig-prep",
     cardTitle: "Wig Prep",
